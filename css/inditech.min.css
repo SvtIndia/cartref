@@ -1,0 +1,20 @@
+.mfp-content .product-form>label {
+  min-width:13rem;
+ }
+
+ .single-product .product-form>label {
+  min-width:19rem;
+ }
+
+.home-product .product-media img,
+.box-mode .product-media img{
+  /*! height: 28em; */
+}
+
+@media (max-width: 450px)
+{
+  .home-product .product-media img,
+  .box-mode .product-media img{
+    /*! height: 16em; */
+  }
+}
