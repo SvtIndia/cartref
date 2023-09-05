@@ -806,9 +806,11 @@
                                                     @if ($data->order_status == 'New Order')
                                                         <span style="color: green">Order Placed</span>
                                                     @elseif ($data->order_status == 'Under manufacturing')
-                                                        <span style="color: orange">{{ $data->order_status }}</span>
+                                                        <span style="color: orange; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
                                                     @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
-                                                        <span style="color: green">{{ $data->order_status }}</span>
+                                                        <span style="color: green; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
+                                                    @elseif($data->order_status == 'Cancelled')
+                                                        <span style="color: red; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
                                                     @else
                                                         <span>{{ $data->order_status }}</span>
                                                     @endif
