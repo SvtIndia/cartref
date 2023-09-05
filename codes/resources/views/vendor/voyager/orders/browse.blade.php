@@ -532,7 +532,7 @@
                         @endif --}}
 
 
-                        <div>
+                        <div class="sliding-btn-div">
                             <nav>
                                 <ul class="pagination">
                                     <li class="page-item" id="left-button">
@@ -546,7 +546,7 @@
                         </div>
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-responsive table-hover"
-                                style="width: 100%; min-width:2000px; overflow-x:auto;">
+                                style="width: 100%; min-width:1600px; overflow-x:auto;">
                                 <thead>
                                     <tr>
                                         <th class="actions text-right dt-not-orderable">
@@ -561,11 +561,11 @@
                                         <th style="border-right:none;">Product Information</th>
                                         <th style="border-right:none;"></th>
                                         <th></th>
-                                        <th>Seller Information</th>
+                                        @if(auth()->user()->hasRole('Client'))<th>Seller Information</th>@endif
                                         <th>Amount</th>
                                         <th>Logistic Details</th>
                                         <th>Buyer Details</th>
-                                        <th>Shipment Details</th>
+                                        @if(auth()->user()->hasRole('Client'))<th>Shipment Details</th>@endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -573,7 +573,7 @@
                                         {{-- {{ json_encode($data, JSON_PRETTY_PRINT) }} --}}
                                         <tr
                                             @if ($data->order_status == 'Under processing') style="background: #fce5c1;" @elseif($data->order_status == 'Ready to dispatch') style="background: #c2e6fa;" @elseif($data->order_status == 'Shipped') style="background: #d4fae4;" @endif>
-                                            <td class="no-sort no-click bread-actions">
+                                            <td class="no-sort no-click bread-actions" style="width: 2% !important;">
                                                 <ul
                                                     style="display: inline-grid;margin-block-start: 0em;padding-inline-start: 0px;">
                                                     @foreach ($actions as $action)
@@ -585,18 +585,18 @@
                                                     @endforeach
                                                 </ul>
                                             </td>
-                                            <td>
+                                            <td style="width: 1% !important;">
                                                 {{ $data->id }}
                                                 {{-- {{ $data }} --}}
                                             </td>
                                             @if ($showCheckboxColumn)
-                                                <td>
+                                                <td style="width: 1% !important;">
                                                     <input type="checkbox" name="row_id"
                                                         id="checkbox_{{ $data->getKey() }}"
                                                         value="{{ $data->getKey() }}">
                                                 </td>
                                             @endif
-                                            <td style="width: 10pc;">
+                                            <td style="width: 5% !important;">
                                                 <div>
                                                     {{ date('M d, Y', strtotime($data->created_at)) }}
                                                 </div>
@@ -611,7 +611,7 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td style="width: 10% !important;">
                                                 <div class="product-information">
                                                     @if (!empty($data->color))
                                                         <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
@@ -731,7 +731,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td style="width: 6pc">
+                                            <td style="width: 6% !important;">
                                                 <div>
                                                     Item ID:
                                                     @if (!empty($data->color))
@@ -751,48 +751,57 @@
                                                     Type: {{ $data->type }}
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td style="width: 2% !important;">
                                                 Qty: {{ $data->qty }}
                                             </td>
-                                            <td style="width: 12% !important;">
-                                                @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                                    @if (!empty($data->vendor_id))
-                                                        <div>
-                                                            <strong style="color: black; font-weight:700">Name</strong>:
-                                                            {{ $data->vendor->name }}
-                                                        </div>
-                                                        <div>
-                                                            <strong style="color: black; font-weight:700">Brand</strong>:
-                                                            {{ $data->vendor->brand_name }}
-                                                        </div>
-                                                        <div>
-                                                            <strong style="color: black; font-weight:700">Email</strong>:
-                                                            {{ $data->vendor->email }}
-                                                        </div>
-                                                        <div>
-                                                            <strong style="color: black; font-weight:700">Address</strong>:
-                                                            <text>
-                                                                {{ $data->vendor->street_address_1 }} <br>
-                                                                {{ $data->vendor->street_address_2 ?? '' }}<br>
-                                                                {{ $data->vendor->city ?? '' }},
-                                                                {{ $data->vendor->state ?? '' }} -
-                                                                {{ $data->vendor->pincode ?? '' }}
-                                                            </text>
-                                                        </div>
+                                            @if(auth()->user()->hasRole('Client'))
+                                                <td style="width: 10% !important;">
+                                                    @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
+                                                        @if (!empty($data->vendor_id))
+                                                            <div>
+                                                                <text>
+                                                                    <span style="color: black; font-weight:700">Name</span>:
+                                                                    {{ $data->vendor->name }}
+                                                                </text>
+                                                            </div>
+                                                            <div>
+                                                                <text class="text-ellipsis">
+                                                                    <span style="color: black; font-weight:700">Brand</span>:
+                                                                    {{ $data->vendor->brand_name }}
+                                                                </text>
+                                                            </div>
+                                                            <div>
+                                                                <text class="text-ellipsis">
+                                                                    <span style="color: black; font-weight:700">Email</span>:
+                                                                    {{ $data->vendor->email }}
+                                                                </text>
+                                                            </div>
+                                                            <div>
+                                                                <text class="text-ellipsis">
+                                                                    <span style="color: black; font-weight:700">Address</span>:
+                                                                    {{ $data->vendor->street_address_1 }}
+                                                                    {{ $data->vendor->street_address_2 ?? '' }}
+                                                                    {{ $data->vendor->city ?? '' }},
+                                                                    {{ $data->vendor->state ?? '' }} -
+                                                                    {{ $data->vendor->pincode ?? '' }}
+                                                                </text>
+                                                            </div>
+                                                        @endif
                                                     @endif
-                                                @endif
-                                                {{-- <div>
-                                                Type: {{$data->vendor }}
-                                            </div> --}}
-                                            </td>
+                                                    {{-- <div>
+                                                    Type: {{$data->vendor }}
+                                                </div> --}}
+                                                </td>
+                                            @endif
 
-                                            <td>
-                                                <div>{{ Config::get('icrm.currency.icon') . ' ' . $data->product_offerprice }}
+                                            <td style="width: 5% !important;">
+                                                <div>
+                                                    {{ Config::get('icrm.currency.icon') . ' ' . $data->product_offerprice }}
                                                 </div>
                                                 <div>{{ $data->order_method }}</div>
                                             </td>
 
-                                            <td>
+                                            <td style="width: 10% !important;">
                                                 <div>
                                                     @if ($data->order_status == 'New Order')
                                                         <span style="color: green">Order Placed</span>
@@ -860,16 +869,21 @@
 
                                                 @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
                                                     @if (!empty($data->order_awb))
-                                                        <br>
                                                         <div>
+                                                            <a href="javascript:void(0)"
+                                                                onclick="document.getElementById('downloadtaxinvoiceForm').submit()">
+                                                                Tax Invoice
+                                                            </a>
+                                                        </div>
+                                                        <div style="display: none">
                                                             <a>
                                                                 <form action="{{ route('downloadtaxinvoice') }}"
-                                                                    method="post">
+                                                                    method="post" id="downloadtaxinvoiceForm">
                                                                     @csrf
                                                                     <input type="text" hidden name="order_awb"
                                                                         value="{{ $data->order_awb }}">
-                                                                    <button type="submit" class="btn btn-sm btn-info">Tax
-                                                                        Invoice</button>
+                                                                    {{-- <button type="submit" class="btn btn-sm btn-info">Tax
+                                                                        Invoice</button> --}}
                                                                 </form>
                                                             </a>
                                                         </div>
@@ -878,14 +892,18 @@
 
                                             </td>
 
-                                            <td style="width: 15% !important;">
+                                            <td style="width: 10% !important;">
                                                 <div>
                                                     <strong style="color:black; font-weight: 700;">Name: </strong>
                                                     <text class="text-primary">{{ $data->customer_name }}</text>
                                                 </div>
                                                 <div>
-                                                    {{ $data->dropoff_streetaddress1 }}<br>
-                                                    {{ $data->dropoff_streetaddress2 }}<br>
+                                                    <text class="text-ellipsis">
+                                                        {{ $data->dropoff_streetaddress1 }}<br>
+                                                    </text>
+                                                    <text class="text-ellipsis">
+                                                        {{ $data->dropoff_streetaddress2 }}<br>
+                                                    </text>
                                                     <strong
                                                         style="color:black; font-weight: 700;">{{ $data->dropoff_city . ' - ' . $data->dropoff_state }}<br></strong>
                                                     <strong
@@ -894,20 +912,23 @@
                                                         style="color:black; font-weight: 700;">{{ $data->dropoff_pincode }}(Pincode)</strong>
                                                 </div>
                                             </td>
-                                            <td style="width: 15% !important;">
-                                                <div>
-                                                    <strong style="color:black; font-weight: 700;">Expected Delivery Date:
-                                                    </strong>
-                                                    <text
-                                                        class="text-success">{{ $data->exp_delivery_date ? date('M d, Y', strtotime($data->exp_delivery_date)) : '-' }}</text>
-                                                </div>
-                                                <div>
-                                                    <strong style="color:black; font-weight: 700;">Pickup Scheduled Date:
-                                                    </strong>
-                                                    <text
-                                                        class="text-primary">{{ $data->pickup_scheduled_date ? date('M d, Y', strtotime($data->pickup_scheduled_date)) : '-' }}</text>
-                                                </div>
-                                            </td>
+
+                                            @if(auth()->user()->hasRole('Client'))
+                                                <td style="width: 15% !important;">
+                                                    <div>
+                                                        <strong style="color:black; font-weight: 700;">Expected Delivery Date:
+                                                        </strong>
+                                                        <text
+                                                            class="text-success">{{ $data->exp_delivery_date ? date('M d, Y', strtotime($data->exp_delivery_date)) : '-' }}</text>
+                                                    </div>
+                                                    <div>
+                                                        <strong style="color:black; font-weight: 700;">Pickup Scheduled Date:
+                                                        </strong>
+                                                        <text
+                                                            class="text-primary">{{ $data->pickup_scheduled_date ? date('M d, Y', strtotime($data->pickup_scheduled_date)) : '-' }}</text>
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -962,6 +983,27 @@
         .voyager .table tr td,
         .voyager .table tr th {
             border-right: 1px solid;
+        }
+
+        .text-ellipsis {
+            width: 200px;
+            white-space: nowrap;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sliding-btn-div{
+            position: fixed;
+            bottom: 11px;
+            right: 15px;
+            z-index: 1000;
+            background: #c4e2ff;
+            padding: 0px 6px;
+            border-radius: 6px;
+        }
+        .sliding-btn-div .page-link{
+            color: black;
+            font-weight: 400;
         }
     </style>
 
@@ -1032,8 +1074,9 @@
 
         var deleteFormAction;
         $('td').on('click', '.delete', function(e) {
-            $('#delete_form')[0].action = '{{ route('voyager.' . $dataType->slug . '.destroy', '__id') }}'.replace(
-                '__id', $(this).data('id'));
+            $('#delete_form')[0].action = '{{ route('voyager.' . $dataType->slug . '.destroy', '__id') }}'
+                .replace(
+                    '__id', $(this).data('id'));
             $('#delete_modal').modal('show');
         });
 
@@ -1052,11 +1095,11 @@
                     if ($(this).prop('checked')) {
                         $('#dataTable').before(
                             '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 1]), true) }}"></a>'
-                            );
+                        );
                     } else {
                         $('#dataTable').before(
                             '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 0]), true) }}"></a>'
-                            );
+                        );
                     }
 
                     $('#redir')[0].click();
