@@ -1005,6 +1005,10 @@
             color: black;
             font-weight: 400;
         }
+
+        .pagination>li {
+            cursor: pointer;
+        }
     </style>
 
     {{-- Single delete modal --}}
@@ -1121,7 +1125,7 @@
         $("#right-button").click(function() {
             event.preventDefault();
             $(".table-responsive").animate({
-                    scrollLeft: "+=300px"
+                    scrollLeft: "+=500px"
                 },
                 "slow"
             );
@@ -1130,7 +1134,7 @@
         $("#left-button").click(function() {
             event.preventDefault();
             $(".table-responsive").animate({
-                    scrollLeft: "-=300px"
+                    scrollLeft: "-=500px"
                 },
                 "slow"
             );
