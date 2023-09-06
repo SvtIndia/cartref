@@ -30,8 +30,10 @@ class CartStorage {
         $obj = json_decode(json_encode($value));
         $myKey = array_keys((array)$obj)[0];
         $myObj = $obj->$myKey;
+        // dd($myObj);
 
         if($row = Cart::find($key))
+        // if(false)
         {
             // update
             $row->wishlist_data = $value;
@@ -39,6 +41,7 @@ class CartStorage {
             $row->cartrowid = $myKey;
             $row->name = $myObj->name;
             $row->price = $myObj->price;
+            $row->user_id = auth()->user()->id ?? 0;
             $row->quantity = $myObj->quantity;
             $row->attributes = json_encode($myObj->attributes);
             $row->conditions = json_encode($myObj->conditions);
@@ -49,6 +52,7 @@ class CartStorage {
             
             Cart::create([
                 'id' => $key,
+                'user_id' => auth()->user()->id ?? 0,
                 'wishlist_data' => $value,
                 'cartrowid' => $myKey,
                 'name' => $myObj->name,

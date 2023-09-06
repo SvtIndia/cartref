@@ -26,6 +26,7 @@ use LaravelDaily\Invoices\Classes\Party;
 use Illuminate\Support\Facades\Notification;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use App\Notifications\PrepaidOrderEmailToVendor;
+use Illuminate\Support\Facades\Auth;
 
 
 class BagController extends Controller
@@ -109,7 +110,20 @@ class BagController extends Controller
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
-        $carts = \Cart::getContent();
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $carts = \Cart::session($userID)->getContent();
 
         foreach($carts as $key => $cart)
         {
@@ -144,13 +158,13 @@ class BagController extends Controller
             }
 
 
-            $subtotal = \Cart::getSubtotal();
-            $total = \Cart::getTotal();
+            $subtotal = \Cart::session($userID)->getSubtotal();
+            $total = \Cart::session($userID)->getTotal();
 
             $ordervalue = $subtotal;
             
 
-            $couponCondition = \Cart::getCondition('coupon');
+            $couponCondition = \Cart::session($userID)->getCondition('coupon');
             if(!empty($couponCondition))
             {
                 $discount = $couponCondition->getCalculatedValue($subtotal);
@@ -159,7 +173,7 @@ class BagController extends Controller
             }
 
 
-            $shippingCondition = \Cart::getCondition('shipping');
+            $shippingCondition = \Cart::session($userID)->getCondition('shipping');
             if(!empty($shippingCondition))
             {
                 $shipping = $shippingCondition->getCalculatedValue($subtotal);
@@ -168,7 +182,7 @@ class BagController extends Controller
             }
 
 
-            $taxCondition = \Cart::getCondition('tax');
+            $taxCondition = \Cart::session($userID)->getCondition('tax');
             if(!empty($taxCondition))
             {
                 $tax = $taxCondition->getCalculatedValue($subtotal + $shipping - $discount);
@@ -319,12 +333,12 @@ class BagController extends Controller
 
 
 
-        \Cart::clear();
+        \Cart::session($userID)->clear();
         
         
-        \Cart::removeCartCondition('coupon');
-        \Cart::removeCartCondition('shipping');
-        \Cart::removeCartCondition('tax');
+        \Cart::session($userID)->removeCartCondition('coupon');
+        \Cart::session($userID)->removeCartCondition('shipping');
+        \Cart::session($userID)->removeCartCondition('tax');
         Session::remove('ordermethod');
         Session::remove('acceptterms');
         Session::remove('deliverypincode');

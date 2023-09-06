@@ -227,14 +227,26 @@ class Addskutobag extends Component
     {
         $this->validateskufields();
 
-        
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         /**
          * Generate random row id
          * If the product is already in the cart then fetch that product cart row id and assign
         */
 
         // check if same product is already in the cart
-        $validatecartrowid = \Cart::getContent()
+        $validatecartrowid = \Cart::session($userID)->getContent()
         ->where('attributes.product_id', $this->product->id)
         ->where('attributes.size', $this->size)
         ->where('attributes.color', $this->color)
@@ -300,7 +312,7 @@ class Addskutobag extends Component
 
         if(Config::get('icrm.stock_management.feature') == 1)
         {
-            $sameproduct = \Cart::getContent()
+            $sameproduct = \Cart::session($userID)->getContent()
                 ->where('attributes.product_id', $this->product->id)
                 ->where('attributes.size', $this->size)
                 ->where('attributes.color', $this->color);
@@ -465,7 +477,20 @@ class Addskutobag extends Component
             'conditions' => [$maxgplus, $tax]
         );
 
-        \Cart::add($item);
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        \Cart::session($userID)->add($item);
 
         // if(Auth::check()){
         //     \App\Models\Cart::firstOrCreate(['cartrowid' => $cartrowid], [
@@ -719,7 +744,20 @@ class Addskutobag extends Component
 
         if(Config::get('icrm.stock_management.feature') == 1)
         {
-            $sameproduct = \Cart::getContent()
+            $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+            $sameproduct = \Cart::session($userID)->getContent()
                 ->where('attributes.product_id', $this->product->id)
                 ->where('attributes.size', $this->size)
                 ->where('attributes.color', $this->color);

@@ -25,9 +25,23 @@
                                         @php
                                             $product = App\Models\Product::where('id', $cart->attributes->product_id)->first();
                                             
+                                            $userID;
+                                            if(\Illuminate\Support\Facades\Auth::check()){
+                                                $userID = auth()->user()->id;
+                                            }
+                                            else{
+                                                if(session('session_id')){
+                                                    $userID = session('session_id');
+                                                }
+                                                else{
+                                                    $userID = rand(1111111111,9999999999);
+                                                    session(['session_id' => $userID]);
+                                                }
+                                            }
+
                                             if(empty($product))
                                             {
-                                                \Cart::clear();
+                                                \Cart::session($userID)->clear();
                                             }
 
                                         @endphp

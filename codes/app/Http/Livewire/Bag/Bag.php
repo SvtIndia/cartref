@@ -9,6 +9,7 @@ use Darryldecode\Cart\Cart;
 use Seshac\Shiprocket\Shiprocket;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class Bag extends Component
 {
@@ -28,9 +29,22 @@ class Bag extends Component
 
     public function render()
     {
-        // \Cart::clear();
+        // \Cart::session($userID)->clear();
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
-        $carts = \Cart::getContent();
+        $carts = \Cart::session($userID)->getContent();
 
         if(count($carts) == 0)
         {
@@ -39,9 +53,9 @@ class Bag extends Component
             Session::remove('deliverynotavailable');
         }
 
-        $subtotal = \Cart::getSubTotal();
+        $subtotal = \Cart::session($userID)->getSubTotal();
 
-        $total = \Cart::getTotal();
+        $total = \Cart::session($userID)->getTotal();
 
 
         if(!empty(Session::get('deliverypincode')))
@@ -62,7 +76,20 @@ class Bag extends Component
 
     public function plusqty($cartid)
     {
-        $cart = \Cart::get($cartid);
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $cart = \Cart::session($userID)->get($cartid);
 
         /**
          * If stock management is enabled then check if we have available stock
@@ -91,7 +118,7 @@ class Bag extends Component
         }
 
 
-        \Cart::update($cartid, array(
+        \Cart::session($userID)->update($cartid, array(
             'quantity' => 1, // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
             'attributes' => array(
                 'size' => $cart->attributes->size,
@@ -119,10 +146,23 @@ class Bag extends Component
 
     public function minusqty($cartid)
     {
-        $cart = \Cart::get($cartid);
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $cart = \Cart::session($userID)->get($cartid);
 
         // you may also want to update a product by reducing its quantity, you do this like so:
-        \Cart::update($cartid, array(
+        \Cart::session($userID)->update($cartid, array(
             'quantity' => -1, // so if the current product has a quantity of 4, it will subtract 1 and will result to 3
             'attributes' => array(
                 'size' => $cart->attributes->size,
@@ -148,7 +188,20 @@ class Bag extends Component
 
     private function updatecartweight($cartid)
     {
-        $cart = \Cart::get($cartid);
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $cart = \Cart::session($userID)->get($cartid);
 
         // get product weight
         $product = Product::where('id', $cart->attributes->product_id)->first();
@@ -180,7 +233,7 @@ class Bag extends Component
             $cartweight = $product->weight;
         }
         
-        \Cart::update($cartid, array(
+        \Cart::session($userID)->update($cartid, array(
             'attributes' => array(
                 'size' => $cart->attributes->size,
                 'product_id' => $cart->attributes->product_id,
@@ -201,7 +254,20 @@ class Bag extends Component
 
     public function removecart($cartid)
     {
-        \Cart::remove($cartid);
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        \Cart::session($userID)->remove($cartid);
 
         $this->emit('cartcount');
     }
@@ -209,7 +275,20 @@ class Bag extends Component
     public function checkshippingavailability()
     {
 
-        $weight = \Cart::getContent()->sum('attributes.weight');
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $weight = \Cart::session($userID)->getContent()->sum('attributes.weight');
 
         if(Config::get('icrm.shipping_provider.shiprocket') == 1)
         {
@@ -228,6 +307,19 @@ class Bag extends Component
 
     private function dtdccheckavailability()
     {
+        $userID;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -283,7 +375,7 @@ class Bag extends Component
                          * Today + buffer days + max manufacturing_period
                          */
 
-                        $cartproducts = \Cart::getContent()->pluck('attributes.product_id');
+                        $cartproducts = \Cart::session($userID)->getContent()->pluck('attributes.product_id');
                         
                         if(Config::get('icrm.order_lifecycle.undermanufacturing.feature') == 1)
                         {
