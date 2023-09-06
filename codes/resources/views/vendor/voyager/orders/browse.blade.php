@@ -111,7 +111,7 @@
                                                     class="count">{{ $orders->where('order_status', 'Shipped')->count() }}</span>
                                             </div>
                                             <div class="info">
-                                                <span class="title">Shipped</span>
+                                                <span class="title">In Transist</span>
                                             </div>
                                         </div>
                                     </a>

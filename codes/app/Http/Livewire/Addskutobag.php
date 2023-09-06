@@ -466,6 +466,32 @@ class Addskutobag extends Component
         );
 
         \Cart::add($item);
+
+        // if(Auth::check()){
+        //     \App\Models\Cart::firstOrCreate(['cartrowid' => $cartrowid], [
+        //         'cartrowid' => $cartrowid,
+        //         'name' => $this->product->name,
+        //         'price' => $this->offer_price,
+        //         'quantity' => $this->qty,
+        //         'attributes' => json_encode(array(
+        //             'size' => $this->size,
+        //             'product_id' => $this->product->id,
+        //             'customized_image' => $CustomizeImageName,
+        //             'original_file' => $OriginialImageName,
+        //             'color' => $this->color,
+        //             'g_plus' => $this->max_g_need,
+        //             'cost_per_g' => $this->product->cost_per_g,
+        //             'g_plus_charges' => $gpluscharges,
+        //             'weight' => $cartweight,
+        //             'hsn' => $this->product->productsubcategory->hsn,
+        //             'gst' => $this->product->productsubcategory->gst,
+        //             'type' => $ordertype,
+        //             'requireddocument' => $requireddocument,
+
+        //         )),
+        //         'conditions' => json_encode([$maxgplus, $tax])
+        //     ]);
+        // }
         
         $this->added = true;
 
