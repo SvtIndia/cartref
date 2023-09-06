@@ -48,204 +48,174 @@
                     <div class="panel-body">
 
 
-                        <div class="dashboard">
+                        @php
+                            if (
+                                auth()
+                                    ->user()
+                                    ->hasRole(['Vendor'])
+                            ) {
+                                $orders = App\Order::where('vendor_id', auth()->user()->id)->get();
+                            } else {
+                                $orders = App\Order::get();
+                            }
+                        @endphp
 
-                            @php
-                                if (
-                                    auth()
-                                        ->user()
-                                        ->hasRole(['Vendor'])
-                                ) {
-                                    $orders = App\Order::where('vendor_id', auth()->user()->id)->get();
-                                } else {
-                                    $orders = App\Order::get();
-                                }
-                            @endphp
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=New Order">
-                                <div class="item @if (request('label') == 'New Order') new_order active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'New Order')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">New Order</span>
-                                    </div>
-
+                        <div>
+                            <h3>Order Manifestation <i class="voyager-basket"></i></h1>
+                                <div class="dashboard">
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=New Order">
+                                        <div class="item @if (request('label') == 'New Order') new_order active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'New Order')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">New Order</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Ready to Dispatch">
+                                        <div class="item @if (request('label') == 'Ready to Dispatch') ready_to_dispatch active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Ready To Dispatch')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Ready to Dispatch</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a
+                                        href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Scheduled For Pickup">
+                                        <div
+                                            class="item @if (request('label') == 'Scheduled For Pickup') scheduled_for_pickup active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Scheduled For Pickup')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Pending Pickup</span>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                        </div>
+
+                        <div>
+                            <h3>Order Haulage <i class="voyager-truck"></i></h1>
+                                <div class="dashboard">
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Shipped">
+                                        <div class="item @if (request('label') == 'Shipped') shipped active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Shipped')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Shipped</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Delivered">
+                                        <div class="item @if (request('label') == 'Delivered') delivered active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Delivered')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Delivered</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Cancelled">
+                                        <div class="item @if (request('label') == 'Cancelled') cancelled active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Cancelled')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Cancelled</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                        </div>
+
+                        <div>
+                            <h3>Returns <img width="50px" height="50px" src="{{config('app.url')}}/images/icons/product-return.svg" alt="Product Return SVG"/></h1>
+                                <div class="dashboard">
+
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=RTO">
+                                        <div class="item @if (request('label') == 'RTO') rto active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'RTO')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Return To Origin</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a
+                                        href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Request For Return">
+                                        <div class="item @if (request('label') == 'Request For Return') requestforreturn active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->whereIn('order_status', ['Requested For Return', 'Return Request Accepted', 'Return Request Rejected', 'Returned'])->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Customer Return</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Returned">
+                                        <div class="item @if (request('label') == 'Returned') returned active @endif">
+                                            <div class="stat">
+                                                <span
+                                                    class="count">{{ $orders->where('order_status', 'Returned')->count() }}</span>
+                                            </div>
+                                            <div class="info">
+                                                <span class="title">Returne Delivered</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                        </div>
 
 
+                        <div class="dashboard">
                             @if (Config::get('icrm.order_lifecycle.undermanufacturing.feature') == 1)
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Under Manufacturing">
                                     <div class="item @if (request('label') == 'Under Manufacturing') under_manufacturing active @endif">
-
                                         <div class="stat">
                                             <span
                                                 class="count">{{ $orders->where('order_status', 'Under Manufacturing')->count() }}</span>
                                         </div>
-
                                         <div class="info">
                                             <span class="title">Under Manufacturing</span>
                                         </div>
-
                                     </div>
                                 </a>
                             @endif
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Scheduled For Pickup">
-                                <div class="item @if (request('label') == 'Scheduled For Pickup') scheduled_for_pickup active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Scheduled For Pickup')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Scheduled For Pickup</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Ready to Dispatch">
-                                <div class="item @if (request('label') == 'Ready to Dispatch') ready_to_dispatch active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Ready To Dispatch')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Ready to Dispatch</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Shipped">
-                                <div class="item @if (request('label') == 'Shipped') shipped active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Shipped')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Shipped</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-
-
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Delivered">
-                                <div class="item @if (request('label') == 'Delivered') delivered active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Delivered')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Delivered</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Other">
                                 <div class="item @if (request('label') == 'Other') other active @endif">
-
                                     <div class="stat">
                                         <span class="count">{{ $orders->where('order_status', 'Other')->count() }}</span>
                                     </div>
-
                                     <div class="info">
                                         <span class="title">Others</span>
                                     </div>
-
                                 </div>
                             </a>
-
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=RTO">
-                                <div class="item @if (request('label') == 'RTO') rto active @endif">
-
-                                    <div class="stat">
-                                        <span class="count">{{ $orders->where('order_status', 'RTO')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">RTO</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Cancelled">
-                                <div class="item @if (request('label') == 'Cancelled') cancelled active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Cancelled')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Cancelled</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Request For Return">
-                                <div class="item @if (request('label') == 'Request For Return') requestforreturn active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->whereIn('order_status', ['Requested For Return', 'Return Request Accepted', 'Return Request Rejected', 'Returned'])->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Request For Return</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Returned">
-                                <div class="item @if (request('label') == 'Returned') returned active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                            class="count">{{ $orders->where('order_status', 'Returned')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Returned</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?all=true">
                                 <div class="item @if (request('all') == true) active @endif">
-
                                     <div class="stat">
                                         <span class="count">{{ $orders->count() }}</span>
                                     </div>
-
                                     <div class="info">
                                         <span class="title">All</span>
                                     </div>
-
                                 </div>
                             </a>
-
                         </div>
 
 
@@ -561,11 +531,17 @@
                                         <th style="border-right:none;">Product Information</th>
                                         <th style="border-right:none;"></th>
                                         <th></th>
-                                        @if(auth()->user()->hasRole('Client'))<th>Seller Information</th>@endif
+                                        @if (auth()->user()->hasRole('Client'))
+                                            <th>Seller Information</th>
+                                        @endif
                                         <th>Amount</th>
-                                        <th>Logistic Details</th>
+                                        @if (auth()->user()->hasRole('Client') || (request('label') != 'New Order' && auth()->user()->hasRole('Vendor')))
+                                            <th>Logistic Details</th>
+                                        @endif
                                         <th>Buyer Details</th>
-                                        @if(auth()->user()->hasRole('Client'))<th>Shipment Details</th>@endif
+                                        @if (auth()->user()->hasRole('Client'))
+                                            <th>Shipment Details</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -754,31 +730,35 @@
                                             <td style="width: 2% !important;">
                                                 Qty: {{ $data->qty }}
                                             </td>
-                                            @if(auth()->user()->hasRole('Client'))
+                                            @if (auth()->user()->hasRole('Client'))
                                                 <td style="width: 10% !important;">
                                                     @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
                                                         @if (!empty($data->vendor_id))
                                                             <div>
                                                                 <text>
-                                                                    <span style="color: black; font-weight:700">Name</span>:
+                                                                    <span
+                                                                        style="color: black; font-weight:700">Name</span>:
                                                                     {{ $data->vendor->name }}
                                                                 </text>
                                                             </div>
                                                             <div>
                                                                 <text class="text-ellipsis">
-                                                                    <span style="color: black; font-weight:700">Brand</span>:
+                                                                    <span
+                                                                        style="color: black; font-weight:700">Brand</span>:
                                                                     {{ $data->vendor->brand_name }}
                                                                 </text>
                                                             </div>
                                                             <div>
                                                                 <text class="text-ellipsis">
-                                                                    <span style="color: black; font-weight:700">Email</span>:
+                                                                    <span
+                                                                        style="color: black; font-weight:700">Email</span>:
                                                                     {{ $data->vendor->email }}
                                                                 </text>
                                                             </div>
                                                             <div>
                                                                 <text class="text-ellipsis">
-                                                                    <span style="color: black; font-weight:700">Address</span>:
+                                                                    <span
+                                                                        style="color: black; font-weight:700">Address</span>:
                                                                     {{ $data->vendor->street_address_1 }}
                                                                     {{ $data->vendor->street_address_2 ?? '' }}
                                                                     {{ $data->vendor->city ?? '' }},
@@ -801,98 +781,103 @@
                                                 <div>{{ $data->order_method }}</div>
                                             </td>
 
-                                            <td style="width: 10% !important;">
-                                                <div>
-                                                    @if ($data->order_status == 'New Order')
-                                                        <span style="color: green">Order Placed</span>
-                                                    @elseif ($data->order_status == 'Under manufacturing')
-                                                        <span style="color: orange; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
-                                                    @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
-                                                        <span style="color: green; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
-                                                    @elseif($data->order_status == 'Cancelled')
-                                                        <span style="color: red; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
-                                                    @else
-                                                        <span>{{ $data->order_status }}</span>
-                                                    @endif
-                                                </div>
-
-                                                @if (!empty($data->order_substatus))
+                                            @if (auth()->user()->hasRole('Client') || (request('label') != 'New Order' && auth()->user()->hasRole('Vendor')))
+                                                <td style="width: 10% !important;">
                                                     <div>
-                                                        {{ $data->order_substatus }}
+                                                        @if ($data->order_status == 'New Order')
+                                                            <span style="color: green">Order Placed</span>
+                                                        @elseif ($data->order_status == 'Under manufacturing')
+                                                            <span
+                                                                style="color: orange; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
+                                                        @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
+                                                            <span
+                                                                style="color: green; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
+                                                        @elseif($data->order_status == 'Cancelled')
+                                                            <span
+                                                                style="color: red; font-weight:600; font-size:15px">{{ strtoupper($data->order_status) }}</span>
+                                                        @else
+                                                            <span>{{ $data->order_status }}</span>
+                                                        @endif
                                                     </div>
-                                                @endif
 
-                                                <div>
-                                                    {{ $data->shipping_provider }}
-                                                </div>
-
-                                                @if (!empty($data->order_awb))
-                                                    <div>
-                                                        AWB:
-                                                        <a
-                                                            href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?order_awb={{ $data->order_awb }}">
-                                                            {{ $data->order_awb }}
-                                                        </a>
-                                                    </div>
-                                                @endif
-
-                                                @if (!empty($data->shipping_id))
-                                                    <div>
-                                                        Shipping ID: {{ $data->shipping_id }}
-                                                    </div>
-                                                @endif
-
-                                                @if (!empty($data->shipping_label))
-                                                    <div>
-                                                        <a href="{{ $data->shipping_label }}">
-                                                            Shipping label
-                                                        </a>
-                                                    </div>
-                                                @endif
-
-                                                @if (Config::get('icrm.site_package.multi_vendor_store') == 0)
-                                                    @if (!empty($data->tax_invoice))
+                                                    @if (!empty($data->order_substatus))
                                                         <div>
-                                                            <a href="{{ $data->tax_invoice }}">
-                                                                Tax invoice
-                                                            </a>
+                                                            {{ $data->order_substatus }}
                                                         </div>
                                                     @endif
-                                                @endif
 
-                                                @if (!empty($data->manifest_url))
                                                     <div>
-                                                        <a href="{{ $data->manifest_url }}">
-                                                            Manifest
-                                                        </a>
+                                                        {{ $data->shipping_provider }}
                                                     </div>
-                                                @endif
 
-
-                                                @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
                                                     @if (!empty($data->order_awb))
                                                         <div>
-                                                            <a href="javascript:void(0)"
-                                                                onclick="document.getElementById('downloadtaxinvoiceForm').submit()">
-                                                                Tax Invoice
-                                                            </a>
-                                                        </div>
-                                                        <div style="display: none">
-                                                            <a>
-                                                                <form action="{{ route('downloadtaxinvoice') }}"
-                                                                    method="post" id="downloadtaxinvoiceForm">
-                                                                    @csrf
-                                                                    <input type="text" hidden name="order_awb"
-                                                                        value="{{ $data->order_awb }}">
-                                                                    {{-- <button type="submit" class="btn btn-sm btn-info">Tax
-                                                                        Invoice</button> --}}
-                                                                </form>
+                                                            AWB:
+                                                            <a
+                                                                href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?order_awb={{ $data->order_awb }}">
+                                                                {{ $data->order_awb }}
                                                             </a>
                                                         </div>
                                                     @endif
-                                                @endif
 
-                                            </td>
+                                                    @if (!empty($data->shipping_id))
+                                                        <div>
+                                                            Shipping ID: {{ $data->shipping_id }}
+                                                        </div>
+                                                    @endif
+
+                                                    @if (!empty($data->shipping_label))
+                                                        <div>
+                                                            <a href="{{ $data->shipping_label }}">
+                                                                Shipping label
+                                                            </a>
+                                                        </div>
+                                                    @endif
+
+                                                    @if (Config::get('icrm.site_package.multi_vendor_store') == 0)
+                                                        @if (!empty($data->tax_invoice))
+                                                            <div>
+                                                                <a href="{{ $data->tax_invoice }}">
+                                                                    Tax invoice
+                                                                </a>
+                                                            </div>
+                                                        @endif
+                                                    @endif
+
+                                                    @if (!empty($data->manifest_url))
+                                                        <div>
+                                                            <a href="{{ $data->manifest_url }}">
+                                                                Manifest
+                                                            </a>
+                                                        </div>
+                                                    @endif
+
+
+                                                    @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
+                                                        @if (!empty($data->order_awb))
+                                                            <div>
+                                                                <a href="javascript:void(0)"
+                                                                    onclick="document.getElementById('downloadtaxinvoiceForm').submit()">
+                                                                    Tax Invoice
+                                                                </a>
+                                                            </div>
+                                                            <div style="display: none">
+                                                                <a>
+                                                                    <form action="{{ route('downloadtaxinvoice') }}"
+                                                                        method="post" id="downloadtaxinvoiceForm">
+                                                                        @csrf
+                                                                        <input type="text" hidden name="order_awb"
+                                                                            value="{{ $data->order_awb }}">
+                                                                        {{-- <button type="submit" class="btn btn-sm btn-info">Tax
+                                                                            Invoice</button> --}}
+                                                                    </form>
+                                                                </a>
+                                                            </div>
+                                                        @endif
+                                                    @endif
+
+                                                </td>
+                                            @endif
 
                                             <td style="width: 10% !important;">
                                                 <div>
@@ -915,16 +900,18 @@
                                                 </div>
                                             </td>
 
-                                            @if(auth()->user()->hasRole('Client'))
+                                            @if (auth()->user()->hasRole('Client'))
                                                 <td style="width: 15% !important;">
                                                     <div>
-                                                        <strong style="color:black; font-weight: 700;">Expected Delivery Date:
+                                                        <strong style="color:black; font-weight: 700;">Expected Delivery
+                                                            Date:
                                                         </strong>
                                                         <text
                                                             class="text-success">{{ $data->exp_delivery_date ? date('M d, Y', strtotime($data->exp_delivery_date)) : '-' }}</text>
                                                     </div>
                                                     <div>
-                                                        <strong style="color:black; font-weight: 700;">Pickup Scheduled Date:
+                                                        <strong style="color:black; font-weight: 700;">Pickup Scheduled
+                                                            Date:
                                                         </strong>
                                                         <text
                                                             class="text-primary">{{ $data->pickup_scheduled_date ? date('M d, Y', strtotime($data->pickup_scheduled_date)) : '-' }}</text>
@@ -994,7 +981,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .sliding-btn-div{
+
+        .sliding-btn-div {
             position: fixed;
             bottom: 11px;
             right: 15px;
@@ -1003,7 +991,8 @@
             padding: 0px 6px;
             border-radius: 6px;
         }
-        .sliding-btn-div .page-link{
+
+        .sliding-btn-div .page-link {
             color: black;
             font-weight: 400;
         }

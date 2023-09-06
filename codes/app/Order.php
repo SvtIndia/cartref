@@ -21,7 +21,7 @@ class Order extends Model
     {
         return $this->belongsTo(Orderlifecycle::class, 'id', 'order_id');
     }
-    
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
@@ -36,7 +36,7 @@ class Order extends Model
     {
         return $this->belongsTo(ProductSubcategory::class, 'product_subcategory_id', 'id');
     }
-    
+
 
     public function productcolor()
     {
@@ -54,7 +54,7 @@ class Order extends Model
             }else{
                 $query->where('order_status', request('label'));
             }
-            
+
         }
 
         if(request('order_id'))
@@ -67,12 +67,12 @@ class Order extends Model
             $query->where('order_awb', request('order_awb'));
         }
 
-        
+
 
         /**
          * Update order status according to dtdc tracking API
         */
-        
+
 
         // if admin show all data else show only individual data
         if(auth()->user()->hasRole(['admin']))
@@ -92,12 +92,15 @@ class Order extends Model
             {
                 $this->shiprockettrackorder();
             }
-            
+
             if(Config::get('icrm.shipping_provider.dtdc') == 1)
             {
                 $this->dtdctrackorder();
             }
         }
+
+        // $query->leftJoin('showcases', 'orders.order_id', '=', 'showcases.order_id')
+        //     ->whereNull('showcases.id');
 
         return $query->orderBy('updated_at', 'desc');
     }
@@ -126,19 +129,19 @@ class Order extends Model
                 ]);
             }
 
-            
+
             if(isset(json_decode($response)->tracking_data->shipment_track))
             {
 
                 $currentstatus = strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
 
                 if(
-                    $currentstatus == 'OUT FOR PICKUP' 
+                    $currentstatus == 'OUT FOR PICKUP'
                     OR $currentstatus == 'AWB ASSIGNED'
                     OR $currentstatus == 'LABEL GENERATED'
-                    OR $currentstatus == 'PICKUP SCHEDULED' 
-                    OR $currentstatus == 'PICKUP GENERATED' 
-                    OR $currentstatus == 'PICKUP QUEUED' 
+                    OR $currentstatus == 'PICKUP SCHEDULED'
+                    OR $currentstatus == 'PICKUP GENERATED'
+                    OR $currentstatus == 'PICKUP QUEUED'
                     OR $currentstatus == 'MANIFEST GENERATED'
                     )
                 {
@@ -147,11 +150,11 @@ class Order extends Model
                         'order_substatus' => '',
                     ]);
                 }
-    
+
                 if(
-                    $currentstatus == 'SHIPPED' 
-                    OR $currentstatus == 'IN TRANSIT' 
-                    OR $currentstatus == 'OUT FOR DELIVERY' 
+                    $currentstatus == 'SHIPPED'
+                    OR $currentstatus == 'IN TRANSIT'
+                    OR $currentstatus == 'OUT FOR DELIVERY'
                     OR $currentstatus == 'PICKED UP'
                     )
                 {
@@ -160,7 +163,7 @@ class Order extends Model
                         'order_substatus' => '',
                     ]);
                 }
-    
+
                 if($currentstatus == 'CANCELLED')
                 {
                     $order->update([
@@ -168,7 +171,7 @@ class Order extends Model
                         // 'order_substatus' => '',
                     ]);
                 }
-    
+
                 if($currentstatus == 'DELIVERED')
                 {
                     $order->update([
@@ -176,8 +179,8 @@ class Order extends Model
                         'order_substatus' => '',
                     ]);
                 }
-    
-    
+
+
                 if($currentstatus == 'RTO INITIATED')
                 {
                     $order->update([
@@ -185,8 +188,8 @@ class Order extends Model
                         'order_substatus' => '',
                     ]);
                 }
-    
-    
+
+
                 if($currentstatus == 'RTO DELIVERED')
                 {
                     $order->update([
@@ -194,9 +197,9 @@ class Order extends Model
                         'order_substatus' => '',
                     ]);
                 }
-    
-    
-    
+
+
+
                 if(
                     $currentstatus != 'OUT FOR PICKUP'
                     AND $currentstatus != 'AWB ASSIGNED'
@@ -208,7 +211,7 @@ class Order extends Model
                     AND $currentstatus != 'SHIPPED'
                     AND $currentstatus != 'IN TRANSIT'
                     AND $currentstatus != 'OUT FOR DELIVERY'
-                    AND $currentstatus != 'PICKED UP'    
+                    AND $currentstatus != 'PICKED UP'
                     AND $currentstatus != 'CANCELLED'
                     AND $currentstatus != 'DELIVERED'
                     AND $currentstatus != 'RTO INITIATED'
@@ -222,7 +225,7 @@ class Order extends Model
 
             }
 
-            
+
         }
 
     }
@@ -231,9 +234,9 @@ class Order extends Model
     private function dtdctrackorder()
     {
         $orders = Order::whereNotIn('order_status', ['New Order', 'Under Manufacturing', 'Scheduled For Pickup', 'Delivered', 'Cancelled'])
-                        ->where('shipping_provider', 'DTDC')                
+                        ->where('shipping_provider', 'DTDC')
                         ->get();
-        
+
         foreach($orders as $order)
         {
             $curl = curl_init();
@@ -246,7 +249,7 @@ class Order extends Model
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => 
+            CURLOPT_POSTFIELDS =>
             "
                 {
                     \n\t\"TrkType\":\t\"cnno\",
@@ -294,7 +297,7 @@ class Order extends Model
                             'order_substatus' => ''
                         ]);
                     }
-                                       
+
                     if(json_decode($collection)->trackHeader->strStatus == 'Booked' OR json_decode($collection)->trackHeader->strStatus == 'In Transit' OR json_decode($collection)->trackHeader->strStatus == 'Softdata Upload')
                     {
                         $order->update([
@@ -336,13 +339,13 @@ class Order extends Model
                     }
 
                     if(
-                        json_decode($collection)->trackHeader->strStatus != 'RTO' AND 
+                        json_decode($collection)->trackHeader->strStatus != 'RTO' AND
                         json_decode($collection)->trackHeader->strStatus != 'Delivered' AND
                         json_decode($collection)->trackHeader->strStatus != 'DELIVERED' AND
                         json_decode($collection)->trackHeader->strStatus != 'Shipped' AND
                         json_decode($collection)->trackHeader->strStatus != 'SHIPPED' AND
                         json_decode($collection)->trackHeader->strStatus != 'Cancelled' AND
-                        json_decode($collection)->trackHeader->strStatus != 'CANCELLED' 
+                        json_decode($collection)->trackHeader->strStatus != 'CANCELLED'
                         AND json_decode($collection)->trackHeader->strStatus != 'In Transit'
                         AND json_decode($collection)->trackHeader->strStatus != 'Softdata Upload'
                         AND json_decode($collection)->trackHeader->strStatus != 'Not Picked'
@@ -362,5 +365,5 @@ class Order extends Model
             }
         }
     }
-    
+
 }
