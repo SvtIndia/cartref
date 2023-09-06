@@ -14,7 +14,7 @@ class CreateCartsTable extends Migration
     public function up()
     {
         Schema::create('carts', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->index();
             $table->bigInteger('cartrowid')->nullable()->default(0);
             $table->bigInteger('user_id')->nullable()->default(0);
             $table->string('name')->nullable();
@@ -24,6 +24,7 @@ class CreateCartsTable extends Migration
             $table->string('conditions')->nullable();
             $table->longText('wishlist_data')->nullable();
             $table->timestamps();
+            $table->primary('id');
             $table->softDeletes();
         });
     }
