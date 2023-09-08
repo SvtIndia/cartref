@@ -21,7 +21,7 @@ class Cart extends Model
         'wishlist_data'
     ];
 
-    
+
     /**
      * Mutator for wishlist_column
      * @param $value
@@ -42,4 +42,18 @@ class Cart extends Model
         return unserialize($value);
     }
 
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function scopeUserId($query)
+    {
+        return $query->has('user');
+    }
 }
