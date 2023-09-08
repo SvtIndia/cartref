@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,5 +56,15 @@ class Cart extends Model
     public function scopeUserId($query)
     {
         return $query->has('user');
+    }
+
+    public function getOrdersAttribute(){
+        if($this->user_id > 0){
+            $user = $this->user;
+            return $orders = Order::with('product')->where('user_id', $this->user_id)->get();
+        }
+        else{
+            return [];
+        }
     }
 }
