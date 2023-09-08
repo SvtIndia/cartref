@@ -23,14 +23,14 @@ class Bag extends Component
         $this->pickuppincode = setting('seller-name.pincode');
         $this->deliverypincode = Session::get('deliverypincode');
 
-        
+
     }
 
 
     public function render()
     {
         // \Cart::session($userID)->clear();
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -66,7 +66,7 @@ class Bag extends Component
             Session::remove('deliveryavailable');
             Session::remove('deliverynotavailable');
         }
-        
+
         return view('livewire.bag.bag')->with([
             'carts' => $carts,
             'subtotal' => $subtotal,
@@ -76,7 +76,7 @@ class Bag extends Component
 
     public function plusqty($cartid)
     {
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -108,13 +108,13 @@ class Bag extends Component
                     ->first()->available_stock;
             }
 
-            
+
             if($cart->quantity == $availablestock)
             {
                 Session::flash($cartid.'qtynotavailable', 'Only '.$availablestock.' item left');
                 return;
             }
-            
+
         }
 
 
@@ -137,7 +137,7 @@ class Bag extends Component
 
             )
         ));
-        
+
         $this->updatecartweight($cartid);
 
         $this->emit('cartcount');
@@ -146,7 +146,7 @@ class Bag extends Component
 
     public function minusqty($cartid)
     {
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -188,7 +188,7 @@ class Bag extends Component
 
     private function updatecartweight($cartid)
     {
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -228,11 +228,11 @@ class Bag extends Component
                 $cartweight = $skuweight->weight;
             }
 
-            
+
         }else{
             $cartweight = $product->weight;
         }
-        
+
         \Cart::session($userID)->update($cartid, array(
             'attributes' => array(
                 'size' => $cart->attributes->size,
@@ -254,7 +254,7 @@ class Bag extends Component
 
     public function removecart($cartid)
     {
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -275,7 +275,7 @@ class Bag extends Component
     public function checkshippingavailability()
     {
 
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -301,13 +301,13 @@ class Bag extends Component
             $this->dtdccheckavailability();
         }
 
-        
-        
+
+
     }
 
     private function dtdccheckavailability()
     {
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -360,7 +360,7 @@ class Bag extends Component
 
                 if($collection['status'] == true)
                 {
-                    
+
                     $servicelist = $collection['data'];
                     // dd($servicelist);
                     $acceptableservices = ['B2C SMART EXPRESS'];
@@ -376,7 +376,7 @@ class Bag extends Component
                          */
 
                         $cartproducts = \Cart::session($userID)->getContent()->pluck('attributes.product_id');
-                        
+
                         if(Config::get('icrm.order_lifecycle.undermanufacturing.feature') == 1)
                         {
                             // get maximum day of the manufacturing period
@@ -386,8 +386,8 @@ class Bag extends Component
                         }else{
                             $bufferdays = Config::get('icrm.shipping_provider.buffer_days') + 1;
                         }
-                        
-                        
+
+
                         $etd = date('j F, Y', strtotime("+$bufferdays days"));
                         Session::flash('deliveryavailable', 'Expected delivery by '.$etd);
                         Session::put('deliverypincode', $this->deliverypincode);
@@ -400,7 +400,7 @@ class Bag extends Component
                         return;
                     }
 
-                      
+
                 }else{
                     // not available
                     // dd($collection['status']);
@@ -442,28 +442,28 @@ class Bag extends Component
         $token =  Shiprocket::getToken();
         $response =  Shiprocket::courier($token)->checkServiceability($pincodeDetails);
 
-            
+
 
         if($response['status'] == 200)
         {
-            
+
             /**
              * Usefull fields:
              * courier_name - Ekart
              * rate - 76.0
              * cod - 1/0
              * etd - Apr 27, 2022
-            */ 
+            */
 
             if(Config::get('icrm.shipping_provider.shiprocket_recommendation') == 1)
             {
                 if(isset($response['data']['available_courier_companies'][0]))
                 {
                     $etd = $response['data']['available_courier_companies'][0]['etd'];
-                    $cod = $response['data']['available_courier_companies'][0]['cod'];            
+                    $cod = $response['data']['available_courier_companies'][0]['cod'];
                 }
             }else{
-                
+
                 $availablecouriercompanies = collect(json_decode($response)->data->available_courier_companies);
                 $availablecouriercompaniess = $availablecouriercompanies->sortBy('rate');
 
@@ -476,7 +476,7 @@ class Bag extends Component
             }
 
             $this->deliveryavailability = true;
-            
+
             if(Config::get('icrm.order_methods.cod') == 1)
             {
                 if($cod == 1)

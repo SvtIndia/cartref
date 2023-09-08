@@ -5,7 +5,7 @@
             <div class="container mt-7 mb-2">
                 <div class="row">
                     <div class="col-lg-8 col-md-12 pr-lg-4">
-                        
+
                         @if (count($carts) > 0)
                             <table class="shop-table cart-table">
                                 <thead>
@@ -24,8 +24,8 @@
                                         {{-- Get cart product information --}}
                                         @php
                                             $product = App\Models\Product::where('id', $cart->attributes->product_id)->first();
-                                            
-                                            $userID;
+
+                                            $userID = 0;
                                             if(\Illuminate\Support\Facades\Auth::check()){
                                                 $userID = auth()->user()->id;
                                             }
@@ -82,13 +82,13 @@
                                                     <br><span>Brand: {{ $product->brand_id }}</span>
 
                                                     @if ($cart->attributes->color != 'NA')
-                                                        <br><span>Color: {{ $cart->attributes->color }}</span>    
+                                                        <br><span>Color: {{ $cart->attributes->color }}</span>
                                                     @endif
-                                                    
+
                                                     @if ($cart->attributes->size != 'NA')
-                                                        <br><span>Size: {{ $cart->attributes->size }}</span> 
+                                                        <br><span>Size: {{ $cart->attributes->size }}</span>
                                                     @endif
-                                                    
+
                                                     @if ($cart->attributes->g_plus)
                                                         <br><span>Required G+: {{ $cart->attributes->g_plus }}</span>
                                                     @endif
@@ -96,7 +96,7 @@
                                                     @if ($cart->attributes->cost_per_g)
                                                         <br><span>Additional cost per G+: {{ Config::get('icrm.currency.icon') }} {{ $cart->attributes->cost_per_g }}/-</span>
                                                     @endif
-                                                    
+
                                                     @if ($cart->attributes->requireddocument)
                                                         <br><span>Custom requirement: <a href="{{ asset($cart->attributes->requireddocument) }}" style="color: blue">Download</a> </span>
                                                     @endif
@@ -106,22 +106,22 @@
                                                     @endif
 
                                                     @if ($cart->attributes->original_file)
-                                                        <br><span>Original file: 
+                                                        <br><span>Original file:
                                                         @foreach ($cart->attributes->original_file as $key => $originalfile)
                                                             <a href="{{ $originalfile }}" target="_blank" style="color: blue">Attachment {{ $key+1 }} @if($loop->last) @else , @endif</a>
                                                         @endforeach
                                                         </span>
                                                     @endif
-                                                    
+
                                                     <br><span>Order type: {{ $cart->attributes->type }}</span>
                                                     @isset($product->manufacturing_period)
                                                         @if ($product->manufacturing_period > 0)
-                                                            <br><span>Manufacturing Period: {{ $product->manufacturing_period }} days</span>        
+                                                            <br><span>Manufacturing Period: {{ $product->manufacturing_period }} days</span>
                                                         @endif
                                                     @endif
-                                                    
+
                                                     <br><span>Hsn: {{ $product->productsubcategory->hsn }}</span>
-                                                    
+
                                                 </div>
                                             </td>
                                             <td class="product-subtotal">
@@ -148,9 +148,9 @@
                                             <td class="product-price">
                                                 <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $cart->getPriceSumWithConditions() }}</span>
                                                 @if (Config::get('icrm.tax.type') == 'subcategory')
-                                                    <br><small class="includingtax">Including {{ $product->productsubcategory->gst }}% {{ Config::get('icrm.tax.name') }}</small>    
+                                                    <br><small class="includingtax">Including {{ $product->productsubcategory->gst }}% {{ Config::get('icrm.tax.name') }}</small>
                                                 @endif
-                                                
+
                                             </td>
                                             <td class="product-close">
                                                 <a wire:click="removecart({{ $cart->id }})" class="product-remove" title="Remove this product">
@@ -187,8 +187,8 @@
                                 </div>
                             </div>
                         @endif
-                            
-                        
+
+
                     </div>
                     <aside class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
@@ -203,7 +203,7 @@
                                             <p class="summary-subtotal-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($subtotal, 2) }}</p>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr class="sumnary-shipping shipping-row-last">
                                         <td colspan="2">
                                             <h4 class="summary-subtitle">Check Shipping Serviceability</h4>
@@ -212,17 +212,17 @@
                                 </table>
                                 <div class="shipping-address">
                                     <form wire:submit.prevent="checkshippingavailability">
-                                        <input type="text" 
-                                            class="form-control @if(Session::has('deliveryavailable')) available @endif @if(Session::has('deliverynotavailable') ) notavailable @endif" 
-                                            wire:model.defer="deliverypincode" 
+                                        <input type="text"
+                                            class="form-control @if(Session::has('deliveryavailable')) available @endif @if(Session::has('deliverynotavailable') ) notavailable @endif"
+                                            wire:model.defer="deliverypincode"
                                             placeholder="Delivery Pincode" />
 
                                         @if (Session::has('deliveryavailable') == true)
-                                            <small class="available">{{ Session::get('deliveryavailable') }}</small> <br> 
+                                            <small class="available">{{ Session::get('deliveryavailable') }}</small> <br>
                                         @elseif(Session::has('deliverynotavailable') == true)
                                             <small class="notavailable">{{ Session::get('deliverynotavailable') }}</small> <br>
                                         @endif
-                                        
+
                                         <button type="submit" class="btn btn-md btn-dark btn-rounded btn-outline">Check</button>
                                     </form>
                                 </div>
@@ -244,11 +244,11 @@
                                     <small class="outofstock">Before processing please check shipping serviceability</small>
                                 @endif
 
-                                
-                                
 
-                                
-                    
+
+
+
+
 
                             </div>
                         </div>
@@ -256,7 +256,7 @@
                 </div>
             </div>
         </div>
-    
+
     </main>
 </div>
 

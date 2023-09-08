@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 class Addskutobag extends Component
 {
     use WithFileUploads;
-    
+
     public $product;
     public $size;
     public $color;
@@ -42,7 +42,7 @@ class Addskutobag extends Component
     {
 
         Session::remove('qtynotavailable');
-        
+
         $this->product = $product;
 
         $this->offer_price = $product->offer_price;
@@ -62,7 +62,7 @@ class Addskutobag extends Component
                 {
 
                     $firstcolor = Productcolor::where('status', 1)->where('product_id', $this->product->id)->first();
-                    
+
                     if(isset($firstcolor))
                     {
                         if(!empty($firstcolor->color))
@@ -70,7 +70,7 @@ class Addskutobag extends Component
                             $this->color = $firstcolor->color;
                         }
                     }
-                    
+
                 }
             }
         }
@@ -87,7 +87,7 @@ class Addskutobag extends Component
             $this->emit('getcolorimages', $color);
             // $this->emit('showcolorimage', $color);
         }
-        
+
     }
 
     public function selectsize($size)
@@ -113,7 +113,7 @@ class Addskutobag extends Component
         }else{
             $this->size = $size;
         }
-        
+
     }
 
     public function updatedRequireddocument()
@@ -146,7 +146,7 @@ class Addskutobag extends Component
         }else{
             $this->qty++;
         }
-        
+
     }
 
     public function minusqty()
@@ -154,10 +154,10 @@ class Addskutobag extends Component
         $this->qty--;
     }
 
-   
+
     public function render()
-    {   
-        
+    {
+
         if($this->qty < 1)
         {
             $this->qty = 1;
@@ -175,7 +175,7 @@ class Addskutobag extends Component
                         $this->availablestock = $this->product->productskus->where('size', $this->size)->where('color', $this->color)->first()->available_stock;
                     }
                 }
-                
+
             }else{
                 if(!empty($this->size))
                 {
@@ -195,8 +195,8 @@ class Addskutobag extends Component
                 $this->availablestock = $this->product->productskus->first()->available_stock;
             }
         }
-        
-        
+
+
 
         if(!empty($this->size))
         {
@@ -217,7 +217,7 @@ class Addskutobag extends Component
         }
 
         $this->validateskufields();
-        
+
 
         return view('livewire.addskutobag');
     }
@@ -227,7 +227,7 @@ class Addskutobag extends Component
     {
         $this->validateskufields();
 
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -254,7 +254,7 @@ class Addskutobag extends Component
         ->where('attributes.customized_image', null)
         ->first();
 
-        
+
 
         // if product exists in the cart then fetch cart row id
         if(!empty($validatecartrowid))
@@ -289,16 +289,16 @@ class Addskutobag extends Component
                         $cartweight = $skuweight->weight * ($validatecartrowid->quantity + 1);
                     }
 
-                    
+
                 }else{
                     $cartweight = $this->product->weight * ($validatecartrowid->quantity + 1);
                 }
-                
-            }            
+
+            }
 
 
         }else{
-            
+
             // Generate random row id
             $cartrowid = mt_rand(1000000000, 9999999999);
 
@@ -323,7 +323,7 @@ class Addskutobag extends Component
             }else{
                 $alreadyincart = 0;
             }
-            
+
             // dd($this->availablestock);
             if($alreadyincart + $this->qty > $this->availablestock)
             {
@@ -338,8 +338,8 @@ class Addskutobag extends Component
         // if the product is customized
         if(isset($this->customized_image))
         {
-            $CustomizeImageName = 'Customized - '.time().'.'.$this->customized_image->extension();  
-        
+            $CustomizeImageName = 'Customized - '.time().'.'.$this->customized_image->extension();
+
             $this->customized_image->move(public_path('images/customized/'), $CustomizeImageName);
 
         }else{
@@ -349,8 +349,8 @@ class Addskutobag extends Component
 
         if(isset($this->original_file))
         {
-            $OriginialImageName = 'Originial - '.time().'.'.$this->original_file->extension();  
-        
+            $OriginialImageName = 'Originial - '.time().'.'.$this->original_file->extension();
+
             $this->original_file->move(public_path('images/customized/'), $OriginialImageName);
         }else{
             $OriginialImageName = '';
@@ -358,9 +358,9 @@ class Addskutobag extends Component
 
         if(!empty($this->max_g_need))
         {
-            // calculate max g plus value 
+            // calculate max g plus value
             $gpluscharges = $this->max_g_need * $this->product->cost_per_g;
-            
+
             $maxgplus = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'maxgplus',
                 'type' => 'maxgplus',
@@ -404,13 +404,13 @@ class Addskutobag extends Component
                     $cartweight = $skuweight->weight;
                 }
 
-                
+
             }else{
                 $cartweight = $this->product->weight;
             }
         }
 
-        
+
         if(Config::get('icrm.tax.type') == 'subcategory')
         {
             /**
@@ -477,7 +477,7 @@ class Addskutobag extends Component
             'conditions' => [$maxgplus, $tax]
         );
 
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -517,11 +517,11 @@ class Addskutobag extends Component
         //         'conditions' => json_encode([$maxgplus, $tax])
         //     ]);
         // }
-        
+
         $this->added = true;
 
         Session::remove('quickviewid');
-        
+
         Session::flash('success', 'Product successfully added to cart');
 
         return redirect()->route('bag');
@@ -529,7 +529,7 @@ class Addskutobag extends Component
     }
 
 
-        
+
 
     private function validateskufields()
     {
@@ -543,7 +543,7 @@ class Addskutobag extends Component
         }else{
             $this->color = 'NA';
         }
-        
+
         if(count($this->product->productskus->where('size', '!=', 'NA')) > 0)
         {
             if(empty($this->size))
@@ -554,7 +554,7 @@ class Addskutobag extends Component
         }else{
             $this->size = 'NA';
         }
-        
+
 
         if($this->qty < 1)
         {
@@ -578,7 +578,7 @@ class Addskutobag extends Component
         if(isset($this->product->requirement_document))
         {
             if(count(json_decode($this->product->requirement_document)) > 0)
-            {           
+            {
                 if(empty($this->requireddocument))
                 {
                     return $this->disablebtn = true;
@@ -587,9 +587,9 @@ class Addskutobag extends Component
                 }
             }
         }
-        
 
-        
+
+
         $this->disablebtn = false;
 
         if($this->disablebtn == true)
@@ -611,7 +611,7 @@ class Addskutobag extends Component
     public function addtoshowcaseathome()
     {
         $this->validateskufields();
-        
+
         if(!Auth::check())
         {
             if(!session()->has('url.intended'))
@@ -619,7 +619,7 @@ class Addskutobag extends Component
             {
                 session(['url.intended' => url()->previous()]);
             }
-        
+
             return redirect()->route('login');
         }
 
@@ -638,7 +638,7 @@ class Addskutobag extends Component
             if(empty($notsamevendor))
             {
                 $msg = 'At a time you can request showcase at home only from one vendor. <a href="'.url('/products/vendor/'.$this->product->seller_id).'" style="text-decoration: underline; color: black; font-weight: 600;"> Click here </a> to browse products from '.ucwords($this->product->vendor->brand_name).' vendor';
-                
+
                 // dd('a');
                 Session::flash('warning', $msg);
                 return redirect()->route('product.slug', ['slug' => $this->product->slug]);
@@ -649,15 +649,15 @@ class Addskutobag extends Component
         /**
          * Validate how many active showcases one customer can have
          */
-        
+
         $activeshowcases = Showcase::where('user_id', auth()->user()->id)->where('order_status', 'New Order')->select('order_id')->groupBy('order_id')->count();
-        
+
         if($activeshowcases == Config::get('icrm.showcase_at_home.active_orders'))
         {
             Session::flash('warning', 'At a time you can place only '.Config::get('icrm.showcase_at_home.active_orders').' active showcase at home orders.');
             return redirect()->route('product.slug', ['slug' => $this->product->slug]);
         }
-        
+
         /**
          * Check if the allowed showcase at home products count exceeds
          */
@@ -681,7 +681,7 @@ class Addskutobag extends Component
          * Get the color image of the selected product
          */
         $colorimage = Productcolor::where('product_id', $this->product->id)->where('color', $this->color)->first();
-        
+
 
         if(empty($colorimage))
         {
@@ -718,17 +718,17 @@ class Addskutobag extends Component
         $this->added = true;
 
         Session::remove('quickviewid');
-        
+
         Session::flash('success', 'Product successfully added to showcase at home');
 
         if(Session::get('showcasecity') == null)
         {
-            return redirect()->route('showcase.getstarted'); 
+            return redirect()->route('showcase.getstarted');
         }
 
 
         return redirect()->route('showcase.bag');
-        
+
     }
 
 
@@ -744,7 +744,7 @@ class Addskutobag extends Component
 
         if(Config::get('icrm.stock_management.feature') == 1)
         {
-            $userID;
+            $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -768,7 +768,7 @@ class Addskutobag extends Component
             }else{
                 $alreadyincart = 0;
             }
-            
+
             // dd($this->availablestock);
             if($alreadyincart + $this->qty > $this->availablestock)
             {
@@ -781,7 +781,7 @@ class Addskutobag extends Component
 
         $customize = app('customize');
         $customizecontent = app('customize')->getContent();
-        
+
         /**
          * Generate random row id
          * If the product is already in the cart then fetch that product cart row id and assign
@@ -795,7 +795,7 @@ class Addskutobag extends Component
         ->where('attributes.g_plus', $this->max_g_need)
         ->first();
 
-        
+
 
         // if product exists in the cart then fetch cart row id
         if(!empty($validatecartrowid))
@@ -810,15 +810,15 @@ class Addskutobag extends Component
                 $cartweight = $this->product->weight * ($validatecartrowid->quantity + 1);
             }
         }else{
-            
+
             // Generate random row id
             $cartrowid = mt_rand(1000000000, 9999999999);
         }
 
-        
+
         if(!empty($this->max_g_need))
         {
-            // calculate max g plus value 
+            // calculate max g plus value
             $gpluscharges = $this->max_g_need * $this->product->cost_per_g;
             $maxgplus = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'maxgplus',
@@ -842,7 +842,7 @@ class Addskutobag extends Component
             $cartweight = $this->product->weight;
         }
 
-        
+
         if(Config::get('icrm.tax.type') == 'subcategory')
         {
             /**
@@ -878,7 +878,7 @@ class Addskutobag extends Component
 
 
         // add to customize cart with conditions
-        $customize->add([ 
+        $customize->add([
             'id' => $cartrowid,
             'name' => $this->product->name,
             'price' => $this->product->offer_price,
@@ -903,7 +903,7 @@ class Addskutobag extends Component
 
 
         Session::remove('quickviewid');
-        
+
         return redirect()->route('customize', ['customizeid' => $cartrowid]);
     }
 

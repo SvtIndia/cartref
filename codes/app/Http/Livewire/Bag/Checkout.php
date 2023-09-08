@@ -58,7 +58,7 @@ class Checkout extends Component
     public $disablebtn = true;
 
     public $pickuppincode;
-    
+
     protected $rules = [
         'name' => 'required',
         'phone' => 'required|integer|digits:10',
@@ -83,11 +83,24 @@ class Checkout extends Component
         /**
          * Debug with conditions
          */
-        // \Cart::removeCartCondition('coupon');
-        \Cart::removeCartCondition('tax');
-        \Cart::removeCartCondition('shipping');
+        // \Cart::session($userID)->removeCartCondition('coupon');
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        \Cart::session($userID)->removeCartCondition('tax');
+        \Cart::session($userID)->removeCartCondition('shipping');
 
-        
+
         /**
          * If delivery pincode is not set then redirect to bag
          */
@@ -125,15 +138,28 @@ class Checkout extends Component
 
     }
 
-   
+
 
     public function render()
     {
-        
 
-        $carts = \Cart::getContent()->where('attributes.type', '!=', 'Showcase At Home');
-        $subtotal = \Cart::getSubtotal();
-        $total = \Cart::getTotal();
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
+        $carts = \Cart::session($userID)->getContent()->where('attributes.type', '!=', 'Showcase At Home');
+        $subtotal = \Cart::session($userID)->getSubtotal();
+        $total = \Cart::session($userID)->getTotal();
 
         if(!empty(Session::get('appliedcouponcode')))
         {
@@ -143,14 +169,14 @@ class Checkout extends Component
         }
 
         // calculate discount coupon
-        $couponCondition = \Cart::getCondition('coupon');
+        $couponCondition = \Cart::session($userID)->getCondition('coupon');
         if(!empty($couponCondition))
         {
             $this->discount = $couponCondition->getCalculatedValue($subtotal);
         }else{
             $this->discount = 0;
         }
-        
+
 
         // calculate shipping charges
         if(count($carts) > 0)
@@ -159,7 +185,7 @@ class Checkout extends Component
             $this->calcshippingcharges();
         }
 
-        $shippingCondition = \Cart::getCondition('shipping');
+        $shippingCondition = \Cart::session($userID)->getCondition('shipping');
 
         if(!empty($shippingCondition))
         {
@@ -169,11 +195,11 @@ class Checkout extends Component
             }else{
                 $this->shipping = number_format($shippingCondition->getCalculatedValue($subtotal), 0);
             }
-            
+
         }else{
             $this->shipping = 0;
         }
-        
+
 
         if(Config::get('icrm.tax.type') == 'fixed')
         {
@@ -187,22 +213,22 @@ class Checkout extends Component
             $this->calculatesubcategorytax();
         }
 
-        $taxCondition = \Cart::getCondition('tax');
+        $taxCondition = \Cart::session($userID)->getCondition('tax');
         if(!empty($taxCondition))
         {
             $this->tax = $taxCondition->getCalculatedValue($subtotal + $this->shipping - $this->discount);
         }else{
             $this->tax = 0;
         }
-        
+
         $this->ordervalue = $subtotal;
         $this->fsubtotal = $subtotal + $this->shipping - $this->discount;
         $this->ftotal = $total - $this->discount + $this->tax + $this->shipping;
-        $this->bagcount = \Cart::getTotalQuantity();
+        $this->bagcount = \Cart::session($userID)->getTotalQuantity();
 
          // if the fields are blank in mount then fetch from session fields
         $this->sessionfields();
-        
+
         // if session field is not present then fetch auth fields
         $this->authfields();
 
@@ -222,19 +248,19 @@ class Checkout extends Component
             {
                 // valid
                 $this->disablebtn = false;
-    
+
             }else{
                 // invalid
                 $this->disablebtn = true;
             }
         }
-        
+
 
         if(Session::get('acceptterms') != true){
-            // 
+            //
             $this->disablebtn = true;
         }
-        
+
         Session::get('deliveryavailable');
 
         return view('livewire.bag.checkout')->with([
@@ -257,7 +283,7 @@ class Checkout extends Component
         {
             $this->phone = Session::get('phone');
         }
-        
+
         if(empty($this->companyname))
         {
             $this->companyname = Session::get('companyname');
@@ -362,8 +388,21 @@ class Checkout extends Component
     // runs after render
     public function dehydrate()
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
-        if(count(\Cart::getContent()) <= 0)
+        if(count(\Cart::session($userID)->getContent()) <= 0)
         {
             Session::flash('danger', 'Your Bag is empty');
             return redirect()->route('bag');
@@ -378,7 +417,7 @@ class Checkout extends Component
             Session::flash('danger', 'Your account has been disabled. Please contact us to reactivate.');
             return redirect()->route('bag');
         }
-        
+
     }
 
     public function updated($propertyName)
@@ -442,7 +481,20 @@ class Checkout extends Component
 
     private function checkshippingavailability()
     {
-        $weight = \Cart::getContent()->sum('attributes.weight');
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $weight = \Cart::session($userID)->getContent()->sum('attributes.weight');
         // dd($weight);
 
         if (Config::get('icrm.shipping_provider.shiprocket') == 1) {
@@ -480,6 +532,20 @@ class Checkout extends Component
 
         curl_close($curl);
 
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
         if ($err) {
             // not available
             $this->deliveryavailability = false;
@@ -509,9 +575,9 @@ class Checkout extends Component
                          * Calulate expected delivery date
                          * Today + buffer days
                          */
-                        
+
                         // get maximum day of the manufacturing period
-                        foreach(\Cart::getContent() as $cart)
+                        foreach(\Cart::session($userID)->getContent() as $cart)
                         {
                             $mpproduct = Product::where('id', $cart->attributes->product_id)->orderBy('manufacturing_period', 'DESC')->first();
                         }
@@ -522,14 +588,14 @@ class Checkout extends Component
                         }else{
                             $bufferdays = Config::get('icrm.shipping_provider.buffer_days') + 1;
                         }
-                        
-                        
+
+
 
                         $this->etd = date('j F, Y', strtotime("+$bufferdays days"));
                         Session::flash('deliveryavailable', 'Expected delivery by '.$this->etd);
                         Session::put('etd', $this->etd);
                         Session::put('deliverypincode', $this->deliverypincode);
-                        
+
                         return;
                     }else{
                         // not available
@@ -539,7 +605,7 @@ class Checkout extends Component
                         // return;
                     }
 
-                      
+
                 }else{
                     // not available
                     $this->deliveryavailability = false;
@@ -572,18 +638,18 @@ class Checkout extends Component
         ];
         $token =  Shiprocket::getToken();
         $response =  Shiprocket::courier($token)->checkServiceability($pincodeDetails);
-        
-        
+
+
         if($response['status'] == 200)
         {
-            
+
             /**
              * Usefull fields:
              * courier_name - Ekart
              * rate - 76.0
              * cod - 1/0
              * etd - Apr 27, 2022
-            */ 
+            */
 
             if(Config::get('icrm.shipping_provider.shiprocket_recommendation') == 1)
             {
@@ -591,11 +657,11 @@ class Checkout extends Component
                 if(isset($response['data']['available_courier_companies'][0]))
                 {
                     $rate = $response['data']['available_courier_companies'][0]['rate'];
-                    
+
                     $this->etd = $response['data']['available_courier_companies'][0]['etd'];
                     Session::put('etd', $response['data']['available_courier_companies'][0]['etd']);
 
-                    $cod = $response['data']['available_courier_companies'][0]['cod'];            
+                    $cod = $response['data']['available_courier_companies'][0]['cod'];
                 }
             }else{
 
@@ -607,18 +673,18 @@ class Checkout extends Component
                 if(isset($availablecouriercompaniess))
                 {
                     $rate = $availablecouriercompaniess->first()->rate;
-                    
+
                     $this->etd = $availablecouriercompaniess->first()->etd;
                     Session::put('etd', $availablecouriercompaniess->first()->etd);
 
-                    $cod = $availablecouriercompaniess->first()->cod;            
+                    $cod = $availablecouriercompaniess->first()->cod;
                 }
             }
 
             // shipping available
             $this->deliveryavailability = true;
 
-            
+
             if(Config::get('icrm.order_methods.cod') == 1)
             {
                 if($cod == 1)
@@ -648,7 +714,7 @@ class Checkout extends Component
 
     private function mapcitystate($pincode)
     {
-        
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -691,8 +757,8 @@ class Checkout extends Component
                 exit;
                 $refresh;
             }
-            
-            
+
+
             if(collect($collection)['Status'] != 'Error')
             {
                 if(collect($collection)['PostOffice'][0]->Country == 'India')
@@ -718,24 +784,37 @@ class Checkout extends Component
 
         }
 
-        
+
     }
 
     private function calcshippingcharges()
     {
-        $weight = \Cart::getContent()->sum('attributes.weight');
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $weight = \Cart::session($userID)->getContent()->sum('attributes.weight');
 
-        
+
         // if shipping charges are fetched from the courier partner
         if(Config::get('icrm.shipping_provider.calculatefrompartner') == 1)
         {
             if (Config::get('icrm.shipping_provider.shiprocket') == 1) {
                 $this->calcshiprocketcharges($weight);
             }
-    
+
             if (Config::get('icrm.shipping_provider.dtdc') == 1) {
                 Session::remove('shippingcharges');
-                
+
                 if(Config::get('icrm.shipping_provider.fixed.feature') == 1)
                 {
                     // since dtdc dont provide shipping rate api so calculate according to fixed rates
@@ -744,24 +823,24 @@ class Checkout extends Component
                     {
                         if(Config::get('icrm.shipping_provider.fixed.type') == 'perc')
                         {
-                            Session::put('shippingcharges', (\Cart::getSubtotal() * Config::get('icrm.shipping_provider.fixed.value') / 100));
+                            Session::put('shippingcharges', (\Cart::session($userID)->getSubtotal() * Config::get('icrm.shipping_provider.fixed.value') / 100));
                         }
 
                         if(Config::get('icrm.shipping_provider.fixed.type') == 'amount')
                         {
-                            Session::put('shippingcharges', (\Cart::getSubtotal() + Config::get('icrm.shipping_provider.fixed.value')));
+                            Session::put('shippingcharges', (\Cart::session($userID)->getSubtotal() + Config::get('icrm.shipping_provider.fixed.value')));
                         }
                     }
                 }else{
-                    
+
                     // just incase configuration is wrong then use this default settings
 
-                    Session::put('shippingcharges', (\Cart::getSubtotal() * 2 / 100));
+                    Session::put('shippingcharges', (\Cart::session($userID)->getSubtotal() * 2 / 100));
                 }
             }
         }
 
-        
+
         // If shipping charges are fixed rate
         if(Config::get('icrm.shipping_provider.fixed.feature') == 1)
         {
@@ -769,17 +848,17 @@ class Checkout extends Component
             {
                 if(Config::get('icrm.shipping_provider.fixed.type') == 'perc')
                 {
-                    Session::put('shippingcharges', (\Cart::getSubtotal() * Config::get('icrm.shipping_provider.fixed.value') / 100));
+                    Session::put('shippingcharges', (\Cart::session($userID)->getSubtotal() * Config::get('icrm.shipping_provider.fixed.value') / 100));
                 }
 
                 if(Config::get('icrm.shipping_provider.fixed.type') == 'amount')
                 {
-                    Session::put('shippingcharges', (\Cart::getSubtotal() + Config::get('icrm.shipping_provider.fixed.value')));
+                    Session::put('shippingcharges', (\Cart::session($userID)->getSubtotal() + Config::get('icrm.shipping_provider.fixed.value')));
                 }
             }
         }
 
-        
+
         /**
          * get shipping charges from delivery partner or else update null
          * If the platform charges addition shipping charges then add value
@@ -800,7 +879,7 @@ class Checkout extends Component
             'order' => 2
         ));
 
-        \Cart::condition($shipping);
+        \Cart::session($userID)->condition($shipping);
     }
 
     private function calcshiprocketcharges($weight)
@@ -816,7 +895,7 @@ class Checkout extends Component
         $token =  Shiprocket::getToken();
         $response =  Shiprocket::courier($token)->checkServiceability($pincodeDetails);
 
-        
+
 
         if(isset(json_decode($response)->status_code))
         {
@@ -841,18 +920,18 @@ class Checkout extends Component
                 return;
             }
         }
-        
+
 
         if($response['status'] == 200)
         {
-            
+
             /**
              * Usefull fields:
              * courier_name - Ekart
              * rate - 76.0
              * cod - 1/0
              * etd - Apr 27, 2022
-            */ 
+            */
 
             if(Config::get('icrm.shipping_provider.shiprocket_recommendation') == 1)
             {
@@ -887,6 +966,19 @@ class Checkout extends Component
 
     public function calculatefixedtax()
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         // or add multiple conditions from different condition instances
         $tax = new \Darryldecode\Cart\CartCondition(array(
             'name' => 'tax',
@@ -895,12 +987,25 @@ class Checkout extends Component
             'value' => Config::get('icrm.tax.fixedtax.perc').'%',
             'order' => 1
         ));
-                
-        \Cart::condition($tax);
+
+        \Cart::session($userID)->condition($tax);
     }
 
     public function calculatesubcategorytax()
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         // or add multiple conditions from different condition instances
         $tax = new \Darryldecode\Cart\CartCondition(array(
             'name' => 'tax',
@@ -909,8 +1014,8 @@ class Checkout extends Component
             'value' => Config::get('icrm.tax.fixedtax.perc').'%',
             'order' => 1
         ));
-                
-        \Cart::condition($tax);
+
+        \Cart::session($userID)->condition($tax);
     }
 
     public function applycoupon()
@@ -920,11 +1025,24 @@ class Checkout extends Component
          * Check if the coupon is invalid or expired
          * Check coupon type and calculate accordingly
          */
-        
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
         if(!empty($this->couponcode))
         {
             $coupon = Coupon::where('code', $this->couponcode)->where('user_email', null)->first();
-            
+
             /**
              * If the coupon is empty on above result then maybe user has unique coupon for his account
              */
@@ -941,15 +1059,15 @@ class Checkout extends Component
                 // check if coupon is valid and available for everyone
 
                 $currentDate = date('Y-m-d');
-                $currentDate = date('Y-m-d', strtotime($currentDate));   
+                $currentDate = date('Y-m-d', strtotime($currentDate));
                 $startDate = date('Y-m-d', strtotime($coupon->from));
                 $endDate = date('Y-m-d', strtotime($coupon->to));
-                
+
                 if(($currentDate >= $startDate) && ($currentDate <= $endDate)){
                     // coupon is valid and not expired
-                    
+
                     // remove other applied coupons
-                    \Cart::removeCartCondition('coupon');
+                    \Cart::session($userID)->removeCartCondition('coupon');
 
                     /**
                      * check if there is minimum order value exists in coupon
@@ -959,15 +1077,15 @@ class Checkout extends Component
                     if(!empty($coupon->min_order_value))
                     {
                         // min order value exists
-                        if(\Cart::getSubTotal() < $coupon->min_order_value)
+                        if(\Cart::session($userID)->getSubTotal() < $coupon->min_order_value)
                         {
                             // show error message when the subtotal is lesser than order value
                             Session::flash('warning', 'Coupon is valid only for orders above '.Config::get('icrm.currency.icon').$coupon->min_order_value);
                             return redirect()->route('checkout');
                         }
                     }
-                    
-                    
+
+
                     // get the discount amount according to the coupon type calculation and apply coupon condition
                     if($coupon->type == 'PercentageOff')
                     {
@@ -978,7 +1096,7 @@ class Checkout extends Component
                     if($coupon->type == 'FixedOff')
                     {
                         $this->FixedOff($coupon);
-                    }                    
+                    }
 
                     Session::flash('success', 'Coupon code "'.$this->couponcode.'" successfully applied');
                     // return redirect('shopping-cart/bag/checkout');
@@ -994,12 +1112,25 @@ class Checkout extends Component
                 return redirect()->route('checkout');
             }
         }
-        
+
     }
 
 
     private function PercentageOff($coupon)
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         Session::remove('appliedcouponcode');
         $value = $coupon->value.'%';
 
@@ -1016,7 +1147,7 @@ class Checkout extends Component
             'order' => 3
         ));
 
-        \Cart::condition($percentageoffcoupon);
+        \Cart::session($userID)->condition($percentageoffcoupon);
 
         Session::put('appliedcouponcode', $coupon->code);
         // Session::flash('success', 'The coupon code "'.$coupon->code.'" successfully applied on the bag');
@@ -1027,6 +1158,19 @@ class Checkout extends Component
 
     private function FixedOff($coupon)
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         Session::remove('appliedcouponcode');
         $value = $coupon->value;
 
@@ -1043,7 +1187,7 @@ class Checkout extends Component
             'order' => 3
         ));
 
-        \Cart::condition($fixedoffcoupon);
+        \Cart::session($userID)->condition($fixedoffcoupon);
 
         Session::put('appliedcouponcode', $coupon->code);
         // Session::flash('success', 'The coupon code "'.$coupon->code.'" successfully applied on the bag');
@@ -1054,7 +1198,20 @@ class Checkout extends Component
 
     public function removecoupon()
     {
-        \Cart::removeCartCondition('coupon');
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        \Cart::session($userID)->removeCartCondition('coupon');
         Session::flash('success', 'Coupon successfully removed');
         Session::remove('appliedcouponcode');
         return redirect()->route('checkout');
@@ -1069,7 +1226,7 @@ class Checkout extends Component
             Session::put('ordermethod', 'cod');
         }
 
-        
+
     }
 
     public function acceptterms()
@@ -1079,12 +1236,12 @@ class Checkout extends Component
             Session::remove('acceptterms');
         }else{
             Session::put('acceptterms', true);
-        }        
+        }
     }
 
     public function placeorder()
     {
-        
+
         if($this->disablebtn == true)
         {
             Session::flash('danger', 'Before proceeding please fill all the required fields.');
@@ -1103,17 +1260,17 @@ class Checkout extends Component
             $this->carttoorder();
         }else{
             // prepaid
-            $this->collectpayment(); 
+            $this->collectpayment();
         }
 
-        
+
     }
 
     private function collectpayment()
     {
         /**
          * Catch payment with the payment gateway and redirect with payment info & status
-         */ 
+         */
         $this->razorpay();
     }
 
@@ -1125,11 +1282,24 @@ class Checkout extends Component
 
     private function carttoorder()
     {
-        
+
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
-        $carts = \Cart::getContent();
+        $carts = \Cart::session($userID)->getContent();
 
         foreach($carts as $key => $cart)
         {
@@ -1139,7 +1309,7 @@ class Checkout extends Component
             if(Config::get('icrm.product_sku.size') == 1 AND Config::get('icrm.product_sku.color') == 1)
             {
                 $sku = Productsku::where('size', $cart->attributes->size)->where('color', $cart->attributes->color)->where('product_id', $cart->attributes->product_id)->first();
-                
+
                 if(!empty($sku->weight))
                 {
                     $length = $sku->length;
@@ -1155,7 +1325,7 @@ class Checkout extends Component
 
             }elseif(Config::get('icrm.product_sku.size') == 1 AND Config::get('icrm.product_sku.color') == 0){
                 $sku = Productsku::where('size', $cart->attributes->size)->where('product_id', $cart->attributes->product_id)->first();
-                
+
                 if(!empty($sku->weight))
                 {
                     $length = $sku->length;
@@ -1209,14 +1379,14 @@ class Checkout extends Component
                 $requirementdocument = url($cart->attributes->requireddocument);
             }
 
-            
+
             if($cart->attributes->customized_image == null)
             {
                 $customizedimage = '';
             }else{
                 $customizedimage = url($cart->attributes->customized_image);
             }
-            
+
 
             if($cart->attributes->original_file == null)
             {
@@ -1240,7 +1410,7 @@ class Checkout extends Component
             $order->price_sum = $cart->getPriceSumWithConditions();
             $order->size = $cart->attributes->size;
             $order->color = $cart->attributes->color;
-            
+
             $order->g_plus = $cart->attributes->g_plus;
             $order->cost_per_g = $cart->attributes->cost_per_g;
             $order->requirement_document = $requirementdocument;
@@ -1279,7 +1449,7 @@ class Checkout extends Component
             $order->width = $breath;
             $order->height = $height;
             $order->weight = $weight;
-            
+
             $order->user_id = auth()->user()->id;
             $order->order_weight = $cart->attributes->weight;
             $order->order_status = 'New Order';
@@ -1297,23 +1467,23 @@ class Checkout extends Component
                 }else{
                     $updatestock = Productsku::where('product_id', $product->id)->where('size', $cart->attributes->size)->first();
                 }
-                
-                
+
+
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock - $cart->quantity,
                 ]);
             }
-            
-            // \Cart::remove($cart->id);
+
+            // \Cart::session($userID)->remove($cart->id);
 
         }
 
 
         Session::put('cartnotclear', true);
-        \Cart::removeCartCondition('maxgplus');
-        \Cart::removeCartCondition('coupon');
-        \Cart::removeCartCondition('shipping');
-        \Cart::removeCartCondition('tax');
+        \Cart::session($userID)->removeCartCondition('maxgplus');
+        \Cart::session($userID)->removeCartCondition('coupon');
+        \Cart::session($userID)->removeCartCondition('shipping');
+        \Cart::session($userID)->removeCartCondition('tax');
         Session::remove('ordermethod');
         Session::remove('acceptterms');
         Session::remove('deliverypincode');
@@ -1329,7 +1499,7 @@ class Checkout extends Component
 
             if(Config::get('icrm.sms.msg91.feature') == 1)
             {
-                
+
                 if(!empty(auth()->user()->mobile))
                 {
                     if(!empty(Config::get('icrm.sms.msg91.order_placed_flow_id')))
@@ -1342,16 +1512,16 @@ class Checkout extends Component
                         ->variable('url', route('trackingurl', ['id' => $orderid]))
                         ->send();
                     }
-                    
+
                 }
             }
 
             $this->orderemail($order, $carts);
-            
+
         } catch (\Exception $e) {
             // something else went wrong
         }
-        
+
 
         return redirect()->route('ordercomplete', ['id' => $order->order_id]);
         // return $this->redirect('/my-orders/order/'.$order->order_id);
@@ -1373,15 +1543,15 @@ class Checkout extends Component
 
 
             $vendorinfo = User::where('id', $order->vendor_id)->first();
-            
+
             if(!empty($vendorinfo->email))
             {
                 // Send order notification to vendor
                 Notification::route('mail', $vendorinfo->email)->notify(new CodOrderEmailToVendor($order));
             }
-            
+
         }
-        
+
     }
 
 }

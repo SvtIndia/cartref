@@ -40,7 +40,7 @@ class BagController extends Controller
     {
 
         return view('bag.bag')->with([
-  
+
         ]);
     }
 
@@ -60,7 +60,7 @@ class BagController extends Controller
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
         $payment = $api->payment->fetch($request->razorpay_payment_id);
-        
+
         if(count($input)  && !empty($input['razorpay_payment_id'])) {
             try {
 
@@ -72,8 +72,8 @@ class BagController extends Controller
                 return redirect()->back();
             }
         }
-        
-    
+
+
         /** if payment successful then insert transaction data into the database */
 
         $payInfo = [
@@ -97,7 +97,7 @@ class BagController extends Controller
         $this->carttoorder();
 
 
-         
+
         Session::flash('success', 'Payment done and order placed successfully');
         // return redirect()->route('myorders');
         return response()->json(['success' => 'Payment successful']);
@@ -110,7 +110,7 @@ class BagController extends Controller
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
-        $userID;
+        $userID = 0;
         if(Auth::check()){
             $userID = auth()->user()->id;
         }
@@ -162,7 +162,7 @@ class BagController extends Controller
             $total = \Cart::session($userID)->getTotal();
 
             $ordervalue = $subtotal;
-            
+
 
             $couponCondition = \Cart::session($userID)->getCondition('coupon');
             if(!empty($couponCondition))
@@ -228,7 +228,7 @@ class BagController extends Controller
             $order->price_sum = $cart->getPriceSumWithConditions();
             $order->size = $cart->attributes->size;
             $order->color = $cart->attributes->color;
-            
+
             $order->g_plus = $cart->attributes->g_plus;
             $order->cost_per_g = $cart->attributes->cost_per_g;
             $order->requirement_document = $requirementdocument;
@@ -282,22 +282,22 @@ class BagController extends Controller
                 }else{
                     $updatestock = Productsku::where('product_id', $cart->attributes->product_id)->where('size', $cart->attributes->size)->first();
                 }
-                
-                
+
+
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock - $cart->quantity,
                 ]);
             }
         }
 
-        
+
 
         // send order sms & email
         try {
 
             if(Config::get('icrm.sms.msg91.feature') == 1)
             {
-                
+
                 if(!empty(auth()->user()->mobile))
                 {
                     if(!empty(Config::get('icrm.sms.msg91.order_placed_flow_id')))
@@ -311,10 +311,10 @@ class BagController extends Controller
                         ->variable('url', route('trackingurl', ['id' => $orderid]))
                         ->send();
                     }
-                    
+
                 }
             }
-            
+
             // SEND ORDER PLACED EMAIL TO CUSTOMER
             $this->orderemail($order);
 
@@ -334,8 +334,8 @@ class BagController extends Controller
 
 
         \Cart::session($userID)->clear();
-        
-        
+
+
         \Cart::session($userID)->removeCartCondition('coupon');
         \Cart::session($userID)->removeCartCondition('shipping');
         \Cart::session($userID)->removeCartCondition('tax');
@@ -347,7 +347,7 @@ class BagController extends Controller
         Session::remove('deliveryavailable');
         Session::remove('etd');
 
-        
+
 
     }
 
@@ -360,13 +360,13 @@ class BagController extends Controller
         if(Config::get('icrm.site_package.multi_vendor_store') == 1)
         {
             $vendorinfo = User::where('id', $order->vendor_id)->first();
-            
+
             if(!empty($vendorinfo->email))
             {
                 // Send order notification to vendor
                 Notification::route('mail', $vendorinfo->email)->notify(new PrepaidOrderEmailToVendor($order));
             }
-            
+
         }
     }
 
@@ -381,11 +381,11 @@ class BagController extends Controller
             * Demo: eb6e38f684ef558a1d64fcf8a75967
             * Live: 1d7458885d42002edc2f29e7162049
          * Content-Type: application/json
-         * Method: POST 
+         * Method: POST
     */
     public function dtdcordercancellation(Request $request)
     {
-        // Dummy Curl Request to call api 
+        // Dummy Curl Request to call api
        /**
         * Check if the order awb holds any of the orders which has customized product type
         */
@@ -397,7 +397,7 @@ class BagController extends Controller
             if(count($orderstatus) == 0)
             {
                 Session::flash('warning', 'Your order is already schedulled for shipping and can not to cancelled. Order ID:'.$request->order_id.'.');
-                
+
                 return redirect()->route('myorders');
             }
         }
@@ -409,7 +409,7 @@ class BagController extends Controller
             if(count($customized) > 0)
             {
                 Session::flash('warning', 'You can not request cancellation for orders which has customized products. Order ID:'.$request->order_id.'.');
-                
+
                 return redirect()->route('myorders');
             }
         }
@@ -427,7 +427,7 @@ class BagController extends Controller
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => 
+        CURLOPT_POSTFIELDS =>
         "
             {
                 \n\t\"AWBNo\":[\"$request->order_awb\"],
@@ -480,10 +480,10 @@ class BagController extends Controller
 
                 // show alert on frontend
                 Session::flash('success', 'Order successfully cancelled for order id '.$request->order_id.'.');
-                
+
                 return redirect()->route('myorders');
             }
-            
+
         }
 
 
@@ -494,5 +494,5 @@ class BagController extends Controller
 
 
 
-    
+
 }

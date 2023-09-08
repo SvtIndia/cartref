@@ -23,7 +23,7 @@ class CustomizeProductController extends Controller
     public function introduction()
     {
         // $page = Page::where('slug', 'customize-introduction')->where('status', 'ACTIVE')->first();
-        
+
         // if(empty($page))
         // {
         //     return abort(404);
@@ -44,12 +44,12 @@ class CustomizeProductController extends Controller
     public function customize()
     {
         $customizecart= app('customize')->get(request('customizeid'));
-        
+
         if(empty($customizecart))
         {
             return abort('404');
         }
-    
+
 
         $product = Product::where('id', $customizecart->attributes->product_id)->first();
 
@@ -85,7 +85,7 @@ class CustomizeProductController extends Controller
             $customizableimage = $product->customize_images;
         }
 
-        
+
 
         return view('customize.customize')->with([
             'product' => $product,
@@ -94,7 +94,7 @@ class CustomizeProductController extends Controller
         ]);
     }
 
-    
+
 
     public function customized(Request $request)
     {
@@ -106,7 +106,7 @@ class CustomizeProductController extends Controller
         // https://stackoverflow.com/questions/26785940/laravel-save-base64-png-file-to-public-folder-from-controller
         // https://stackoverflow.com/questions/55820359/how-to-upload-canvas-image-to-storage-on-laravel
         $image = Image::make(file_get_contents($request->imgBase64));
-        
+
         $filename = 'customized-product-'.$customizeid.'.png';
 
         Storage::disk('public')->putFileAs(
@@ -121,12 +121,12 @@ class CustomizeProductController extends Controller
     public function sharefiles()
     {
         $customizecart= app('customize')->get(request('customizeid'));
-        
+
         if(empty($customizecart))
         {
             return abort('404');
         }
-    
+
 
         $product = Product::where('id', $customizecart->attributes->product_id)->first();
 
@@ -203,7 +203,7 @@ class CustomizeProductController extends Controller
 
             foreach($attachedoriginalimages as $originalimage)
             {
-                
+
                 $filename = time().str_replace(' ', '', $originalimage->getClientOriginalName());
                 // '.'.$originalimage->extension()
 
@@ -216,12 +216,12 @@ class CustomizeProductController extends Controller
                 $originalimages[] = asset('/storage/images/original_images/'.$filename);
             }
          }
-        
-        
+
+
 
         if($customizecart->attributes->g_plus != null)
         {
-            // calculate max g plus value 
+            // calculate max g plus value
             $gpluscharges = $customizecart->attributes->g_plus * $product->cost_per_g;
             $maxgplus = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'maxgplus',
@@ -240,7 +240,7 @@ class CustomizeProductController extends Controller
         }
 
 
-        
+
         if(Config::get('icrm.tax.type') == 'subcategory')
         {
             /**
@@ -295,13 +295,28 @@ class CustomizeProductController extends Controller
             'conditions' => [$maxgplus, $tax]
         );
 
-        \Cart::add($item);
+
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
+        \Cart::session($userID)->add($item);
 
         // delete customize from customize cart
         app('customize')->clear($request->customized);
-        
+
         Session::remove('quickviewid');
-        
+
         Session::flash('success', 'Customized product successfully added to cart');
 
         return redirect()->route('bag');
@@ -316,7 +331,7 @@ class CustomizeProductController extends Controller
             $customizeid = $request->customizeid;
 
             $image = Image::make(file_get_contents($request->imgBase64));
-            
+
             $filename = "customized-product-media".$customizeid."-".time().".png";
 
             Storage::disk('public')->putFileAs(
@@ -324,6 +339,6 @@ class CustomizeProductController extends Controller
                 $request->imgBase64,
                 $filename
             );
-        }        
+        }
     }
 }

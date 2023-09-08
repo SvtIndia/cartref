@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\Session;
 
@@ -14,10 +15,23 @@ class Showcasecount extends Component
 
     public function render()
     {
-        $ssproducts = app('showcase')->getContent();
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $ssproducts = app('showcase')->session($userID)->getContent();
 
         return view('livewire.showcasecount')->with([
-            'showcasecount' => app('showcase')->getTotalQuantity(),
+            'showcasecount' => app('showcase')->session($userID)->getTotalQuantity(),
             'ssproducts' => $ssproducts
         ]);
     }
@@ -42,7 +56,7 @@ class Showcasecount extends Component
 
         $this->emit('showcasebag');
         // return redirect(request()->header('Referer'));
-        return redirect()->back();        
+        return redirect()->back();
     }
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Bag;
 
 use App\Order;
 use App\Productsku;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Seshac\Shiprocket\Shiprocket;
 use Illuminate\Support\Facades\Config;
@@ -26,10 +27,23 @@ class Ordercomplete extends Component
          * Because of the checkout page with COD order it wasn't redirecting to order complete page
          * If sessiong cartnot clear is true then clear cart
          */
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
         if(Session::get('cartnotclear') == true)
         {
-            \Cart::clear();
+            \Cart::session($userID)->clear();
         }
 
         $this->orderid = request('id');
@@ -72,16 +86,16 @@ class Ordercomplete extends Component
                         $this->canbecancelled = true;
                     }
 
-                    
+
                 }
             }
-            
+
         }else{
             foreach($this->items as $item)
             {
-                
+
                 // If the order does not have customized item then order can be cancelled until it is ready_to_dispatch
-                
+
                 if($this->canbecancelled == false)
                 {
                     if($this->items->whereIn('order_status', ['Ready To Dispatch', 'Shipped', 'Delivered', 'Other', 'RTO', 'Cancelled', 'Requested For Return', 'Return Request Accepted', 'Return Request Rejected', 'Returned'])->count() > 0)
@@ -97,9 +111,9 @@ class Ordercomplete extends Component
         }
 
 
-        
-        
-        
+
+
+
 
         /**
          * Update item tracking info from shipping provider
@@ -134,27 +148,27 @@ class Ordercomplete extends Component
                 // dd($order);
                 $token =  Shiprocket::getToken();
                 $response = Shiprocket::track($token)->throwShipmentId($order->shipping_id);
-    
-    
-    
+
+
+
                 if(isset(json_decode($response)->tracking_data->track_url))
                 {
                     $order->update([
                         'tracking_url' => json_decode($response)->tracking_data->track_url,
                     ]);
                 }
-    
-                
+
+
                 if(isset(json_decode($response)->tracking_data->shipment_track))
                 {
-    
+
                     if(
-                        json_decode($response)->tracking_data->shipment_track[0]->current_status == 'OUT FOR PICKUP' 
+                        json_decode($response)->tracking_data->shipment_track[0]->current_status == 'OUT FOR PICKUP'
                         OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'AWB ASSIGNED'
                         OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'LABEL GENERATED'
-                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP SCHEDULED' 
-                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP GENERATED' 
-                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP QUEUED' 
+                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP SCHEDULED'
+                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP GENERATED'
+                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKUP QUEUED'
                         OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'MANIFEST GENERATED'
                         )
                     {
@@ -163,11 +177,11 @@ class Ordercomplete extends Component
                             'order_substatus' => '',
                         ]);
                     }
-        
+
                     if(
-                        json_decode($response)->tracking_data->shipment_track[0]->current_status == 'SHIPPED' 
-                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'IN TRANSIT' 
-                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'OUT FOR DELIVERY' 
+                        json_decode($response)->tracking_data->shipment_track[0]->current_status == 'SHIPPED'
+                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'IN TRANSIT'
+                        OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'OUT FOR DELIVERY'
                         OR json_decode($response)->tracking_data->shipment_track[0]->current_status == 'PICKED UP'
                         )
                     {
@@ -176,7 +190,7 @@ class Ordercomplete extends Component
                             'order_substatus' => '',
                         ]);
                     }
-        
+
                     if(json_decode($response)->tracking_data->shipment_track[0]->current_status == 'CANCELLED')
                     {
                         $order->update([
@@ -184,7 +198,7 @@ class Ordercomplete extends Component
                             // 'order_substatus' => '',
                         ]);
                     }
-        
+
                     if(json_decode($response)->tracking_data->shipment_track[0]->current_status == 'DELIVERED')
                     {
                         $order->update([
@@ -192,8 +206,8 @@ class Ordercomplete extends Component
                             'order_substatus' => '',
                         ]);
                     }
-        
-        
+
+
                     if(json_decode($response)->tracking_data->shipment_track[0]->current_status == 'RTO INITIATED')
                     {
                         $order->update([
@@ -201,8 +215,8 @@ class Ordercomplete extends Component
                             'order_substatus' => '',
                         ]);
                     }
-        
-        
+
+
                     if(json_decode($response)->tracking_data->shipment_track[0]->current_status == 'RTO DELIVERED')
                     {
                         $order->update([
@@ -210,9 +224,9 @@ class Ordercomplete extends Component
                             'order_substatus' => '',
                         ]);
                     }
-        
-        
-        
+
+
+
                     if(
                         json_decode($response)->tracking_data->shipment_track[0]->current_status != 'OUT FOR PICKUP'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'AWB ASSIGNED'
@@ -224,7 +238,7 @@ class Ordercomplete extends Component
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'SHIPPED'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'IN TRANSIT'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'OUT FOR DELIVERY'
-                        AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'PICKED UP'    
+                        AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'PICKED UP'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'CANCELLED'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'DELIVERED'
                         AND json_decode($response)->tracking_data->shipment_track[0]->current_status != 'RTO INITIATED'
@@ -235,10 +249,10 @@ class Ordercomplete extends Component
                             'order_substatus' => json_decode($response)->tracking_data->shipment_track[0]->current_status,
                         ]);
                     }
-    
+
                 }
-    
-                
+
+
             }
     }
 
@@ -256,7 +270,7 @@ class Ordercomplete extends Component
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => 
+            CURLOPT_POSTFIELDS =>
             "
                 {
                     \n\t\"TrkType\":\t\"cnno\",
@@ -293,7 +307,7 @@ class Ordercomplete extends Component
                 $collection = collect(json_decode($collection[0]));
 
                 // dd($collection);
-                
+
                 if(json_decode($collection)->status == 'SUCCESS')
                 {
                     // update shipment status accordingly
@@ -305,7 +319,7 @@ class Ordercomplete extends Component
                             'order_substatus' => ''
                         ]);
                     }
-                         
+
                     if(json_decode($collection)->trackHeader->strStatus == 'Booked' OR json_decode($collection)->trackHeader->strStatus == 'In Transit' OR json_decode($collection)->trackHeader->strStatus == 'Softdata Upload')
                     {
                         $order->update([
@@ -347,13 +361,13 @@ class Ordercomplete extends Component
                     }
 
                     if(
-                        json_decode($collection)->trackHeader->strStatus != 'RTO' AND 
+                        json_decode($collection)->trackHeader->strStatus != 'RTO' AND
                         json_decode($collection)->trackHeader->strStatus != 'Delivered' AND
                         json_decode($collection)->trackHeader->strStatus != 'DELIVERED' AND
                         json_decode($collection)->trackHeader->strStatus != 'Shipped' AND
                         json_decode($collection)->trackHeader->strStatus != 'SHIPPED' AND
                         json_decode($collection)->trackHeader->strStatus != 'Cancelled' AND
-                        json_decode($collection)->trackHeader->strStatus != 'CANCELLED' 
+                        json_decode($collection)->trackHeader->strStatus != 'CANCELLED'
                         AND json_decode($collection)->trackHeader->strStatus != 'In Transit'
                         AND json_decode($collection)->trackHeader->strStatus != 'Softdata Upload'
                         AND json_decode($collection)->trackHeader->strStatus != 'Not Picked'
@@ -376,10 +390,10 @@ class Ordercomplete extends Component
 
     public function render()
     {
-        
+
 
         return view('livewire.bag.ordercomplete')->with([
-            
+
         ]);
     }
 
@@ -389,7 +403,7 @@ class Ordercomplete extends Component
         /**
          * This function is currently not in use we are using controller function
          */
-        
+
         // set_time_limit(0);
 
         // fetch seller info
@@ -403,8 +417,8 @@ class Ordercomplete extends Component
                 'PAN'        => setting('seller-name.pan_number'),
             ],
         ]);
-        
-        
+
+
 
         $customer = new Party([
             'name'          => $this->items->first()->customer_name,
@@ -416,8 +430,8 @@ class Ordercomplete extends Component
                 'order number' => $this->orderid,
             ],
         ]);
-        
-        
+
+
         $items = [];
 
         foreach($this->items as $item)
@@ -437,7 +451,7 @@ class Ordercomplete extends Component
         ];
 
         $notes = implode("<br>", $notes);
-        
+
         $invoice = Invoice::make('payment receipt')
             // ->series('BIG')
             // ability to include translated invoice status
@@ -476,7 +490,7 @@ class Ordercomplete extends Component
             'invoice_url' => $url,
         ]);
 
-    
+
     }
 
 
@@ -495,7 +509,7 @@ class Ordercomplete extends Component
          * Fetch awb code and share with shipping provider to cancel order
          */
 
-        
+
          /**
           * Check if the order is not scheduled with shipping partner and awb code is empty then directly update the order status to cancelled with substatus cancelled before shipping initiated
           */
@@ -518,12 +532,12 @@ class Ordercomplete extends Component
             {
                 if(Config::get('icrm.product_sku.color') == 1)
                 {
-                    
+
                     $sku = Productsku::where('product_id', $cancelled->product_id)
                             ->where('size', $cancelled->size)
                             ->where('color', $cancelled->color)
                             ->first();
-                    
+
                     $sku->update([
                         'available_stock' => $sku->available_stock + $cancelled->qty,
                     ]);
@@ -533,7 +547,7 @@ class Ordercomplete extends Component
                     $sku = Productsku::where('product_id', $cancelled->product_id)
                             ->where('size', $cancelled->size)
                             ->first();
-                    
+
                     $sku->update([
                         'available_stock' => $sku->available_stock + $cancelled->qty,
                     ]);
@@ -565,7 +579,7 @@ class Ordercomplete extends Component
 
     private function shipirocketcancelorder($awb)
     {
-        
+
         $ids = [$awb];
         $response =  Shiprocket::order($this->shiprockettoken)->cancel($ids);
 
@@ -575,14 +589,14 @@ class Ordercomplete extends Component
             'order_substatus' => 'Cancelled after shipping initiated'
         ]);
 
-        Session::flash('success', 'Order with the ID number "'.$this->items->first()->order_id.'" has been successfully cancelled');                
+        Session::flash('success', 'Order with the ID number "'.$this->items->first()->order_id.'" has been successfully cancelled');
         return redirect()->route('ordercomplete', ['id' => $this->orderid]);
     }
 
     private function dtdccancelorder($awb)
     {
-        
-        
+
+
     }
 
 }
