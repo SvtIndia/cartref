@@ -145,14 +145,7 @@
 
                         <div style="display:inline-flex; width:100%; justify-content: space-between">
                             <div style="width: 48%">
-                                <h3>Returns
-                                    <img width="50px" height="40px"
-                                        style="
-                                    position: relative;
-                                    margin-top: -15px;
-                                "
-                                        src="{{ config('app.url') }}/images/icons/product-return.svg"
-                                        alt="Product Return SVG" />
+                                <h3>Returns <i class="voyager-refresh"></i>
                                     </h1>
                                     <div class="dashboard">
 
@@ -563,7 +556,7 @@
                                         <th>Order Date</th>
                                         <th style="border-right:none;">Product Information</th>
                                         <th style="border-right:none;"></th>
-                                        <th></th>
+                                        <th>Quantity</th>
                                         @if (auth()->user()->hasRole('Client'))
                                             <th>Seller Information</th>
                                         @endif
@@ -939,7 +932,7 @@
                                             @if (auth()->user()->hasRole('Client'))
                                                 <td style="width: 15% !important;">
                                                     <div>
-                                                        <strong style="color:black; font-weight: 700;">Expected Delivery
+                                                        <strong style="color:black; font-weight: 700;">Delivery
                                                             Date:
                                                         </strong>
                                                         <text
