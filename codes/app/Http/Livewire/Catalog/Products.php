@@ -28,15 +28,16 @@ class Products extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    
+
     public $noproducts = false;
     public $search;
-    
+
     // public $categorys;
     // public $subcategorys;
     public $selectedcategory;
     public $selectedsubcategory;
     public $brands;
+    public $brand_name;
     public $sizes;
     public $colors;
 
@@ -51,7 +52,7 @@ class Products extends Component
     public $models;
     public $voltages;
     public $interfaces;
-    
+
     public $displaytypes;
     public $displaycolors;
 
@@ -66,6 +67,7 @@ class Products extends Component
         // 'categorys' => ['except' => '', 'as' => 'category'],
         // 'subcategorys' => ['except' => '', 'as' => 'subcategory'],
         'brands' => ['except' => '', 'as' => 'brands'],
+        // 'brand_name' => ['brand_name' => '', 'as' => 'brand_name'],
         'sizes' => ['except' => '', 'as' => 'size'],
         'colors' => ['except' => '', 'as' => 'color'],
 
@@ -76,7 +78,7 @@ class Products extends Component
         'maxprice' => ['except' => '', 'as' => 'maxprice'],
         'styles' => ['except' => '', 'as' => 'style'],
         'occasions' => ['except' => '', 'as' => 'occasion'],
-        
+
         'types' => ['except' => '', 'as' => 'type'],
         'mounts' => ['except' => '', 'as' => 'mount'],
         'models' => ['except' => '', 'as' => 'model'],
@@ -85,7 +87,7 @@ class Products extends Component
         'displaytypes' => ['except' => '', 'as' => 'displaytype'],
         'displaycolors' => ['except' => '', 'as' => 'displaycolor'],
 
-        
+
         'search' => ['except' => '', 'as' => 'search'],
         'sort' => ['except' => '', 'as' => 'sort'],
         // 'page' => ['except' => ''],
@@ -93,23 +95,22 @@ class Products extends Component
 
     public function mount()
     {
-        if(Session::get('paginate'))
-        {
+        if (Session::get('paginate')) {
             $this->paginate = Session::get('paginate');
-        }else{
+        } else {
             $this->paginate = Config::get('icrm.frontend.catalog.pagination_count');
         }
 
-        if(!empty(request('category')))
-        {
+        if (!empty(request('category'))) {
             $this->selectedcategory = request('category');
         }
+        if (!empty(request('brand_name'))) {
+            $this->brand_name = request('brand_name');
+        }
 
-        if(!empty(request('subcategory')))
-        {
+        if (!empty(request('subcategory'))) {
             $this->selectedsubcategory = request('subcategory');
         }
-        
     }
 
     // public function updatedCategorys()
@@ -124,7 +125,7 @@ class Products extends Component
     //     $this->emit('render');
 
     // }
-    
+
     // public function updatedSubcategorys()
     // {
     //     if (!is_array($this->subcategorys)) return;
@@ -133,7 +134,7 @@ class Products extends Component
     //         return $subcategory != false;
     //     });
     // }
-    
+
     public function listmode()
     {
         Session::put('gridview', 'listmode');
@@ -177,15 +178,13 @@ class Products extends Component
             return $gender != false;
         });
     }
-    
+
     public function updatedMinprice()
     {
-        
     }
 
     public function updatedMaxprice()
     {
-        
     }
 
     // public function updatedPrices()
@@ -242,7 +241,6 @@ class Products extends Component
         $this->colors = array_filter($this->colors, function ($color) {
             return $color != false;
         });
-
     }
 
     public function updatedTypes()
@@ -291,250 +289,231 @@ class Products extends Component
         });
     }
 
-    
+
 
     public function render()
     {
+
         $products = Product::where('admin_status', 'Accepted')
-                    // ->whereLike('name', $this->search ?? '')
-                    ->whereHas('vendor', function($query){
-                        $query->where('status', 1);
-                    })
-                    ->when($this->search, function($query){
+            // ->whereLike('name', $this->search ?? '')
+            ->whereHas('vendor', function ($query) {
+                $query->where('status', 1);
+            })
+            ->when($this->search, function ($query) {
 
-                        $query
-                        ->where(function($query){
-                                    
-                            if(Str::contains($this->search, ['men', 'women', 'kid']) == false)
-                            {
-                                $query
-                                ->orWhere('sku', 'LIKE', '%'.$this->search.'%')
-                                ->orWhere('name', 'LIKE', '%'.$this->search.'%')
-                                ->orWhere('name', 'LIKE', '%'.substr($this->search, 0,-1).'%')
+                $query
+                    ->where(function ($query) {
+
+                        if (Str::contains($this->search, ['men', 'women', 'kid']) == false) {
+                            $query
+                                ->orWhere('sku', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('name', 'LIKE', '%' . $this->search . '%')
+                                ->orWhere('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%')
                                 // ->orWhere('description', 'LIKE', '%'.$this->search.'%')
-                                ->orWhereHas('productcategory', function($query){
+                                ->orWhereHas('productcategory', function ($query) {
                                     $query
-                                    ->where('name', 'LIKE', '%'.$this->search.'%')
-                                    ->where('name', 'LIKE', '%'.substr($this->search, 0,-1).'%');
+                                        ->where('name', 'LIKE', '%' . $this->search . '%')
+                                        ->where('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%');
                                 })
-                                ->orWhereHas('productsubcategory', function($query){
+                                ->orWhereHas('productsubcategory', function ($query) {
                                     $query
-                                    ->where('name', 'LIKE', '%'.$this->search.'%')
-                                    ->where('name', 'LIKE', '%'.substr($this->search, 0,-1).'%');
-                                })
-                                ;
-                            }
-                            
+                                        ->where('name', 'LIKE', '%' . $this->search . '%')
+                                        ->where('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%');
+                                });
+                        }
 
 
-                            
-                            $splitwords = explode(" ", $this->search);
-
-                            foreach($splitwords as $splitword)
-                            {
-                                
-                                if(Str::contains($splitword, ['men', 'women', 'kid']) == false)
-                                {
-                                    $query
-                                    ->orWhere('name', 'LIKE', '%'.$splitword.'%')
-                                    ->orWhere('name', 'LIKE', '%'.substr($splitword, 0,-1).'%')
-                                    // ->orWhere('description', 'LIKE', '%'.$splitword.'%')
-                                    ->orWhereHas('productcategory', function($query) use($splitword){
-                                        $query
-                                        ->where('name', 'LIKE', '%'.$splitword.'%')
-                                        ->where('name', 'LIKE', '%'.substr($splitword, 0,-1).'%');
-                                    })
-                                    ->orWhereHas('productsubcategory', function($query) use($splitword){
-                                        $query
-                                        ->where('name', 'LIKE', '%'.$splitword.'%')
-                                        ->where('name', 'LIKE', '%'.substr($splitword, 0,-1).'%');
-                                    })
-                                
-                                    ;
-                                }
-                                
-                            
-                            }
 
 
-                        });
-                        
-                    })
-                    ->when($this->search, function($query)
-                    {
-                        // if gender is mentioned in the search
                         $splitwords = explode(" ", $this->search);
 
-                        foreach($splitwords as $splitwordgender)
-                        {
-                            if($splitwordgender == 'men' OR $splitwordgender == 'mens')
-                            {
-                                $query->whereIn('gender_id', ['Men']);
-                            }
+                        foreach ($splitwords as $splitword) {
 
-                            if($splitwordgender == 'women' OR $splitwordgender == 'womens')
-                            {
-                                $query->whereIn('gender_id', ['Women']);
-                            }
-
-                            if($splitwordgender == 'kid' OR $splitwordgender == 'kids')
-                            {
-                                $query->whereIn('gender_id', ['Kids']);
+                            if (Str::contains($splitword, ['men', 'women', 'kid']) == false) {
+                                $query
+                                    ->orWhere('name', 'LIKE', '%' . $splitword . '%')
+                                    ->orWhere('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%')
+                                    // ->orWhere('description', 'LIKE', '%'.$splitword.'%')
+                                    ->orWhereHas('productcategory', function ($query) use ($splitword) {
+                                        $query
+                                            ->where('name', 'LIKE', '%' . $splitword . '%')
+                                            ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
+                                    })
+                                    ->orWhereHas('productsubcategory', function ($query) use ($splitword) {
+                                        $query
+                                            ->where('name', 'LIKE', '%' . $splitword . '%')
+                                            ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
+                                    });
                             }
                         }
-                    })
-                    ->when($this->selectedcategory, function($query){
-                        $query->whereHas('productcategory', function($q){
-                            $q->where('slug', $this->selectedcategory);
+                    });
+            })
+            ->when($this->search, function ($query) {
+                // if gender is mentioned in the search
+                $splitwords = explode(" ", $this->search);
+
+                foreach ($splitwords as $splitwordgender) {
+                    if ($splitwordgender == 'men' or $splitwordgender == 'mens') {
+                        $query->whereIn('gender_id', ['Men']);
+                    }
+
+                    if ($splitwordgender == 'women' or $splitwordgender == 'womens') {
+                        $query->whereIn('gender_id', ['Women']);
+                    }
+
+                    if ($splitwordgender == 'kid' or $splitwordgender == 'kids') {
+                        $query->whereIn('gender_id', ['Kids']);
+                    }
+                }
+            })
+            ->when($this->selectedcategory, function ($query) {
+                $query->whereHas('productcategory', function ($q) {
+                    $q->where('slug', $this->selectedcategory);
+                });
+            })
+            ->when($this->selectedsubcategory, function ($query) {
+                $query->whereHas('productsubcategory', function ($q) {
+                    $q->where('slug', $this->selectedsubcategory);
+                });
+            })
+            ->when($this->minprice > 0, function ($query) {
+                $query->where('offer_price', '>=', $this->minprice);
+            })
+            ->when($this->maxprice > 0, function ($query) {
+                $query->where('offer_price', '<=', $this->maxprice);
+            })
+            ->when($this->sizes, function ($query) {
+                $query->whereHas('sizes', function ($q) {
+                    $q->whereIn('id', array_values($this->sizes));
+                });
+            })
+            ->when($this->colors, function ($query) {
+                $query->whereHas('colors', function ($q) {
+                    $q->whereIn('id', array_values($this->colors));
+                });
+            })
+            ->when($this->types, function ($query) {
+                $query->whereIn('type_id', array_values($this->types));
+            })
+            ->when($this->mounts, function ($query) {
+                $query->whereIn('mount_id', array_values($this->mounts));
+            })
+            ->when($this->models, function ($query) {
+                $query->whereIn('modellist_id', array_values($this->models));
+            })
+            ->when($this->voltages, function ($query) {
+                $query->whereIn('voltage_id', array_values($this->voltages));
+            })
+            ->when($this->interfaces, function ($query) {
+                $query->whereIn('interface_id', array_values($this->interfaces));
+            })
+            ->when($this->brands, function ($query) {
+                $query->whereIn('brand_id', array_values($this->brands));
+            })
+            ->when($this->brand_name, function ($query) {
+                $query->where('brand_id', ($this->brand_name));
+            })
+            ->when($this->genders, function ($query) {
+                // need to check
+                $query->whereIn('gender_id', array_values($this->genders));
+            })
+            ->when($this->styles, function ($query) {
+                // need to check
+                $query->whereIn('style_id', array_values($this->styles));
+            })
+            ->when($this->sort, function ($query) {
+                if ($this->sort == 'asc') {
+                    $query->orderBy('created_at', 'asc');
+                } elseif ($this->sort == 'desc') {
+                    $query->orderBy('created_at', 'desc');
+                } elseif ($this->sort == 'plth') {
+                    $query->orderBy('offer_price', 'ASC');
+                } elseif ($this->sort == 'phtl') {
+                    $query->orderBy('offer_price', 'DESC');
+                }
+            })
+            ->when($this->producttypes, function ($query) {
+                foreach ($this->producttypes as $producttype) {
+                    if ($producttype == 'all') {
+                        $query;
+                    }
+
+                    if ($producttype == 'excludeoutofstock') {
+                        $query->whereHas('productskus', function ($q) {
+                            $q->where('available_stock', '>', 0);
                         });
-                    })
-                    ->when($this->selectedsubcategory, function($query){
-                        $query->whereHas('productsubcategory', function($q){
-                            $q->where('slug', $this->selectedsubcategory);
-                        });
-                    })
-                    ->when($this->minprice > 0, function($query){
-                        $query->where('offer_price', '>=', $this->minprice);
-                    })
-                    ->when($this->maxprice > 0, function($query){
-                        $query->where('offer_price', '<=', $this->maxprice);
-                    })
-                    ->when($this->sizes, function($query){
-                        $query->whereHas('sizes', function($q){
-                            $q->whereIn('id', array_values($this->sizes));
-                        });
-                    })
-                    ->when($this->colors, function($query){
-                        $query->whereHas('colors', function($q){
-                            $q->whereIn('id', array_values($this->colors));
-                        });
-                    })
-                    ->when($this->types, function($query){
-                        $query->whereIn('type_id', array_values($this->types));
-                    })
-                    ->when($this->mounts, function($query){
-                        $query->whereIn('mount_id', array_values($this->mounts));
-                    })
-                    ->when($this->models, function($query){
-                        $query->whereIn('modellist_id', array_values($this->models));
-                    })
-                    ->when($this->voltages, function($query){
-                        $query->whereIn('voltage_id', array_values($this->voltages));
-                    })
-                    ->when($this->interfaces, function($query){
-                        $query->whereIn('interface_id', array_values($this->interfaces));
-                    })
-                    ->when($this->brands, function($query){
-                        $query->whereIn('brand_id', array_values($this->brands));
-                    })
-                    ->when($this->genders, function($query){
+                    }
+
+                    if ($producttype == 'customization') {
+                        $query->where('customize_images', '!=', null);
+                    }
+
+                    if ($producttype == 'showcaseathome') {
                         // need to check
-                        $query->whereIn('gender_id', array_values($this->genders));
-                    })
-                    ->when($this->styles, function($query){
-                        // need to check
-                        $query->whereIn('style_id', array_values($this->styles));
-                    })
-                    ->when($this->sort, function($query){
-                        if($this->sort == 'asc')
-                        {
-                            $query->orderBy('created_at', 'asc');
-                        }elseif($this->sort == 'desc'){
-                            $query->orderBy('created_at', 'desc');
-                        }elseif($this->sort == 'plth'){
-                            $query->orderBy('offer_price', 'ASC');
-                        }elseif($this->sort == 'phtl'){
-                            $query->orderBy('offer_price', 'DESC');
-                        }
-                    })
-                    ->when($this->producttypes, function($query){
-                        foreach($this->producttypes as $producttype){
-                            if($producttype == 'all')
-                            {
-                                $query;
-                            }
-
-                            if($producttype == 'excludeoutofstock')
-                            {
-                                $query->whereHas('productskus', function($q){
-                                    $q->where('available_stock', '>', 0);
-                                });
-                            }
-
-                            if($producttype == 'customization')
-                            {
-                                $query->where('customize_images', '!=', null);
-                            }
-                            
-                            if($producttype == 'showcaseathome')
-                            {
-                                // need to check
-                                $query->whereHas('vendor', function($q){
-                                    $q->where('status', 1)->where('showcase_at_home', 1);
-                                });
-                            }
-                        }
-                    })
-                    ->when(\Request::route()->getName() == 'products.vendor', function($query){
-                        /**
-                         * If the catalog route is products.vendor 
-                         * then fetch products for selected vendor
-                         * Need to check
-                         */
-                        // dd(request('slug'));
-                        $query->whereHas('vendor', function($q){
-                            $q->where('status', 1);
-                        })->where('seller_id', request('slug'));
-                        
-                    })
-                    ->when(!empty(Session::get('showcasecity')), function($query){
-                        /**
-                         * If showcase at home activated then fetch only products for showcasepincode city
-                         * Map city name
-                         * Need to check
-                         */
-
-                         $query->whereHas('vendor', function($q){
-                            $q->where('status', 1)->where('showcase_at_home', 1)->where('city', Session::get('showcasecity'));
-                        });
-                    })
-                    ->when(\Request::route()->getName() == 'products.showcase', function($query){
-                        /**
-                         * If the catalog route is products.showcase
-                         * then fetch only products whose vendor is offering showcase at home.
-                         * Need to check
-                         */
-                        $query->whereHas('vendor', function($q){
+                        $query->whereHas('vendor', function ($q) {
                             $q->where('status', 1)->where('showcase_at_home', 1);
                         });
-                    })
-                    ->when(\Request::route()->getName() == 'products.showcase.vendor', function($query){
-                        /**
-                         * If the catalog route is products.showcase.vendor
-                         * then fetch only products of the selected vendor who is offering showcase at home.
-                         * Need to check
-                        */
-                        $query->whereHas('vendor', function($q){
-                            $q->where('status', 1)->where('showcase_at_home', 1)->where('id', request('vendor_id'));
-                        });
+                    }
+                }
+            })
+            ->when(\Request::route()->getName() == 'products.vendor', function ($query) {
+                /**
+                 * If the catalog route is products.vendor
+                 * then fetch products for selected vendor
+                 * Need to check
+                 */
+                // dd(request('slug'));
+                $query->whereHas('vendor', function ($q) {
+                    $q->where('status', 1);
+                })->where('seller_id', request('slug'));
+            })
+            ->when(!empty(Session::get('showcasecity')), function ($query) {
+                /**
+                 * If showcase at home activated then fetch only products for showcasepincode city
+                 * Map city name
+                 * Need to check
+                 */
 
-                    });
+                $query->whereHas('vendor', function ($q) {
+                    $q->where('status', 1)->where('showcase_at_home', 1)->where('city', Session::get('showcasecity'));
+                });
+            })
+            ->when(\Request::route()->getName() == 'products.showcase', function ($query) {
+                /**
+                 * If the catalog route is products.showcase
+                 * then fetch only products whose vendor is offering showcase at home.
+                 * Need to check
+                 */
+                $query->whereHas('vendor', function ($q) {
+                    $q->where('status', 1)->where('showcase_at_home', 1);
+                });
+            })
+            ->when(\Request::route()->getName() == 'products.showcase.vendor', function ($query) {
+                /**
+                 * If the catalog route is products.showcase.vendor
+                 * then fetch only products of the selected vendor who is offering showcase at home.
+                 * Need to check
+                 */
+                $query->whereHas('vendor', function ($q) {
+                    $q->where('status', 1)->where('showcase_at_home', 1)->where('id', request('vendor_id'));
+                });
+            });
 
-        
+
 
         $products = $products->inRandomOrder()->paginate($this->paginate);
-        
-        $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
-        
 
-        return view('livewire.catalog.products',[
+        $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
+
+
+        return view('livewire.catalog.products', [
             'categories' => $categories,
             // 'subcategories' => $subcategories,
             'genderss' => Gender::where('status', 1)->where('name', '!=', 'NA')->orderBy('id', 'ASC')->get(),
             'sizess' => Size::where('name', '!=', 'NA')->where('status', 1)->has('products')->orderBy('id', 'ASC')->get(),
             'colorss' => Color::where('name', '!=', 'NA')->where('status', 1)->has('products')->orderBy('id', 'ASC')->get(),
             'brandss' => Brand::where('status', 1)->whereHas('products')->orderBy('id', 'ASC')->get(),
-            
+
             'styless' => Style::where('status', 1)->orderBy('id', 'ASC')->get(),
             'occasionss' => Occasion::where('status', 1)->orderBy('id', 'ASC')->get(),
 
@@ -543,7 +522,7 @@ class Products extends Component
             'modelss' => Modellist::where('name', '!=', 'NA')->where('status', 1)->orderBy('id', 'ASC')->get(),
             'voltagess' => Voltage::where('name', '!=', 'NA')->where('status', 1)->orderBy('id', 'ASC')->get(),
             'interfacess' => InterfaceList::where('name', '!=', 'NA')->where('status', 1)->orderBy('id', 'ASC')->get(),
-            
+
             'products' => $products,
         ]);
     }
@@ -556,7 +535,4 @@ class Products extends Component
         Session::flash('success', 'Showcase At Home deactivated');
         return redirect()->route('products');
     }
-
-
-    
 }

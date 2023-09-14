@@ -59,7 +59,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Route::get('/msg91', function(){
 //     // https://github.com/craftsys/msg91-laravel#installation
@@ -98,15 +98,15 @@ require __DIR__.'/auth.php';
  * Laravel admin
  */
 
-    Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
-        Voyager::routes(['verify', true]);
-        Route::get('/downloadlabel', [DownloadLabelController::class, 'downloadlabel'])->name('downloadlabel');
-        Route::post('/orders/downloadtaxinvoice', [DownloadLabelController::class, 'downloadtaxinvoice'])->name('downloadtaxinvoice');
-    });
+Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
+    Voyager::routes(['verify', true]);
+    Route::get('/downloadlabel', [DownloadLabelController::class, 'downloadlabel'])->name('downloadlabel');
+    Route::post('/orders/downloadtaxinvoice', [DownloadLabelController::class, 'downloadtaxinvoice'])->name('downloadtaxinvoice');
+});
 
- /**
-  * End Laravel admin
-  */
+/**
+ * End Laravel admin
+ */
 
 
 /**
@@ -116,23 +116,23 @@ require __DIR__.'/auth.php';
  * used this guilde
  */
 
-    Route::get("generate-sitemap", function () {
-        SitemapGenerator::create(env('APP_URL'))->writeToFile('../../public_html/'.str_replace('https://', '', env('APP_URL')).'/sitemap.xml');
-    });
+Route::get("generate-sitemap", function () {
+    SitemapGenerator::create(env('APP_URL'))->writeToFile('../../public_html/' . str_replace('https://', '', env('APP_URL')) . '/sitemap.xml');
+});
 
 /**
-* End Sitemap
-*/
+ * End Sitemap
+ */
 
 
 /** Language Transation */
-    Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 
 
- /**
-  * For SEO use this package: https://romanzipp.github.io/Laravel-SEO/example-app.html#service-provider
-  */
+/**
+ * For SEO use this package: https://romanzipp.github.io/Laravel-SEO/example-app.html#service-provider
+ */
 
 
 
@@ -141,10 +141,10 @@ require __DIR__.'/auth.php';
 /**
  * Header
  */
-    Route::post('/search', [WelcomeController::class, 'search'])->name('search');
- /**
-  * End header
-  */
+Route::post('/search', [WelcomeController::class, 'search'])->name('search');
+/**
+ * End header
+ */
 
 
 
@@ -156,8 +156,8 @@ require __DIR__.'/auth.php';
  * Homepage
  */
 
-    Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-    Route::get('/slider/{slug}', [WelcomeController::class, 'slider'])->name('slider.slug');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+Route::get('/slider/{slug}', [WelcomeController::class, 'slider'])->name('slider.slug');
 /**
  * End homepage
  */
@@ -172,7 +172,7 @@ require __DIR__.'/auth.php';
  * About us
  */
 
-    Route::get('/about-us', [WelcomeController::class, 'aboutus'])->name('aboutus');
+Route::get('/about-us', [WelcomeController::class, 'aboutus'])->name('aboutus');
 
 /**
  * End about us
@@ -180,12 +180,12 @@ require __DIR__.'/auth.php';
 
 
 
- /**
-  * Contact us
-  */
+/**
+ * Contact us
+ */
 
-    Route::get('/contactus', [WelcomeController::class, 'contactus'])->name('contactus');
-    Route::post('/contactus', [WelcomeController::class, 'contactuspost'])->name('contactuspost');
+Route::get('/contactus', [WelcomeController::class, 'contactus'])->name('contactus');
+Route::post('/contactus', [WelcomeController::class, 'contactuspost'])->name('contactuspost');
 
 
 /**
@@ -193,32 +193,30 @@ require __DIR__.'/auth.php';
  */
 
 
- /**
+/**
  * Blogs
  */
-if(Config::get('icrm.frontend.blogs.feature') == 1)
-{
-    Route::prefix('blogs')->group(function(){
+if (Config::get('icrm.frontend.blogs.feature') == 1) {
+    Route::prefix('blogs')->group(function () {
         Route::get('/all', [BlogsController::class, 'index'])->name('blogs');
         Route::get('/blog/{slug}', [BlogsController::class, 'blog'])->name('blog');
     });
 }
 /**
-* End blog
-*/
+ * End blog
+ */
 
 
 /**
-* Newsletters component
-*/
-if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
-{
+ * Newsletters component
+ */
+if (Config::get('icrm.frontend.newslettersignup.feature') == 1) {
     Route::post('/newslettersignup', [WelcomeController::class, 'newslettersignup'])->name('newslettersignup');
 }
 
 /**
-* End newsletter component
-*/
+ * End newsletter component
+ */
 
 
 
@@ -226,26 +224,26 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * Catalog and product
  */
 
-    Route::get('/products', [WelcomeController::class, 'products'])->name('products');
-    Route::get('/products/category/{category}', [WelcomeController::class, 'productscategory'])->name('products.category');
-    Route::get('/products/subcategory/{subcategory}', [WelcomeController::class, 'productssubcategory'])->name('products.subcategory');
-    Route::get('/products/vendor/{slug}', [WelcomeController::class, 'productsfromvendor'])->name('products.vendor');
+Route::get('/products', [WelcomeController::class, 'products'])->name('products');
+Route::get('/products/{vendor_id}', [WelcomeController::class, 'brandByVendor'])->name('products-brnads');
+Route::get('/products/category/{category}', [WelcomeController::class, 'productscategory'])->name('products.category');
+Route::get('/products/subcategory/{subcategory}', [WelcomeController::class, 'productssubcategory'])->name('products.subcategory');
+Route::get('/products/vendor/{slug}', [WelcomeController::class, 'productsfromvendor'])->name('products.vendor');
 
-    Route::get('/product/{slug}', [WelcomeController::class, 'product'])->name('product.slug');
+Route::get('/product/{slug}', [WelcomeController::class, 'product'])->name('product.slug');
 
 
-    if(Config::get('icrm.showcase_at_home.feature') == 1)
-    {
-        Route::get('/products/showcase-at-home', [WelcomeController::class, 'productsshowcaseathome'])->name('products.showcase');
-        Route::get('/products/showcase-at-home/vendor/{vendor_id}', [WelcomeController::class, 'productsshowcaseathomeforvendor'])->name('products.showcase.vendor');
-    }
+if (Config::get('icrm.showcase_at_home.feature') == 1) {
+    Route::get('/products/showcase-at-home', [WelcomeController::class, 'productsshowcaseathome'])->name('products.showcase');
+    Route::get('/products/showcase-at-home/vendor/{vendor_id}', [WelcomeController::class, 'productsshowcaseathomeforvendor'])->name('products.showcase.vendor');
+}
 
-    // Route::get('/product/{slug}/{color}', [WelcomeController::class, 'productcolor'])->name('product.slug.color');
-    // Route::get('/product/{slug}/csin-{sin}', [WelcomeController::class, 'productsin'])->name('product.slug.sin');
+// Route::get('/product/{slug}/{color}', [WelcomeController::class, 'productcolor'])->name('product.slug.color');
+// Route::get('/product/{slug}/csin-{sin}', [WelcomeController::class, 'productsin'])->name('product.slug.sin');
 
- /**
-  * End catalog and product
-  */
+/**
+ * End catalog and product
+ */
 
 
 
@@ -256,11 +254,11 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * Bag wishlist
  */
 
-    Route::post('/bag/wishlist', [WishlistController::class, 'wishlist'])->name('bag.wishlist');
+Route::post('/bag/wishlist', [WishlistController::class, 'wishlist'])->name('bag.wishlist');
 
-    Route::prefix('shopping-cart')->middleware(['auth', 'verified'])->group(function(){
-        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
-    });
+Route::prefix('shopping-cart')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist');
+});
 
 
 /**
@@ -275,54 +273,53 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * Customization
  */
 
-    if (Config::get('icrm.customize.feature') == 1){
-        Route::prefix('customization')->group(function(){
-            Route::get('/introduction', [CustomizeProductController::class, 'introduction'])->name('customize.introduction');
-            Route::get('/customize', [CustomizeProductController::class, 'customize'])->name('customize');
-            Route::post('/customize/customized', [CustomizeProductController::class, 'customized'])->name('customize.customized');
+if (Config::get('icrm.customize.feature') == 1) {
+    Route::prefix('customization')->group(function () {
+        Route::get('/introduction', [CustomizeProductController::class, 'introduction'])->name('customize.introduction');
+        Route::get('/customize', [CustomizeProductController::class, 'customize'])->name('customize');
+        Route::post('/customize/customized', [CustomizeProductController::class, 'customized'])->name('customize.customized');
 
-            // upload media
-            Route::post('/customize/uploadmedia', [CustomizeProductController::class, 'uploadmedia'])->name('customize.uploadmedia');
+        // upload media
+        Route::post('/customize/uploadmedia', [CustomizeProductController::class, 'uploadmedia'])->name('customize.uploadmedia');
 
-            Route::get('/customize/sharefiles', [CustomizeProductController::class, 'sharefiles'])->name('customize.sharefiles');
-            Route::post('/customize/movetobag', [CustomizeProductController::class, 'movetobag'])->name('customize.movetobag');
+        Route::get('/customize/sharefiles', [CustomizeProductController::class, 'sharefiles'])->name('customize.sharefiles');
+        Route::post('/customize/movetobag', [CustomizeProductController::class, 'movetobag'])->name('customize.movetobag');
+    });
+}
 
-        });
-    }
-
- /**
-  * End customization
-  */
+/**
+ * End customization
+ */
 
 
 /**
  * Showcase at home
  */
-    if (Config::get('icrm.showcase_at_home.feature') == 1){
-        Route::prefix('showcase-at-home')->group(function () {
-            Route::get('/introduction', [ShowcaseAtHomeController::class, 'introduction'])->name('showcase.introduction');
-            Route::get('/get-started', [ShowcaseAtHomeController::class, 'getstarted'])->name('showcase.getstarted');
-            Route::post('/activate', [ShowcaseAtHomeController::class, 'activateshowcase'])->name('showcase.activate');
-            Route::post('/deactivate', [ShowcaseAtHomeController::class, 'deactivateshowcase'])->name('showcase.deactivate');
-        });
-    }
-
-    Route::prefix('showcase-at-home')->middleware(['auth', 'verified'])->group(function(){
-        Route::get('/bag', [ShowcaseAtHomeController::class, 'bag'])->name('showcase.bag');
-        Route::get('/bag/checkout', [ShowcaseAtHomeController::class, 'checkout'])->name('showcase.checkout');
-        Route::post('/paynow', [ShowcaseAtHomeController::class, 'paynow'])->name('showcase.paynow');
-        Route::post('/purchase/paynow', [ShowcaseAtHomeController::class, 'purchasepaynow'])->name('showcase.purchase.paynow');
-
-        Route::prefix('my-orders')->middleware(['auth', 'verified'])->group(function(){
-            Route::get('/all', [ShowcaseAtHomeController::class, 'myorders'])->name('showcase.myorders');
-            Route::get('/order/{id}', [ShowcaseAtHomeController::class, 'ordercomplete'])->name('showcase.ordercomplete');
-            Route::get('/order/{id}/buynow', [ShowcaseAtHomeController::class, 'buynow'])->name('showcase.buynow');
-        });
+if (Config::get('icrm.showcase_at_home.feature') == 1) {
+    Route::prefix('showcase-at-home')->group(function () {
+        Route::get('/introduction', [ShowcaseAtHomeController::class, 'introduction'])->name('showcase.introduction');
+        Route::get('/get-started', [ShowcaseAtHomeController::class, 'getstarted'])->name('showcase.getstarted');
+        Route::post('/activate', [ShowcaseAtHomeController::class, 'activateshowcase'])->name('showcase.activate');
+        Route::post('/deactivate', [ShowcaseAtHomeController::class, 'deactivateshowcase'])->name('showcase.deactivate');
     });
+}
 
- /**
-  * End showcase at home
-  */
+Route::prefix('showcase-at-home')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/bag', [ShowcaseAtHomeController::class, 'bag'])->name('showcase.bag');
+    Route::get('/bag/checkout', [ShowcaseAtHomeController::class, 'checkout'])->name('showcase.checkout');
+    Route::post('/paynow', [ShowcaseAtHomeController::class, 'paynow'])->name('showcase.paynow');
+    Route::post('/purchase/paynow', [ShowcaseAtHomeController::class, 'purchasepaynow'])->name('showcase.purchase.paynow');
+
+    Route::prefix('my-orders')->middleware(['auth', 'verified'])->group(function () {
+        Route::get('/all', [ShowcaseAtHomeController::class, 'myorders'])->name('showcase.myorders');
+        Route::get('/order/{id}', [ShowcaseAtHomeController::class, 'ordercomplete'])->name('showcase.ordercomplete');
+        Route::get('/order/{id}/buynow', [ShowcaseAtHomeController::class, 'buynow'])->name('showcase.buynow');
+    });
+});
+
+/**
+ * End showcase at home
+ */
 
 
 
@@ -330,14 +327,14 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * Bag
  */
 
-    Route::prefix('shopping-cart')->group(function(){
-        Route::get('/bag', [BagController::class, 'bag'])->name('bag');
-    });
+Route::prefix('shopping-cart')->group(function () {
+    Route::get('/bag', [BagController::class, 'bag'])->name('bag');
+});
 
-    Route::prefix('shopping-cart')->middleware(['auth', 'verified'])->group(function(){
-        Route::get('/bag/checkout', [BagController::class, 'checkout'])->name('checkout');
-        Route::post('/bag/paynow', [BagController::class, 'paynow'])->name('bag.paynow');
-    });
+Route::prefix('shopping-cart')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/bag/checkout', [BagController::class, 'checkout'])->name('checkout');
+    Route::post('/bag/paynow', [BagController::class, 'paynow'])->name('bag.paynow');
+});
 
 
 /**
@@ -352,20 +349,20 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  */
 
 
-    Route::prefix('my-orders')->middleware(['auth', 'verified'])->group(function(){
-        Route::get('/all', [myorderscontroller::class, 'index'])->name('myorders');
-        Route::get('/order/{id}', [myorderscontroller::class, 'ordercomplete'])->name('ordercomplete');
-        Route::post('/order/{id}/downloadinvoice', [myorderscontroller::class, 'downloadinvoice'])->name('downloadinvoice');
+Route::prefix('my-orders')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/all', [myorderscontroller::class, 'index'])->name('myorders');
+    Route::get('/order/{id}', [myorderscontroller::class, 'ordercomplete'])->name('ordercomplete');
+    Route::post('/order/{id}/downloadinvoice', [myorderscontroller::class, 'downloadinvoice'])->name('downloadinvoice');
 
-        Route::get('/order/{id}/product/{slug}', [myorderscontroller::class, 'orderproduct'])->name('ordercomplete.orderproduct');
-    });
+    Route::get('/order/{id}/product/{slug}', [myorderscontroller::class, 'orderproduct'])->name('ordercomplete.orderproduct');
+});
 
-    Route::get('/tu/{id}', [myorderscontroller::class, 'ordercomplete'])->name('trackingurl')->middleware('auth');
+Route::get('/tu/{id}', [myorderscontroller::class, 'ordercomplete'])->name('trackingurl')->middleware('auth');
 
 
- /**
-  * end my orders
-  */
+/**
+ * end my orders
+ */
 
 
 
@@ -373,28 +370,28 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * Page generator
  */
 
-    Route::get('/page/{slug}', [WelcomeController::class, 'page'])->name('page.slug');
+Route::get('/page/{slug}', [WelcomeController::class, 'page'])->name('page.slug');
 
 
 /**
-  * End page generator
-*/
+ * End page generator
+ */
 
 
 /**
  * My account
  */
 
-    Route::prefix('my-account')->middleware(['auth', 'verified'])->group(function(){
-        Route::get('/account-details', [MyAccountController::class, 'myaccount'])->name('myaccount');
-        // Route::post('/updateprofile', [MyAccountController::class, 'updateprofile'])->name('update-profile');
+Route::prefix('my-account')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/account-details', [MyAccountController::class, 'myaccount'])->name('myaccount');
+    // Route::post('/updateprofile', [MyAccountController::class, 'updateprofile'])->name('update-profile');
 
-        // Route::get('/change-password', [MyAccountController::class, 'changepassword'])->name('myaccount-change-password');
+    // Route::get('/change-password', [MyAccountController::class, 'changepassword'])->name('myaccount-change-password');
 
-        // Route::get('/manage-addresses', [MyAccountController::class, 'manageaddresses'])->name('myaccount-manage-addresses');
-        // Route::post('/manage-addresses', [MyAccountController::class, 'postmanageaddresses'])->name('post.myaccount-manage-addresses');
-        // Route::get('/request-return', [MyAccountController::class, 'requestreturn'])->name('myaccount.return');
-    });
+    // Route::get('/manage-addresses', [MyAccountController::class, 'manageaddresses'])->name('myaccount-manage-addresses');
+    // Route::post('/manage-addresses', [MyAccountController::class, 'postmanageaddresses'])->name('post.myaccount-manage-addresses');
+    // Route::get('/request-return', [MyAccountController::class, 'requestreturn'])->name('myaccount.return');
+});
 
 /**
  * End my account
@@ -411,13 +408,13 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
 /**
  * Vendor signup
  */
-    if(Config::get('icrm.vendor.signup') == 1){
-        Route::get('/become-a-seller', [VendorController::class, 'becomeseller'])->name('becomeseller');
-        Route::post('/become-a-seller', [VendorController::class, 'vendorsignup'])->name('vendorsignup');
-    }
+if (Config::get('icrm.vendor.signup') == 1) {
+    Route::get('/become-a-seller', [VendorController::class, 'becomeseller'])->name('becomeseller');
+    Route::post('/become-a-seller', [VendorController::class, 'vendorsignup'])->name('vendorsignup');
+}
 /**
  * End vendor signup
-*/
+ */
 
 
 
@@ -426,63 +423,63 @@ if(Config::get('icrm.frontend.newslettersignup.feature') == 1)
  * All these routes are only for developer to use for the laravel optimization
  */
 
-    //Clear Cache facade value:
-    Route::get('/clear-cache', function() {
-        $exitCode = Artisan::call('cache:clear');
-        return '<h1>Cache facade value cleared</h1>';
-    });
+//Clear Cache facade value:
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('cache:clear');
+    return '<h1>Cache facade value cleared</h1>';
+});
 
-    //Reoptimized class loader:
-    Route::get('/optimize', function() {
-        $exitCode = Artisan::call('optimize');
-        return '<h1>Reoptimized class loader</h1>';
-    });
+//Reoptimized class loader:
+Route::get('/optimize', function () {
+    $exitCode = Artisan::call('optimize');
+    return '<h1>Reoptimized class loader</h1>';
+});
 
-    //Route cache:
-    Route::get('/route-cache', function() {
-        $exitCode = Artisan::call('route:cache');
-        return '<h1>Routes cached</h1>';
-    });
+//Route cache:
+Route::get('/route-cache', function () {
+    $exitCode = Artisan::call('route:cache');
+    return '<h1>Routes cached</h1>';
+});
 
-    //Clear Route cache:
-    Route::get('/route-clear', function() {
-        $exitCode = Artisan::call('route:clear');
-        return '<h1>Route cache cleared</h1>';
-    });
+//Clear Route cache:
+Route::get('/route-clear', function () {
+    $exitCode = Artisan::call('route:clear');
+    return '<h1>Route cache cleared</h1>';
+});
 
-    //Clear View cache:
-    Route::get('/view-clear', function() {
-        $exitCode = Artisan::call('view:clear');
-        return '<h1>View cache cleared</h1>';
-    });
+//Clear View cache:
+Route::get('/view-clear', function () {
+    $exitCode = Artisan::call('view:clear');
+    return '<h1>View cache cleared</h1>';
+});
 
-    //Clear Config cache:
-    Route::get('/config-cache', function() {
-        $exitCode = Artisan::call('config:cache');
-        return '<h1>Config cached</h1>';
-    });
+//Clear Config cache:
+Route::get('/config-cache', function () {
+    $exitCode = Artisan::call('config:cache');
+    return '<h1>Config cached</h1>';
+});
 
-    //Clear Config cache:
-    Route::get('/config-clear', function() {
-        $exitCode = Artisan::call('config:clear');
-        return '<h1>Config cleared</h1>';
-    });
+//Clear Config cache:
+Route::get('/config-clear', function () {
+    $exitCode = Artisan::call('config:clear');
+    return '<h1>Config cleared</h1>';
+});
 
 
-    //Clear Config cache:
-    Route::get('/backup-run', function() {
-        $exitCode = Artisan::call('backup:run');
-        return '<h1>Backup done</h1>';
-    });
+//Clear Config cache:
+Route::get('/backup-run', function () {
+    $exitCode = Artisan::call('backup:run');
+    return '<h1>Backup done</h1>';
+});
 
-    //Clear Config cache:
-    Route::get('/backup-clean', function() {
-        $exitCode = Artisan::call('backup:clean');
-        return '<h1>Backup cleaned</h1>';
-    });
+//Clear Config cache:
+Route::get('/backup-clean', function () {
+    $exitCode = Artisan::call('backup:clean');
+    return '<h1>Backup cleaned</h1>';
+});
 
 /**
  * End laravel optimize
  */
 
- Route::view('/invoice/test','vendor.invoices.templates.default');
+Route::view('/invoice/test', 'vendor.invoices.templates.default');

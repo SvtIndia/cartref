@@ -13,6 +13,7 @@ use App\HomeSlider;
 use App\Newsletter;
 use App\Productsku;
 use App\Models\Product;
+use App\Models\User;
 use App\ProductCategory;
 use App\ProductSubcategory;
 use Darryldecode\Cart\Cart;
@@ -38,9 +39,9 @@ class WelcomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
         $homesliders = HomeSlider::where('status', 1)->orderBy('order_id', 'ASC')->get();
-        
+
         if (Config::get('icrm.frontend.flashsale.feature') == 1){
 
             $flashsales = Product::
@@ -53,11 +54,11 @@ class WelcomeController extends Controller
         }else{
             $flashsales = [];
         }
-        
+
 
         // $categories = ProductCategory::where('status', 1)->get();
         // $subcategories = ProductSubcategory::where('status', 1)->get();
-        
+
         // 3 column collections
         if(Config::get('icrm.frontend.threecolumncomponent.feature') == 1)
         {
@@ -65,7 +66,7 @@ class WelcomeController extends Controller
         }else{
             $collections3c = [];
         }
-        
+
         // 2 column collections
         if(Config::get('icrm.frontend.twocolumncomponent.feature') == 1)
         {
@@ -96,7 +97,7 @@ class WelcomeController extends Controller
         }else{
             $collections5cfr = [];
         }
-        
+
 
         if(Config::get('icrm.frontend.trendingproducts.feature') == 1)
         {
@@ -104,7 +105,7 @@ class WelcomeController extends Controller
         }else{
             $trendings = [];
         }
-        
+
         if(Config::get('icrm.frontend.blogs.feature') == 1)
         {
             $blogs = Post::where('status', 'PUBLISHED')->where('featured', 1)->take(4)->get();
@@ -186,7 +187,7 @@ class WelcomeController extends Controller
             ->take(Config::get('icrm.frontend.trendingproducts.count'))
             ->get();
          }
-         
+
         return $trendings;
     }
 
@@ -226,13 +227,32 @@ class WelcomeController extends Controller
      */
     public function products()
     {
-        
 
+        if(Session::get('city') && !isset($_GET['brand_name'])){
+            $city = Session::get('city');
+            $users = User::where('city','LIKE','%'.$city.'%')->get();
+
+            return view('vendors')->with([
+                'users' => $users
+            ]);
+        }
         return view('products')->with([
-            
+
         ]);
     }
 
+    public function brandByVendor($user_id){
+        if(Session::get('city')){
+            $city = Session::get('city');
+            $user = User::where('city','LIKE','%'.$city.'%')->whereId($user_id)->first();
+
+            return view('brand')->with([
+                'user' => $user
+            ]);
+        }
+
+        return redirect()->route('products');
+    }
 
     /**
      * Display a listing of the resource.
@@ -244,7 +264,7 @@ class WelcomeController extends Controller
         // filter accordig to category
 
         return view('products')->with([
-            
+
         ]);
     }
 
@@ -259,7 +279,7 @@ class WelcomeController extends Controller
         // filter accordig to subcategory
 
         return view('products')->with([
-            
+
         ]);
     }
 
@@ -290,16 +310,16 @@ class WelcomeController extends Controller
         ]);
     }
 
-    
 
-    
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function product($slug)
-    {       
+    {
         Session::remove('quickviewid');
 
         if(Auth::check())
@@ -329,7 +349,7 @@ class WelcomeController extends Controller
         {
             return abort(404);
         }
-    
+
         $relatedproducts = Product::where('admin_status', 'Accepted')
                             ->where('subcategory_id', $product->subcategory_id)
                             ->whereHas('vendor', function($q){
@@ -343,7 +363,7 @@ class WelcomeController extends Controller
             // add product in recently viewed list
             $this->recentlyviewed($product);
         }
-        
+
         $shareComponent = \Share::page(
             route('product.slug', ['slug' => $product->slug]),
             $product->description,
@@ -351,10 +371,10 @@ class WelcomeController extends Controller
         ->facebook()
         ->linkedin()
         ->whatsapp();
-        
+
         $previous = Product::where('admin_status', 'Accepted')->where('id', '<', $product->id)->orderBy('id')->first();
         $next = Product::where('admin_status', 'Accepted')->where('id', '>', $product->id)->orderBy('id')->first();
-        
+
         /**
          * If the product color is sku
          * Check if the url does has color
@@ -408,13 +428,13 @@ class WelcomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function productcolor($slug, $color)
-    {       
+    {
         $product = Product::where('slug', $slug)->where('admin_status', 'Accepted')->whereHas('productskus', function($q) use($color){
             $q->where('color', $color);
         })->with('productsku')->first();
 
-        
-        
+
+
         $morecolors = Productsku::
                     groupBy('color', 'main_image')
                     ->select('color', DB::raw('count(*) as total'), 'main_image')
@@ -428,8 +448,8 @@ class WelcomeController extends Controller
         // add product in recently viewed list
         $this->recentlyviewed($product);
 
-        
-        
+
+
         return view('product')->with([
             'product' => $product,
             'morecolors' => $morecolors,
@@ -444,7 +464,7 @@ class WelcomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function productsin($slug, $sin  )
-    {       
+    {
         $product = Product::where('slug', $slug)->where('id', $sin)->where('status', 1)->first();
         $morecolors = Product::where('product_group', $product->product_group)->where('id', '!=', $product->id)->where('status', 1)->get();
         $similarproducts = Product::where('status', 1)->take(10)->get();
@@ -452,8 +472,8 @@ class WelcomeController extends Controller
         // add product in recently viewed list
         $this->recentlyviewed($product);
 
-        
-        
+
+
         return view('product')->with([
             'product' => $product,
             'morecolors' => $morecolors,
@@ -471,14 +491,14 @@ class WelcomeController extends Controller
             $product->name,
             $product->offer_price,
             '1'
-        );        
-        
+        );
+
         return;
     }
 
-  
 
-    
+
+
     /**
      * Display a listing of the resource.
      *
@@ -490,7 +510,7 @@ class WelcomeController extends Controller
     }
 
 
-    
+
 
     /**
      * Display a listing of the resource.
@@ -545,7 +565,7 @@ class WelcomeController extends Controller
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->where('status', 'ACTIVE')->first();
-        
+
         $previous = Page::related()
                         ->where('id', '<', $page->id)
                         ->orderBy('id', 'DESC')->first();
@@ -562,7 +582,7 @@ class WelcomeController extends Controller
     }
 
 
-    
+
 
     /**
      * Display a listing of the resource.
@@ -572,7 +592,7 @@ class WelcomeController extends Controller
     public function slider($slug)
     {
         $slider = HomeSlider::where('id', $slug)->where('status', 1)->first();
-        
+
         $previous = HomeSlider::where('status', 1)
                         ->whereNull('url')
                         ->where('id', '<', $slider->id)
