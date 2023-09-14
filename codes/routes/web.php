@@ -42,6 +42,7 @@ use App\Http\Controllers\DownloadLabelController;
 use App\Http\Controllers\ShowcaseAtHomeController;
 use App\Http\Controllers\CustomizeProductController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ProductBulkUploadController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -99,7 +100,10 @@ require __DIR__ . '/auth.php';
  */
 
 Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
+    Route::get('/products/bulk-upload', [ProductBulkUploadController::class ,'upload'])->name('products.bulk-upload');
+
     Voyager::routes(['verify', true]);
+
     Route::get('/downloadlabel', [DownloadLabelController::class, 'downloadlabel'])->name('downloadlabel');
     Route::post('/orders/downloadtaxinvoice', [DownloadLabelController::class, 'downloadtaxinvoice'])->name('downloadtaxinvoice');
 });

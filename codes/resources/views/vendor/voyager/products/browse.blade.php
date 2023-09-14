@@ -33,6 +33,10 @@
             @endif
         @endforeach
 
+        <a href="{{ route('products.bulk-upload') }}" class="btn btn-warning btn-add-new">
+            <i class="voyager-upload"></i> <span>Bulk Upload</span>
+        </a>
+
         @livewire('productsdashboard')
 
         @include('voyager::multilingual.language-selector')
@@ -93,7 +97,7 @@
                                             @if ($isServerSide && in_array($row->field, $sortableColumns))
                                                 <a href="{{ $row->sortByUrl($orderBy, $sortOrder) }}">
                                             @endif
-                                            
+
                                             @if ($row->getTranslatedAttribute('display_name') == 'Id')
                                                     {{ substr(setting('site.title'), 0,1).'SIN '.$row->getTranslatedAttribute('display_name') }}
                                             @else
@@ -140,13 +144,13 @@
                                                 @if (isset($row->details->view))
                                                     @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $data->{$row->field}, 'action' => 'browse', 'view' => 'browse', 'options' => $row->details])
                                                 @elseif($row->type == 'image')
-                                                    
+
                                                     @if($row->getTranslatedAttribute('display_name') == 'Main Image')
                                                         <a href="{{ route('product.slug', ['slug' => $data->slug]) }}" target="_blank">
                                                     @endif
-                                                    
+
                                                     <img src="@if( !filter_var($data->{$row->field}, FILTER_VALIDATE_URL)){{ Voyager::image( $data->{$row->field} ) }}@else{{ $data->{$row->field} }}@endif">
-                                                    
+
                                                     @if($row->getTranslatedAttribute('display_name') == 'Product Title')
                                                         </a>
                                                     @endif
@@ -206,19 +210,19 @@
                                                 @elseif($row->type == 'color')
                                                     <span class="badge badge-lg" style="background-color: {{ $data->{$row->field} }}">{{ $data->{$row->field} }}</span>
                                                 @elseif($row->type == 'text')
-                                                    
+
                                                     @if($row->getTranslatedAttribute('display_name') == 'Product Title')
                                                         <a href="{{ route('product.slug', ['slug' => $data->slug]) }}" target="_blank" style="color: blue;">
                                                     @endif
-                                                    
+
                                                         @include('voyager::multilingual.input-hidden-bread-browse')
-                                                        
+
                                                         @if ($row->getTranslatedAttribute('display_name') == 'Id')
                                                             <div>{{ mb_strlen( $data->{$row->field} ) > 50 ? mb_substr($data->{$row->field}, 0, 50) . ' ...' : substr(setting('site.title'), 0,1).'SIN'.$data->{$row->field} }}</div>
                                                         @else
                                                             <div>{{ mb_strlen( $data->{$row->field} ) > 50 ? mb_substr($data->{$row->field}, 0, 50) . ' ...' : $data->{$row->field} }}</div>
                                                         @endif
-                                                                                                            
+
                                                     @if($row->getTranslatedAttribute('display_name') == 'Product Title')
                                                         </a>
                                                     @endif
@@ -293,7 +297,7 @@
                                                 @endif
                                             </td>
                                         @endforeach
-                                        
+
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -340,7 +344,7 @@
                                         @endif
                                         <td>
                                             <div class="product-information">
-                                                
+
                                                 <a href="{{ route('product.slug', ['slug' => $data->slug]) }}" class="name" target="_blank">
                                                     <img src="{{ Voyager::image($data->image) }}" alt="{{ $data->name }}">
                                                 </a>
@@ -363,11 +367,11 @@
                                                             Subcategory: {{ $data->productsubcategory->name }}
                                                         </div>
 
-                                                        
+
                                                         @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
                                                             @if (!empty($data->seller_id))
                                                                 <div>
-                                                                    Vendor: 
+                                                                    Vendor:
                                                                     <a href="{{ route('products.vendor', ['slug' => $data->vendor->id]) }}" target="_blank" style="color: #7396A9; opacity: 1;">
                                                                         {{ $data->vendor->brand_name }}
                                                                     </a>
@@ -400,7 +404,7 @@
                                             <div>Offer Price: {{ Config::get('icrm.currency.icon').$data->offer_price }}</div>
                                             <div>MRP: <strike>{{ Config::get('icrm.currency.icon').$data->mrp }}</strike></div>
                                         </td>
-                                        
+
                                         <td>
                                             {{ $data->admin_status }}
                                         </td>
