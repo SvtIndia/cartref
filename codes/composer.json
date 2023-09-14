@@ -21,7 +21,7 @@
         "razorpay/razorpay": "^2.8",
         "seshac/laravel-shiprocket-api": "^2.0",
         "spatie/laravel-sitemap": "^5.9",
-        "tcg/voyager": "^1.5",
+        "tcg/voyager": "*",
         "tucker-eric/eloquentfilter": "^3.0"
     },
     "require-dev": {

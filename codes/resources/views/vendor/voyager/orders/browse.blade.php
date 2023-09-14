@@ -527,7 +527,11 @@
                             </div>
                         @endif --}}
 
-
+<?php
+// echo"<pre>";
+//     print_r($dataTypeContent[0]);
+//     echo"</pre>";
+    ?>
                         <div class="sliding-btn-div">
                             <nav>
                                 <ul class="pagination">
@@ -572,7 +576,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($dataTypeContent as $data)
-                                        {{-- {{ json_encode($data, JSON_PRETTY_PRINT) }} --}}
+
+
                                         <tr
                                             @if ($data->order_status == 'Under processing') style="background: #fce5c1;" @elseif($data->order_status == 'Ready to dispatch') style="background: #c2e6fa;" @elseif($data->order_status == 'Shipped') style="background: #d4fae4;" @endif>
                                             <td class="no-sort no-click bread-actions" style="width: 2% !important;">
@@ -611,6 +616,19 @@
                                                         href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?order_id={{ $data->order_id }}">
                                                         {{ $data->order_id }}
                                                     </a>
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    @php
+                                                    $hourdiff = round((time() - strtotime($data->created_at))/3600, 1);
+                                                    if ($hourdiff>36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
+                                                       echo '<span
+                                                                style="color: red;font-weight:600; font-size:15px">Order Delayed (Deduct 10%)</span>'; # code...
+                                                    }elseif ($hourdiff<36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
+                                                       echo '<span
+                                                                style="color: green;font-weight:600; font-size:15px">'.$hourdiff.' Hours Left to Dispatch</span>'; # code...
+                                                    }
+                                                    @endphp
                                                 </div>
                                             </td>
                                             <td style="width: 10% !important;">
