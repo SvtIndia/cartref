@@ -23,7 +23,7 @@
         </a>
         <form action="{{ route('search') }}" method="post" class="input-wrapper">
             @csrf
-            <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search your keyword..." required="">
+            <input type="text" class="form-control" name="search" value="{{ $_GET['search'] ?? '' }}" autocomplete="off" placeholder="Search your keyword..." value="{{ $_GET['search'] ?? '' }}" required="">
             <button class="btn btn-search" type="submit" title="submit-button">
                 <i class="d-icon-search"></i>
             </button>

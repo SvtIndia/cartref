@@ -8,7 +8,7 @@
         <div class="mobile-menu-container scrollable">
             <form action="{{ route('search') }}" method="post" class="input-wrapper">
                 @csrf
-                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search your keyword..." required="">
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search your keyword..." value="{{ $_GET['search'] ?? '' }}" required="">
                 <button class="btn btn-search" type="submit" title="submit-button">
                     <i class="d-icon-search"></i>
                 </button>
@@ -20,7 +20,7 @@
                         <div class="authname">Welcome {{ strtok(auth()->user()->name, ' ') }}!</div>
                     </li>
                 @endauth
-                
+
                 {{ menu('Website', 'components.frontend.headers.01-navs') }}
 
                 <li class="submenu active">

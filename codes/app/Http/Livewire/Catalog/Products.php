@@ -304,36 +304,12 @@ class Products extends Component
                 $query
                     ->where(function ($query) {
 
-                        if (Str::contains($this->search, ['men', 'women', 'kid']) == false) {
-                            $query
-                                ->orWhere('sku', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('name', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%')
-                                // ->orWhere('description', 'LIKE', '%'.$this->search.'%')
-                                ->orWhereHas('productcategory', function ($query) {
-                                    $query
-                                        ->where('name', 'LIKE', '%' . $this->search . '%')
-                                        ->where('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%');
-                                })
-                                ->orWhereHas('productsubcategory', function ($query) {
-                                    $query
-                                        ->where('name', 'LIKE', '%' . $this->search . '%')
-                                        ->where('name', 'LIKE', '%' . substr($this->search, 0, -1) . '%');
-                                });
-                        }
-
-
-
-
                         $splitwords = explode(" ", $this->search);
 
                         foreach ($splitwords as $splitword) {
 
                             if (Str::contains($splitword, ['men', 'women', 'kid']) == false) {
                                 $query
-                                    ->orWhere('name', 'LIKE', '%' . $splitword . '%')
-                                    ->orWhere('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%')
-                                    // ->orWhere('description', 'LIKE', '%'.$splitword.'%')
                                     ->orWhereHas('productcategory', function ($query) use ($splitword) {
                                         $query
                                             ->where('name', 'LIKE', '%' . $splitword . '%')
@@ -346,6 +322,11 @@ class Products extends Component
                                     });
                             }
                         }
+                    })
+                    ->where(function ($query) {
+                        $query->orWhere('sku', 'LIKE', '%' . $this->search . '%');
+                        $query->orWhere('name', 'LIKE', '%' . $this->search . '%');
+                        $query->orWhere('description', 'LIKE', '%' . $this->search . '%');
                     });
             })
             ->when($this->search, function ($query) {
