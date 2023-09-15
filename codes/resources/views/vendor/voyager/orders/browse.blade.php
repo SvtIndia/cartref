@@ -620,13 +620,20 @@
                                                 <br>
                                                 <div>
                                                     @php
+
                                                     $hourdiff = round((time() - strtotime($data->created_at))/3600, 1);
+
+                                                    $date = Carbon\Carbon::parse($data->created_at);
+                                                    $date->addHours(36);
+                                                    $now = Carbon\Carbon::now();
+                                                    $diff = $date->diffInHours($now);
+
                                                     if ($hourdiff>36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
                                                                 style="color: red;font-weight:600; font-size:15px">Order Delayed (Deduct 10%)</span>'; # code...
                                                     }elseif ($hourdiff<36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
-                                                                style="color: green;font-weight:600; font-size:15px">'.Carbon\Carbon::parse($data->created_at)->addHours(36)->format('H: i').' Hours Left to Dispatch</span>'; # code...
+                                                                style="color: green;font-weight:600; font-size:15px">'.$diff.' Hours Left to Dispatch</span>'; # code...
                                                     }
                                                     @endphp
                                                 </div>
