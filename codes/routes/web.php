@@ -100,7 +100,8 @@ require __DIR__ . '/auth.php';
  */
 
 Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
-    Route::get('/products/bulk-upload', [ProductBulkUploadController::class ,'upload'])->name('products.bulk-upload');
+    Route::get('/products/bulk-upload', [ProductBulkUploadController::class ,'uploadPage'])->name('products.bulk-upload');
+    Route::post('/products/bulk-upload', [ProductBulkUploadController::class ,'upload'])->name('products.bulk-upload');
 
     Voyager::routes(['verify', true]);
 

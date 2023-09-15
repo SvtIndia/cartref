@@ -566,12 +566,10 @@ class WelcomeController extends Controller
     {
         $page = Page::where('slug', $slug)->where('status', 'ACTIVE')->first();
 
-        $previous = Page::related()
-                        ->where('id', '<', $page->id)
+        $previous = Page::where('id', '<', $page->id)
                         ->orderBy('id', 'DESC')->first();
 
-        $next = Page::related()
-                        ->where('id', '>', $page->id)
+        $next = Page::where('id', '>', $page->id)
                         ->orderBy('id')->first();
 
         return view('page')->with([

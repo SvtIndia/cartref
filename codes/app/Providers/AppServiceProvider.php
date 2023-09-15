@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
                         str_contains($attribute, '.'),
                         function (Builder $query) use ($attribute, $searchTerm) {
                             [$relationName, $relationAttribute] = explode('.', $attribute);
-        
+
                             $query->orWhereHas($relationName, function (Builder $query) use ($relationAttribute, $searchTerm) {
                                 $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
                             });
@@ -64,10 +64,10 @@ class AppServiceProvider extends ServiceProvider
                     );
                 }
             });
-        
+
             return $this;
         });
-        
+
         Voyager::addFormField(SelectDependentDropdown::class);
 
         Voyager::addAction(\App\Actions\CancelOrder::class);
@@ -84,8 +84,8 @@ class AppServiceProvider extends ServiceProvider
         // Voyager::addAction(\App\Actions\CancelOrder::class);
 
         Paginator::useBootstrap();
-        
-        $pages = Page::related()->where('status', 'ACTIVE')->orderBy('order_id', 'ASC')->get();
+
+        $pages = Page::where('status', 'ACTIVE')->orderBy('order_id', 'ASC')->get();
 
 
         $coupons = Coupon::where('status', 1)
@@ -94,11 +94,11 @@ class AppServiceProvider extends ServiceProvider
                         ->where('user_email', null)
                         ->inRandomOrder()
                         ->get();
-        
+
 
         if(Auth::check())
         {
-            \Cart::session(auth()->user()->id); 
+            \Cart::session(auth()->user()->id);
         }
 
 
@@ -114,7 +114,7 @@ class AppServiceProvider extends ServiceProvider
             'pages' => $pages,
             'coupons' => $coupons,
         ]);
-        
+
     }
 
 
@@ -143,7 +143,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
-            
+
         }
     }
 
