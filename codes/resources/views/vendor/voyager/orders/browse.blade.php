@@ -626,14 +626,14 @@
                                                     $date = Carbon\Carbon::parse($data->created_at);
                                                     $date->addHours(36);
                                                     $now = Carbon\Carbon::now();
-                                                    $diff = $date->diffInHours($now);
+                                                    $diff = $date->diffInSeconds($now);
 
                                                     if ($hourdiff>36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
                                                                 style="color: red;font-weight:600; font-size:15px">Order Delayed (Deduct 10%)</span>'; # code...
                                                     }elseif ($hourdiff<36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
-                                                                style="color: green;font-weight:600; font-size:15px">'.$diff.' Hours Left to Dispatch</span>'; # code...
+                                                                style="color: green;font-weight:600; font-size:15px">'.gmdate('H:i', $diff);.' Hours Left to Dispatch</span>'; # code...
                                                     }
                                                     @endphp
                                                 </div>
