@@ -31,6 +31,9 @@
                     </form>
 
                 </div>
+                <a href="{{ config('app.url') }}/vendor/excel-files/product-dummy.xlsx" download class="btn btn-warning btn-add-new">
+                    <i class="voyager-cloud-download"></i> <span>Download Dummy File</span>
+                </a>
             </div>
         </div>
     </div>

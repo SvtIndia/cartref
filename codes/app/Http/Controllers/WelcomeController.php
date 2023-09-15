@@ -228,7 +228,7 @@ class WelcomeController extends Controller
     public function products()
     {
 
-        if(Session::get('city') && !isset($_GET['brand_name'])){
+        if(Session::get('city') && !isset($_GET['brand_name']) && !isset($_GET['search'])){
             $city = Session::get('city');
             $users = User::where('city','LIKE','%'.$city.'%')->get();
 
