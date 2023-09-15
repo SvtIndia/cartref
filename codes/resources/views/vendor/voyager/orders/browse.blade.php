@@ -203,7 +203,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        @if(auth()->user()->hasRole('Client'))
+                                        @if (auth()->user()->hasRole('Client'))
                                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?all=true">
                                                 <div class="item @if (request('all') == true) active @endif">
                                                     <div class="stat">
@@ -527,11 +527,11 @@
                             </div>
                         @endif --}}
 
-<?php
-// echo"<pre>";
-//     print_r($dataTypeContent[0]);
-//     echo"</pre>";
-    ?>
+                        <?php
+                        // echo"<pre>";
+                        //     print_r($dataTypeContent[0]);
+                        //     echo"</pre>";
+                        ?>
                         <div class="sliding-btn-div">
                             <nav>
                                 <ul class="pagination">
@@ -565,10 +565,14 @@
                                             <th>Seller Information</th>
                                         @endif
                                         <th>Amount</th>
-                                        {{-- @if (auth()->user()->hasRole('Client') || (request('label') != 'New Order' && auth()->user()->hasRole('Vendor'))) --}}
+                                        {{-- @if (auth()->user()->hasRole('Client') ||
+    (request('label') != 'New Order' &&
+        auth()->user()->hasRole('Vendor'))) --}}
                                         <th>Logistic Details</th>
                                         {{-- @endif --}}
-                                        @if (auth()->user()->hasRole('Client'))<th>Buyer Information</th>@endif
+                                        @if (auth()->user()->hasRole('Client'))
+                                            <th>Buyer Information</th>
+                                        @endif
                                         @if (auth()->user()->hasRole('Client'))
                                             <th>Pickup and Delivery</th>
                                         @endif
@@ -603,7 +607,7 @@
                                                         value="{{ $data->getKey() }}">
                                                 </td>
                                             @endif
-                                            <td style="width: 5% !important;">
+                                            <td style="width: 10% !important;">
                                                 <div>
                                                     {{ date('M d, Y', strtotime($data->created_at)) }}
                                                 </div>
@@ -621,25 +625,23 @@
                                                 <div>
                                                     @php
 
-                                                    $hourdiff = round((time() - strtotime($data->created_at))/3600, 1);
+                                                        $hourdiff = round((time() - strtotime($data->created_at)) / 3600, 1);
+
+                                                        $now = $data->created_at;
+                                                        $now->format('Y-m-d H:i:s');
+                                                        $hours = 36;
+                                                        $modified = (clone $now)->add(new DateInterval("PT{$hours}H"));
 
 
+                                                        $newDiff = round((strtotime($modified) - time()) / 3600, 0);
 
-                                                    $now = $data->created_at;
-                                                    $now->format('Y-m-d H:i:s');
-                                                    $hours = 36;
-                                                    $modified = (clone $now)->add(new DateInterval("PT{$hours}H"));
-                                                    $modified->format('Y-m-d H:i:s');
-
-                                                    $newDiff = round((strtotime($modified) - time())/3600, 0);
-
-                                                    if ($hourdiff>36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
-                                                       echo '<span
-                                                                style="color: red;font-weight:600; font-size:15px">Order Delayed (Deduct 10%)</span>'; # code...
-                                                    }elseif ($hourdiff<36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
-                                                       echo '<span
-                                                                style="color: green;font-weight:600; font-size:15px">'.$newDiff.' Hours Left to Dispatch</span>'; # code...
-                                                    }
+                                                        if ($hourdiff > 36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
+                                                            echo '<span
+                                                                style="color: red;font-weight:600; font-size:15px">LATE SHIPMENT</span>'; # code...
+                                                        } elseif ($hourdiff < 36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
+                                                            echo '<span style="color: green;font-weight:400; font-size:12px">Please dispatch your order on or before '.
+                                                                $modified->format('jS M, Y H:i A') .' to avoid a late processing fees of (Order value x 10.35%)'; # code...
+                                                        }
                                                     @endphp
                                                 </div>
                                             </td>
