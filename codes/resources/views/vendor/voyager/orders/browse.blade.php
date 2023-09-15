@@ -623,17 +623,22 @@
 
                                                     $hourdiff = round((time() - strtotime($data->created_at))/3600, 1);
 
-                                                    $date = Carbon\Carbon::parse($data->created_at);
-                                                    $date->addHours(36);
-                                                    $now = Carbon\Carbon::now();
-                                                    $diff = $date->diffInSeconds($now);
+
+
+                                                    $now = $data->created_at;
+                                                    $now->format('Y-m-d H:i:s');
+                                                    $hours = 36;
+                                                    $modified = (clone $now)->add(new DateInterval("PT{$hours}H"));
+                                                    $modified->format('Y-m-d H:i:s');
+
+                                                    $newDiff = round((strtotime($modified) - time())/3600, 0);
 
                                                     if ($hourdiff>36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
                                                                 style="color: red;font-weight:600; font-size:15px">Order Delayed (Deduct 10%)</span>'; # code...
                                                     }elseif ($hourdiff<36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                        echo '<span
-                                                                style="color: green;font-weight:600; font-size:15px">'.gmdate('H:i', $diff).' Hours Left to Dispatch</span>'; # code...
+                                                                style="color: green;font-weight:600; font-size:15px">'.$newDiff.' Hours Left to Dispatch</span>'; # code...
                                                     }
                                                     @endphp
                                                 </div>
