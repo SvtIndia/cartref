@@ -14,7 +14,9 @@ use App\Http\Controllers\Api\V1\DependentDropdownController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/shiprocket-test',function(){
+    return request()->all();
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
