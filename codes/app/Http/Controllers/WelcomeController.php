@@ -32,7 +32,6 @@ class WelcomeController extends Controller
     {
         // $this->middleware(['verified']);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +39,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $homesliders = HomeSlider::where('status', 1)->orderBy('order_id', 'ASC')->get();
+        $homesliders = HomeSlider::where(['status' => 1, 'category' => 'Home'])->orderBy('order_id', 'ASC')->get();
 
         if (Config::get('icrm.frontend.flashsale.feature') == 1){
 
@@ -62,7 +61,7 @@ class WelcomeController extends Controller
         // 3 column collections
         if(Config::get('icrm.frontend.threecolumncomponent.feature') == 1)
         {
-            $collections3c = Collection::where('status', 1)->where('group_name', '3Column')->take(3)->get();
+            $collections3c = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '3Column')->take(3)->get();
         }else{
             $collections3c = [];
         }
@@ -70,7 +69,7 @@ class WelcomeController extends Controller
         // 2 column collections
         if(Config::get('icrm.frontend.twocolumncomponent.feature') == 1)
         {
-            $collections2c = Collection::where('status', 1)->where('group_name', '2Column')->take(2)->get();
+            $collections2c = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '2Column')->take(2)->get();
         }else{
             $collections2c = [];
         }
@@ -78,7 +77,7 @@ class WelcomeController extends Controller
 
         if(Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1)
         {
-            $collections2cfr = Collection::where('status', 1)->where('group_name', '2Columnandfreerows')->get();
+            $collections2cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '2Columnandfreerows')->get();
         }else{
             $collections2cfr = [];
         }
@@ -86,17 +85,18 @@ class WelcomeController extends Controller
 
         if(Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1)
         {
-            $collections3cfr = Collection::where('status', 1)->where('group_name', '3Columnandfreerows')->get();
+            $collections3cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '3Columnandfreerows')->get();
         }else{
             $collections3cfr = [];
         }
 
         if(Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1)
         {
-            $collections5cfr = Collection::where('status', 1)->where('group_name', '5Columnandfreerows')->get();
+            $collections5cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '5Columnandfreerows')->get();
         }else{
             $collections5cfr = [];
         }
+
 
 
         if(Config::get('icrm.frontend.trendingproducts.feature') == 1)
@@ -128,9 +128,132 @@ class WelcomeController extends Controller
             $recentlyviewed = [];
         }
 
-        $dynamiccollections = Collection::where('status', 1)->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
+        $dynamiccollections = Collection::where(['status' => 1, 'category' => 'Home'])->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
+
+        // return ($dynamiccollections);
+
 
         return view('welcome')->with([
+            'homesliders' => $homesliders,
+            'flashsales' => $flashsales,
+            // 'trendingcategories' => $trendingcategories,
+            'recentlyviewed' => $recentlyviewed,
+            // 'categories' => $categories,
+            // 'subcategories' => $subcategories,
+            'collections3c' => $collections3c,
+            'collections2cfr' => $collections2cfr,
+            'collections3cfr' => $collections3cfr,
+            'collections5cfr' => $collections5cfr,
+            'collections2c' => $collections2c,
+            'trendings' => $trendings,
+            'blogs' => $blogs,
+            'dynamiccollections' => $dynamiccollections,
+        ]);
+    }
+
+    public function dynamicCategory($category)
+    {
+        $homesliders = HomeSlider::where(['status' => 1, 'category' => $category])->orderBy('order_id', 'ASC')->get();
+
+        // if (Config::get('icrm.frontend.flashsale.feature') == 1){
+
+        //     $flashsales = Product::
+        //         where('flash_sale', 1)
+        //         ->where('admin_status', 'Accepted')
+        //         ->whereHas('vendor', function($q){
+        //             $q->where('status', 1);
+        //         })
+        //         ->inRandomOrder()->limit(Config::get('icrm.frontend.flashsale.count'))->get();
+        // }else{
+        // }
+        $flashsales = [];
+
+
+        // $categories = ProductCategory::where('status', 1)->get();
+        // $subcategories = ProductSubcategory::where('status', 1)->get();
+
+        // 3 column collections
+        if(Config::get('icrm.frontend.threecolumncomponent.feature') == 1)
+        {
+            $collections3c = Collection::where(['status' => 1, 'category' => $category])
+                                ->where('group_name', '3Column')->take(3)->get();
+        }else{
+            $collections3c = [];
+        }
+
+        // 2 column collections
+        if(Config::get('icrm.frontend.twocolumncomponent.feature') == 1)
+        {
+            $collections2c = Collection::where(['status' => 1, 'category' => $category])
+                                ->where('group_name', '2Column')->take(2)->get();
+        }else{
+            $collections2c = [];
+        }
+
+
+        if(Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1)
+        {
+            $collections2cfr = Collection::where(['status' => 1, 'category' => $category])
+                                ->where('group_name', '2Columnandfreerows')->get();
+        }else{
+            $collections2cfr = [];
+        }
+
+
+        if(Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1)
+        {
+            $collections3cfr = Collection::where(['status' => 1, 'category' => $category])
+                                ->where('group_name', '3Columnandfreerows')->get();
+        }else{
+            $collections3cfr = [];
+        }
+
+        if(Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1)
+        {
+            $collections5cfr = Collection::where(['status' => 1, 'category' => $category])
+                                ->where('group_name', '5Columnandfreerows')->get();
+        }else{
+            $collections5cfr = [];
+        }
+
+
+
+        // if(Config::get('icrm.frontend.trendingproducts.feature') == 1)
+        // {
+        //     $trendings = $this->trendingproducts();
+        // }else{
+        // }
+        $trendings = [];
+
+        // if(Config::get('icrm.frontend.blogs.feature') == 1)
+        // {
+        //     $blogs = Post::where('status', 'PUBLISHED')->where('featured', 1)->take(4)->get();
+        // }else{
+        // }
+        $blogs = [];
+
+
+        // if(Config::get('icrm.frontend.recentlyviewed.feature') == 1)
+        // {
+        //     $recentlyviewedcontent = app('recentlyviewed')->getContent();
+        //     $recentlyviewed = Product::where('admin_status', 'Accepted')
+        //                         ->whereIn('id', $recentlyviewedcontent->pluck('id'))
+        //                         ->whereHas('vendor', function($q){
+        //                             $q->where('status', 1);
+        //                         })
+        //                         ->take(Config::get('icrm.frontend.recentlyviewed.count'))
+        //                         ->get();
+        // }else{
+        // }
+        $recentlyviewed = [];
+
+        $dynamiccollections = Collection::where(['status' => 1, 'category' => $category])
+                            ->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
+
+        // return ($dynamiccollections);
+
+
+        return view('category')->with([
             'homesliders' => $homesliders,
             'flashsales' => $flashsales,
             // 'trendingcategories' => $trendingcategories,

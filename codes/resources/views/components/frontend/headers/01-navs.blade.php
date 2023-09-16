@@ -41,7 +41,7 @@
                                  @if (count($genderwisecategories) > 0)
                                  <li class="submenu @if($menu_item->link() == Route::getFacadeRoot()->current()->uri()) active @endif
                                     ">
-                                    <a>{{ $gender->name }}</a>
+                                    <a href="{{ route('category.dynamic', $gender->name) }}">{{ $gender->name }}</a>
     
                                     <ul>
 
@@ -131,7 +131,7 @@
                     ">
                     
                     @if(count($menu_item->children) > 0)
-                        <a>{{ $menu_item->title }}</a>
+                        <a href="{{ route('category.dynamic', $menu_item->title) }}">{{ $menu_item->title }}</a>
                     @else
                         <a href="{{ $menu_item->link() }}">{{ $menu_item->title }}</a>    
                     @endif

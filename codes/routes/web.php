@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 use App\EmailNotification;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
@@ -228,6 +227,7 @@ if (Config::get('icrm.frontend.newslettersignup.feature') == 1) {
 /**
  * Catalog and product
  */
+Route::get('/category/{category}', [WelcomeController::class, 'dynamicCategory'])->name('category.dynamic');
 
 Route::get('/products', [WelcomeController::class, 'products'])->name('products');
 Route::get('/products/{vendor_id}', [WelcomeController::class, 'brandByVendor'])->name('products-brnads');

@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use App\Productsku;
 use App\Productcolor;
 use App\ProductReview;
-use App\Models\Product;
 use App\ProductCategory;
 use App\ProductSubcategory;
 use TCG\Voyager\Models\User;
@@ -30,45 +29,45 @@ class Product extends Model
 
     public function scopeRoleWise($query)
     {
-        
+
         return $query
         ->when(auth()->user()->hasRole(['admin', 'Client']), function($query){
-            
+
             return $query;
-            
+
         })
         ->when(auth()->user()->hasRole(['Vendor']), function($query){
-            
+
             return $query
             ->where('seller_id', auth()->user()->id);
-            
+
         })
         ->when(!auth()->user()->hasRole(['admin', 'Client', 'Vendor']), function($query){
-            
+
             return $query->where('created_by', auth()->user()->id);
-            
+
         })
         ->when(request('type') == 'regular', function($query){
-            
+
             return $query->where('customize_images', null);
-            
+
         })
         ->when(request('type') == 'customized', function($query){
-            
-            
+
+
             return $query->where('customize_images', '!==', null);
-            
+
         })
         ->when(request('filter') == 'activeproducts', function($query){
-            
+
             return $query->where('admin_status', 'Accepted');
-            
+
         })
         ->when(request('filter') == 'inactiveproducts', function($query){
-            
-            
+
+
             $query->whereNotIn('admin_status', ['Accepted', 'Pending For Verification', 'Updated']);
-            
+
         })
         ->when(request('filter') == 'pendingforverificationproducts', function($query){
             return $query->whereIn('admin_status', ['Pending For Verification', 'Updated']);
@@ -82,7 +81,7 @@ class Product extends Model
 
         // return $query;
     }
-    
+
     public function save(array $options = [])
     {
         /**
@@ -90,7 +89,7 @@ class Product extends Model
          * If the product is accepted (already approved)
          * Then label as updated
          */
-        
+
         if(auth()->user()->hasRole(['Vendor']))
         {
             if($this->seller_id != null)
@@ -99,7 +98,7 @@ class Product extends Model
             }
         }
 
-        
+
         if(empty($this->category_id))
         {
             return redirect()->back()->with(['error', 'Category not selected']);
@@ -145,8 +144,8 @@ class Product extends Model
                      */
                     $skus = Productsku::where('product_id', $id)->where('size', $size->name)->where('color', $color->name)->first();
 
-                    
-                    
+
+
                     if(!empty($skus))
                     {
                         // if sku length is empty then fetch from default product fields
@@ -159,7 +158,7 @@ class Product extends Model
                                 'weight' => $product->weight,
                             ]);
                         }
-                        
+
                         /**
                          * Dont create new sku
                          * Check if the sku is inactive then activate
@@ -172,7 +171,7 @@ class Product extends Model
                         /**
                          * Create new sku
                          */
-                        
+
                         $sku = New Productsku;
                         $sku->product_id = $id;
                         $sku->sku = $size->name.'-'.$color->name;
@@ -196,7 +195,7 @@ class Product extends Model
                  * Else create new sku
                  */
                 $skus = Productsku::where('product_id', $id)->where('size', $size->name)->get();
-                    
+
                 if(count($skus) > 0)
                 {
                     /**
@@ -229,7 +228,7 @@ class Product extends Model
              */
             // dd($product->sizes->pluck('name'));
             $nonusesizeskus = Productsku::where('product_id', $id)->whereNotIn('size', $product->sizes->pluck('name'))->get();
-            
+
             if(count($nonusesizeskus) > 0)
             {
                 foreach($nonusesizeskus as $nonusesizesku)
@@ -276,7 +275,7 @@ class Product extends Model
                     'weight' => $product->weight,
                 ]);
             }
-            
+
             if(empty($skus))
             {
                 /**
@@ -295,7 +294,7 @@ class Product extends Model
                 $sku->save();
             }
 
-            
+
         }
 
 
@@ -368,14 +367,14 @@ class Product extends Model
             }
         }
 
-        
-        
+
+
 
     }
 
     public static function subcategoryIdRelationship($id) {
-		
-        return 
+
+        return
         self::where('products.id', '=', $id)
             // select field from both the tables
             ->select('products.subcategory_id', 'product_categories.id as category_id')
@@ -390,17 +389,17 @@ class Product extends Model
         }
 
 
-    
+
     public function productsku()
     {
         return $this->belongsTo(Productsku::class, 'id', 'product_id');
     }
-    
+
 
     public function productskus()
     {
         return $this->hasMany(Productsku::class, 'product_id')->where('status', 1);
-        
+
     }
 
     public function productcolors()

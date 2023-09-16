@@ -9,7 +9,7 @@
 @section('content')
     @include('components.frontend.introsliders.01')
 
-    <section id="statistics">
+    {{-- <section id="statistics">
         <div class="container">
             <div class="stats owl-carousel">
 
@@ -52,7 +52,7 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
 
     @include('components/frontend/collections/dynamiccollections')
 
@@ -69,11 +69,11 @@
 
     @include('components/frontend/collections/2column')
 
-    @include('components.frontend.cardcarousels.trending')
+    {{-- @include('components.frontend.cardcarousels.trending') --}}
 
-    @include('components.frontend.cardcolumns.blogs01')
+    {{-- @include('components.frontend.cardcolumns.blogs01') --}}
     <br><br>
-    @include('components.frontend.cardcarousels.recentlyviewed')
+    {{-- @include('components.frontend.cardcarousels.recentlyviewed') --}}
 @endsection
 
 
