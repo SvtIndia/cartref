@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\V1\DependentDropdownController;
 |
 */
 Route::post('/shiprocket-test',function(){
-    return request()->all();
+    return;
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
