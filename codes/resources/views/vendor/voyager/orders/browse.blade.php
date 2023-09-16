@@ -639,10 +639,10 @@
 
                                                         if ($hourdiff > 36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                             echo '<span
-                                                                style="color: red;font-weight:600; font-size:15px">LATE SHIPMENT</span>'; # code...
+                                                                style="color: red;font-weight:600; font-size:15px">LATE SHIPMENT <br>LPF: '.round($data->product_offerprice * 0.1035, 0).'/- </span>'; # code...
                                                         } elseif ($hourdiff < 36 && ($data->order_status == 'New Order' || $data->order_status == 'Under Manufacturing')) {
                                                             echo '<span style="color: green;font-weight:400; font-size:12px">Please dispatch your order on or before '.
-                                                                $modified->format('jS M, Y H:i A') .' to avoid a late processing fees of '. round($data->product_offerprice * 0.1035, 0) . ' /-';
+                                                                $modified->format('jS M, Y H:i A') .' to avoid a late processing fees ';
                                                         }
                                                     @endphp
                                                 </div>
