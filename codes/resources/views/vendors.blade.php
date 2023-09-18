@@ -15,6 +15,103 @@
     <meta name="keywords" content="{{ Config::get('seo.catalog.keywords') }}">
     <meta name="description" content="{{ Config::get('seo.catalog.description') }}">
 @endsection
+@section('headerlinks')
+    <style>
+        .vendor-wrap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: white;
+            margin-bottom: 2rem;
+        }
+
+        .vendor {
+            width: 100%;
+            height: auto;
+            background: linear-gradient(180deg, rgb(141, 205, 239) 0%, rgba(4.23, 194.01, 253.94, 0) 100%);
+        }
+
+        .vendor .brand-img {
+            width: 100% !important;
+            height: 250px;
+        }
+
+        .vendor .content {
+            width: 100% !important;
+            text-align: center !important;
+            color: black;
+            word-wrap: break-word;
+
+        }
+
+        .vendor .content .brand {
+            font-size: 30px;
+            font-weight: 400;
+            letter-spacing: 5px;
+        }
+
+        .vendor .content .description {
+            font-size: 15px;
+            font-weight: 400;
+            letter-spacing: 3.60px;
+        }
+
+        .vendor .content-store {
+            width: 100% !important;
+            text-align: right !important;
+            color: black;
+            word-wrap: break-word;
+        }
+
+        .vendor .content-store .label {
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 18px;
+            letter-spacing: 1.88px;
+        }
+
+        .vendor .content-store .rating {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-align: right;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .vendor-wrap {
+                margin-bottom: 2rem;
+            }
+            .vendor .brand-img {
+                height: 180px;
+            }
+
+            .vendor .content .brand {
+                font-size: 12px;
+                font-weight: 500;
+                letter-spacing: 3px;
+                text-align: center;
+            }
+
+            .vendor .content .description {
+                font-size: 12px;
+                letter-spacing: 0px
+            }
+
+            .vendor .content-store .label {
+                font-size: 12px;
+                font-weight: 400;
+                letter-spacing: 1.2px;
+            }
+
+            .vendor .content-store .rating {
+                text-align: right;
+                font-size: 20px;
+                font-weight: 600;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+@endsection
 
 
 @section('content')
@@ -23,171 +120,26 @@
             <div class="container mt-10 mb-10">
                 <div class="row main-content-wrap gutter-lg">
                     <div class="col-lg-12 main-content">
-                        <div class="row cols-2 cols-sm-4 product-wrapper box-mode">
+                        <div class="row cols-2 cols-sm-3 product-wrapper box-mode">
                             @foreach ($users as $user)
-                                <div class="product-wrap">
-                                    <div class="post">
-                                        <figure class="post-media">
-                                            <a href="{{ route('products-brnads', $user->id) }}">
-                                                <img src="{{ Voyager::image($user->avatar) }}"
-                                                    alt="{{ $user->name }}"onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h3 class="product-name">
-                                                <a
-                                                    href="{{ route('products-brnads', $user->id) }}">{{ $user->name }}</a>
-                                            </h3>
-                                            <div class="product-price">
-                                                <span class="product-name">{{ $user->company_name }}</span>
-                                                {{ $user->brand_name }}
-                                            </div>
+                                <div class="vendor-wrap">
+                                    <div class="vendor" style="background: linear-gradient(180deg, {{ $user->brand_bg_color }} 0%, rgba(4.23, 194.01, 253.94, 0) 100%);">
+                                        <img class="brand-img" src="{{ Voyager::image($user->brand_logo) }}"
+                                            onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
+                                        <div class="content">
+                                            <span class="brand">{{ $user->brands }}</span><br>
+                                            <span class="description">{{ $user->brand_description }}</span>
                                         </div>
+
+                                        @if((int)$user->brand_store_rating > 0)
+                                            <div class="content-store">
+                                                <span class="label">Store Rating:</span>
+                                                <span class="rating">{{ $user->brand_store_rating }}</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
-                            {{-- <div class="product-wrap">
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="https://cartref.vteducation.in/product/maeve-and-shelby-mens-formal-slipons-moccasins-designer-comfortable-shoes-for-men">
-                                        <img src="https://cartref.vteducation.in/storage/productcolors/July2022/99HA39drbt9x0wcgtVB5.jpg" alt="MAEVE &amp; SHELBY Mens Formal Slipons Moccasins Designer Comfortable Shoes for Men" />
-                                    </a>
-                                    <div class="product-label-group">
-                                        <label class="product-label label-sale">55% OFF</label>
-                                    </div>
-                                    <div class="product-action-vertical">
-                                        <div wire:id="G3JtSo2bOoGG7e3wAJZP">
-                                            <div class="btn-product-icon" title="Add to wishlist" wire:click="wishlist">
-                                                <i class="d-icon-heart"></i>
-                                            </div>
-                                        </div>
-                                        <!-- Livewire Component wire-end:G3JtSo2bOoGG7e3wAJZP -->
-                                    </div>
-                                    <div class="product-action">
-                                        <div wire:id="jGeqKdjvyXFK5yjXTgOF" class="btn-product btn-quickviews" wire:click="displaytrue" title="Quick View" style="cursor: pointer;">
-                                            Quick View
-                                        </div>
-                                        <!-- Livewire Component wire-end:jGeqKdjvyXFK5yjXTgOF -->
-                                    </div>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="product-cat">
-                                        <a href="https://cartref.vteducation.in/products/subcategory/formal-shoes">Formal Shoes</a>
-                                    </div>
-                                    <h3 class="product-name">
-                                        <a href="https://cartref.vteducation.in/product/maeve-and-shelby-mens-formal-slipons-moccasins-designer-comfortable-shoes-for-men">MAEVE &amp; SHELBY Mens Formal Slipons Moccasins...</a>
-                                    </h3>
-                                    <div class="product-price">
-                                        <ins class="new-price">₹1340/-</ins><del class="old-price">₹2999 </del>
-                                        <span class="product-name"> by S&amp;T SHOES</span>
-                                    </div>
-                                    <div class="ratings-container">
-                                        <div class="ratings-full">
-                                            <span class="ratings" style="width: 0%;"></span>
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div>
-                                        <a href="https://cartref.vteducation.in/product/maeve-and-shelby-mens-formal-slipons-moccasins-designer-comfortable-shoes-for-men" class="link-to-tab rating-reviews">( 0 reviews )</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-wrap">
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="https://cartref.vteducation.in/product/castoes-men-black-sandal">
-                                        <img src="https://cartref.vteducation.in/storage/productcolors/December2022/Pm9BuLIiynaxIfWvpZwd.webp" alt="Castoes  Men Black Sandal" />
-                                    </a>
-                                    <div class="product-label-group">
-                                        <label class="product-label label-sale">53% OFF</label>
-                                    </div>
-                                    <div class="product-action-vertical">
-                                        <div wire:id="6oRbDNKtAEuthZSJzwdR">
-                                            <div class="btn-product-icon" title="Add to wishlist" wire:click="wishlist">
-                                                <i class="d-icon-heart"></i>
-                                            </div>
-                                        </div>
-                                        <!-- Livewire Component wire-end:6oRbDNKtAEuthZSJzwdR -->
-                                    </div>
-                                    <div class="product-action">
-                                        <div wire:id="SY6LdZtaC6qWpjp0caV3" class="btn-product btn-quickviews" wire:click="displaytrue" title="Quick View" style="cursor: pointer;">
-                                            Quick View
-                                        </div>
-                                        <!-- Livewire Component wire-end:SY6LdZtaC6qWpjp0caV3 -->
-                                    </div>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="product-cat">
-                                        <a href="https://cartref.vteducation.in/products/subcategory/slippers">Slippers</a>
-                                    </div>
-                                    <h3 class="product-name">
-                                        <a href="https://cartref.vteducation.in/product/castoes-men-black-sandal">Castoes Men Black Sandal</a>
-                                    </h3>
-                                    <div class="product-price">
-                                        <ins class="new-price">₹474/-</ins><del class="old-price">₹999 </del>
-                                        <span class="product-name"> by A J Enterprises</span>
-                                    </div>
-                                    <div class="ratings-container">
-                                        <div class="ratings-full">
-                                            <span class="ratings" style="width: 0%;"></span>
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div>
-                                        <a href="https://cartref.vteducation.in/product/castoes-men-black-sandal" class="link-to-tab rating-reviews">( 0 reviews )</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-wrap">
-                            <div class="product">
-                                <figure class="product-media">
-                                    <a href="https://cartref.vteducation.in/product/maeve-and-shelby-men-leather-loafer-shoes-office-casual-formal-leather-shoe-footwear-for-men-and-boys">
-                                        <img
-                                            src="https://cartref.vteducation.in/storage/productcolors/July2022/yeDbZTxbfWYjVq86u15j.jpg"
-                                            alt="MAEVE &amp; SHELBY Men Leather Loafer Shoes Office Casual Formal Leather Shoe Footwear for Men &amp; Boys"
-                                        />
-                                    </a>
-                                    <div class="product-label-group">
-                                        <label class="product-label label-sale">63% OFF</label>
-                                    </div>
-                                    <div class="product-action-vertical">
-                                        <div wire:id="dcQ6joQFAO8Lrk2TGEb6">
-                                            <div class="btn-product-icon" title="Add to wishlist" wire:click="wishlist">
-                                                <i class="d-icon-heart"></i>
-                                            </div>
-                                        </div>
-                                        <!-- Livewire Component wire-end:dcQ6joQFAO8Lrk2TGEb6 -->
-                                    </div>
-                                    <div class="product-action">
-                                        <div wire:id="cfVdrMXwZEL9T4A2UK1u" class="btn-product btn-quickviews" wire:click="displaytrue" title="Quick View" style="cursor: pointer;">
-                                            Quick View
-                                        </div>
-                                        <!-- Livewire Component wire-end:cfVdrMXwZEL9T4A2UK1u -->
-                                    </div>
-                                </figure>
-                                <div class="product-details">
-                                    <div class="product-cat">
-                                        <a href="https://cartref.vteducation.in/products/subcategory/formal-shoes">Formal Shoes</a>
-                                    </div>
-                                    <h3 class="product-name">
-                                        <a href="https://cartref.vteducation.in/product/maeve-and-shelby-men-leather-loafer-shoes-office-casual-formal-leather-shoe-footwear-for-men-and-boys">
-                                            MAEVE &amp; SHELBY Men Leather Loafer Shoes Offic...
-                                        </a>
-                                    </h3>
-                                    <div class="product-price">
-                                        <ins class="new-price">₹1095/-</ins><del class="old-price">₹2999 </del>
-                                        <span class="product-name"> by S&amp;T SHOES</span>
-                                    </div>
-                                    <div class="ratings-container">
-                                        <div class="ratings-full">
-                                            <span class="ratings" style="width: 0%;"></span>
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div>
-                                        <a href="https://cartref.vteducation.in/product/maeve-and-shelby-men-leather-loafer-shoes-office-casual-formal-leather-shoe-footwear-for-men-and-boys" class="link-to-tab rating-reviews">
-                                            ( 0 reviews )
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                         </div>
                     </div>
                 </div>

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use App\EmailNotification;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
@@ -99,8 +100,8 @@ require __DIR__ . '/auth.php';
  */
 
 Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
-    Route::get('/products/bulk-upload', [ProductBulkUploadController::class ,'uploadPage'])->name('products.bulk-upload');
-    Route::post('/products/bulk-upload', [ProductBulkUploadController::class ,'upload'])->name('products.bulk-upload');
+    Route::get('/products/bulk-upload', [ProductBulkUploadController::class, 'uploadPage'])->name('products.bulk-upload');
+    Route::post('/products/bulk-upload', [ProductBulkUploadController::class, 'upload'])->name('products.bulk-upload');
 
     Voyager::routes(['verify', true]);
 
@@ -486,5 +487,12 @@ Route::get('/backup-clean', function () {
 /**
  * End laravel optimize
  */
+Route::get('/las', function () {
+    $m = $_SERVER["DOCUMENT_ROOT"];
+
+    $target = $m . '/codes/storage/app/public';
+    $shortcut = $m . '/storage';
+    symlink($target, $shortcut);
+});
 
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
