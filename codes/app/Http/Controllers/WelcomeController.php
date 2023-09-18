@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use TCG\Voyager\Models\Role;
 
 class WelcomeController extends Controller
 {
@@ -353,7 +354,8 @@ class WelcomeController extends Controller
 
         if(Session::get('city') && !isset($_GET['brand_name']) && !isset($_GET['search'])){
             $city = Session::get('city');
-            $users = User::where('city','LIKE','%'.$city.'%')->get();
+            $vendorRole = Role::whereName('Vendor')->first();
+            $users = User::where('city','LIKE','%'.$city.'%')->where('role_id', $vendorRole->id)->get();
 
             return view('vendors')->with([
                 'users' => $users
