@@ -9,7 +9,7 @@
         @endif
 
         {{ Config::get('seo.catalog.title') }} --}}
-        Vendors
+        {{ $user->brands ?? $user->name }} | Brand
     </title>
 
     <meta name="keywords" content="{{ Config::get('seo.catalog.keywords') }}">
@@ -81,6 +81,7 @@
             .vendor-wrap {
                 margin-bottom: 2rem;
             }
+
             .vendor .brand-img {
                 height: 180px;
             }
@@ -113,7 +114,6 @@
     </style>
 @endsection
 
-
 @section('content')
     <div class="page-content">
         <div class="page-content mb-10 pb-3">
@@ -121,22 +121,19 @@
                 <div class="row main-content-wrap gutter-lg">
                     <div class="col-lg-12 main-content">
                         <div class="row cols-2 cols-sm-3 product-wrapper box-mode">
-                            @foreach ($users as $user)
-                                <a href="{{ route('products-category', $user->id) }}" class="vendor-wrap">
-                                    <div class="vendor" style="background: linear-gradient(180deg, {{ $user->brand_bg_color }} 0%, rgba(4.23, 194.01, 253.94, 0) 100%);">
-                                        <img class="brand-img" src="{{ Voyager::image($user->brand_logo) }}"
+                            @foreach ($subCategories as $subCategory)
+                                <a href="{{ route('products.subcategory', ['subcategory' => $subCategory->slug, 'brands[' . $user->brands . ']' => $user->brands]) }}"
+                                    class="vendor-wrap">
+
+
+                                    <div class="vendor"
+                                        style="background: linear-gradient(180deg, white 0%, rgba(4.23, 194.01, 253.94, 0) 100%);">
+                                        <img class="brand-img" src="{{ Voyager::image($subCategory->image) }}"
                                             onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
                                         <div class="content">
-                                            <span class="brand">{{ $user->brands }}</span><br>
-                                            <span class="description">{{ $user->brand_description }}</span>
+                                            <span class="brand">{{ $subCategory->name }}</span><br>
+                                            HSN :<span class="description">{{ $subCategory->hsn }}</span>
                                         </div>
-
-                                        @if((int)$user->brand_store_rating > 0)
-                                            <div class="content-store">
-                                                <span class="label">Store Rating:</span>
-                                                <span class="rating">{{ $user->brand_store_rating }}</span>
-                                            </div>
-                                        @endif
                                     </div>
                                 </a>
                             @endforeach

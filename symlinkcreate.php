@@ -2,6 +2,6 @@
 
 $domain = $_SERVER['HTTP_HOST'];
 
-symlink('/home/cartrefs/public_html/codes/storage/app/public', '/home/cartrefs/public_html/storage');
+symlink('C:\Users\user\Documents\GitHub\cartref\codes\storage\app\public', 'C:\Users\user\Documents\GitHub\cartref\storage');
 
 ?>

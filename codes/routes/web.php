@@ -231,7 +231,7 @@ if (Config::get('icrm.frontend.newslettersignup.feature') == 1) {
 Route::get('/category/{category}', [WelcomeController::class, 'dynamicCategory'])->name('category.dynamic');
 
 Route::get('/products', [WelcomeController::class, 'products'])->name('products');
-Route::get('/products/{vendor_id}', [WelcomeController::class, 'brandByVendor'])->name('products-brnads');
+Route::get('/products/{vendor_id}', [WelcomeController::class, 'categoryByVendor'])->name('products-category');
 Route::get('/products/category/{category}', [WelcomeController::class, 'productscategory'])->name('products.category');
 Route::get('/products/subcategory/{subcategory}', [WelcomeController::class, 'productssubcategory'])->name('products.subcategory');
 Route::get('/products/vendor/{slug}', [WelcomeController::class, 'productsfromvendor'])->name('products.vendor');
@@ -487,12 +487,5 @@ Route::get('/backup-clean', function () {
 /**
  * End laravel optimize
  */
-Route::get('/las', function () {
-    $m = $_SERVER["DOCUMENT_ROOT"];
-
-    $target = $m . '/codes/storage/app/public';
-    $shortcut = $m . '/storage';
-    symlink($target, $shortcut);
-});
 
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
