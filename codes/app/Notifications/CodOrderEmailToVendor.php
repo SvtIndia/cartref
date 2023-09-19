@@ -53,8 +53,8 @@ class CodOrderEmailToVendor extends Notification
                         ->line('Please check your seller dashboard for complete order details and proceed with fulfilling the order promptly.')
                         ->line("If you have any questions or need assistance, feel free to reach out to our support team at info@cartrefs.com")
                         ->line('Thank you for being a valued seller on our platform.')
-                        ->line('Best regards,')
-                        ->line(env('APP_NAME'))
+                        // ->line('Best regards,')
+                        // ->line(env('APP_NAME'))
                     ;
     }
 
