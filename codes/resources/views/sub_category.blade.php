@@ -17,9 +17,6 @@
 @endsection
 @section('headerlinks')
     <style>
-        .product-wrapper{
-            justify-content: space-around;
-        }
         .vendor-wrap {
             width: 100%;
             height: 100%;
