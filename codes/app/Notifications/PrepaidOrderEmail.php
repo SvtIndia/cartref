@@ -45,6 +45,7 @@ class PrepaidOrderEmail extends Notification
         return (new MailMessage)
                         ->subject(ucwords(auth()->user()->name).', Thank you for your order!')
                         ->greeting('Hello '.ucwords(auth()->user()->name).',')
+                        ->line('Confirmation Number: '.$this->order->order_id)
                         ->line('We’re happy to let you know that we’ve received your order.')
                         ->line('Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.')
                         ->line('If you have any questions, contact us here or call us on +91-8447923903')
