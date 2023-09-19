@@ -50,7 +50,7 @@ class PrepaidOrderEmail extends Notification
                         ->line('Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.')
                         ->line('If you have any questions, contact us here or call us on +91-8447923903')
                         ->line('We are here to help!')
-                        ->line('Returns: If you would like to return your product(s), please see here' .route('ordercomplete', ['id' => $this->order->order_id]). 'or contact us.')
+                        ->line('Returns: If you would like to return your product(s), please see here ' .route('ordercomplete', ['id' => $this->order->order_id]). ' or contact us.')
                         // ->line('Thank you for choosing '.env('APP_NAME').'. We are happy to serve you!')
                         // ->line('This email is to inform you that we have received your prepaid order for '.Config::get('icrm.currency.icon').number_format($this->order->order_total, 2).'/-')
                         // ->line('Click on the below button for order information and tracking.')

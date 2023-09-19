@@ -18,9 +18,10 @@ class PrepaidOrderEmailToVendor extends Notification
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order, $seller)
     {
         $this->order = $order;
+        $this->seller = $seller;
     }
 
     /**
@@ -43,12 +44,22 @@ class PrepaidOrderEmailToVendor extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                        ->subject('New order received on '.env('APP_URL').'!')
-                        ->greeting('Hello,')
-                        ->line(ucwords(auth()->user()->name).' have placed an prepaid order on '.env('APP_URL'))
-                        ->line('Click on the below button to view new orders.')
-                        ->action('View New Orders', url('/'.Config::get('icrm.admin_panel.prefix').'/orders?label=New Order'))
-                        ->line('Thank you for using '.env('APP_URL').'!')
+                        ->subject('New Order Alert: Order #'.$this->order->order_id)
+                        ->greeting('Dear '.$this->seller->name)
+                        ->line("We're pleased to inform you that you have received a new order on ".env('APP_URL'))
+                        ->line('Order Number: #'.$this->order->order_id)
+                        ->line('Customer: #'.ucwords(auth()->user()->name))
+                        ->line('Email: #'.auth()->user()->email)
+                        ->line('Please check your seller dashboard for complete order details and proceed with fulfilling the order promptly.')
+                        ->line("If you have any questions or need assistance, feel free to reach out to our support team at info@cartrefs.com")
+                        ->line('Thank you for being a valued seller on our platform.')
+                        ->line('Best regards,')
+                        ->line(env('APP_NAME'))
+
+                        // ->line(ucwords(auth()->user()->name).' have placed an prepaid order on '.env('APP_URL'))
+                        // ->line('Click on the below button to view new orders.')
+                        // ->action('View New Orders', url('/'.Config::get('icrm.admin_panel.prefix').'/orders?label=New Order'))
+                        // ->line('Thank you for using '.env('APP_URL').'!')
                     ;
     }
 

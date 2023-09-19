@@ -1547,7 +1547,7 @@ class Checkout extends Component
             if(!empty($vendorinfo->email))
             {
                 // Send order notification to vendor
-                Notification::route('mail', $vendorinfo->email)->notify(new CodOrderEmailToVendor($order));
+                Notification::route('mail', $vendorinfo->email)->notify(new CodOrderEmailToVendor($order,$vendorinfo));
             }
 
         }
