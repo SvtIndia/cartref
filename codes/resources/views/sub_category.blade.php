@@ -17,6 +17,9 @@
 @endsection
 @section('headerlinks')
     <style>
+        .product-wrapper{
+            justify-content: space-around;
+        }
         .vendor-wrap {
             width: 100%;
             height: 100%;
@@ -31,9 +34,22 @@
             background: linear-gradient(180deg, rgb(141, 205, 239) 0%, rgba(4.23, 194.01, 253.94, 0) 100%);
         }
 
-        .vendor .brand-img {
-            width: 100% !important;
-            height: 250px;
+        .vendor .brand-img-container {
+            width: 150px !important;
+            height: 180px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 1px #B1A5A5 solid;
+        }
+
+        .vendor .brand-img{
+            max-width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            width: 100%;
+            object-fit: cover;
+            border: 1px #B1A5A5 solid
         }
 
         .vendor .content {
@@ -45,9 +61,8 @@
         }
 
         .vendor .content .brand {
-            font-size: 30px;
+            font-size: 20px;
             font-weight: 400;
-            letter-spacing: 5px;
         }
 
         .vendor .content .description {
@@ -82,13 +97,18 @@
                 margin-bottom: 2rem;
             }
 
+            .vendor .brand-img-container {
+                width: 120px !important;
+                height: 150px;
+            }
+
+
             .vendor .brand-img {
                 height: 180px;
             }
 
             .vendor .content .brand {
-                font-size: 12px;
-                font-weight: 500;
+                font-size: 15px;
                 letter-spacing: 3px;
                 text-align: center;
             }
@@ -99,9 +119,8 @@
             }
 
             .vendor .content-store .label {
-                font-size: 12px;
+                font-size: 15px;
                 font-weight: 400;
-                letter-spacing: 1.2px;
             }
 
             .vendor .content-store .rating {
@@ -120,19 +139,20 @@
             <div class="container mt-10 mb-10">
                 <div class="row main-content-wrap gutter-lg">
                     <div class="col-lg-12 main-content">
-                        <div class="row cols-2 cols-sm-3 product-wrapper box-mode">
+                        <div class="row cols-2 cols-sm-5 product-wrapper box-mode">
                             @foreach ($subCategories as $subCategory)
                                 <a href="{{ route('products.subcategory', ['subcategory' => $subCategory->slug, 'brands[' . $user->brands . ']' => $user->brands]) }}"
                                     class="vendor-wrap">
 
-
                                     <div class="vendor"
                                         style="background: linear-gradient(180deg, white 0%, rgba(4.23, 194.01, 253.94, 0) 100%);">
-                                        <img class="brand-img" src="{{ Voyager::image($subCategory->image) }}"
-                                            onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
+                                        <div class="brand-img-container">
+                                            <img class="brand-img" src="{{ Voyager::image($subCategory->image) }}"
+                                                onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
+                                        </div>
                                         <div class="content">
                                             <span class="brand">{{ $subCategory->name }}</span><br>
-                                            HSN :<span class="description">{{ $subCategory->hsn }}</span>
+                                            {{-- HSN :<span class="description">{{ $subCategory->hsn }}</span> --}}
                                         </div>
                                     </div>
                                 </a>
