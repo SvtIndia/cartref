@@ -299,40 +299,40 @@ class Products extends Component
                 $query->where('status', 1);
             })
             // ->where('product_tags', 'LIKE', '%' . $this->search . '%')
-            // ->when($this->search, function ($query) {
-            //     $query->where('product_tags', 'LIKE', '%' . $this->search . '%');
-            // })
             ->when($this->search, function ($query) {
-
-                $query
-                    ->where('product_tags', 'LIKE', '%' . $this->search . '%')
-                    ->where(function ($query) {
-
-                        $splitwords = explode(" ", $this->search);
-
-                        foreach ($splitwords as $splitword) {
-
-                            if (Str::contains($splitword, ['men', 'women', 'kid']) == false) {
-                                $query
-                                    ->orWhereHas('productcategory', function ($query) use ($splitword) {
-                                        $query
-                                            ->where('name', 'LIKE', '%' . $splitword . '%')
-                                            ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
-                                    })
-                                    ->orWhereHas('productsubcategory', function ($query) use ($splitword) {
-                                        $query
-                                            ->where('name', 'LIKE', '%' . $splitword . '%')
-                                            ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
-                                    });
-                            }
-                        }
-                    })
-                    ->where(function ($query) {
-                        // $query->orWhere('sku', 'LIKE', '%' . $this->search . '%');
-                        // $query->orWhere('name', 'LIKE', '%' . $this->search . '%');
-                        // $query->orWhere('description', 'LIKE', '%' . $this->search . '%');
-                    });
+                $query->where('product_tags', 'LIKE', '%' . $this->search . '%');
             })
+            // ->when($this->search, function ($query) {
+
+            //     $query
+            //         // ->where('product_tags', 'LIKE', '%' . $this->search . '%')
+            //         ->where(function ($query) {
+
+            //             $splitwords = explode(" ", $this->search);
+
+            //             foreach ($splitwords as $splitword) {
+
+            //                 if (Str::contains($splitword, ['men', 'women', 'kid']) == false) {
+            //                     $query
+            //                         ->orWhereHas('productcategory', function ($query) use ($splitword) {
+            //                             $query
+            //                                 ->where('name', 'LIKE', '%' . $splitword . '%')
+            //                                 ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
+            //                         })
+            //                         ->orWhereHas('productsubcategory', function ($query) use ($splitword) {
+            //                             $query
+            //                                 ->where('name', 'LIKE', '%' . $splitword . '%')
+            //                                 ->where('name', 'LIKE', '%' . substr($splitword, 0, -1) . '%');
+            //                         });
+            //                 }
+            //             }
+            //         })
+            //         ->where(function ($query) {
+            //             // $query->orWhere('sku', 'LIKE', '%' . $this->search . '%');
+            //             // $query->orWhere('name', 'LIKE', '%' . $this->search . '%');
+            //             // $query->orWhere('description', 'LIKE', '%' . $this->search . '%');
+            //         });
+            // })
             ->when($this->search, function ($query) {
                 // if gender is mentioned in the search
                 $splitwords = explode(" ", $this->search);
@@ -482,7 +482,8 @@ class Products extends Component
                 $query->whereHas('vendor', function ($q) {
                     $q->where('status', 1)->where('showcase_at_home', 1)->where('id', request('vendor_id'));
                 });
-            });
+            })
+            ;
 
 
 
