@@ -293,15 +293,19 @@ class Products extends Component
 
     public function render()
     {
-
         $products = Product::where('admin_status', 'Accepted')
             // ->whereLike('name', $this->search ?? '')
             ->whereHas('vendor', function ($query) {
                 $query->where('status', 1);
             })
+            // ->where('product_tags', 'LIKE', '%' . $this->search . '%')
+            // ->when($this->search, function ($query) {
+            //     $query->where('product_tags', 'LIKE', '%' . $this->search . '%');
+            // })
             ->when($this->search, function ($query) {
 
                 $query
+                    ->where('product_tags', 'LIKE', '%' . $this->search . '%')
                     ->where(function ($query) {
 
                         $splitwords = explode(" ", $this->search);
@@ -324,9 +328,9 @@ class Products extends Component
                         }
                     })
                     ->where(function ($query) {
-                        $query->orWhere('sku', 'LIKE', '%' . $this->search . '%');
-                        $query->orWhere('name', 'LIKE', '%' . $this->search . '%');
-                        $query->orWhere('description', 'LIKE', '%' . $this->search . '%');
+                        // $query->orWhere('sku', 'LIKE', '%' . $this->search . '%');
+                        // $query->orWhere('name', 'LIKE', '%' . $this->search . '%');
+                        // $query->orWhere('description', 'LIKE', '%' . $this->search . '%');
                     });
             })
             ->when($this->search, function ($query) {
