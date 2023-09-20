@@ -42,16 +42,15 @@ class WelcomeController extends Controller
     {
         $homesliders = HomeSlider::where(['status' => 1, 'category' => 'Home'])->orderBy('order_id', 'ASC')->get();
 
-        if (Config::get('icrm.frontend.flashsale.feature') == 1){
+        if (Config::get('icrm.frontend.flashsale.feature') == 1) {
 
-            $flashsales = Product::
-                where('flash_sale', 1)
+            $flashsales = Product::where('flash_sale', 1)
                 ->where('admin_status', 'Accepted')
-                ->whereHas('vendor', function($q){
+                ->whereHas('vendor', function ($q) {
                     $q->where('status', 1);
                 })
                 ->inRandomOrder()->limit(Config::get('icrm.frontend.flashsale.count'))->get();
-        }else{
+        } else {
             $flashsales = [];
         }
 
@@ -60,72 +59,64 @@ class WelcomeController extends Controller
         // $subcategories = ProductSubcategory::where('status', 1)->get();
 
         // 3 column collections
-        if(Config::get('icrm.frontend.threecolumncomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.threecolumncomponent.feature') == 1) {
             $collections3c = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '3Column')->take(3)->get();
-        }else{
+        } else {
             $collections3c = [];
         }
 
         // 2 column collections
-        if(Config::get('icrm.frontend.twocolumncomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.twocolumncomponent.feature') == 1) {
             $collections2c = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '2Column')->take(2)->get();
-        }else{
+        } else {
             $collections2c = [];
         }
 
 
-        if(Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1) {
             $collections2cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '2Columnandfreerows')->get();
-        }else{
+        } else {
             $collections2cfr = [];
         }
 
 
-        if(Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1) {
             $collections3cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '3Columnandfreerows')->get();
-        }else{
+        } else {
             $collections3cfr = [];
         }
 
-        if(Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1) {
             $collections5cfr = Collection::where(['status' => 1, 'category' => 'Home'])->where('group_name', '5Columnandfreerows')->get();
-        }else{
+        } else {
             $collections5cfr = [];
         }
 
 
 
-        if(Config::get('icrm.frontend.trendingproducts.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.trendingproducts.feature') == 1) {
             $trendings = $this->trendingproducts();
-        }else{
+        } else {
             $trendings = [];
         }
 
-        if(Config::get('icrm.frontend.blogs.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.blogs.feature') == 1) {
             $blogs = Post::where('status', 'PUBLISHED')->where('featured', 1)->take(4)->get();
-        }else{
+        } else {
             $blogs = [];
         }
 
 
-        if(Config::get('icrm.frontend.recentlyviewed.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.recentlyviewed.feature') == 1) {
             $recentlyviewedcontent = app('recentlyviewed')->getContent();
             $recentlyviewed = Product::where('admin_status', 'Accepted')
-                                ->whereIn('id', $recentlyviewedcontent->pluck('id'))
-                                ->whereHas('vendor', function($q){
-                                    $q->where('status', 1);
-                                })
-                                ->take(Config::get('icrm.frontend.recentlyviewed.count'))
-                                ->get();
-        }else{
+                ->whereIn('id', $recentlyviewedcontent->pluck('id'))
+                ->whereHas('vendor', function ($q) {
+                    $q->where('status', 1);
+                })
+                ->take(Config::get('icrm.frontend.recentlyviewed.count'))
+                ->get();
+        } else {
             $recentlyviewed = [];
         }
 
@@ -174,46 +165,41 @@ class WelcomeController extends Controller
         // $subcategories = ProductSubcategory::where('status', 1)->get();
 
         // 3 column collections
-        if(Config::get('icrm.frontend.threecolumncomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.threecolumncomponent.feature') == 1) {
             $collections3c = Collection::where(['status' => 1, 'category' => $category])
-                                ->where('group_name', '3Column')->take(3)->get();
-        }else{
+                ->where('group_name', '3Column')->take(3)->get();
+        } else {
             $collections3c = [];
         }
 
         // 2 column collections
-        if(Config::get('icrm.frontend.twocolumncomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.twocolumncomponent.feature') == 1) {
             $collections2c = Collection::where(['status' => 1, 'category' => $category])
-                                ->where('group_name', '2Column')->take(2)->get();
-        }else{
+                ->where('group_name', '2Column')->take(2)->get();
+        } else {
             $collections2c = [];
         }
 
 
-        if(Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.twocolumnfreerowscomponent.feature') == 1) {
             $collections2cfr = Collection::where(['status' => 1, 'category' => $category])
-                                ->where('group_name', '2Columnandfreerows')->get();
-        }else{
+                ->where('group_name', '2Columnandfreerows')->get();
+        } else {
             $collections2cfr = [];
         }
 
 
-        if(Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.threecolumnfreerowscomponent.feature') == 1) {
             $collections3cfr = Collection::where(['status' => 1, 'category' => $category])
-                                ->where('group_name', '3Columnandfreerows')->get();
-        }else{
+                ->where('group_name', '3Columnandfreerows')->get();
+        } else {
             $collections3cfr = [];
         }
 
-        if(Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.fivecolumnfreerowscomponent.feature') == 1) {
             $collections5cfr = Collection::where(['status' => 1, 'category' => $category])
-                                ->where('group_name', '5Columnandfreerows')->get();
-        }else{
+                ->where('group_name', '5Columnandfreerows')->get();
+        } else {
             $collections5cfr = [];
         }
 
@@ -249,7 +235,7 @@ class WelcomeController extends Controller
         $recentlyviewed = [];
 
         $dynamiccollections = Collection::where(['status' => 1, 'category' => $category])
-                            ->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
+            ->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
 
         // return ($dynamiccollections);
 
@@ -287,30 +273,27 @@ class WelcomeController extends Controller
          * Fetch most purchased top 10 products from order table
          */
 
-         $orders = DB::table('orders')
-                    ->select('product_id', DB::raw('count(*) as productcount'))
-                    ->groupBy('product_id')
-                    ->orderBy('productcount', 'desc')
-                    ->inRandomOrder()
-                    ->limit(Config::get('icrm.frontend.trendingproducts.count'))
-                    ->get();
+        $orders = DB::table('orders')
+            ->select('product_id', DB::raw('count(*) as productcount'))
+            ->groupBy('product_id')
+            ->orderBy('productcount', 'desc')
+            ->inRandomOrder()
+            ->limit(Config::get('icrm.frontend.trendingproducts.count'))
+            ->get();
 
-         if(count($orders) > 0)
-         {
-            $trendings = Product::
-            where('admin_status', 'Accepted')
-            ->whereIn('id', $orders->pluck('product_id'))
-            ->whereHas('vendor', function($q){
-                $q->where('status', 1);
-            })
-            ->take(Config::get('icrm.frontend.trendingproducts.count'))
-            ->get();
-         }else{
-            $trendings = Product::
-            where('admin_status', 'Accepted')
-            ->take(Config::get('icrm.frontend.trendingproducts.count'))
-            ->get();
-         }
+        if (count($orders) > 0) {
+            $trendings = Product::where('admin_status', 'Accepted')
+                ->whereIn('id', $orders->pluck('product_id'))
+                ->whereHas('vendor', function ($q) {
+                    $q->where('status', 1);
+                })
+                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+                ->get();
+        } else {
+            $trendings = Product::where('admin_status', 'Accepted')
+                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+                ->get();
+        }
 
         return $trendings;
     }
@@ -325,7 +308,7 @@ class WelcomeController extends Controller
             'message' => 'required'
         ]);
 
-        $contact = New Contact;
+        $contact = new Contact;
         $contact->name = $request->name;
         $contact->email = $request->email;
         $contact->mobile = $request->phone;
@@ -351,26 +334,29 @@ class WelcomeController extends Controller
      */
     public function products()
     {
-        if(Session::get('showcasecity') && !isset($_GET['brand_name']) && !isset($_GET['search'])){
+        if (
+            Session::get('showcasecity') &&
+            !isset($_GET['brand_name']) &&
+            !isset($_GET['search'])
+        ) {
             $city = Session::get('showcasecity');
             $vendorRole = Role::whereName('Vendor')->first();
-            $users = User::where('city','LIKE','%'.$city.'%')->where('role_id', $vendorRole->id)->where('status',true)->get();
+            $users = User::where('city', 'LIKE', '%' . $city . '%')->where('role_id', $vendorRole->id)->where('status', true)->get();
 
             return view('vendors')->with([
                 'users' => $users
             ]);
         }
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
-    public function categoryByVendor($user_id){
-        if(Session::get('showcasecity')){
+    public function categoryByVendor($user_id)
+    {
+        if (Session::get('showcasecity')) {
             $city = Session::get('showcasecity');
-            $user = User::where('city','LIKE','%'.$city.'%')->whereId($user_id)->where('status',true)->first();
+            $user = User::where('city', 'LIKE', '%' . $city . '%')->whereId($user_id)->where('status', true)->first();
 
-            $subCategories = ProductSubcategory::join('products','product_subcategories.id','products.subcategory_id')
+            $subCategories = ProductSubcategory::join('products', 'product_subcategories.id', 'products.subcategory_id')
                 ->where(['products.seller_id' => $user->id])
                 ->groupBy('products.subcategory_id')
                 ->select('product_subcategories.*')
@@ -395,13 +381,11 @@ class WelcomeController extends Controller
     {
         // filter accordig to category
 
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -410,36 +394,28 @@ class WelcomeController extends Controller
     {
         // filter accordig to subcategory
 
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
 
     public function productsfromvendor($slug)
     {
         // filter according to vendor
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
 
     public function productsshowcaseathome()
     {
         // filter only products which has showcase at home
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
 
     public function productsshowcaseathomeforvendor()
     {
         // filter only products which has showcase at home from selected vendor
-        return view('products')->with([
-
-        ]);
+        return view('products')->with([]);
     }
 
 
@@ -454,44 +430,40 @@ class WelcomeController extends Controller
     {
         Session::remove('quickviewid');
 
-        if(Auth::check())
-        {
-            if(auth()->user()->hasRole(['Vendor', 'admin', 'Client']))
-            {
+        if (Auth::check()) {
+            if (auth()->user()->hasRole(['Vendor', 'admin', 'Client'])) {
                 $product = Product::where('slug', $slug)->first();
-            }else{
+            } else {
                 // if customer
                 $product = Product::where('slug', $slug)
-                        ->where('admin_status', 'Accepted')
-                        ->whereHas('vendor', function($q){
-                            $q->where('status', 1);
-                        })
-                        ->first();
+                    ->where('admin_status', 'Accepted')
+                    ->whereHas('vendor', function ($q) {
+                        $q->where('status', 1);
+                    })
+                    ->first();
             }
-        }else{
+        } else {
             $product = Product::where('slug', $slug)
-                        ->where('admin_status', 'Accepted')
-                        ->whereHas('vendor', function($q){
-                            $q->where('status', 1);
-                        })
-                        ->first();
+                ->where('admin_status', 'Accepted')
+                ->whereHas('vendor', function ($q) {
+                    $q->where('status', 1);
+                })
+                ->first();
         }
 
-        if(empty($product))
-        {
+        if (empty($product)) {
             return abort(404);
         }
 
         $relatedproducts = Product::where('admin_status', 'Accepted')
-                            ->where('subcategory_id', $product->subcategory_id)
-                            ->whereHas('vendor', function($q){
-                                $q->where('status', 1);
-                            })
-                            ->take(8)->get();
+            ->where('subcategory_id', $product->subcategory_id)
+            ->whereHas('vendor', function ($q) {
+                $q->where('status', 1);
+            })
+            ->take(8)->get();
 
 
-        if(Config::get('icrm.frontend.recentlyviewed.feature') == 1)
-        {
+        if (Config::get('icrm.frontend.recentlyviewed.feature') == 1) {
             // add product in recently viewed list
             $this->recentlyviewed($product);
         }
@@ -500,9 +472,9 @@ class WelcomeController extends Controller
             route('product.slug', ['slug' => $product->slug]),
             $product->description,
         )
-        ->facebook()
-        ->linkedin()
-        ->whatsapp();
+            ->facebook()
+            ->linkedin()
+            ->whatsapp();
 
         $previous = Product::where('admin_status', 'Accepted')->where('id', '<', $product->id)->orderBy('id')->first();
         $next = Product::where('admin_status', 'Accepted')->where('id', '>', $product->id)->orderBy('id')->first();
@@ -561,17 +533,16 @@ class WelcomeController extends Controller
      */
     public function productcolor($slug, $color)
     {
-        $product = Product::where('slug', $slug)->where('admin_status', 'Accepted')->whereHas('productskus', function($q) use($color){
+        $product = Product::where('slug', $slug)->where('admin_status', 'Accepted')->whereHas('productskus', function ($q) use ($color) {
             $q->where('color', $color);
         })->with('productsku')->first();
 
 
 
-        $morecolors = Productsku::
-                    groupBy('color', 'main_image')
-                    ->select('color', DB::raw('count(*) as total'), 'main_image')
-                    ->where('product_id', $product->id)->where('status', 1)
-                    ->get();
+        $morecolors = Productsku::groupBy('color', 'main_image')
+            ->select('color', DB::raw('count(*) as total'), 'main_image')
+            ->where('product_id', $product->id)->where('status', 1)
+            ->get();
 
 
 
@@ -595,7 +566,7 @@ class WelcomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function productsin($slug, $sin  )
+    public function productsin($slug, $sin)
     {
         $product = Product::where('slug', $slug)->where('id', $sin)->where('status', 1)->first();
         $morecolors = Product::where('product_group', $product->product_group)->where('id', '!=', $product->id)->where('status', 1)->get();
@@ -666,7 +637,7 @@ class WelcomeController extends Controller
     }
 
 
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -699,10 +670,10 @@ class WelcomeController extends Controller
         $page = Page::where('slug', $slug)->where('status', 'ACTIVE')->first();
 
         $previous = Page::where('id', '<', $page->id)
-                        ->orderBy('id', 'DESC')->first();
+            ->orderBy('id', 'DESC')->first();
 
         $next = Page::where('id', '>', $page->id)
-                        ->orderBy('id')->first();
+            ->orderBy('id')->first();
 
         return view('page')->with([
             'page' => $page,
@@ -724,21 +695,20 @@ class WelcomeController extends Controller
         $slider = HomeSlider::where('id', $slug)->where('status', 1)->first();
 
         $previous = HomeSlider::where('status', 1)
-                        ->whereNull('url')
-                        ->where('id', '<', $slider->id)
-                        ->orderBy('id', 'DESC')->first();
+            ->whereNull('url')
+            ->where('id', '<', $slider->id)
+            ->orderBy('id', 'DESC')->first();
 
         $next = HomeSlider::where('status', 1)
-                        ->whereNull('url')
-                        ->where('id', '>', $slider->id)
-                        ->orderBy('id')->first();
+            ->whereNull('url')
+            ->where('id', '>', $slider->id)
+            ->orderBy('id')->first();
 
 
         /**
          * If URL is present then redirect to URL
          */
-        if(!empty($slider->url))
-        {
+        if (!empty($slider->url)) {
             return redirect($slider->url);
         }
 
@@ -769,5 +739,4 @@ class WelcomeController extends Controller
         Session::flash('success', 'Congratulations! You have successfully signedup for newsletters.');
         return redirect()->back();
     }
-
 }
