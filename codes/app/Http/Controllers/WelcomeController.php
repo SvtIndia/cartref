@@ -354,7 +354,7 @@ class WelcomeController extends Controller
         if(Session::get('showcasecity') && !isset($_GET['brand_name']) && !isset($_GET['search'])){
             $city = Session::get('showcasecity');
             $vendorRole = Role::whereName('Vendor')->first();
-            $users = User::where('city','LIKE','%'.$city.'%')->where('role_id', $vendorRole->id)->get();
+            $users = User::where('city','LIKE','%'.$city.'%')->where('role_id', $vendorRole->id)->where('status',true)->get();
 
             return view('vendors')->with([
                 'users' => $users
@@ -368,7 +368,7 @@ class WelcomeController extends Controller
     public function categoryByVendor($user_id){
         if(Session::get('showcasecity')){
             $city = Session::get('showcasecity');
-            $user = User::where('city','LIKE','%'.$city.'%')->whereId($user_id)->first();
+            $user = User::where('city','LIKE','%'.$city.'%')->whereId($user_id)->where('status',true)->first();
 
             $subCategories = ProductSubcategory::join('products','product_subcategories.id','products.subcategory_id')
                 ->where(['products.seller_id' => $user->id])
