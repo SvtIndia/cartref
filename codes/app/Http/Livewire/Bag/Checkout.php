@@ -189,6 +189,8 @@ class Checkout extends Component
 
         if($subtotal > 500){
             $this->appliedShipping = 0;
+        }else{
+            $this->appliedShipping = $this->shipping;
         }
 
 

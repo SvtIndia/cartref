@@ -172,7 +172,7 @@
                                                     @elseif ($this->appliedShipping > 0)
                                                         <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} {{ number_format($this->appliedShipping, 2) }}</td>
                                                     @elseif ($this->appliedShipping == 0 && $this->shipping > 0)
-                                                        <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} {{ number_format($this->shipping, 2) }}</td>
+                                                        <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} <del>{{ number_format($this->shipping, 2) }}</del></td>
                                                     @else
                                                         <td class="product-total text-body" style="color: green !important;">Free Shipping</td>
                                                     @endif
