@@ -15,6 +15,8 @@ function isTab(){
         <style>
             .dynamic-hero { 
                 position: relative; 
+                /* background-image: url('https://placekitten.com/1200/800');
+                background-color: rgb(0 0 0 / 100%); */
                 background-size: cover;
                 background-blend-mode: multiply;
             }
