@@ -12,10 +12,23 @@ function isTab(){
 
     @if (count($dynamiccollections) > 0)
 
+        <style>
+            .dynamic-hero { 
+                position: relative; 
+                /* background-image: url('https://placekitten.com/1200/800');
+                background-color: rgb(0 0 0 / 100%); */
+                background-size: cover;
+                background-blend-mode: multiply;
+            }
+        </style>
         @foreach ($dynamiccollections as $dynamiccollection)
 
             <section id="dynamiccollections{{ $dynamiccollection->id }}">
-                <div class="containers pt-10 pb-6 pr-4 pl-4" @if(!empty($dynamiccollection->background_color)) style="background: {{ $dynamiccollection->background_color }};" @endif>
+                <div class="containers pt-10 pb-6 pr-4 pl-4 dynamic-hero" style="
+                    @if(!empty($dynamiccollection->background_color)) background: {{ $dynamiccollection->background_color }}; @endif
+                    @if(!empty($dynamiccollection->background_image)) background-image: url({{ Voyager::image($dynamiccollection->background_image) }}); @endif
+                    @if($dynamiccollection->background_opacity > 0) background-color: rgb(0 0 0 / {{ $dynamiccollection->background_opacity }}%); @endif
+                 ">
                     
                     <h2 class="title title-center mb-4">
                         {{ $dynamiccollection->group_name }}
