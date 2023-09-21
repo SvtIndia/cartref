@@ -28,11 +28,14 @@
         .vendor {
             width: 100%;
             height: auto;
-            background: linear-gradient(180deg, rgb(141, 205, 239) 0%, rgba(4.23, 194.01, 253.94, 0) 100%);
+            /* background: linear-gradient(180deg, rgb(141, 205, 239) 0%, rgba(4.23, 194.01, 253.94, 0) 100%); */
         }
 
         .vendor .brand-img {
-            width: 100% !important;
+            width: 98% !important;
+            display: flex;
+            margin: auto;
+            padding-top: 1rem;
             height: 250px;
         }
 
@@ -171,7 +174,7 @@
                             @foreach ($users as $user)
                                 <a href="{{ route('products-category', $user->id) }}" class="vendor-wrap">
                                     <div class="vendor"
-                                        style="background: linear-gradient(180deg, {{ $user->brand_bg_color }} 0%, rgba(4.23, 194.01, 253.94, 0) 100%);">
+                                        style="background: linear-gradient(white,{{ $user->brand_bg_color }},white);">
                                         <img class="brand-img" src="{{ Voyager::image($user->brand_logo) }}"
                                             onerror="this.onerror=null;this.src='{{ config('app.url') }}/images/placeholer.png';" />
                                         <div class="content">
