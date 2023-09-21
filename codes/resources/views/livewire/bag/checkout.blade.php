@@ -3,7 +3,7 @@
         <div class="page-content pt-7 pb-10 mb-10">
             @include('livewire.bag.bag_header')
             <div class="container mt-7">
-                
+
                 <form wire:submit.prevent="placeorder">
                     {{-- wire:submit.prevent="placeorder" --}}
                     <div class="row">
@@ -23,7 +23,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <label>Company Name 
+                                    <label>Company Name
                                         @if (Config::get('icrm.auth.fields.companyinfo') != true)
                                         (Optional)
                                         @endif
@@ -32,7 +32,7 @@
                                     <input type="text" class="form-control @error('companyname') error @enderror" wire:model.debounce.1s="companyname" />
                                 </div>
                                 <div class="col-xs-6">
-                                    <label>GST 
+                                    <label>GST
                                         @if (Config::get('icrm.auth.fields.companyinfo') != true)
                                         (Optional)
                                         @endif
@@ -41,7 +41,7 @@
                                     <input type="text" class="form-control @error('gst') error @enderror" wire:model.defer="gst"  />
                                 </div>
                             </div>
-                            
+
                             <label>Country / Region <span class="required">*</span></label>
                             <div class="select-box">
                                 @error('country') <span class="error">{{ $message }}</span> @enderror
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
+
                                 <div class="col-xs-6">
                                     <label>State <span class="required">*</span></label>
                                     @error('state') <span class="error">{{ $message }}</span> @enderror
@@ -112,10 +112,10 @@
                                 <div class="summary pt-5">
                                     <h3 class="title title-simple text-left text-uppercase">Your Order
                                         @if (Session::has('deliveryavailable'))
-                                            <br><span style="color: green;">{{ Session::get('deliveryavailable') }}</span>    
+                                            <br><span style="color: green;">{{ Session::get('deliveryavailable') }}</span>
                                         @endif
                                     </h3>
-                                    
+
                                     <table class="order-table">
                                         <thead>
                                             <tr>
@@ -132,7 +132,7 @@
                                                     <td class="product-total text-body">{{ Config::get('icrm.currency.icon') }} {{ number_format($cart->getPriceSumWithConditions(), 2) }}</td>
                                                 </tr>
                                             @endforeach
-                                            
+
                                             <div class="card accordion">
                                                 <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
                                                     <i class="fas fa-exclamation-circle"></i>
@@ -144,7 +144,7 @@
                                                     <div class="check-coupon-box d-flex">
                                                         {{-- <form wire:submit.prevent="applycoupon"> --}}
                                                             <input type="text"
-                                                                class="input-text form-control text-grey ls-m mr-4 mb-4" 
+                                                                class="input-text form-control text-grey ls-m mr-4 mb-4"
                                                                 wire:model.debounce.5s="couponcode" placeholder="Coupon code">
                                                             <button type="submit" wire:click="applycoupon" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
                                                                 Coupon</button>
@@ -166,21 +166,23 @@
                                                 @endif
                                                 <tr>
                                                     <td class="product-name">Shipping</td>
-                                                    
+
                                                     @if(empty($this->city))
                                                         <td class="product-total text-body" style="color: red !important;">Not available</td>
-                                                    @elseif ($this->shipping > 0)
-                                                        <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} {{ number_format($this->shipping, 2) }}</td>    
+                                                    @elseif ($this->appliedShipping > 0)
+                                                        <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} {{ number_format($this->appliedShipping, 2) }}</td>
+                                                    @elseif ($this->appliedShipping == 0 && $this->shipping > 0)
+                                                        <td class="product-total text-body" style="color: green !important;">+{{ config::get('icrm.currency.icon') }} {{ number_format($this->shipping, 2) }}</td>
                                                     @else
                                                         <td class="product-total text-body" style="color: green !important;">Free Shipping</td>
                                                     @endif
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                     <td class="product-name">Subtotal</td>
                                                     <td class="product-total text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($fsubtotal, 2) }}</td>
                                                 </tr>
-                                                
+
                                                 @if (Config::get('icrm.tax.type') == 'fixed')
                                                     @if ($this->tax > 0)
                                                         <tr>
@@ -222,12 +224,12 @@
                                             </a><span class="required">*</span>
                                         </label>
                                     </div>
-                                    
+
                                     @if (Session::get('ordermethod') == 'cod')
 
                                         <div>
-                                            <button type="submit" wire:loading.remove wire:model="disablebtn" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-order" 
-                                                @if($this->disablebtn == true) disabled="disabled" @endif 
+                                            <button type="submit" wire:loading.remove wire:model="disablebtn" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-order"
+                                                @if($this->disablebtn == true) disabled="disabled" @endif
                                                 {{-- @if(Session::get('ordermethod') != 'cod') disabled="disabled" @endif --}}
                                                 >
                                                 Place Cash On Delivery Order
@@ -245,21 +247,21 @@
                                             <button type="submit" wire:loading.remove wire:loading.attr="disabled" wire:model="disablebtn" class="btn btn-dark btn-rounded btn-order" id="rzp-button1" @if($this->disablebtn == true) disabled="disabled" @endif>
                                                 Make Payment
                                             </button>
-    
+
                                             <button wire:loading.delay.long wire:target="disablebtn" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-order">
                                                 Processing Payment...
                                             </button>
                                         </div>
 
                                     @endif
-                                    
+
                                     @if($this->disablebtn == true)
                                         @if(empty($this->city))
                                             <small class="outofstock">Delivery not available in your area.</small>
                                         @elseif(Session::get('acceptterms') == true)
                                             <small class="outofstock">Please fill out all the required fields.</small>
                                         @elseif(Session::get('acceptterms') == false)
-                                            <small class="outofstock">Agree terms and conditions.</small> 
+                                            <small class="outofstock">Agree terms and conditions.</small>
                                         @endif
                                     @endif
 
@@ -275,7 +277,7 @@
                 </form>
             </div>
         </div>
-    
+
     </main>
 </div>
 
