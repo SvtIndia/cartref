@@ -62,7 +62,7 @@
 
                         <div style="display:inline-flex; width:100%; justify-content: space-between">
                             <div style="width: 48%">
-                                <h3>Order Manifestation. <i class="voyager-basket"></i></h1>
+                                <h3>Order Manifestation <i class="voyager-basket"></i></h1>
                                     <div class="dashboard">
                                         <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=New Order">
                                             <div class="item @if (request('label') == 'New Order') new_order active @endif">
