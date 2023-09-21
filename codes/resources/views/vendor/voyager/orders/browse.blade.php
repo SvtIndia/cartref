@@ -71,7 +71,7 @@
                                                         class="count">{{ $orders->where('order_status', 'New Order')->count() }}</span>
                                                 </div>
                                                 <div class="info">
-                                                    <span class="title">New Order</span>
+                                                    <span class="title">New Orders</span>
                                                 </div>
                                             </div>
                                         </a>
