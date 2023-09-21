@@ -334,11 +334,7 @@ class WelcomeController extends Controller
      */
     public function products()
     {
-        if (
-            Session::get('showcasecity') &&
-            !isset($_GET['brand_name']) &&
-            !isset($_GET['search'])
-        ) {
+        if (Session::get('showcasecity') && !isset($_GET['brand_name']) && !isset($_GET['search'])) {
             $city = Session::get('showcasecity');
             $vendorRole = Role::whereName('Vendor')->first();
             $users = User::where('city', 'LIKE', '%' . $city . '%')->where('role_id', $vendorRole->id)->where('status', true)->get();
