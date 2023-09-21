@@ -84,7 +84,7 @@
                                                         class="count">{{ $orders->where('order_status', 'Ready To Dispatch')->count() }}</span>
                                                 </div>
                                                 <div class="info">
-                                                    <span class="title">Ready to Dispatch</span>
+                                                    <span class="title">Ready To Dispatch</span>
                                                 </div>
                                             </div>
                                         </a>
