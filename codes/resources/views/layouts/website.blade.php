@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -18,7 +18,7 @@
     {{-- <link rel="preload" href="{{ asset('fonts/riode.ttf?5gap68') }}" as="font" type="font/woff2" crossorigin="anonymous"> --}}
     <link rel="preload" href="{{ asset('vendor/fontawesome-free/webfonts/fa-solid-900.woff2') }}" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="{{ asset('vendor/fontawesome-free/webfonts/fa-brands-400.woff2') }}" as="font" type="font/woff2" crossorigin="anonymous">
-    
+
     <script src="{{ asset('js/webfont.js') }}" async=""></script><script>
         WebFontConfig = {
             google: { families: ['Poppins:400,500,600,700,800,900'] }
@@ -30,7 +30,7 @@
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
-    
+
 
     @if (Config::get('icrm.auth.otp_verification') == true)
         @auth
@@ -42,7 +42,7 @@
         @endauth
     @endif
 
-    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.min.css') }}">
 
@@ -56,18 +56,18 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/icrm.min.css?version=1') }}">
-    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/inditech.min.css') }}">
-    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cartrefs.min.css') }}">
 
     @if (env('#APP_URL') == 'https://hawkwings.in')
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/hawkwings.css') }}">    
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/hawkwings.css') }}">
     @endif
-    
+
 
     @yield('headerlinks')
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900" media="all">
 
     {!! setting('online-chat.customer_support') !!}
@@ -78,11 +78,11 @@
     @php
         $gorderid = request('id');
     @endphp
-        
+
     @if(\Request::route()->getName() == 'ordercomplete')
-        {!! setting('site.conversion_complete_script') !!}    
+        {!! setting('site.conversion_complete_script') !!}
     @endif
-    
+
 
     @livewireStyles
     <script src="{{ asset('php_ua/assets/js/scripts/phpUaJS.js') }}"></script>
@@ -91,7 +91,7 @@
 
 
 <body class="home loaded" style="overflow-x: hidden;">
-    
+
     @livewire('quickviewmodal')
 
 
@@ -101,8 +101,8 @@
         @if (\Request::route()->getName() != 'showcase.getstarted')
             @include('components.frontend.headers.01')
         @endif
-        
-        
+
+
         <!-- End of Header -->
         <main class="main @yield('mainclass')">
             <div class="page-content">
@@ -122,19 +122,19 @@
         @endif
 
         @if (\Request::route()->getName() != 'showcase.getstarted')
-            @include('components.frontend.footers.01') 
+            @include('components.frontend.footers.01')
         @endif
-        
+
         <!-- End of Footer -->
     {{-- <div class="minipopup-area"></div></div> --}}
 
-   @include('components.frontend.footers.stickyfooter')
+    @include('components.frontend.footers.stickyfooter')
 
     <!-- Scroll Top -->
     <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
 
     @include('components.frontend.headers.01-mobile')
-    
+
     {{-- @include('components.frontend.ctas.popupnewsletter') --}}
 
     <!-- sticky icons-->
@@ -174,7 +174,7 @@
 
     <script src="{{ asset('vendor/owl-carousel/owl.carousel.min.js') }}"></script>
     {{-- <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script> --}}
-    
+
     <script src="{{ asset('vendor/jquery.plugin/jquery.plugin.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery.countdown/jquery.countdown.min.js') }}"></script>
 
@@ -189,7 +189,7 @@
 
     {{-- If below mentioned jquery is enabled the product images jquery will not work --}}
     {{-- <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js') }}"></script> --}}
-    
+
     {{-- different jquery for different pages --}}
     @if (\Request::route()->getPrefix() != '/customize-product')
         {{-- <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script>         --}}
@@ -197,7 +197,7 @@
 
     {{-- <script src="{{ asset('owlcarousel/owl.carousel.min.js') }}"></script> --}}
     {{-- @yield('js') --}}
-    
+
     {{-- @include('components.frontend.footers.footerscriptscode') --}}
 
     @if (\Request::route()->getPrefix() == '/customization')
@@ -205,12 +205,38 @@
     @endif
 
     @yield('bottomscripts')
-    
+
     {!! setting('scripts.bottom_scripts') !!}
-    
+
     @livewireScripts
     <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
+    <script src="{{ config('app.url') }}/vendor/toast/tata.js"></script>
+
+    <script>
+        window.addEventListener('showToast', (e) => {
+            // console.log(e.detail.status)
+            if(e.detail.status == 'success'){
+                tata.success(e.detail.msg,'')
+            }
+            if(e.detail.status == 'log'){
+                tata.log(e.detail.msg,'')
+            }
+            if(e.detail.status == 'info'){
+                tata.info(e.detail.msg,'')
+            }
+            if(e.detail.status == 'warning'){
+                tata.warning(e.detail.msg,'')
+            }
+            if(e.detail.status == 'error'){
+                tata.error(e.detail.msg,'')
+            }
+
+        });
+        window.addEventListener('contentChanged', (e) => {
+            alert(e.detail.item.name);
+        });
+    </script>
     @stack('scripts')
 </body>
-    
+
 </html>

@@ -520,11 +520,18 @@ class Addskutobag extends Component
 
         $this->added = true;
 
+        $this->emit('cartcount');
+
+        // $this->dispatchBrowserEvent('contentChanged', ['item' => $item]);
+
+        $this->dispatchBrowserEvent('showToast', ['msg' => 'Product successfully added to cart', 'status' => 'success']);
+
+
         Session::remove('quickviewid');
 
         Session::flash('success', 'Product successfully added to cart');
 
-        return redirect()->route('bag');
+        // return redirect()->route('bag');
         // return redirect()->route('product.slug', ['slug' => $this->product->slug, 'color' => $this->color]);
     }
 
