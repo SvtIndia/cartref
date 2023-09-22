@@ -1,40 +1,68 @@
 @php
-function isMobile() {
-    return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "mobile")); 
-}
+    function isMobile()
+    {
+        return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
+    }
 
-function isTab(){
-    return is_numeric(strpos(strtolower($_SERVER["HTTP_USER_AGENT"]), "tablet")); 
-}
+    function isTab()
+    {
+        return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'tablet'));
+    }
 @endphp
 
 @if (isset($dynamiccollections))
 
     @if (count($dynamiccollections) > 0)
 
-        <style>
-            .dynamic-hero { 
-                position: relative; 
-                /* background-image: url('https://placekitten.com/1200/800');
-                background-color: rgb(0 0 0 / 100%); */
-                background-size: cover;
-                background-blend-mode: multiply;
-            }
-        </style>
         @foreach ($dynamiccollections as $dynamiccollection)
+            <style>
+                .dynamic-hero{{ $dynamiccollection->id }} {
+                    position: relative;
+                    background-size: cover;
+                    background-blend-mode: multiply;
+                }
+
+                .dynamic-hero{{ $dynamiccollection->id }}::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0;
+
+                }
+            </style>
+            @if (!empty($dynamiccollection->background_color))
+                <style>
+                    .dynamic-hero{{ $dynamiccollection->id }}::before {
+                        background: {{ $dynamiccollection->background_color }};
+                    }
+                </style>
+            @endif
+            @if (!empty($dynamiccollection->background_image))
+                <style>
+                    .dynamic-hero{{ $dynamiccollection->id }}::before {
+                        background-image: url({{ config('app.url').'/storage/'.str_replace('\\', '/', $dynamiccollection->background_image) }});
+                    }
+                </style>
+            @endif
+            @if ($dynamiccollection->background_opacity > 0)
+                <style>
+                    .dynamic-hero{{ $dynamiccollection->id }}::before {
+                        opacity: {{ $dynamiccollection->background_opacity / 10 }};
+                    }
+                </style>
+            @endif
 
             <section id="dynamiccollections{{ $dynamiccollection->id }}">
-                <div class="containers pt-10 pb-6 pr-4 pl-4 dynamic-hero" style="
-                    @if(!empty($dynamiccollection->background_color)) background: {{ $dynamiccollection->background_color }}; @endif
-                    @if(!empty($dynamiccollection->background_image)) background-image: url({{ Voyager::image($dynamiccollection->background_image) }}); @endif
-                    @if($dynamiccollection->background_opacity > 0) background-color: rgb(0 0 0 / {{ $dynamiccollection->background_opacity }}%); @endif
-                 ">
-                    
+                <div class="containers pt-10 pb-6 pr-4 pl-4  dynamic-hero{{ $dynamiccollection->id }}">
+
                     <h2 class="title title-center mb-4">
                         {{ $dynamiccollection->group_name }}
                     </h2>
-        
-                    
+
+
                     {{-- <div class="banner-desc-container">
                         <p>{{ setting('3-column-collection.description') }}</p>
                     </div> --}}
@@ -45,17 +73,15 @@ function isTab(){
                     @endphp
 
                     <style>
-
-                        @media (min-width: 901px)
-                        {
-                            .dynamiccollections{{ $dynamiccollection->id }}{
+                        @media (min-width: 901px) {
+                            .dynamiccollections{{ $dynamiccollection->id }} {
                                 display: grid;
                                 grid-template-columns: repeat({{ $dynamiccollection->desktop_columns }}, 1fr);
                                 /* grid-template-columns: repeat(8, 1fr); */
                                 grid-gap: {{ $dynamiccollection->desktop_gap }}em;
                             }
 
-                            #dynamiccollections{{ $dynamiccollection->id }} h2.title{
+                            #dynamiccollections{{ $dynamiccollection->id }} h2.title {
                                 font-size: 2.3em;
                                 font-family: 'Poppins', sans-serif;
                                 margin-bottom: 1em !important;
@@ -64,83 +90,71 @@ function isTab(){
 
                         }
 
-                        @media (max-width: 900px)
-                        {
-                            .dynamiccollections{{ $dynamiccollection->id }}{
+                        @media (max-width: 900px) {
+                            .dynamiccollections{{ $dynamiccollection->id }} {
                                 display: grid;
                                 grid-template-columns: repeat({{ $dynamiccollection->tablet_columns }}, 1fr);
                                 grid-gap: {{ $dynamiccollection->tablet_gap }}em;
                             }
 
-                            #dynamiccollections{{ $dynamiccollection->id }} h2.title{
+                            #dynamiccollections{{ $dynamiccollection->id }} h2.title {
                                 font-size: 2.3em;
                                 font-family: 'Poppins', sans-serif;
                                 margin-bottom: 1em !important;
                                 font-weight: 500;
                             }
 
-                            
+
                         }
 
-                        @media (max-width: 600px)
-                        {
-                            .dynamiccollections{{ $dynamiccollection->id }}{
+                        @media (max-width: 600px) {
+                            .dynamiccollections{{ $dynamiccollection->id }} {
                                 display: grid;
                                 grid-template-columns: repeat({{ $dynamiccollection->mobile_columns }}, 1fr);
                                 grid-gap: {{ $dynamiccollection->mobile_gap }}em;
                             }
 
-                            #dynamiccollections{{ $dynamiccollection->id }} h2.title{
+                            #dynamiccollections{{ $dynamiccollection->id }} h2.title {
                                 font-size: 1.5em;
                                 font-family: 'Poppins', sans-serif;
                                 margin-bottom: 1em !important;
                                 font-weight: 600;
                             }
                         }
-
                     </style>
 
 
 
                     {{-- Visiblity --}}
                     @if ($dynamiccollection->desktop_visiblity == 0)
-                        
                         <style>
-                            @media (min-width: 901px)
-                            {
+                            @media (min-width: 901px) {
                                 #dynamiccollections{{ $dynamiccollection->id }} {
                                     display: none;
                                 }
                             }
                         </style>
-
                     @endif
 
 
                     @if ($dynamiccollection->tablet_visiblity == 0)
-                        
                         <style>
-                            @media (min-width: 601px) AND (max-width: 900px)
-                            {
+                            @media (min-width: 601px) AND (max-width: 900px) {
                                 #dynamiccollections{{ $dynamiccollection->id }} {
                                     display: none;
                                 }
                             }
                         </style>
-
                     @endif
 
                     @if ($dynamiccollection->mobile_visiblity == 0)
-                        
                         <style>
-                            @media (max-width: 600px)
-                            {
+                            @media (max-width: 600px) {
                                 #dynamiccollections{{ $dynamiccollection->id }} {
                                     display: none;
                                 }
                             }
                         </style>
-
                     @endif
 
 
@@ -151,6 +165,7 @@ function isTab(){
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.carousel {
                                 /* display: block !important; */
                             }
+
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.nocarousel {
                                 display: none !important;
                             }
@@ -160,6 +175,7 @@ function isTab(){
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.carousel {
                                 /* display: block !important; */
                             }
+
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.nocarousel {
                                 display: none !important;
                             }
@@ -169,27 +185,28 @@ function isTab(){
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.carousel {
                                 /* display: block !important; */
                             }
+
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.nocarousel {
                                 display: none !important;
                             }
                         </style>
                     @else
-                        
                         <style>
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.carousel {
                                 display: none !important;
                             }
+
                             #dynamiccollections{{ $dynamiccollection->id }} .dynamiccollections{{ $dynamiccollection->id }}.nocarousel {
                                 /* display: block !important; */
                             }
                         </style>
-
                     @endif
 
 
-                    
 
-                    <div class="dynamiccollections{{ $dynamiccollection->id }} owl-carousel owl-theme owl-nav-bg owl-nav-arrow carousel" data-owl-options="{
+
+                    <div class="dynamiccollections{{ $dynamiccollection->id }} owl-carousel owl-theme owl-nav-bg owl-nav-arrow carousel"
+                        data-owl-options="{
                         'items': {{ $dynamiccollection->desktop_columns }},
                         'autoplay': 10,
                         'slideSpeed': 300,
@@ -200,36 +217,39 @@ function isTab(){
                         'animateOut': 'fadeOut'
                         }">
                         @foreach ($collections as $collection)
-                        <div class="dynamiccollection">
-                            <a href="{{ $collection->url }}">
-                                <div class="image">
-                                    <figure>
-                                        <img src="{{ Voyager::image($collection->image) }}" alt="{{ $dynamiccollection->group_name }}" style="background-color: #ccc;">
-                                    </figure>
-                                </div>
-                            </a>
-                        </div>
+                            <div class="dynamiccollection">
+                                <a href="{{ $collection->url }}">
+                                    <div class="image">
+                                        <figure>
+                                            <img src="{{ Voyager::image($collection->image) }}"
+                                                alt="{{ $dynamiccollection->group_name }}"
+                                                style="background-color: #ccc;">
+                                        </figure>
+                                    </div>
+                                </a>
+                            </div>
                         @endforeach
                     </div>
 
                     <div class="dynamiccollections{{ $dynamiccollection->id }} nocarousel">
                         @foreach ($collections as $collection)
-                        <div class="dynamiccollection">
-                            <a href="{{ $collection->url }}">
-                                <div class="image">
-                                    <figure>
-                                        <img src="{{ Voyager::image($collection->image) }}" alt="{{ $dynamiccollection->group_name }}" style="background-color: #ccc;">
-                                    </figure>
-                                </div>
-                            </a>
-                        </div>
+                            <div class="dynamiccollection">
+                                <a href="{{ $collection->url }}">
+                                    <div class="image">
+                                        <figure>
+                                            <img src="{{ Voyager::image($collection->image) }}"
+                                                alt="{{ $dynamiccollection->group_name }}"
+                                                style="background-color: #ccc;">
+                                        </figure>
+                                    </div>
+                                </a>
+                            </div>
                         @endforeach
                     </div>
-                    
+
                 </div>
             </section>
-
         @endforeach
     @endif
-        
+
 @endif
