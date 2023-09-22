@@ -213,6 +213,7 @@
                         'loop': true,
                         'nav': true,
                         'dots': true,
+                        'autoplayTimeout': 5000,
                         'animateIn': 'fadeIn',
                         'animateOut': 'fadeOut'
                         }">

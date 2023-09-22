@@ -22,7 +22,7 @@
             </div>
             <div class="header-right">
                 <div class="header-center">
-                    <nav class="main-nav ml-0 mr-4">
+                    <nav class="main-nav ml-0 mr-4" style="margin: auto !important;display: flex;">
                         <ul class="menu">
                             @auth
                                 <li>
