@@ -231,7 +231,6 @@ if (Config::get('icrm.frontend.newslettersignup.feature') == 1) {
 Route::get('/category/{category}', [WelcomeController::class, 'dynamicCategory'])->name('category.dynamic');
 
 Route::get('/products', [WelcomeController::class, 'products'])->name('products');
-Route::get('/products/{vendor_id}', [WelcomeController::class, 'categoryByVendor'])->name('products-category');
 Route::get('/products/category/{category}', [WelcomeController::class, 'productscategory'])->name('products.category');
 Route::get('/products/subcategory/{subcategory}', [WelcomeController::class, 'productssubcategory'])->name('products.subcategory');
 Route::get('/products/vendor/{slug}', [WelcomeController::class, 'productsfromvendor'])->name('products.vendor');
@@ -243,6 +242,8 @@ if (Config::get('icrm.showcase_at_home.feature') == 1) {
     Route::get('/products/showcase-at-home', [WelcomeController::class, 'productsshowcaseathome'])->name('products.showcase');
     Route::get('/products/showcase-at-home/vendor/{vendor_id}', [WelcomeController::class, 'productsshowcaseathomeforvendor'])->name('products.showcase.vendor');
 }
+
+Route::get('/products/{vendor_id}', [WelcomeController::class, 'categoryByVendor'])->name('products-category');
 
 // Route::get('/product/{slug}/{color}', [WelcomeController::class, 'productcolor'])->name('product.slug.color');
 // Route::get('/product/{slug}/csin-{sin}', [WelcomeController::class, 'productsin'])->name('product.slug.sin');
