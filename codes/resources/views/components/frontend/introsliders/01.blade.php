@@ -1,6 +1,7 @@
 @if (isset($homesliders))
     @if (count($homesliders) > 0)
-            <div class="big-slider animation-slider owl-carousel owl-theme owl-nav-bg owl-nav-arrow row cols-1 gutter-no" data-owl-options="{
+        <div class="big-slider animation-slider owl-carousel owl-theme owl-nav-bg owl-nav-arrow row cols-1 gutter-no"
+            data-owl-options="{
                 'items': 1,
                 'autoplay': 200,
                 'loop': true,
@@ -11,35 +12,40 @@
                 'animateOut': 'fadeOut'
             }">
             @foreach ($homesliders as $slider)
-            <a href="{{ route('slider.slug', ['slug' => $slider->id]) }}">
+                <a href="{{ route('slider.slug', ['slug' => $slider->id]) }}">
 
-                <div class="big-slide1 banner banner-fixed code-content" style="background-color: #fff">
+                    <div class="big-slide1 banner banner-fixed code-content" style="background-color: #fff">
 
-                    {{-- Banner Image --}}
+                        {{-- Banner Image --}}
 
-                    <figure>
-                        {{-- <img src="{{ Voyager::image($slider->background_image) }}" alt="{{ env('APP_NAME').'-'.$slider->title_1 }}"> --}}
+                        <figure>
+                            {{-- <img src="{{ Voyager::image($slider->background_image) }}" alt="{{ env('APP_NAME').'-'.$slider->title_1 }}"> --}}
                             <picture>
-                                <source media="(min-width:650px)" srcset="{{ Voyager::image($slider->background_image) }}">
-                                    @if (empty($slider->mb_background_image))
-                                        <source media="(min-width:465px)" srcset="{{ Voyager::image($slider->background_image) }}">
-                                            <img src="{{ Voyager::image($slider->background_image) }}" alt="{{ env('APP_NAME') }}-slider-{{ $slider->id }}" style="width:auto;">
-                                    @else
-                                        <source media="(min-width:465px)" srcset="{{ Voyager::image($slider->mb_background_image) }}">
-                                            <img src="{{ Voyager::image($slider->mb_background_image) }}" alt="{{ env('APP_NAME') }}-slider-{{ $slider->id }}" style="width:auto;">
-                                    @endif
+                                <source media="(min-width:650px)"
+                                    srcset="{{ Voyager::image($slider->background_image) }}">
+                                @if (empty($slider->mb_background_image))
+                                    <source media="(min-width:465px)"
+                                        srcset="{{ Voyager::image($slider->background_image) }}">
+                                    <img src="{{ Voyager::image($slider->background_image) }}"
+                                        alt="{{ env('APP_NAME') }}-slider-{{ $slider->id }}" style="width:auto;">
+                                @else
+                                    <source media="(min-width:465px)"
+                                        srcset="{{ Voyager::image($slider->mb_background_image) }}">
+                                    <img src="{{ Voyager::image($slider->mb_background_image) }}"
+                                        alt="{{ env('APP_NAME') }}-slider-{{ $slider->id }}" style="width:auto;">
+                                @endif
 
 
                             </picture>
-                    </figure>
+                        </figure>
 
 
 
-                </div>
+                    </div>
 
-            </a>
+                </a>
             @endforeach
-            </div>
+        </div>
 
     @endif
 @endif

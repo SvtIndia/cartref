@@ -3,7 +3,7 @@
     {
         return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
     }
-
+    
     function isTab()
     {
         return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'tablet'));
@@ -43,7 +43,7 @@
             @if (!empty($dynamiccollection->background_image))
                 <style>
                     .dynamic-hero{{ $dynamiccollection->id }}::before {
-                        background-image: url({{ config('app.url').'/storage/'.str_replace('\\', '/', $dynamiccollection->background_image) }});
+                        background-image: url({{ config('app.url') . '/storage/' . str_replace('\\', '/', $dynamiccollection->background_image) }});
                     }
                 </style>
             @endif
@@ -222,9 +222,15 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            <img src="{{ Voyager::image($collection->image) }}"
-                                                alt="{{ $dynamiccollection->group_name }}"
-                                                style="background-color: #ccc;">
+                                            @if (isMobile() && file_exists(Voyager::image($collection->mb_image)))
+                                                <img src="{{ Voyager::image($collection->mb_image) }}"
+                                                    alt="{{ $dynamiccollection->group_name }}"
+                                                    style="background-color: #ccc;">
+                                            @else
+                                                <img src="{{ Voyager::image($collection->image) }}"
+                                                    alt="{{ $dynamiccollection->group_name }}"
+                                                    style="background-color: #ccc;">
+                                            @endif
                                         </figure>
                                     </div>
                                 </a>
@@ -238,9 +244,15 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            <img src="{{ Voyager::image($collection->image) }}"
-                                                alt="{{ $dynamiccollection->group_name }}"
-                                                style="background-color: #ccc;">
+                                            @if (isMobile() && file_exists(Voyager::image($collection->mb_image)))
+                                                <img src="{{ Voyager::image($collection->mb_image) }}"
+                                                    alt="{{ $dynamiccollection->group_name }}"
+                                                    style="background-color: #ccc;">
+                                            @else
+                                                <img src="{{ Voyager::image($collection->image) }}"
+                                                    alt="{{ $dynamiccollection->group_name }}"
+                                                    style="background-color: #ccc;">
+                                            @endif
                                         </figure>
                                     </div>
                                 </a>
