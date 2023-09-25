@@ -532,7 +532,7 @@
                         //     print_r($dataTypeContent[0]);
                         //     echo"</pre>";
                         ?>
-                        <div class="sliding-btn-div">
+                        {{-- <div class="sliding-btn-div">
                             <nav>
                                 <ul class="pagination">
                                     <li class="page-item" id="left-button">
@@ -543,7 +543,7 @@
                                     </li>
                                 </ul>
                             </nav>
-                        </div>
+                        </div> --}}
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-responsive table-hover"
                                 style="width: 100%; min-width:1600px; overflow-x:auto;">
@@ -626,7 +626,7 @@
                                                     @php
                                                         $sameDayEnd = date('Y-m-d 00:00:00', strtotime($data->created_at));
                                                         $forward = Carbon\Carbon::parse($sameDayEnd)->addDay(1);
-                                                        
+
                                                         $hourdiff = round((time() - strtotime($forward)) / 3600, 1);
 
                                                         $now = $forward;
@@ -1182,7 +1182,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $("#right-button").click(function() {
             event.preventDefault();
             $(".table-responsive").animate({
@@ -1200,5 +1200,5 @@
                 "slow"
             );
         });
-    </script>
+    </script> --}}
 @stop
