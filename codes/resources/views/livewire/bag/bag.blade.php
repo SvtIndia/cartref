@@ -159,7 +159,7 @@
                                             </td>
                                             <td class="product-close">
                                                 <a wire:click="wishlist({{ $product->id }},{{ $cart->id }})" class="product-remove" title="Move to wishlist">
-                                                    <i class="fas fa-arrow-right"></i>
+                                                    <i class="d-icon-heart"></i>
                                                 </a>
                                             </td>
                                         </tr>
