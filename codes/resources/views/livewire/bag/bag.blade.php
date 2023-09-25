@@ -16,6 +16,7 @@
                                         <th><span>Price</span></th>
                                         <th><span>quantity</span></th>
                                         <th>Subtotal</th>
+                                        <th colspan="2">Actions</th>
                                         {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
@@ -157,7 +158,7 @@
                                                     <i class="fas fa-times"></i>
                                                 </a>
                                             </td>
-                                            <td class="product-close">
+                                            <td class="product-close" style="color:red; border-color:red;">
                                                 <a wire:click="wishlist({{ $product->id }},{{ $cart->id }})" class="product-remove" title="Move to wishlist">
                                                     <i class="d-icon-heart"></i>
                                                 </a>
