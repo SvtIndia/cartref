@@ -498,7 +498,7 @@ class Products extends Component
             'genderss' => Gender::where('status', 1)->where('name', '!=', 'NA')->orderBy('id', 'ASC')->get(),
             'sizess' => Size::where('name', '!=', 'NA')->where('status', 1)->has('products')->orderBy('id', 'ASC')->get(),
             'colorss' => Color::where('name', '!=', 'NA')->where('status', 1)->has('products')->orderBy('id', 'ASC')->get(),
-            'brandss' => Brand::where('status', 1)->whereHas('products')->orderBy('id', 'ASC')->get(),
+            'brandss' => Brand::where('status', 1)->whereHas('products')->orderBy('name', 'ASC')->get(),
 
             'styless' => Style::where('status', 1)->orderBy('id', 'ASC')->get(),
             'occasionss' => Occasion::where('status', 1)->orderBy('id', 'ASC')->get(),
