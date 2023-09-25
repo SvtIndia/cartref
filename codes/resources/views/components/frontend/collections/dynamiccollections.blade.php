@@ -222,7 +222,7 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            @if (isMobile() && file_exists(Voyager::image($collection->mb_image)))
+                                            @if (isMobile() && file_exists(config('app.url') . '/storage/' . $collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
@@ -244,7 +244,7 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            @if (isMobile() && file_exists(Voyager::image($collection->mb_image)))
+                                            @if (isMobile() && file_exists(config('app.url') . '/storage/' . $collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
