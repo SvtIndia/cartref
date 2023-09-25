@@ -8,7 +8,8 @@
         <div class="mobile-menu-container scrollable">
             <form action="{{ route('search') }}" method="post" class="input-wrapper">
                 @csrf
-                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search your keyword..." value="{{ $_GET['search'] ?? '' }}" required="">
+                <input type="text" class="form-control" name="search" autocomplete="off"
+                    placeholder="Search your keyword..." value="{{ $_GET['search'] ?? '' }}" required="">
                 <button class="btn btn-search" type="submit" title="submit-button">
                     <i class="d-icon-search"></i>
                 </button>
@@ -20,11 +21,10 @@
                         <div class="authname">Welcome {{ strtok(auth()->user()->name, ' ') }}!</div>
                     </li>
                 @endauth
-
+                
                 {{ menu('Website', 'components.frontend.headers.01-navs') }}
 
-                <li class="submenu active">
-                    {{-- <a href="">Select Language</a> --}}
+                {{-- <li class="submenu active">
                     <a>{{ Config::get('languages')[App::getLocale()]['display'] }}</a>
                     <ul>
                         @foreach (Config::get('languages') as $lang => $language)
@@ -37,7 +37,7 @@
                         @endif
                         @endforeach
                     </ul>
-                </li>
+                </li> --}}
             </ul>
             <!-- End of MobileMenu -->
         </div>
