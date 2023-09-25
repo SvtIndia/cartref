@@ -10,6 +10,7 @@ use Seshac\Shiprocket\Shiprocket;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class Bag extends Component
 {
@@ -270,6 +271,69 @@ class Bag extends Component
         \Cart::session($userID)->remove($cartid);
 
         $this->emit('cartcount');
+    }
+
+    public function wishlist($wishlistproductid)
+    {
+
+
+        if(Config::get('icrm.frontend.wishlist.auth') == true)
+        {
+            if(!Auth::check())
+            {
+                return redirect()->route('login');
+            }
+        }
+
+        // dd($this->wishlistproductid);
+        // $wishlistproductid;
+
+        $product = Product::where('id', $wishlistproductid)->first();
+        // dd($product);
+        if(empty($product))
+        {
+            Session::flash('danger', 'There is something wrong. Please refresh the page and try again!');
+            return redirect()->back();
+        }
+
+        $wishlist = app('wishlist');
+
+        // if($this->wishlistchecked == true)
+        // {
+        //     // remove
+        //     $wishlist->remove($product->id);
+
+        //     $this->wishlistchecked = false;
+
+        //     // Session::flash('success', 'Product successfully removed from the wishlist!');
+        // }else{
+            try{
+
+                $wishlist->add(
+                    $product->id,
+                    $product->name,
+                    $product->offer_price,
+                    '1'
+                );
+
+                $this->dispatchBrowserEvent('showToast', ['msg' => 'Product successfully added in the wishlist!', 'status' => 'success']);
+            }
+            catch(Throwable $e){
+                $this->dispatchBrowserEvent('showToast', ['msg' => $e->getMessage(), 'status' => 'error']);
+
+            }
+
+        //     $this->wishlistchecked = true;
+        //     // Session::flash('success', 'Product successfully added in the wishlist!');
+        // }
+
+        // dd($this->wishlistchecked);
+        $this->emit('wishlistcount');
+
+        // Session::remove('quickviewid');
+
+        return;
+        // return redirect(request()->header('Referer'));
     }
 
     public function checkshippingavailability()

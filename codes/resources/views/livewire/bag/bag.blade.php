@@ -157,6 +157,11 @@
                                                     <i class="fas fa-times"></i>
                                                 </a>
                                             </td>
+                                            <td class="product-close">
+                                                <a wire:click="wishlist({{ $product->id }})" class="product-remove" title="Move to wishlist">
+                                                    <i class="fas fa-arrow-right"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                         @endif
                                     @endforeach

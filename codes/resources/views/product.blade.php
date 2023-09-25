@@ -15,7 +15,7 @@
     <div class="page-content mb-10 pb-6">
         <div class="container">
             <div class="product product-single row mb-7">
-                
+
                 <div class="col-md-7 hidden-sm hidden-md hidden-lg">
                     <div class="product-details">
                         <div class="product-navigation">
@@ -24,7 +24,7 @@
                                 <li><a href="{{ route('products') }}" class="active">Products</a></li>
                                 <li>{{ $product->productsubcategory->name }}</li>
                             </ul>
-    
+
                             <ul class="product-nav">
                                 @isset($previous)
                                     @if (!empty($previous))
@@ -58,7 +58,7 @@
                                 @endisset
                             </ul>
                         </div>
-    
+
                         <h1 class="product-name">
                             <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
                                 {{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}
@@ -75,9 +75,9 @@
                                 </span>
                             @endif
                         </div>
-                    
-    
-    
+
+
+
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@
                                 <li><a href="{{ route('products') }}" class="active">Products</a></li>
                                 <li>{{ $product->productsubcategory->name }}</li>
                             </ul>
-    
+
                             <ul class="product-nav">
                                 @isset($previous)
                                     @if (!empty($previous))
@@ -129,7 +129,7 @@
                                 @endisset
                             </ul>
                         </div>
-    
+
                         <h1 class="product-name hidden-xs">
                             <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
                                 {{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}
@@ -146,14 +146,14 @@
                                 </span>
                             @endif
                         </div>
-                        
+
 
                         @livewire('addskutobag', [
                             'product' => $product
                         ])
-    
+
                         <hr class="product-divider mb-3">
-    
+
                         <div class="product-footer">
                             {{-- <div class="social-links mr-4">
                                 <a href="#" class="social-link social-facebook fab fa-facebook-f"></a>
@@ -170,10 +170,10 @@
                             ])
 
                             {{-- <span class="divider d-lg-show"></span> --}}
-                            
+
                             @if (!empty($product->brochure))
                                 @foreach (json_decode($product->brochure) as $key => $brochure)
-                                    <a href="{{ asset('/storage/'.$brochure->download_link) }}" target="_blank" class="btn-product btn-product-down mr-6 link"><i class="fa fa-download"></i>Download {{ Config::get('icrm.frontend.brochure.name') }} {{ number_format($key+1, 0) }}</a>    
+                                    <a href="{{ asset('/storage/'.$brochure->download_link) }}" target="_blank" class="btn-product btn-product-down mr-6 link"><i class="fa fa-download"></i>Download {{ Config::get('icrm.frontend.brochure.name') }} {{ number_format($key+1, 0) }}</a>
                                 @endforeach
                             @endif
 
@@ -181,7 +181,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="tab tab-nav-simple product-tabs">
                 <ul class="nav nav-tabs justify-content-center" role="tablist">
                     <li class="nav-item">
@@ -344,14 +344,14 @@
                                             {{ $product->vendor->name }}
                                         </a>
                                     </p>
-                                </li>    
+                                </li>
                             @endif
-                            
-                            
+
+
                             <li><label>Brand:</label>
                                 <p>{{ $product->brand_id }}</p>
                             </li>
-{{--                             
+{{--
                             @if (count($product->productcolors) > 0)
                                 <li><label>Color:</label>
                                     <p>
@@ -361,7 +361,7 @@
                                     </p>
                                 </li>
                             @endif
-                            
+
                             @if (count($product->productskus) > 0)
                                 <li><label>Size:</label>
                                     <p>
@@ -371,7 +371,7 @@
                                     </p>
                                 </li>
                             @endif --}}
-                            
+
                             @if (!empty($product->max_g))
                                 <li><label>Maximum G+:</label>
                                     <p>{{ $product->max_g }}</p>
@@ -402,7 +402,7 @@
 
                         </ul>
                     </div>
-                    
+
                     @if (!empty($product->size_guide))
                         <div class="tab-pane" id="product-tab-size-guide">
                             <figure class="mt-4 mb-4" style="margin: auto;">
@@ -418,14 +418,12 @@
                     </div>
                 </div>
             </div>
-    
+
             @isset($relatedproducts)
-                
-         
                 @if (count($relatedproducts) > 0)
-                <section class="pt-3 mt-10">
-                    <h2 class="title justify-content-center">Related Products</h2>
-        
+                    <section class="pt-3 mt-10">
+                        <h2 class="title justify-content-center">Related Products</h2>
+
                         <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product" data-owl-options="{
                             'items': 5,
                             'nav': false,
@@ -446,9 +444,9 @@
                                 }
                             }
                         }">
-                            
-                            
-                            
+
+
+
                         <div class="owl-stage-outer">
                             <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
                                 @foreach ($relatedproducts as $key => $product)
@@ -487,10 +485,10 @@
                                                 </div>
                                                 <div class="ratings-container">
                                                     <div class="ratings-full">
-                                                        <span class="ratings" style="width: 
+                                                        <span class="ratings" style="width:
                                                         @if($product->productreviews)
                                                         {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
-                                                        @else   
+                                                        @else
                                                         0%
                                                         @endif"></span>
                                                         <span class="tooltiptext tooltip-top"></span>
@@ -514,7 +512,6 @@
                             <div class="owl-dots disabled"></div></div>
                     </section>
                 @endif
-
             @endisset
         </div>
     </div>
