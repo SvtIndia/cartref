@@ -273,7 +273,7 @@ class Bag extends Component
         $this->emit('cartcount');
     }
 
-    public function wishlist($wishlistproductid)
+    public function wishlist($wishlistproductid, $cart_id)
     {
 
 
@@ -315,8 +315,8 @@ class Bag extends Component
                     $product->offer_price,
                     '1'
                 );
-
-                $this->dispatchBrowserEvent('showToast', ['msg' => 'Product successfully added in the wishlist!', 'status' => 'success']);
+                $this->removecart($cart_id);
+                $this->dispatchBrowserEvent('showToast', ['msg' => 'Product successfully moved in the wishlist!', 'status' => 'success']);
             }
             catch(Throwable $e){
                 $this->dispatchBrowserEvent('showToast', ['msg' => $e->getMessage(), 'status' => 'error']);
