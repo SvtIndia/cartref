@@ -3,7 +3,7 @@
     {
         return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
     }
-    
+
     function isTab()
     {
         return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'tablet'));
@@ -222,7 +222,7 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            @if (isMobile() && \Illuminate\Support\Facades\Storage::exists($collection->mb_image))
+                                            @if (isMobile() && file_exists(public_path('/storage/').$collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
@@ -244,7 +244,7 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            @if (isMobile() && \Illuminate\Support\Facades\Storage::exists($collection->mb_image))
+                                            @if (isMobile() && file_exists(public_path('/storage/').$collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
