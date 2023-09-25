@@ -1,5 +1,5 @@
 @if(isset($trendings))
-    
+
     @if (count($trendings) > 0)
     <section class="mt-7 appear-animate fadeIn appear-animation-visible home-product" data-animation-options="{
         'delay': '.2s'
@@ -10,6 +10,7 @@
                 'items': 4,
                 'nav': false,
                 'dots': true,
+                'autoplayTimeout': 5000,
                 'loop': false,
                 'margin': 20,
                 'responsive': {
@@ -26,12 +27,12 @@
                     }
                 }
             }">
-                
-                
+
+
     <div class="owl-stage-outer">
     <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1460px;">
         @foreach ($trendings as $product)
-        <div class="owl-item active" style="width: 345px; margin-right: 20px;">            
+        <div class="owl-item active" style="width: 345px; margin-right: 20px;">
                 <div class="product text-center">
                     <figure class="product-media">
                         <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
@@ -68,10 +69,10 @@
                         </div>
                         <div class="ratings-container">
                             <div class="ratings-full">
-                                <span class="ratings" style="width: 
+                                <span class="ratings" style="width:
                                 @if($product->productreviews)
                                 {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
-                                @else   
+                                @else
                                 0%
                                 @endif"></span>
                                 <span class="tooltiptext tooltip-top"></span>
@@ -84,11 +85,11 @@
                                     @foreach ($product->productcolors as $key => $productcolor)
                                         <a class="color @if($key == 0) @endif" data-src="{{ Voyager::image($productcolor->main_image) }}" href="{{ route('product.slug', ['slug' => $product->slug, 'color' => $productcolor->color]) }}" style="background-color: {{ $productcolor->color }}"></a>
                                     @endforeach
-                                </div>                                      
+                                </div>
                             @endif
                         @endif --}}
                     </div>
-                </div>            
+                </div>
         </div>
         @endforeach
     </div></div>

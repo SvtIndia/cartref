@@ -1,7 +1,7 @@
 @isset($blogs)
 
     @if (count($blogs) > 0)
-        
+
     <section class="mt-10 pt-6">
         <div class="container">
             <h2 class="title title-center">From Our Blog</h2>
@@ -11,6 +11,7 @@
                 'dots': true,
                 'nav': false,
                 'loop': false,
+                'autoplayTimeout': 5000,
                 'margin': 20,
                 'autoPlay': true,
                 'responsive': {
@@ -29,13 +30,13 @@
                     }
                 }
             }">
-                
-                
-                
-                
+
+
+
+
         <div class="owl-stage-outer">
             <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1460px;">
-                
+
                 @foreach ($blogs as $key => $blog)
                     <div class="owl-item active" style="width: 345px; margin-right: 20px;"><div class="post overlay-dark overlay-zoom appear-animate" data-animation-options="{
                             'name': 'fadeInRightShorter',
@@ -62,7 +63,7 @@
 
             </div>
         </div>
-        
+
         <div class="owl-nav disabled">
             <button type="button" title="presentation" class="owl-prev">
                 <i class="d-icon-angle-left"></i>

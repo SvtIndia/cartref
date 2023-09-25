@@ -45,7 +45,7 @@
             height: 100%;
             vertical-align: middle;
             width: 100%;
-            object-fit: cover;
+            /* object-fit: cover; */
             border: 1px #B1A5A5 solid
         }
 

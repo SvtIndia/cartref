@@ -429,6 +429,7 @@
                             'nav': false,
                             'loop': true,
                             'dots': true,
+                            'autoplayTimeout': 5000,
                             'margin': 20,
                             'responsive': {
                                 '0': {
