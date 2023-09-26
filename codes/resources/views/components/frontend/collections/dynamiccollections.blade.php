@@ -222,15 +222,15 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            {{-- @if (isMobile() && file_exists(public_path('/storage/').$collection->mb_image))
+                                            @if (isMobile() && Storage::disk('public')->exists($collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
-                                            @else --}}
+                                            @else
                                                 <img src="{{ Voyager::image($collection->image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
-                                            {{-- @endif --}}
+                                            @endif
                                         </figure>
                                     </div>
                                 </a>
@@ -244,19 +244,21 @@
                                 <a href="{{ $collection->url }}">
                                     <div class="image">
                                         <figure>
-                                            {{-- @if (isMobile() && file_exists(public_path('/storage/').$collection->mb_image))
+                                            @if (isMobile() && Storage::disk('public')->exists($collection->mb_image))
                                                 <img src="{{ Voyager::image($collection->mb_image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
-                                            @else --}}
+                                            @else
                                                 <img src="{{ Voyager::image($collection->image) }}"
                                                     alt="{{ $dynamiccollection->group_name }}"
                                                     style="background-color: #ccc;">
-                                            {{-- @endif --}}
+                                            @endif
                                         </figure>
                                     </div>
                                 </a>
                             </div>
+                            {{-- {{ public_path('storage'.'/'.$collection->mb_image) }}
+                            Is file exists = {{  Storage::disk('public')->exists($collection->mb_image) }} --}}
                         @endforeach
                     </div>
 
