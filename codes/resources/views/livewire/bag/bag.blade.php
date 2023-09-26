@@ -1,7 +1,11 @@
 <style>
     @media screen and (max-width: 480px) {
+        .cart .shop-table tr {
+            padding: 2rem 0 0rem!important;
+        }
+
         .cart-tr {
-            display: flex;
+            display: flex !important;
             flex-wrap: wrap;
         }
 
@@ -15,18 +19,24 @@
             flex: 0 0 50%;
             text-align: left;
         }
-        .product-quantity{
+
+        .product-quantity {
             max-width: 50%;
             flex: 0 0 50%;
         }
-        .product-price{
+
+        .product-price {
             max-width: 50%;
             flex: 0 0 50%;
-            text-align: left;
+            text-align: left !important;
+            margin-top: 5px;
         }
 
         .cart .product-remove {
             position: unset !important;
+        }
+        .product-close{
+            margin-bottom: 5px;
         }
     }
 </style>
