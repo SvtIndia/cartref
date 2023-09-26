@@ -275,8 +275,9 @@
             <div class="mfp-container mfp-ajax-holder">
                 <div class="mfp-content">
                     <div class="product product-single row product-popup">
-
-                        <h1>No Internet</h1>
+                        <figure class="product-image">
+                            <img src="{{ config('app.url').'/images/error/no-internet.jpeg' }}" style="display: flex; margin: auto;" alt="No Internet">
+                        </figure>
                         <button title="Close (Esc)" onclick="document.getElementById('no_internet').style.display = 'none';" type="button" class="mfp-close"><span>×</span></button>
                     </div>
                 </div>
@@ -364,14 +365,18 @@
     </script>
     <script>
         window.addEventListener("online", function() {
-            alert("You are online now!");
             document.getElementById('no_internet').style.display = 'none';
         });
 
         window.addEventListener("offline", function() {
-            alert("Oops! You are offline now!");
             document.getElementById('no_internet').style.display = 'block'
         });
+
+        if (navigator.onLine) {
+            document.getElementById('no_internet').style.display = 'none';
+        } else {
+            document.getElementById('no_internet').style.display = 'block'
+        }
     </script>
     @stack('scripts')
 </body>
