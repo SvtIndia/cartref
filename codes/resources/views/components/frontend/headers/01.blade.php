@@ -1,3 +1,8 @@
+<style>
+    .menu>li {
+       margin-right:16px !important;
+    }
+</style>
 <header class="header border-no">
     <div class="sticky-content-wrapper" style="height: 98px;">
         <div class="header-middle sticky-header fix-top sticky-content" style="z-index: 1060;">
@@ -21,7 +26,7 @@
                 <!-- End of Divider -->
             </div>
             <div class="header-right">
-                <div class="header-center">
+                <div class="header-center" style="margin-right: 12px;min-width: 119px;text-align: center;">
                     <nav class="main-nav ml-0 mr-4" style="margin: auto !important;display: flex;">
                         <ul class="menu">
                             @auth

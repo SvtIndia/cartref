@@ -1,7 +1,7 @@
 <div>
     <main class="main cart">
         <div class="page-content pt-7 pb-10">
-            
+
             <div class="step-by pr-4 pl-4">
                 <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif"><a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}">Showcase Order</a></h3>
                 <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.buynow') active @endif"><a href="{{ route('showcase.buynow', ['id' => $this->orderid]) }}">Buy now</a></h3>
@@ -11,7 +11,7 @@
             <div class="container mt-7 mb-2">
                 <div class="row">
                     <div class="col-lg-8 col-md-12 pr-lg-4">
-                        
+
                         @if (count($buyshowcases) > 0)
                             <table class="shop-table cart-table">
                                 <thead>
@@ -51,8 +51,8 @@
                                                     <br><span>Brand: {{ $showcase->product->brand_id }}</span>
                                                     <br><span>Color: {{ $showcase->color }}</span>
                                                     <br><span>Size: {{ $showcase->size }}</span>
-                                                    
-                                                    <br><span>Order type: {{ $showcase->type }}</span>                                                    
+
+                                                    <br><span>Order type: {{ $showcase->type }}</span>
                                                 </div>
                                             </td>
                                             <td class="product-subtotal">
@@ -76,7 +76,7 @@
                                     Go to showcase order
                                 </a>
                                 <small>At a time you can only request showcase at home from one vendor</small>
-                                
+
                                 {{-- <button type="submit"
                                     class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled">Update
                                     Cart</button> --}}
@@ -99,8 +99,8 @@
                                 </div>
                             </div>
                         @endif
-                            
-                        
+
+
                     </div>
                     <aside class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
@@ -126,7 +126,7 @@
                                             <p class="summary-subtotal-price" style="color: red !important;">-{{ Config::get('icrm.currency.icon') }}{{ number_format($showcaserefund, 2) }}</p>
                                         </td>
                                     </tr>
-                                    
+
 
                                     <tr class="summary-subtotal">
                                         <td>
@@ -147,8 +147,8 @@
                                             </td>
                                         </tr>
                                     @endif
-                                    
-                                    
+
+
                                 </table>
                                 <table class="total">
                                     <tr class="summary-subtotal">
@@ -181,8 +181,8 @@
                                 @if (Session::get('showcasebagordermethod') == 'cod')
 
                                         <div>
-                                            <button type="submit" wire:click="placeorder" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-checkout btn-block" 
-                                                @if($this->disablebtn == true) disabled="disabled" @endif 
+                                            <button type="submit" wire:click="placeorder" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-checkout btn-block"
+                                                @if($this->disablebtn == true) disabled="disabled" @endif
                                                 {{-- @if(Session::get('ordermethod') != 'cod') disabled="disabled" @endif --}}
                                                 >
                                                 Place Cash On Delivery Order
@@ -195,7 +195,7 @@
                                             <button type="submit" wire:loading.attr="disabled" wire:click="placeorder" class="btn btn-dark btn-rounded btn-checkout btn-block" id="rzp-button1" @if($this->disablebtn == true) disabled="disabled" @endif>
                                                 Make Payment
                                             </button>
-    
+
                                         </div>
 
                                     @endif
@@ -206,7 +206,7 @@
                 </div>
             </div>
         </div>
-    
+
     </main>
 </div>
 
@@ -215,7 +215,7 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     Livewire.on('srazorPay', function() {
-    
+
         var full_name = "{{ $this->rname }}";
         var email = "{{ $this->remail }}";
         var contact_number = "{{ $this->rphone }}";
@@ -257,7 +257,7 @@
             "currency": "INR",
             "name": "{{ env('APP_NAME') }}",
             "description": "Payment",
-            "image": "{{ Voyager::image(setting('site.logo')) }}",
+            "image": "{{ Voyager::image(setting('razorpay.logo')) }}",
             "order_id": "", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 $.ajaxSetup({

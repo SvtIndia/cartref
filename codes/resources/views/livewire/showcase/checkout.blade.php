@@ -14,7 +14,7 @@
                         <div class="check-coupon-box d-flex">
                             <form wire:submit.prevent="applycoupon">
                                 <input type="text"
-                                    class="input-text form-control text-grey ls-m mr-4 mb-4" 
+                                    class="input-text form-control text-grey ls-m mr-4 mb-4"
                                     wire:model.debounce.1s="couponcode" placeholder="Coupon code">
                                 <button type="submit" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
                                     Coupon</button>
@@ -51,7 +51,7 @@
                                     <input type="text" class="form-control @error('gst') error @enderror" wire:model.defer="gst"  />
                                 </div>
                             </div>
-                            
+
                             <label>Country / Region <span class="required">*</span></label>
                             <div class="select-box">
                                 @error('country') <span class="error">{{ $message }}</span> @enderror
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                
+
                                 <div class="col-xs-6">
                                     <label>State <span class="required">*</span></label>
                                     @error('state') <span class="error">{{ $message }}</span> @enderror
@@ -122,10 +122,10 @@
                                 <div class="summary pt-5">
                                     <h3 class="title title-simple text-left text-uppercase">Your Order
                                         @if (Session::has('sdeliveryavailable'))
-                                            <br><span>{{ Session::get('sdeliveryavailable') }}</span>    
+                                            <br><span>{{ Session::get('sdeliveryavailable') }}</span>
                                         @endif
                                     </h3>
-                                    
+
                                     <table class="order-table">
                                         <thead>
                                             <tr>
@@ -180,7 +180,7 @@
                                             </a><span class="required">*</span>
                                         </label>
                                     </div>
-                                    
+
                                     <div>
                                         <button type="submit" wire:loading.remove wire:loading.attr="disabled" wire:model="disablebtn" class="btn btn-dark btn-rounded btn-order" id="rzp-button1" @if($this->disablebtn == true) disabled="disabled" @endif>
                                             Make Payment
@@ -195,7 +195,7 @@
                                         @if(Session::get('acceptterms') == true)
                                             <small class="outofstock">Please fill out all the required fields.</small>
                                         @elseif(Session::get('acceptterms') == false)
-                                            <small class="outofstock">Agree terms and conditions.</small> 
+                                            <small class="outofstock">Agree terms and conditions.</small>
                                         @endif
                                     @endif
 
@@ -211,7 +211,7 @@
                 </form>
             </div>
         </div>
-    
+
     </main>
 </div>
 
@@ -261,7 +261,7 @@
             "currency": "INR",
             "name": "{{ env('APP_NAME') }}",
             "description": "Payment",
-            "image": "{{ Voyager::image(setting('site.logo')) }}",
+            "image": "{{ Voyager::image(setting('razorpay.logo')) }}",
             "order_id": "", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response){
                 $.ajaxSetup({
