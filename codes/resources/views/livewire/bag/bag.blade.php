@@ -170,10 +170,10 @@
                             <span class="amount">{{ Config::get('icrm.currency.icon') }}
                                 {{ $cart->getPriceSumWithConditions() }}</span>
                             <span class="amount" style="color: black;font-size: 16px;margin-left: 5px;">
-                                <del>{{ Config::get('icrm.currency.icon') }}{{ $cart->getPriceWithConditions() }}</del>
+                                <del>{{ Config::get('icrm.currency.icon') }}{{ $product->mrp * $cart->quantity }}</del>
                             </span><br>
                             <text class="save_text">
-                                You Save {{ Config::get('icrm.currency.icon') }} {{ $cart->getPriceWithConditions() - $cart->getPriceSumWithConditions() }}
+                                You Save {{ Config::get('icrm.currency.icon') }} {{ ($product->mrp * $cart->quantity) - $cart->getPriceSumWithConditions() }}
                             </text>
 
                             @if (Config::get('icrm.tax.type') == 'subcategory')
