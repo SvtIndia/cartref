@@ -22,7 +22,7 @@
                     background-blend-mode: multiply;
                 }
 
-                .dynamic-hero{{ $dynamiccollection->id }}::before {
+                .dynamic-hero{{ $dynamiccollection->id }}::after {
                     content: "";
                     position: absolute;
                     top: 0;
@@ -79,6 +79,8 @@
                                 grid-template-columns: repeat({{ $dynamiccollection->desktop_columns }}, 1fr);
                                 /* grid-template-columns: repeat(8, 1fr); */
                                 grid-gap: {{ $dynamiccollection->desktop_gap }}em;
+                                z-index: 1;
+                                position:relative;
                             }
 
                             #dynamiccollections{{ $dynamiccollection->id }} h2.title {
@@ -95,6 +97,8 @@
                                 display: grid;
                                 grid-template-columns: repeat({{ $dynamiccollection->tablet_columns }}, 1fr);
                                 grid-gap: {{ $dynamiccollection->tablet_gap }}em;
+                                z-index: 1;
+                                position:relative;
                             }
 
                             #dynamiccollections{{ $dynamiccollection->id }} h2.title {
@@ -112,6 +116,8 @@
                                 display: grid;
                                 grid-template-columns: repeat({{ $dynamiccollection->mobile_columns }}, 1fr);
                                 grid-gap: {{ $dynamiccollection->mobile_gap }}em;
+                                z-index: 1;
+                                position:relative;
                             }
 
                             #dynamiccollections{{ $dynamiccollection->id }} h2.title {
@@ -205,8 +211,7 @@
 
 
 
-                    <div class="dynamiccollections{{ $dynamiccollection->id }} owl-carousel owl-theme owl-nav-bg owl-nav-arrow carousel"
-                        data-owl-options="{
+                    <div class="dynamiccollections{{ $dynamiccollection->id }} owl-carousel owl-theme owl-nav-bg owl-nav-arrow carousel" data-owl-options="{
                         'items': {{ $dynamiccollection->desktop_columns }},
                         'autoplay': 10,
                         'slideSpeed': 300,
@@ -238,7 +243,7 @@
                         @endforeach
                     </div>
 
-                    <div class="dynamiccollections{{ $dynamiccollection->id }} nocarousel">
+                    <div class="dynamiccollections{{ $dynamiccollection->id }} nocarousel" style="z-index: 1; position:relative;">
                         @foreach ($collections as $collection)
                             <div class="dynamiccollection">
                                 <a href="{{ $collection->url }}">
