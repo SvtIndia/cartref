@@ -188,7 +188,6 @@
         }
         .product-name{
             width: 25% !important;
-            max-width: 25% !important;
         }
 
     </style>
