@@ -230,7 +230,7 @@
                                 {{ $cart->getPriceWithConditions() }}</span>
                         </td> --}}
                         <div>
-                            <td class="product-quantity" @disabled(true)>
+                            <td class="product-quantity">
                                 <div class="input-group">
                                     <button class="quantity-minus d-icon-minus"
                                         wire:click="minusqty({{ $cart->id }}, {{ $cart->attributes->weight }})"></button>
