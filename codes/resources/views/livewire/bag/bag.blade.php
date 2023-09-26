@@ -15,10 +15,10 @@
             height: 100% !important;
         }
         .product-thumbnail figure img{
-            width: 100% !important;
-            height: auto !important;
-            max-width: 100% !important;
-            max-height: auto !important;
+            width: inherit !important;
+            height: inherit !important;
+            max-width: inherit !important;
+            max-height: inherit !important;
         }
         .cart-tr {
             display: flex !important;
