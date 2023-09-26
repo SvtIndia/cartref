@@ -1,3 +1,35 @@
+<style>
+    @media screen and (max-width: 480px) {
+        .cart-tr {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-thumbnail {
+            max-width: 50%;
+            flex: 0 0 50%;
+        }
+
+        .product-name {
+            max-width: 50%;
+            flex: 0 0 50%;
+            text-align: left;
+        }
+        .product-quantity{
+            max-width: 50%;
+            flex: 0 0 50%;
+        }
+        .product-price{
+            max-width: 50%;
+            flex: 0 0 50%;
+            text-align: left;
+        }
+
+        .cart .product-remove {
+            position: unset !important;
+        }
+    }
+</style>
 <div>
     <main class="main cart">
         <div class="page-content pt-7 pb-10">
@@ -44,7 +76,7 @@
 
                                         @endphp
                                         @if (!empty($product))
-                                            <tr>
+                                            <tr class="cart-tr">
                                                 <td class="product-thumbnail">
                                                     <figure>
                                                         <a
