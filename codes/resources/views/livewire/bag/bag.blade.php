@@ -1,9 +1,23 @@
 <style>
     @media screen and (max-width: 480px) {
         .cart .shop-table tr {
-            padding: 2rem 0 0rem!important;
+            padding: 1rem 0 0rem!important;
         }
-
+        .product-thumbnail{
+            padding: 0rem 2rem 1.5rem 0 !important;
+        }
+        .product-thumbnail figure{
+            width: 100%;
+            height: 100%;
+        }
+        .product-thumbnail figure a{
+            width: 100%;
+            height: 100%;
+        }
+        .product-thumbnail figure img{
+            width: 100%;
+            height: auto;
+        }
         .cart-tr {
             display: flex !important;
             flex-wrap: wrap;
@@ -21,15 +35,20 @@
         }
 
         .product-quantity {
-            max-width: 50%;
+            max-width: 25%;
             flex: 0 0 50%;
         }
 
         .product-price {
-            max-width: 50%;
+            max-width: 25%;
             flex: 0 0 50%;
             text-align: left !important;
             margin-top: 5px;
+        }
+
+        .product-price .amount {
+            color: blue;
+            font-size: 2rem;
         }
 
         .cart .product-remove {
@@ -37,6 +56,9 @@
         }
         .product-close{
             margin-bottom: 5px;
+            align-items: center;
+            display: flex;
+
         }
     }
 </style>
