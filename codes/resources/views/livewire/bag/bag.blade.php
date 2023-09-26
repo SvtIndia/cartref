@@ -224,7 +224,7 @@
                         </td> --}}
                         <div>
                             <td class="product-quantity" @disabled(true)>
-                                <div class="input-group" style="font-size: 3rem;">
+                                <div class="input-group" style="width: 3rem;">
                                     <button class="quantity-minus d-icon-minus"
                                         wire:click="minusqty({{ $cart->id }}, {{ $cart->attributes->weight }})"></button>
                                     <input class="quantity form-control" type="number" min="1" max="1000000"
@@ -244,7 +244,10 @@
                                 {{ $cart->getPriceSumWithConditions() }}</span>
                             <span class="amount" style="color: black;font-size: 16px;margin-left: 5px;">
                                 <del>{{ Config::get('icrm.currency.icon') }}{{ $cart->getPriceWithConditions() }}</del>
-                            </span>
+                            </span><br>
+                            <text style="font-size: 14px; color: green;">
+                                You Save {{ Config::get('icrm.currency.icon') }} {{ $cart->getPriceWithConditions() - $cart->getPriceSumWithConditions() }}
+                            </text>
 
                             @if (Config::get('icrm.tax.type') == 'subcategory')
                                 <br><small class="includingtax">Including {{ $product->productsubcategory->gst }}%
