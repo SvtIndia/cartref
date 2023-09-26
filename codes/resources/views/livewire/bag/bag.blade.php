@@ -16,7 +16,7 @@
         }
         .product-thumbnail figure img{
             width: inherit !important;
-            height: inherit !important;
+            height: 190px !important;
             max-width: inherit !important;
             max-height: inherit !important;
         }
