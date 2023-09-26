@@ -1,25 +1,30 @@
 <style>
     @media screen and (max-width: 480px) {
         .cart .shop-table tr {
-            padding: 1rem 0 0rem!important;
+            padding: 1rem 0 0rem !important;
         }
-        .product-thumbnail{
+
+        .product-thumbnail {
             padding: 0rem 2rem 1.5rem 0 !important;
         }
-        .product-thumbnail figure{
+
+        .product-thumbnail figure {
             width: 100%;
             height: 100%;
         }
-        .product-thumbnail figure a{
+
+        .product-thumbnail figure a {
             width: 100% !important;
             height: 100% !important;
         }
-        .product-thumbnail figure img{
+
+        .product-thumbnail figure img {
             width: inherit !important;
             height: 190px !important;
             max-width: inherit !important;
             max-height: inherit !important;
         }
+
         .cart-tr {
             display: flex !important;
             flex-wrap: wrap;
@@ -42,7 +47,7 @@
         }
 
         .product-price {
-            max-width: 25%;
+            max-width: 40%;
             flex: 0 0 50%;
             text-align: left !important;
             margin-top: 5px;
@@ -57,7 +62,8 @@
         .cart .product-remove {
             position: unset !important;
         }
-        .product-close{
+
+        .product-close {
             margin-bottom: 5px;
             align-items: center;
             display: flex !important;
@@ -218,7 +224,7 @@
                         </td> --}}
                         <div>
                             <td class="product-quantity" @disabled(true)>
-                                <div class="input-group">
+                                <div class="input-group" style="font-size: 3rem;">
                                     <button class="quantity-minus d-icon-minus"
                                         wire:click="minusqty({{ $cart->id }}, {{ $cart->attributes->weight }})"></button>
                                     <input class="quantity form-control" type="number" min="1" max="1000000"
@@ -236,6 +242,10 @@
                         <td class="product-price">
                             <span class="amount">{{ Config::get('icrm.currency.icon') }}
                                 {{ $cart->getPriceSumWithConditions() }}</span>
+                            <span class="amount" style="color: black;font-size: 16px;margin-left: 5px;">
+                                <del>{{ Config::get('icrm.currency.icon') }}{{ $cart->getPriceWithConditions() }}</del>
+                            </span>
+
                             @if (Config::get('icrm.tax.type') == 'subcategory')
                                 <br><small class="includingtax">Including {{ $product->productsubcategory->gst }}%
                                     {{ Config::get('icrm.tax.name') }}</small>
