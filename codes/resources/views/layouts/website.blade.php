@@ -179,6 +179,10 @@
                 width: 9rem !important;
             }
         }
+        .save_text{
+            font-size: 14px;
+            color: green;
+        }
     </style>
 
     @livewireStyles
