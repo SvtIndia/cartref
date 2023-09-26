@@ -11,12 +11,12 @@
             height: 100%;
         }
         .product-thumbnail figure a{
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
         }
         .product-thumbnail figure img{
-            width: 100%;
-            height: auto;
+            width: 100% !important;
+            height: auto !important;
         }
         .cart-tr {
             display: flex !important;
@@ -57,7 +57,7 @@
         .product-close{
             margin-bottom: 5px;
             align-items: center;
-            display: flex;
+            display: flex !important;
 
         }
     }
