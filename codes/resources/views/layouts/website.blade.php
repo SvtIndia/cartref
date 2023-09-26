@@ -101,7 +101,7 @@
     </style>
 
     <style>
-        @media screen and (max-width: 480px) {
+        @media screen and (max-width: 768px) {
             .cart .shop-table tr {
                 padding: 1rem 0 0rem !important;
             }
