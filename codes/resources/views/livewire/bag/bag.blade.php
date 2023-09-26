@@ -25,7 +25,7 @@
                                         {{-- Get cart product information --}}
                                         @php
                                             $product = App\Models\Product::where('id', $cart->attributes->product_id)->first();
-                                            
+
                                             $userID = 0;
                                             if (\Illuminate\Support\Facades\Auth::check()) {
                                                 $userID = auth()->user()->id;
@@ -37,11 +37,11 @@
                                                     session(['session_id' => $userID]);
                                                 }
                                             }
-                                            
+
                                             if (empty($product)) {
                                                 \Cart::session($userID)->clear();
                                             }
-                                            
+
                                         @endphp
                                         @if (!empty($product))
                                             <tr>
@@ -54,7 +54,7 @@
                                                                 $colorimage = App\Productcolor::where('product_id', $product->id)
                                                                     ->where('color', $cart->attributes->color)
                                                                     ->first();
-                                                                
+
                                                                 if (!empty($colorimage->main_image)) {
                                                                     $colorimage = $colorimage->main_image;
                                                                 } else {
@@ -77,10 +77,10 @@
                                                     {{ $product->vendor->pincode }}
                                                     <br> --}}
 
-                                                        @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
+                                                        {{-- @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
                                                             <br><span>Vendor: <a
                                                                     href="{{ route('products.vendor', ['slug' => $product->vendor->id]) }}">{{ ucwords($product->vendor->brand_name) }}</a></span>
-                                                        @endif
+                                                        @endif --}}
 
                                                         <br><span>Brand: {{ $product->brand_id }}</span>
 
@@ -138,17 +138,17 @@
                                                             @endif
                                             @endif
 
-                                            <br><span>Hsn: {{ $product->productsubcategory->hsn }}</span>
+                                            {{-- <br><span>Hsn: {{ $product->productsubcategory->hsn }}</span> --}}
 
                         </div>
                         </td>
-                        <td class="product-subtotal">
+                        {{-- <td class="product-subtotal">
                             <span class="amount">{{ $cart->attributes->weight }}kg</span>
-                        </td>
-                        <td class="product-subtotal">
+                        </td> --}}
+                        {{-- <td class="product-subtotal">
                             <span class="amount">{{ Config::get('icrm.currency.icon') }}
                                 {{ $cart->getPriceWithConditions() }}</span>
-                        </td>
+                        </td> --}}
                         <div>
                             <td class="product-quantity" @disabled(true)>
                                 <div class="input-group">

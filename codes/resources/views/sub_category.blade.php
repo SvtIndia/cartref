@@ -33,7 +33,7 @@
 
         .vendor .brand-img-container {
             width: 150px !important;
-            height: 180px;
+            height: 150px;
             margin: auto;
             overflow: hidden;
             border-radius: 50%;
