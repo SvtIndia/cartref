@@ -178,11 +178,15 @@
             .input-group{
                 width: 9rem !important;
             }
+            .no-mobile{
+                display: none !important;
+            }
         }
         .save_text{
             font-size: 14px;
             color: green;
         }
+
     </style>
 
     @livewireStyles

@@ -73,14 +73,19 @@
                                                             href="{{ route('product.slug', ['slug' => $product->slug, 'color' => $cart->attributes->color]) }}">
                                                             {{ Str::limit($product->name, 35, '...') }}
                                                         </a>
-                                                        {{-- <br>
-                                                    {{ $product->vendor->pincode }}
-                                                    <br> --}}
+                                                        <text class="no-mobile">
+                                                            <br>
+                                                                {{ $product->vendor->pincode }}
+                                                            <br>
+                                                        </text>
 
-                                                        {{-- @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                                            <br><span>Vendor: <a
-                                                                    href="{{ route('products.vendor', ['slug' => $product->vendor->id]) }}">{{ ucwords($product->vendor->brand_name) }}</a></span>
-                                                        @endif --}}
+                                                        @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
+                                                            <span class="no-mobile">
+                                                                <br>
+                                                                Vendor:
+                                                                <a href="{{ route('products.vendor', ['slug' => $product->vendor->id]) }}">{{ ucwords($product->vendor->brand_name) }}</a>
+                                                            </span>
+                                                        @endif
 
                                                         <br><span>Brand: {{ $product->brand_id }}</span>
 
@@ -142,13 +147,13 @@
 
                         </div>
                         </td>
-                        {{-- <td class="product-subtotal">
+                        <td class="product-subtotal no-mobile">
                             <span class="amount">{{ $cart->attributes->weight }}kg</span>
-                        </td> --}}
-                        {{-- <td class="product-subtotal">
+                        </td>
+                        <td class="product-subtotal no-mobile">
                             <span class="amount">{{ Config::get('icrm.currency.icon') }}
                                 {{ $cart->getPriceWithConditions() }}</span>
-                        </td> --}}
+                        </td>
                         <div>
                             <td class="product-quantity">
                                 <div class="input-group">
@@ -173,7 +178,8 @@
                                 <del>{{ Config::get('icrm.currency.icon') }}{{ $product->mrp * $cart->quantity }}</del>
                             </span><br>
                             <text class="save_text">
-                                You Save {{ Config::get('icrm.currency.icon') }} {{ ($product->mrp * $cart->quantity) - $cart->getPriceSumWithConditions() }}
+                                You Save {{ Config::get('icrm.currency.icon') }}
+                                {{ $product->mrp * $cart->quantity - $cart->getPriceSumWithConditions() }}
                             </text>
 
                             @if (Config::get('icrm.tax.type') == 'subcategory')
@@ -286,7 +292,8 @@
                                     Proceed to checkout
                                 </a>
                                 @if ($this->deliveryavailability == false)
-                                    <small class="outofstock">Before processing please check shipping serviceability</small>
+                                    <small class="outofstock">Before processing please check shipping
+                                        serviceability</small>
                                 @endif
 
 
