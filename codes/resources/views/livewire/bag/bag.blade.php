@@ -17,6 +17,8 @@
         .product-thumbnail figure img{
             width: 100% !important;
             height: auto !important;
+            max-width: 100% !important;
+            max-height: auto !important;
         }
         .cart-tr {
             display: flex !important;
