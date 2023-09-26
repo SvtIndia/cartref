@@ -46,6 +46,7 @@
             flex: 0 0 50%;
             text-align: left !important;
             margin-top: 5px;
+            margin-left: 4rem;
         }
 
         .product-price .amount {
