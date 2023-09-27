@@ -1,12 +1,11 @@
 @extends('layouts.website')
 
 @section('meta-seo')
-
     <title>
         @if (request('category'))
-            {{ ucwords(str_replace('-', ' ', request('category'))).' - ' }}
+            {{ ucwords(str_replace('-', ' ', request('category'))) . ' - ' }}
         @elseif(request('subcategory'))
-        {{ ucwords(str_replace('-', ' ', request('subcategory'))).' - ' }}
+            {{ ucwords(str_replace('-', ' ', request('subcategory'))) . ' - ' }}
         @endif
 
         {{ Config::get('seo.catalog.title') }}
@@ -20,3 +19,15 @@
 @section('content')
     @livewire('catalog.products')
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        let action = 'inactive';
+        $(window).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() > $(".product-wrapper").height() && action == 'inactive') {
+                action = 'active';
+                window.livewire.emit('load-more');
+            }
+        });
+    </script>
+@endpush

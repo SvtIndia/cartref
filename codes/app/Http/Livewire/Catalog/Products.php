@@ -163,7 +163,8 @@ class Products extends Component
 
     public function updatedProducttype()
     {
-        if (!is_array($this->producttypes)) return;
+        if (!is_array($this->producttypes))
+            return;
 
         $this->producttypes = array_filter($this->producttypes, function ($producttype) {
             return $producttype != false;
@@ -172,7 +173,8 @@ class Products extends Component
 
     public function updatedGenders()
     {
-        if (!is_array($this->genders)) return;
+        if (!is_array($this->genders))
+            return;
 
         $this->genders = array_filter($this->genders, function ($gender) {
             return $gender != false;
@@ -198,7 +200,8 @@ class Products extends Component
 
     public function updatedSizes()
     {
-        if (!is_array($this->sizes)) return;
+        if (!is_array($this->sizes))
+            return;
 
         $this->sizes = array_filter($this->sizes, function ($size) {
             return $size != false;
@@ -207,7 +210,8 @@ class Products extends Component
 
     public function updatedStyles()
     {
-        if (!is_array($this->styles)) return;
+        if (!is_array($this->styles))
+            return;
 
         $this->styles = array_filter($this->styles, function ($style) {
             return $style != false;
@@ -218,7 +222,8 @@ class Products extends Component
 
     public function updatedOccasions()
     {
-        if (!is_array($this->occasions)) return;
+        if (!is_array($this->occasions))
+            return;
 
         $this->occasions = array_filter($this->occasions, function ($occasion) {
             return $occasion != false;
@@ -227,7 +232,8 @@ class Products extends Component
 
     public function updatedBrands()
     {
-        if (!is_array($this->brands)) return;
+        if (!is_array($this->brands))
+            return;
 
         $this->brands = array_filter($this->brands, function ($brand) {
             return $brand != false;
@@ -236,7 +242,8 @@ class Products extends Component
 
     public function updatedColors()
     {
-        if (!is_array($this->colors)) return;
+        if (!is_array($this->colors))
+            return;
 
         $this->colors = array_filter($this->colors, function ($color) {
             return $color != false;
@@ -245,7 +252,8 @@ class Products extends Component
 
     public function updatedTypes()
     {
-        if (!is_array($this->types)) return;
+        if (!is_array($this->types))
+            return;
 
         $this->types = array_filter($this->types, function ($type) {
             return $type != false;
@@ -254,7 +262,8 @@ class Products extends Component
 
     public function updatedMounts()
     {
-        if (!is_array($this->mounts)) return;
+        if (!is_array($this->mounts))
+            return;
 
         $this->mounts = array_filter($this->mounts, function ($mount) {
             return $mount != false;
@@ -264,7 +273,8 @@ class Products extends Component
 
     public function updatedModels()
     {
-        if (!is_array($this->models)) return;
+        if (!is_array($this->models))
+            return;
 
         $this->models = array_filter($this->models, function ($model) {
             return $model != false;
@@ -273,7 +283,8 @@ class Products extends Component
 
     public function updatedVoltages()
     {
-        if (!is_array($this->voltages)) return;
+        if (!is_array($this->voltages))
+            return;
 
         $this->voltages = array_filter($this->voltages, function ($voltage) {
             return $voltage != false;
@@ -282,13 +293,21 @@ class Products extends Component
 
     public function updatedInterfaces()
     {
-        if (!is_array($this->interfaces)) return;
+        if (!is_array($this->interfaces))
+            return;
 
         $this->interfaces = array_filter($this->interfaces, function ($interface) {
             return $interface != false;
         });
     }
 
+    protected $listeners = [
+        'load-more' => 'loadMore'
+    ];
+    public function loadMore()
+    {
+        $this->paginate = $this->paginate + 12;
+    }
 
 
     public function render()
@@ -483,7 +502,7 @@ class Products extends Component
                     $q->where('status', 1)->where('showcase_at_home', 1)->where('id', request('vendor_id'));
                 });
             })
-            ;
+        ;
 
 
 
