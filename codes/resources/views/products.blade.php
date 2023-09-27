@@ -23,8 +23,15 @@
 @push('scripts')
     <script type="text/javascript">
         let action = 'inactive';
+
+        window.addEventListener('makeInactive', (e) => {
+            console.log('in');
+            action = 'inactive';
+        });
+
         $(window).scroll(function() {
-            if ($(window).scrollTop() + $(window).height() > $(".product-wrapper").height() && action == 'inactive') {
+            if ($(window).scrollTop() + $(window).height() > $(".product-wrapper").height() && action ==
+                'inactive') {
                 action = 'active';
                 window.livewire.emit('load-more');
             }

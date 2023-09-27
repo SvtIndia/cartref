@@ -510,7 +510,7 @@ class Products extends Component
 
         $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
 
-
+        $this->dispatchBrowserEvent('makeInactive');
         return view('livewire.catalog.products', [
             'categories' => $categories,
             // 'subcategories' => $subcategories,
