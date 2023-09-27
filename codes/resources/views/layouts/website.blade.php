@@ -196,6 +196,21 @@
         }
     </style>
 
+    <style>
+        #loader {
+        -webkit-animation: spin 1s infinite linear;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg)
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg)
+            }
+        }
+    </style>
     @livewireStyles
     <script src="{{ asset('php_ua/assets/js/scripts/phpUaJS.js') }}"></script>
 </head>

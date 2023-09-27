@@ -506,7 +506,7 @@ class Products extends Component
 
 
 
-        $products = $products->inRandomOrder()->paginate($this->paginate);
+        $products = $products->paginate($this->paginate);
 
         $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
 

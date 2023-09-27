@@ -25,7 +25,8 @@
         let action = 'inactive';
 
         window.addEventListener('makeInactive', (e) => {
-            console.log('in');
+            // console.log('in');
+            $('#loader').hide();
             action = 'inactive';
         });
 
@@ -33,6 +34,7 @@
             if ($(window).scrollTop() + $(window).height() > $(".product-wrapper").height() && action ==
                 'inactive') {
                 action = 'active';
+                $('#loader').hide();
                 window.livewire.emit('load-more');
             }
         });
