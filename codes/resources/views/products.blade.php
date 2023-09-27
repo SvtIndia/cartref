@@ -34,7 +34,7 @@
             if ($(window).scrollTop() + $(window).height() > $(".product-wrapper").height() && action ==
                 'inactive') {
                 action = 'active';
-                $('#loader').hide();
+                $('#loader').show();
                 window.livewire.emit('load-more');
             }
         });
