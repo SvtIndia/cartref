@@ -16,6 +16,7 @@ class AddFieldsToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->decimal('reward_points', 10, 2)->default(0)->nullable();
             $table->decimal('credits', 10, 2)->default(0)->nullable();
+            $table->boolean('is_first_shopping')->default(false)->nullable();
         });
     }
 
@@ -27,8 +28,9 @@ class AddFieldsToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('reward_points');
-            $table->dropColumn('credits');
+            // $table->dropColumn('reward_points');
+            // $table->dropColumn('credits');
+            // $table->dropColumn('is_first_shopping');
         });
     }
 }

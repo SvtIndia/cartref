@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use TCG\Voyager\Models\Role;
 
 // extends \TCG\Voyager\Models\User
 
@@ -36,7 +37,8 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         'gst_number',
         'brands',
         'signature',
-        'cancelled_check'
+        'cancelled_check',
+        'is_first_shopping'
     ];
 
     /**
@@ -97,5 +99,10 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
             ->where('city', auth()->user()->city);
     }
 
-
+    public function scopeSeller($query)
+    {
+        return  $query->whereHas('role', function($q){
+            $q->whereIn('name', ['Vendor']);
+        });
+    }
 }

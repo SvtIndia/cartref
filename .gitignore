@@ -1,4 +1,7 @@
+/codes/public/
+/codes/.idea
 /codes/vendor/
+codes/server.php
 /codes/node_modules/
 npm-debug.log
 yarn-error.log

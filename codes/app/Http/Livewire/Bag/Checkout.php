@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Bag;
 
+use App\Models\RewardPointLog;
 use App\Order;
 use App\Coupon;
 use App\Productsku;
@@ -59,6 +60,8 @@ class Checkout extends Component
     public $disablebtn = true;
 
     public $pickuppincode;
+
+    public $redeemedRewardPoints;
 
     protected $rules = [
         'name' => 'required',
@@ -1119,6 +1122,17 @@ class Checkout extends Component
             Session::put('ordermethod', 'cod');
         }
     }
+    public function reedemRewardPoints()
+    {
+        if(auth()->user()->reward_points > 0){
+            $this->redeemedRewardPoints = auth()->user()->reward_points * 0.20;
+            $this->ftotal -= $this->redeemedRewardPoints;
+            $this->ftotal = 0;
+        }
+        else{
+            $this->redeemedRewardPoints = 0;
+        }
+    }
 
     public function acceptterms()
     {
@@ -1332,6 +1346,20 @@ class Checkout extends Component
             $order->save();
 
 
+            //100% reward points on first order
+            if(!auth()->user()->is_first_shopping){
+                auth()->user()->increment('reward_points', $this->ftotal);
+                Auth::user()->update(['is_first_shopping' => 1]);
+
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'in';
+                $reward_point->amount = $this->ftotal;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
 
             if (Config::get('icrm.stock_management.feature') == 1) {
                 if (Config::get('icrm.product_sku.color') == 1) {

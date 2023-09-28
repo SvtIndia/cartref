@@ -178,6 +178,12 @@
                                                     @endif
 
                                                 </tr>
+                                                @if($this->redeemedRewardPoints > 0)
+                                                    <tr>
+                                                        <td class="product-name">Reward Points</td>
+                                                        <td class="product-total text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
+                                                    </tr>
+                                                @endif
                                                 <tr>
                                                     <td class="product-name">Subtotal</td>
                                                     <td class="product-total text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($fsubtotal, 2) }}</td>
@@ -197,7 +203,7 @@
                                                     @endif
                                                 @endif
                                             </tr>
-                                            <tr class="summary-subtotal">
+                                            <tr class="summary-subtotal"x>
                                                 <td class="pb-0">
                                                     <h4 class="summary-subtitle">Order Total</h4>
                                                 </td>
@@ -207,6 +213,15 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    @if (auth()->user()->reward_points > 0)
+                                        <div class="form-checkbox mt-4 mb-5" wire:click="reedemRewardPoints">
+                                            <input type="checkbox" class="custom-checkbox" disabled @if($this->redeemedRewardPoints > 0) checked @endif />
+                                            <label class="form-control-label" for="cod">
+                                                Use your reward points up to 20%.
+                                                ({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }})
+                                            </label>
+                                        </div>
+                                    @endif
                                     @if (Config::get('icrm.order_methods.cod') == 1)
                                         @if ($this->cod == true)
                                             <div class="form-checkbox mt-4 mb-5" wire:click="codneeded">
