@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Bag;
 
 use App\Models\RewardPointLog;
+use App\Models\UserCreditLog;
 use App\Order;
 use App\Coupon;
 use App\Productsku;
@@ -62,6 +63,9 @@ class Checkout extends Component
     public $pickuppincode;
 
     public $redeemedRewardPoints;
+    public $redeemedCredits;
+
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     protected $rules = [
         'name' => 'required',
@@ -213,14 +217,31 @@ class Checkout extends Component
         } else {
             $this->tax = 0;
         }
-
+        
         $this->ordervalue = $subtotal;
-        $this->fsubtotal = $subtotal + $this->appliedShipping - $this->discount;
-        $this->ftotal = $total - $this->discount + $this->tax + $this->appliedShipping;
+        $this->fsubtotal = $subtotal + $this->appliedShipping - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
+        $this->ftotal = $total - $this->discount + $this->tax + $this->appliedShipping - $this->redeemedRewardPoints - $this->redeemedCredits;
         $this->bagcount = \Cart::session($userID)->getTotalQuantity();
 
         // if the fields are blank in mount then fetch from session fields
         $this->sessionfields();
+
+        //fetch applied reward point and credits
+        if (empty($this->redeemedRewardPoints)) {
+            if(Session::get('redeemedRewardPoints')){
+                $this->applyRewardPoints();
+            }
+        }
+        if (empty($this->redeemedCredits)) {
+            if(Session::get('redeemedCredits')){
+                $this->applyCredits();
+            }
+        }
+
+        $this->ordervalue = $subtotal;
+        $this->fsubtotal = $subtotal + $this->appliedShipping - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
+        $this->ftotal = $total - $this->discount + $this->tax + $this->appliedShipping - $this->redeemedRewardPoints - $this->redeemedCredits;
+        $this->bagcount = \Cart::session($userID)->getTotalQuantity();
 
         // if session field is not present then fetch auth fields
         $this->authfields();
@@ -310,6 +331,8 @@ class Checkout extends Component
         if (empty($this->email)) {
             $this->email = Session::get('email');
         }
+
+
     }
 
     private function authfields()
@@ -953,6 +976,8 @@ class Checkout extends Component
         if (!empty($this->couponcode)) {
             $coupon = Coupon::where('code', $this->couponcode)->where('user_email', null)->first();
 
+            
+            
             /**
              * If the coupon is empty on above result then maybe user has unique coupon for his account
              */
@@ -964,6 +989,14 @@ class Checkout extends Component
 
             if (!empty($coupon)) {
                 // coupon exists
+
+                //check coupon is applied reward points
+                if($this->redeemedRewardPoints > 0 && !$coupon->is_uwc){
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with reward points', 'status' => 'error']);
+                    return;
+                    // return redirect()->route('checkout');
+                }
+
                 // check if coupon is valid and available for everyone
 
                 $currentDate = date('Y-m-d');
@@ -1122,15 +1155,51 @@ class Checkout extends Component
             Session::put('ordermethod', 'cod');
         }
     }
-    public function reedemRewardPoints()
+    public function redeemRewardPoints()
     {
-        if(auth()->user()->reward_points > 0){
-            $this->redeemedRewardPoints = auth()->user()->reward_points * 0.20;
-            $this->ftotal -= $this->redeemedRewardPoints;
-            $this->ftotal = 0;
-        }
-        else{
+        if(Session::get('redeemedRewardPoints')){
+            Session::remove('redeemedRewardPoints');
             $this->redeemedRewardPoints = 0;
+            return;
+        }
+        
+        Session::remove('redeemedRewardPoints');
+        $this->redeemedRewardPoints = 0;
+        $this->applyRewardPoints();
+
+    }
+    private function applyRewardPoints(){
+        if(auth()->user()->reward_points > 0 && $this->ftotal >= 1500){
+            $this->redeemedRewardPoints = auth()->user()->reward_points * 0.20;
+            Session::put('redeemedRewardPoints', 1);
+        }
+    }
+    public function redeemCredits()
+    {
+        if(Session::get('redeemedCredits')){
+            Session::remove('redeemedCredits');
+            $this->redeemedCredits = 0;
+            return;
+        }
+
+        Session::remove('redeemedCredits');
+        $this->redeemedCredits = 0;
+
+        $this->applyCredits();
+        
+    }
+    private function applyCredits(){
+        $userCredits = auth()->user()->credits;
+        if($userCredits > 0){
+            if($userCredits >= $this->ftotal){
+                $this->redeemedCredits = $this->ftotal;
+            }
+            else{
+                $this->redeemedCredits = $userCredits;    
+            }
+
+            // dd($this->redeemedCredits);
+            Session::put('redeemedCredits', 1);
         }
     }
 
@@ -1344,6 +1413,30 @@ class Checkout extends Component
             $order->order_method = 'COD';
             $order->exp_delivery_date = date('Y-m-d', strtotime($this->etd));
             $order->save();
+
+            if($this->redeemedRewardPoints > 0){
+                auth()->user()->decrement('reward_points', $this->redeemedRewardPoints);
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $this->redeemedRewardPoints;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
+
+            if($this->redeemedCredits > 0){
+                auth()->user()->decrement('credits', $this->redeemedCredits);
+                //make log
+                $reward_point = new UserCreditLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $this->redeemedRewardPoints;
+                $reward_point->closing_bal = auth()->user()->credits;
+                $reward_point->save();
+            }
 
 
             //100% reward points on first order

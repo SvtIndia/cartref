@@ -141,7 +141,7 @@ class Bag extends Component
 
         $this->updatecartweight($cartid);
 
-        $this->emit('cartcount');
+        // $this->emit('cartcount');
 
     }
 

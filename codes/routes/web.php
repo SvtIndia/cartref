@@ -490,3 +490,9 @@ Route::get('/backup-clean', function () {
  */
 
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
+
+Route::get('/get',function(){
+    $a = 'redeemedRewardPoints => '. Session::get('redeemedRewardPoints');
+    $b = 'redeemedCredits => '. Session::get('redeemedCredits');
+    dd($a,$b);
+});

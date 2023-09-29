@@ -146,7 +146,7 @@
                                                             <input type="text"
                                                                 class="input-text form-control text-grey ls-m mr-4 mb-4"
                                                                 wire:model.debounce.5s="couponcode" placeholder="Coupon code">
-                                                            <button type="submit" wire:click="applycoupon" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
+                                                            <button type="button" wire:click="applycoupon" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
                                                                 Coupon</button>
                                                         {{-- </form> --}}
                                                     </div>
@@ -184,6 +184,12 @@
                                                         <td class="product-total text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
                                                     </tr>
                                                 @endif
+                                                @if($this->redeemedCredits > 0)
+                                                    <tr>
+                                                        <td class="product-name">Wallet Credits</td>
+                                                        <td class="product-total text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedCredits, 2) }}</td>
+                                                    </tr>
+                                                @endif
                                                 <tr>
                                                     <td class="product-name">Subtotal</td>
                                                     <td class="product-total text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($fsubtotal, 2) }}</td>
@@ -203,22 +209,31 @@
                                                     @endif
                                                 @endif
                                             </tr>
-                                            <tr class="summary-subtotal"x>
+                                            <tr class="summary-subtotal">
                                                 <td class="pb-0">
-                                                    <h4 class="summary-subtitle">Order Total</h4>
+                                                    <h4 class="summary-subtitle">Order Total</h4>   
                                                 </td>
-                                                <td class=" pt-0 pb-0">
+                                                <td class=" pt-0 pb-0" >
                                                     <p class="summary-total-price ls-s text-primary">{{ Config::get('icrm.currency.icon') }}{{ number_format($ftotal, 2) }}</p>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    @if (auth()->user()->reward_points > 0)
-                                        <div class="form-checkbox mt-4 mb-5" wire:click="reedemRewardPoints">
+                                    @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ftotal >= 1500))
+                                        <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
                                             <input type="checkbox" class="custom-checkbox" disabled @if($this->redeemedRewardPoints > 0) checked @endif />
                                             <label class="form-control-label" for="cod">
                                                 Use your reward points up to 20%.
                                                 ({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }})
+                                            </label>
+                                        </div>
+                                    @endif
+                                    @if ($this->redeemedCredits > 0 || (auth()->user()->credits > 0))
+                                        <div class="form-checkbox mt-4 mb-5" wire:click="redeemCredits">
+                                            <input type="checkbox" class="custom-checkbox" disabled @if($this->redeemedCredits > 0) checked @endif />
+                                            <label class="form-control-label" for="cod">
+                                                Use your wallet credits
+                                                ({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }})
                                             </label>
                                         </div>
                                     @endif
