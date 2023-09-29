@@ -134,21 +134,33 @@
                                             @endforeach
 
                                             <div class="card accordion">
+                                                <p>If you have a coupon code, please apply it below.</p>
+                                                <div class="check-coupon-box d-flex">
+                                                    <input type="text"
+                                                        class="input-text form-control text-grey ls-m mr-4 mb-4"
+                                                        wire:model.debounce.5s="couponcode" placeholder="Coupon code">
+                                                    <button type="button" wire:click="applycoupon" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
+                                                        Coupon</button>
+                                                </div>
+
                                                 <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
                                                     <i class="fas fa-exclamation-circle"></i>
-                                                    <span class="text-body">Have a coupon?</span>
-                                                    <a href="#alert-body2" class="text-primary">Click here to enter your code</a>
+                                                    <span class="text-body">Available offers</span>
+                                                    <a href="#alert-body2" class="text-primary">Click here to view all coupons</a>
                                                 </div>
+
                                                 <div class="alert-body collapsed" id="alert-body2">
-                                                    <p>If you have a coupon code, please apply it below.</p>
-                                                    <div class="check-coupon-box d-flex">
-                                                        {{-- <form wire:submit.prevent="applycoupon"> --}}
-                                                            <input type="text"
-                                                                class="input-text form-control text-grey ls-m mr-4 mb-4"
-                                                                wire:model.debounce.5s="couponcode" placeholder="Coupon code">
-                                                            <button type="button" wire:click="applycoupon" class="btn btn-dark btn-rounded btn-outline mb-4">Apply
-                                                                Coupon</button>
-                                                        {{-- </form> --}}
+                                                    <div>
+                                                        <p class="available-coupons">
+                                                            <span>{{ Config::get('icrm.currency.icon') }}400 cashback on SUMMER75 </span>
+                                                            <span>Applicable</span>
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="available-coupons">
+                                                            <span>{{ Config::get('icrm.currency.icon') }}400 cashback on SUMMER75 </span>
+                                                            <span>Applicable</span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>

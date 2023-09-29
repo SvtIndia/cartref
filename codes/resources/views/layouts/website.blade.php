@@ -194,6 +194,11 @@
         .cart .product-name {
             width: 25% !important;
         }
+
+        .alert-body .available-coupons{
+            justify-content: space-between;
+            display: flex;
+        }
     </style>
 
     <style>

@@ -62,6 +62,8 @@ class Checkout extends Component
 
     public $pickuppincode;
 
+    public $coupons;
+
     public $redeemedRewardPoints;
     public $redeemedCredits;
 
@@ -245,6 +247,11 @@ class Checkout extends Component
 
         // if session field is not present then fetch auth fields
         $this->authfields();
+
+        // $coupons = Coupon::where('status', 1)->where('from','>',Carbon::now())->where('to','<=','')->get();
+        // foreach($coupons as $coupon){
+        //     $coupon->is_applicable = 
+        // }
 
         // disable button if required fields are empty
         if (Config::get('icrm.auth.fields.companyinfo') != true) {
@@ -1428,7 +1435,7 @@ class Checkout extends Component
 
             if($this->redeemedCredits > 0){
                 auth()->user()->decrement('credits', $this->redeemedCredits);
-                //make log
+                //make log vcas `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
                 $reward_point->order_id = $order->id;

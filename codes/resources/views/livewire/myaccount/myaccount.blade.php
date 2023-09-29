@@ -28,6 +28,15 @@
                         <li class="nav-item">
                             <a class="nav-links" href="{{ route('myorders') }}" style="font-size: 1.6rem;">My Orders</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-links" href="javascript:void(0)" style="font-size: 1.6rem;">Cartref Currency :</a>
+                            <li class="nav-item" style="text-align: center;">
+                                Reward Points: <span>{{ auth()->user()->reward_points ?? 0  }} </span><br>
+                            </li>
+                            <li class="nav-item" style="text-align: center;">
+                                Wallet Credits: <span>{{ Config::get('icrm.currency.icon') }}{{ auth()->user()->credits ?? 0 }} </span><br>
+                            </li>
+                        </li>
 
                         @if (Config::get('icrm.showcase_at_home.feature') == 1)
                             <li class="nav-item">
