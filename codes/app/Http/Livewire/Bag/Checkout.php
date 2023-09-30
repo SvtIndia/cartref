@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Bag;
 
+use Carbon\Carbon;
 use App\Models\RewardPointLog;
 use App\Models\UserCreditLog;
 use App\Order;
@@ -143,7 +144,6 @@ class Checkout extends Component
     }
 
 
-
     public function render()
     {
 
@@ -196,9 +196,9 @@ class Checkout extends Component
             $this->shipping = 0;
         }
 
-        if($subtotal > 500){
+        if ($subtotal > 500) {
             $this->appliedShipping = 0;
-        }else{
+        } else {
             $this->appliedShipping = $this->shipping;
         }
 
@@ -219,7 +219,7 @@ class Checkout extends Component
         } else {
             $this->tax = 0;
         }
-        
+
         $this->ordervalue = $subtotal;
         $this->fsubtotal = $subtotal + $this->appliedShipping - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
         $this->ftotal = $total - $this->discount + $this->tax + $this->appliedShipping - $this->redeemedRewardPoints - $this->redeemedCredits;
@@ -230,12 +230,12 @@ class Checkout extends Component
 
         //fetch applied reward point and credits
         if (empty($this->redeemedRewardPoints)) {
-            if(Session::get('redeemedRewardPoints')){
+            if (Session::get('redeemedRewardPoints')) {
                 $this->applyRewardPoints();
             }
         }
         if (empty($this->redeemedCredits)) {
-            if(Session::get('redeemedCredits')){
+            if (Session::get('redeemedCredits')) {
                 $this->applyCredits();
             }
         }
@@ -248,10 +248,39 @@ class Checkout extends Component
         // if session field is not present then fetch auth fields
         $this->authfields();
 
-        // $coupons = Coupon::where('status', 1)->where('from','>',Carbon::now())->where('to','<=','')->get();
-        // foreach($coupons as $coupon){
-        //     $coupon->is_applicable = 
-        // }
+        $sellers = [];
+        foreach ($carts as $cart) {
+            $product = Product::where('id', $cart->attributes->product_id)->first();
+            array_push($sellers, User::find($product->seller_id));
+        }
+        $now = date('Y-m-d');
+        $coupons = Coupon::where('status', 1)->where('from', '<=', $now)->where('to', '>=', $now)->get();
+
+        foreach ($coupons as $coupon) {
+            $coupon->is_applicable = false;
+            $coupon->applicable_amount = 0;
+
+            if ($subtotal >= $coupon->min_order_value) {
+                if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
+                    if ($coupon->is_uwc || $this->redeemedRewardPoints <= 0) {
+                        $coupon->is_applicable = true;
+
+                        // 1. Percentage off
+                        if ($coupon->type == 'PercentageOff') {
+                            $value = $subtotal * ($coupon->value/100);
+                        }
+
+                        // 2. Fixed off
+                        if ($coupon->type == 'FixedOff') {
+                            $value = $coupon->value;
+                        }
+
+                        $discount = $subtotal - $value;
+//                        dd($discount, $value, $coupon->value);
+                    }
+                }
+            }
+        }
 
         // disable button if required fields are empty
         if (Config::get('icrm.auth.fields.companyinfo') != true) {
@@ -573,7 +602,6 @@ class Checkout extends Component
                         }
 
 
-
                         $this->etd = date('j F, Y', strtotime("+$bufferdays days"));
                         Session::flash('deliveryavailable', 'Expected delivery by ' . $this->etd);
                         Session::put('etd', $this->etd);
@@ -616,8 +644,8 @@ class Checkout extends Component
             'cod' => 1,
             'weight' => $weight,
         ];
-        $token =  Shiprocket::getToken();
-        $response =  Shiprocket::courier($token)->checkServiceability($pincodeDetails);
+        $token = Shiprocket::getToken();
+        $response = Shiprocket::courier($token)->checkServiceability($pincodeDetails);
 
 
         if ($response['status'] == 200) {
@@ -847,9 +875,8 @@ class Checkout extends Component
             'cod' => 1,
             'weight' => $weight,
         ];
-        $token =  Shiprocket::getToken();
-        $response =  Shiprocket::courier($token)->checkServiceability($pincodeDetails);
-
+        $token = Shiprocket::getToken();
+        $response = Shiprocket::courier($token)->checkServiceability($pincodeDetails);
 
 
         if (isset(json_decode($response)->status_code)) {
@@ -983,8 +1010,7 @@ class Checkout extends Component
         if (!empty($this->couponcode)) {
             $coupon = Coupon::where('code', $this->couponcode)->where('user_email', null)->first();
 
-            
-            
+
             /**
              * If the coupon is empty on above result then maybe user has unique coupon for his account
              */
@@ -997,8 +1023,21 @@ class Checkout extends Component
             if (!empty($coupon)) {
                 // coupon exists
 
+                //check coupon is applicable for cart products
+                $sellers = [];
+                $carts = \Cart::session($userID)->getContent()->where('attributes.type', '!=', 'Showcase At Home');
+                foreach ($carts as $cart) {
+                    $product = Product::where('id', $cart->attributes->product_id)->first();
+                    array_push($sellers, User::find($product->seller_id));
+                }
+
+                if (!$coupon->is_coupon_for_all || !$coupon->hasSellers($sellers)) {
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with cart products', 'status' => 'error']);
+                    return;
+                }
+
                 //check coupon is applied reward points
-                if($this->redeemedRewardPoints > 0 && !$coupon->is_uwc){
+                if ($this->redeemedRewardPoints > 0 && !$coupon->is_uwc) {
                     $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with reward points', 'status' => 'error']);
                     return;
                     // return redirect()->route('checkout');
@@ -1162,28 +1201,32 @@ class Checkout extends Component
             Session::put('ordermethod', 'cod');
         }
     }
+
     public function redeemRewardPoints()
     {
-        if(Session::get('redeemedRewardPoints')){
+        if (Session::get('redeemedRewardPoints')) {
             Session::remove('redeemedRewardPoints');
             $this->redeemedRewardPoints = 0;
             return;
         }
-        
+
         Session::remove('redeemedRewardPoints');
         $this->redeemedRewardPoints = 0;
         $this->applyRewardPoints();
 
     }
-    private function applyRewardPoints(){
-        if(auth()->user()->reward_points > 0 && $this->ftotal >= 1500){
+
+    private function applyRewardPoints()
+    {
+        if (auth()->user()->reward_points > 0 && $this->ftotal >= 1500) {
             $this->redeemedRewardPoints = auth()->user()->reward_points * 0.20;
             Session::put('redeemedRewardPoints', 1);
         }
     }
+
     public function redeemCredits()
     {
-        if(Session::get('redeemedCredits')){
+        if (Session::get('redeemedCredits')) {
             Session::remove('redeemedCredits');
             $this->redeemedCredits = 0;
             return;
@@ -1193,16 +1236,17 @@ class Checkout extends Component
         $this->redeemedCredits = 0;
 
         $this->applyCredits();
-        
+
     }
-    private function applyCredits(){
+
+    private function applyCredits()
+    {
         $userCredits = auth()->user()->credits;
-        if($userCredits > 0){
-            if($userCredits >= $this->ftotal){
+        if ($userCredits > 0) {
+            if ($userCredits >= $this->ftotal) {
                 $this->redeemedCredits = $this->ftotal;
-            }
-            else{
-                $this->redeemedCredits = $userCredits;    
+            } else {
+                $this->redeemedCredits = $userCredits;
             }
 
             // dd($this->redeemedCredits);
@@ -1360,7 +1404,6 @@ class Checkout extends Component
             }
 
 
-
             $order = new Order;
             $order->order_id = $orderid;
             $order->type = $cart->attributes->type;
@@ -1421,7 +1464,7 @@ class Checkout extends Component
             $order->exp_delivery_date = date('Y-m-d', strtotime($this->etd));
             $order->save();
 
-            if($this->redeemedRewardPoints > 0){
+            if ($this->redeemedRewardPoints > 0) {
                 auth()->user()->decrement('reward_points', $this->redeemedRewardPoints);
                 //make log
                 $reward_point = new RewardPointLog();
@@ -1433,7 +1476,7 @@ class Checkout extends Component
                 $reward_point->save();
             }
 
-            if($this->redeemedCredits > 0){
+            if ($this->redeemedCredits > 0) {
                 auth()->user()->decrement('credits', $this->redeemedCredits);
                 //make log vcas `
                 $reward_point = new UserCreditLog();
@@ -1447,7 +1490,7 @@ class Checkout extends Component
 
 
             //100% reward points on first order
-            if(!auth()->user()->is_first_shopping){
+            if (!auth()->user()->is_first_shopping) {
                 auth()->user()->increment('reward_points', $this->ftotal);
                 Auth::user()->update(['is_first_shopping' => 1]);
 
