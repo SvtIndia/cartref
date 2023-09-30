@@ -143,11 +143,11 @@
                                                         Coupon</button>
                                                 </div>
 
-                                                <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
-                                                    <i class="fas fa-exclamation-circle"></i>
-                                                    <span class="text-body">Available offers</span>
-                                                    <a href="#alert-body2" class="text-primary">Click here to view all coupons</a>
-                                                </div>
+{{--                                                <div class="alert alert-light alert-primary alert-icon mb-4 card-header">--}}
+{{--                                                    <i class="fas fa-exclamation-circle"></i>--}}
+{{--                                                    <span class="text-body">Available offers</span>--}}
+{{--                                                    <a href="#alert-body2" class="text-primary">Click here to view all coupons</a>--}}
+{{--                                                </div>--}}
 
                                                 <div class="alert-body collapsed" id="alert-body2">
                                                     <div>
