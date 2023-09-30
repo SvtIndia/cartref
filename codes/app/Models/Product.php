@@ -26,6 +26,7 @@ class Product extends Model
     use Resizable;
     use Translatable;
     protected $translatable = ['name', 'description'];
+    protected $perPage = 50;
 
     public function scopeRoleWise($query)
     {
