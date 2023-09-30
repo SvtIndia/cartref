@@ -258,7 +258,7 @@ class Checkout extends Component
 
         foreach ($coupons as $coupon) {
             $coupon->is_applicable = false;
-            $coupon->applicable_amount = 0;
+            $coupon->applicable_discount = 0;
 
             if ($subtotal >= $coupon->min_order_value) {
                 if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
@@ -275,13 +275,12 @@ class Checkout extends Component
                             $value = $coupon->value;
                         }
 
-                        $discount = $subtotal - $value;
-//                        dd($discount, $value, $coupon->value);
+                        $coupon->applicable_discount = $value ?? 0;
                     }
                 }
             }
         }
-
+        $this->coupons = $coupons;
         // disable button if required fields are empty
         if (Config::get('icrm.auth.fields.companyinfo') != true) {
             if ($this->name and $this->phone and $this->country and $this->address1 and $this->address2 and $this->deliverypincode and $this->city and $this->state and $this->email) {
@@ -1030,8 +1029,9 @@ class Checkout extends Component
                     $product = Product::where('id', $cart->attributes->product_id)->first();
                     array_push($sellers, User::find($product->seller_id));
                 }
+//                dd($coupon->hasSellers($sellers));
 
-                if (!$coupon->is_coupon_for_all || !$coupon->hasSellers($sellers)) {
+                if (!$coupon->is_coupon_for_all && !$coupon->hasSellers($sellers)) {
                     $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with cart products', 'status' => 'error']);
                     return;
                 }
@@ -1245,6 +1245,7 @@ class Checkout extends Component
         if ($userCredits > 0) {
             if ($userCredits >= $this->ftotal) {
                 $this->redeemedCredits = $this->ftotal;
+                Session::put('ordermethod','cod');
             } else {
                 $this->redeemedCredits = $userCredits;
             }
@@ -1460,8 +1461,11 @@ class Checkout extends Component
             $order->user_id = auth()->user()->id;
             $order->order_weight = $cart->attributes->weight;
             $order->order_status = 'New Order';
-            $order->order_method = 'COD';
+            $order->order_method = ($this->redeemedRewardPoints > 0 && $this->ftotal <= 0) ? 'Wallet Credits' : 'COD';
             $order->exp_delivery_date = date('Y-m-d', strtotime($this->etd));
+
+            $order->used_reward_points = $this->redeemedRewardPoints ?? 0;
+            $order->used_user_credits = $this->redeemedCredits ?? 0;
             $order->save();
 
             if ($this->redeemedRewardPoints > 0) {
@@ -1469,7 +1473,7 @@ class Checkout extends Component
                 //make log
                 $reward_point = new RewardPointLog();
                 $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $order->id;
+                $reward_point->order_id = $orderid;
                 $reward_point->type = 'out';
                 $reward_point->amount = $this->redeemedRewardPoints;
                 $reward_point->closing_bal = auth()->user()->reward_points;
@@ -1481,26 +1485,10 @@ class Checkout extends Component
                 //make log vcas `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $order->id;
+                $reward_point->order_id = $orderid;
                 $reward_point->type = 'out';
-                $reward_point->amount = $this->redeemedRewardPoints;
+                $reward_point->amount = $this->redeemedCredits;
                 $reward_point->closing_bal = auth()->user()->credits;
-                $reward_point->save();
-            }
-
-
-            //100% reward points on first order
-            if (!auth()->user()->is_first_shopping) {
-                auth()->user()->increment('reward_points', $this->ftotal);
-                Auth::user()->update(['is_first_shopping' => 1]);
-
-                //make log
-                $reward_point = new RewardPointLog();
-                $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $order->id;
-                $reward_point->type = 'in';
-                $reward_point->amount = $this->ftotal;
-                $reward_point->closing_bal = auth()->user()->reward_points;
                 $reward_point->save();
             }
 
@@ -1521,6 +1509,23 @@ class Checkout extends Component
 
         }
 
+
+
+
+        //100% reward points on first order
+        if (!auth()->user()->is_first_shopping) {
+            auth()->user()->increment('reward_points', $this->ftotal);
+            Auth::user()->update(['is_first_shopping' => 1]);
+
+            //make log
+            $reward_point = new RewardPointLog();
+            $reward_point->user_id = auth()->user()->id;
+            $reward_point->order_id = $orderid;
+            $reward_point->type = 'in';
+            $reward_point->amount = $this->ftotal;
+            $reward_point->closing_bal = auth()->user()->reward_points;
+            $reward_point->save();
+        }
 
         Session::put('cartnotclear', true);
         \Cart::session($userID)->removeCartCondition('maxgplus');

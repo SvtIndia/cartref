@@ -496,6 +496,6 @@ Route::get('/get',function(){
 //    $b = 'redeemedCredits => '. Session::get('redeemedCredits');
 //    dd($a,$b);
     $coupon = \App\Coupon::find(1);
-    $coupon->is_there = $coupon->sellers->contains(\App\Models\User::find(2));
+    return $coupon->is_there = $coupon->hasSellers([\App\Models\User::find(139), \App\Models\User::find(2)]) ? 'Yes' : 'No';
     return $coupon;
 });

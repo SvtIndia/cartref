@@ -271,8 +271,49 @@ class BagController extends Controller
             $order->order_status = 'New Order';
             $order->order_method = 'Prepaid';
             $order->exp_delivery_date = date('Y-m-d', strtotime(Session::get('etd')));
+
+            $order->used_reward_points = request()->redeemed_reward_points ?? 0;
+            $order->used_user_credits = request()->redeemed_credits ?? 0;
             $order->save();
 
+            if (request()->redeemed_reward_points > 0) {
+                auth()->user()->decrement('reward_points', request()->redeemed_reward_points);
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = request()->redeemed_reward_points;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
+
+            if (request()->redeemed_credits > 0) {
+                auth()->user()->decrement('credits', request()->redeemed_credits);
+                //make log vcas `
+                $reward_point = new UserCreditLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = request()->redeemed_credits;
+                $reward_point->closing_bal = auth()->user()->credits;
+                $reward_point->save();
+            }
+
+            //100% reward points on first order
+            if (!auth()->user()->is_first_shopping) {
+                auth()->user()->increment('reward_points', $ftotal);
+                Auth::user()->update(['is_first_shopping' => 1]);
+
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'in';
+                $reward_point->amount = $ftotal;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
 
             if(Config::get('icrm.stock_management.feature') == 1)
             {

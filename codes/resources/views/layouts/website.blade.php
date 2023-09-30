@@ -196,8 +196,7 @@
         }
 
         .alert-body .available-coupons{
-            justify-content: space-between;
-            display: flex;
+            margin-bottom: 10px;
         }
     </style>
 

@@ -1,7 +1,8 @@
 /codes/public/
+.idea
 /codes/.idea
 /codes/vendor/
-codes/server.php
+/codes/server.php
 /codes/node_modules/
 npm-debug.log
 yarn-error.log
@@ -24,3 +25,5 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+codes/server.php
