@@ -412,10 +412,9 @@
             // alert({{ number_format($this->ftotal, 0) }});
             var amount = {{ str_replace(',', '', $this->ftotal) }};
             // alert(amount);
-            var total_amount = amount * 100;
-            var redeemedRewardPoints = {{ str_replace(',', '', $this->redeemedRewardPoints) }};
-            var redeemedCredits = {{ str_replace(',', '', $this->redeemedCredits) }};
-
+            var total_amount = Number(amount).toFixed(2) * 100;
+            var redeemedRewardPoints = {{ $this->redeemedRewardPoints ?? 0 }};
+            var redeemedCredits = {{ $this->redeemedCredits ?? 0 }};
             // alert(total_amount);
             // return false;
             // var consent = $("#two-step:checkbox:checked").length;
@@ -444,7 +443,7 @@
             //     alert('Please Agree To The Terms and Conditions');
             //     return false;
             // }
-
+            console.log(total_amount);
             var options = {
                 "key": "{{ env('RAZORPAY_KEY') }}", // Enter the Key ID generated from the Dashboard
                 "amount": total_amount, // Amount is in currency subunits. Default currency is INR. Hence, 10 refers to 1000 paise

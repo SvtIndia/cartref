@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RewardPointLog;
+use App\Models\UserCreditLog;
 use App\Size;
 use Redirect;
 use App\Order;
@@ -127,6 +129,7 @@ class BagController extends Controller
 
         foreach($carts as $key => $cart)
         {
+
             // fetch product information
             $product = Product::where('id', $cart->attributes->product_id)->first();
 
@@ -190,8 +193,8 @@ class BagController extends Controller
                 $tax = 0;
             }
 
-            $fsubtotal = $subtotal + $shipping - $discount;
-            $ftotal = $total + $shipping - $discount + $tax;
+            $fsubtotal = $subtotal + $shipping - $discount - request()->redeemed_credits - request()->redeemed_reward_points;
+            $ftotal = $total + $shipping - $discount + $tax - request()->redeemed_credits - request()->redeemed_reward_points;
 
             if($cart->attributes->requireddocument == null)
             {
@@ -215,6 +218,25 @@ class BagController extends Controller
                 $originalfile = json_encode($cart->attributes->original_file);
             }
 
+            //per product discount calculation
+//            $ov = \Cart::session($userID)->getSubtotal() ?? 1;
+            $ratio  = ($cart->getPriceSumWithConditions() / $ordervalue);
+            $coupon_discount = 0; $reward_point_discount = 0; $user_credits_discount = 0;
+
+            if($discount > 0){
+                //coupon discount
+                $coupon_discount = round(($ratio * $discount), 2);
+            }
+            if(request()->redeemed_reward_points > 0){
+                //reward point discount uptoo 20%
+                if(auth()->user()->reward_points >= request()->redeemed_reward_points)
+                    $reward_point_discount = round(($ratio * request()->redeemed_reward_points), 2);
+            }
+            if(request()->redeemed_credits > 0){
+                //wallet credits discount
+                if(auth()->user()->credits >= request()->redeemed_credits)
+                    $user_credits_discount = round(($ratio * request()->redeemed_credits), 2);
+            }
 
             $order = new Order;
             $order->order_id = $orderid;
@@ -225,7 +247,7 @@ class BagController extends Controller
             $order->product_offerprice = $cart->getPriceWithConditions();
             $order->product_mrp = $product->mrp;
             $order->qty = $cart->quantity;
-            $order->price_sum = $cart->getPriceSumWithConditions();
+            $order->price_sum = $cart->getPriceSumWithConditions() - ($coupon_discount + $reward_point_discount + $user_credits_discount);
             $order->size = $cart->attributes->size;
             $order->color = $cart->attributes->color;
 
@@ -276,44 +298,30 @@ class BagController extends Controller
             $order->used_user_credits = request()->redeemed_credits ?? 0;
             $order->save();
 
-            if (request()->redeemed_reward_points > 0) {
-                auth()->user()->decrement('reward_points', request()->redeemed_reward_points);
+            if ($reward_point_discount > 0) {
+                auth()->user()->decrement('reward_points', $reward_point_discount);
                 //make log
                 $reward_point = new RewardPointLog();
                 $reward_point->user_id = auth()->user()->id;
                 $reward_point->order_id = $order->id;
                 $reward_point->type = 'out';
-                $reward_point->amount = request()->redeemed_reward_points;
+                $reward_point->amount = $reward_point_discount;
                 $reward_point->closing_bal = auth()->user()->reward_points;
                 $reward_point->save();
             }
 
-            if (request()->redeemed_credits > 0) {
-                auth()->user()->decrement('credits', request()->redeemed_credits);
-                //make log vcas `
+            if ($user_credits_discount > 0) {
+                auth()->user()->decrement('credits', $user_credits_discount);
+                //make log `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
                 $reward_point->order_id = $order->id;
                 $reward_point->type = 'out';
-                $reward_point->amount = request()->redeemed_credits;
+                $reward_point->amount = $user_credits_discount;
                 $reward_point->closing_bal = auth()->user()->credits;
                 $reward_point->save();
             }
 
-            //100% reward points on first order
-            if (!auth()->user()->is_first_shopping) {
-                auth()->user()->increment('reward_points', $ftotal);
-                Auth::user()->update(['is_first_shopping' => 1]);
-
-                //make log
-                $reward_point = new RewardPointLog();
-                $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $order->id;
-                $reward_point->type = 'in';
-                $reward_point->amount = $ftotal;
-                $reward_point->closing_bal = auth()->user()->reward_points;
-                $reward_point->save();
-            }
 
             if(Config::get('icrm.stock_management.feature') == 1)
             {
@@ -331,7 +339,20 @@ class BagController extends Controller
             }
         }
 
+        //100% reward points on first order
+        if (!auth()->user()->is_first_shopping) {
+            auth()->user()->increment('reward_points', $ftotal);
+            Auth::user()->update(['is_first_shopping' => 1]);
 
+            //make log
+            $reward_point = new RewardPointLog();
+            $reward_point->user_id = auth()->user()->id;
+            $reward_point->order_id = $orderid;
+            $reward_point->type = 'in';
+            $reward_point->amount = $ftotal;
+            $reward_point->closing_bal = auth()->user()->reward_points;
+            $reward_point->save();
+        }
 
         // send order sms & email
         try {
@@ -387,7 +408,8 @@ class BagController extends Controller
         Session::remove('appliedcouponcode');
         Session::remove('deliveryavailable');
         Session::remove('etd');
-
+        Session::remove('redeemedRewardPoints');
+        Session::remove('redeemedCredits');
 
 
     }

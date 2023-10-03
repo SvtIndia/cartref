@@ -257,7 +257,7 @@
                                     <td class="summary-subtotal-price" style="text-align: left;">{{ Config::get('icrm.currency.icon') }}{{ $item->order_tax }}</td>
                                 </tr>
                             @endif
-                            
+
                             <tr class="summary-subtotal">
                                 <td></td>
                                 <td></td>

@@ -267,7 +267,7 @@ class Checkout extends Component
 
                         // 1. Percentage off
                         if ($coupon->type == 'PercentageOff') {
-                            $value = $subtotal * ($coupon->value/100);
+                            $value = $subtotal * ($coupon->value / 100);
                         }
 
                         // 2. Fixed off
@@ -1245,7 +1245,7 @@ class Checkout extends Component
         if ($userCredits > 0) {
             if ($userCredits >= $this->ftotal) {
                 $this->redeemedCredits = $this->ftotal;
-                Session::put('ordermethod','cod');
+                Session::put('ordermethod', 'cod');
             } else {
                 $this->redeemedCredits = $userCredits;
             }
@@ -1303,7 +1303,6 @@ class Checkout extends Component
 
     private function carttoorder()
     {
-
         $userID = 0;
         if (Auth::check()) {
             $userID = auth()->user()->id;
@@ -1321,11 +1320,32 @@ class Checkout extends Component
         $carts = \Cart::session($userID)->getContent();
 
         foreach ($carts as $key => $cart) {
+            //per product discount calculation
+            $ratio  = ($cart->getPriceSumWithConditions() / $this->ordervalue);
+            $coupon_discount = 0; $reward_point_discount = 0; $user_credits_discount = 0;
+
+            if($this->discount > 0){
+                //coupon discount
+                $coupon_discount = round(($ratio * $this->discount), 2);
+            }
+            if($this->redeemedRewardPoints > 0){
+                //reward point discount uptoo 20%
+                if(auth()->user()->reward_points >= $this->redeemedRewardPoints)
+                    $reward_point_discount = round(($ratio * $this->redeemedRewardPoints), 2);
+            }
+            if($this->redeemedCredits > 0){
+                //wallet credits discount
+                if(auth()->user()->credits >= $this->redeemedCredits)
+                    $user_credits_discount = round(($ratio * $this->redeemedCredits), 2);
+            }
             // fetch product information
             $product = Product::where('id', $cart->attributes->product_id)->first();
 
             if (Config::get('icrm.product_sku.size') == 1 and Config::get('icrm.product_sku.color') == 1) {
-                $sku = Productsku::where('size', $cart->attributes->size)->where('color', $cart->attributes->color)->where('product_id', $cart->attributes->product_id)->first();
+                $sku = Productsku::where('size', $cart->attributes->size)
+                    ->where('color', $cart->attributes->color)
+                    ->where('product_id', $cart->attributes->product_id)
+                    ->first();
 
                 if (!empty($sku->weight)) {
                     $length = $sku->length;
@@ -1415,7 +1435,10 @@ class Checkout extends Component
             $order->product_offerprice = $cart->getPriceWithConditions();
             $order->product_mrp = $product->mrp;
             $order->qty = $cart->quantity;
-            $order->price_sum = $cart->getPriceSumWithConditions();
+
+            $order->price_sum = $cart->getPriceSumWithConditions() - ($coupon_discount + $reward_point_discount + $user_credits_discount);
+//            if($cart->getPriceSumWithConditions() == 799)
+//            dd($key, $order->price_sum, $coupon_discount, $reward_point_discount, $user_credits_discount);
             $order->size = $cart->attributes->size;
             $order->color = $cart->attributes->color;
 
@@ -1461,33 +1484,33 @@ class Checkout extends Component
             $order->user_id = auth()->user()->id;
             $order->order_weight = $cart->attributes->weight;
             $order->order_status = 'New Order';
-            $order->order_method = ($this->redeemedRewardPoints > 0 && $this->ftotal <= 0) ? 'Wallet Credits' : 'COD';
+            $order->order_method = (($this->redeemedRewardPoints > 0 || $this->redeemedCredits > 0) && $this->ftotal <= 0) ? 'Prepaid' : 'COD';
             $order->exp_delivery_date = date('Y-m-d', strtotime($this->etd));
 
-            $order->used_reward_points = $this->redeemedRewardPoints ?? 0;
-            $order->used_user_credits = $this->redeemedCredits ?? 0;
+            $order->used_reward_points = $reward_point_discount ?? 0;
+            $order->used_user_credits = $user_credits_discount ?? 0;
             $order->save();
 
-            if ($this->redeemedRewardPoints > 0) {
-                auth()->user()->decrement('reward_points', $this->redeemedRewardPoints);
+            if ($reward_point_discount > 0) {
+                auth()->user()->decrement('reward_points', $reward_point_discount);
                 //make log
                 $reward_point = new RewardPointLog();
                 $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $orderid;
+                $reward_point->order_id = $order->id;
                 $reward_point->type = 'out';
-                $reward_point->amount = $this->redeemedRewardPoints;
+                $reward_point->amount = $reward_point_discount;
                 $reward_point->closing_bal = auth()->user()->reward_points;
                 $reward_point->save();
             }
 
-            if ($this->redeemedCredits > 0) {
-                auth()->user()->decrement('credits', $this->redeemedCredits);
-                //make log vcas `
+            if ($user_credits_discount > 0) {
+                auth()->user()->decrement('credits', $user_credits_discount);
+                //make log `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $orderid;
+                $reward_point->order_id = $order->id;
                 $reward_point->type = 'out';
-                $reward_point->amount = $this->redeemedCredits;
+                $reward_point->amount = $user_credits_discount;
                 $reward_point->closing_bal = auth()->user()->credits;
                 $reward_point->save();
             }
@@ -1508,8 +1531,6 @@ class Checkout extends Component
             // \Cart::session($userID)->remove($cart->id);
 
         }
-
-
 
 
         //100% reward points on first order
@@ -1540,6 +1561,8 @@ class Checkout extends Component
         Session::remove('deliveryavailable');
         Session::remove('deliverynotavailable');
         Session::remove('etd');
+        Session::remove('redeemedRewardPoints');
+        Session::remove('redeemedCredits');
 
 
         // send order sms
