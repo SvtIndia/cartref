@@ -234,7 +234,7 @@
         .alert-body .available-coupons .coupon-body .not-applicable {
             color: red;
             text-align: start;
-            font-size: 10px;
+            font-size: 12px;
         }
 
     </style>
