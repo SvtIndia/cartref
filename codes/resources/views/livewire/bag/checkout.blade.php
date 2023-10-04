@@ -139,11 +139,17 @@
                                         </thead>
                                         <tbody>
                                         @foreach ($carts as $cart)
+                                            @php
+                                                $product = App\Models\Product::where('id', $cart->attributes->product_id)->first();
+                                            @endphp
                                             <tr>
                                                 <td class="product-name">{{ Str::limit($cart->name, 35, '...') }}
                                                     <span class="product-quantity">×&nbsp;{{ $cart->quantity }}</span>
                                                 </td>
-                                                <td class="product-total text-body">{{ Config::get('icrm.currency.icon') }} {{ number_format($cart->getPriceSumWithConditions(), 2) }}</td>
+                                                <td class="product-total text-body">
+                                                    {{ Config::get('icrm.currency.icon') }} {{ number_format($cart->getPriceSumWithConditions(), 2) }}
+                                                    <del style="color:black; margin-left:1rem;">{{ Config::get('icrm.currency.icon') }} {{ $product->mrp * $cart->quantity }}</del>
+                                                </td>
                                             </tr>
                                         @endforeach
 
@@ -205,6 +211,14 @@
                                         </div>
 
                                         <tr class="summary-subtotal">
+                                        <tr>
+                                            <td class="summary-subtitle">Total</td>
+                                            <td class="summary-subtitle text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($this->totalMrp, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="">Cartref's Discount</td>
+                                            <td class="text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format(($this->totalMrp - $ordervalue), 2) }}</td>
+                                        </tr>
                                         <tr>
                                             <td class="summary-subtitle">Order Value</td>
                                             <td class="summary-subtitle text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($ordervalue, 2) }}</td>
@@ -282,13 +296,15 @@
                                                 <tr class="summary-subtotal">
                                                     <td class="pb-0">
                                                         <h4 class="summary-subtitle">Order Total</h4>
+                                                        <span style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</span>
                                                     </td>
-                                                    <td class=" pt-0 pb-0">
+                                                    <td class="pb-0">
                                                         <p class="summary-total-price ls-s text-primary">{{ Config::get('icrm.currency.icon') }}{{ number_format($ftotal, 2) }}</p>
                                                     </td>
                                                 </tr>
                                         </tbody>
                                     </table>
+{{--                                    <p style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</p>--}}
                                     @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ordervalue >= 1500))
                                         <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
                                             <input type="checkbox" class="custom-checkbox" disabled

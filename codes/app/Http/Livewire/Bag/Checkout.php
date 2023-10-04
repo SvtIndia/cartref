@@ -50,7 +50,10 @@ class Checkout extends Component
     public $appliedShipping;
     public $tax;
 
+    public $totalMrp;
+    public $totalSave;
     public $ordervalue;
+
     public $fsubtotal;
     public $ftotal;
     public $bagcount;
@@ -244,17 +247,19 @@ class Checkout extends Component
         $this->fsubtotal = $subtotal + $this->appliedShipping - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
         $this->ftotal = $total - $this->discount + $this->tax + $this->appliedShipping - $this->redeemedRewardPoints - $this->redeemedCredits;
         $this->bagcount = \Cart::session($userID)->getTotalQuantity();
-
         // if session field is not present then fetch auth fields
         $this->authfields();
 
         $sellers = [];
         foreach ($carts as $cart) {
             $product = Product::where('id', $cart->attributes->product_id)->first();
+            $this->totalMrp += $product->mrp * $cart->quantity;
             array_push($sellers, User::find($product->seller_id));
         }
         $now = date('Y-m-d');
         $coupons = Coupon::where('status', 1)->where('from', '<=', $now)->where('to', '>=', $now)->get();
+
+        $this->totalSave = ($this->totalMrp - $this->ordervalue) + $this->discount + ($this->shipping - $this->appliedShipping);
 
         foreach ($coupons as $coupon) {
             $coupon->is_applicable = false;
