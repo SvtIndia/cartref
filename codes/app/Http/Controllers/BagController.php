@@ -430,7 +430,7 @@ class BagController extends Controller
             if(!empty($vendorinfo->email))
             {
                 // Send order notification to vendor
-                Notification::route('mail', $vendorinfo->email)->notify(new PrepaidOrderEmailToVendor($order));
+                Notification::route('mail', $vendorinfo->email)->notify(new PrepaidOrderEmailToVendor($order, $vendorinfo));
             }
 
         }
