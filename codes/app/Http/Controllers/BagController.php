@@ -297,8 +297,8 @@ class BagController extends Controller
             $order->order_method = 'Prepaid';
             $order->exp_delivery_date = date('Y-m-d', strtotime(Session::get('etd')));
 
-            $order->used_reward_points = request()->redeemed_reward_points ?? 0;
-            $order->used_user_credits = request()->redeemed_credits ?? 0;
+            $order->used_reward_points = $reward_point_discount ?? 0;
+            $order->used_user_credits = $user_credits_discount ?? 0;
             $order->save();
 
             if ($reward_point_discount > 0) {
