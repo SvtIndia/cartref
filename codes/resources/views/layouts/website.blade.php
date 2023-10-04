@@ -228,12 +228,13 @@
         }
         .alert-body .available-coupons .coupon-body .applicable {
             color: green;
-            text-align: start;
-            font-size: 12px;
+            text-align: end;
+            font-size: 16px;
         }
         .alert-body .available-coupons .coupon-body .not-applicable {
             color: red;
-            text-align: end;
+            text-align: start;
+            font-size: 10px;
         }
 
     </style>
