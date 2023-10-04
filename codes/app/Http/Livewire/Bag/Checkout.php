@@ -259,6 +259,7 @@ class Checkout extends Component
         foreach ($coupons as $coupon) {
             $coupon->is_applicable = false;
             $coupon->applicable_discount = 0;
+            $coupon->not_applicable_error = '';
 
             if ($subtotal >= $coupon->min_order_value) {
                 if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
@@ -277,6 +278,12 @@ class Checkout extends Component
 
                         $coupon->applicable_discount = $value ?? 0;
                     }
+                    else{
+                        $coupon->not_applicable_error = 'Can not use with cashback';
+                    }
+                }
+                else{
+                    $coupon->not_applicable_error = 'Can not use with cart products';
                 }
             }
         }
@@ -987,6 +994,10 @@ class Checkout extends Component
         \Cart::session($userID)->condition($tax);
     }
 
+    public function applyCirectCoupon($code){
+        $this->couponcode = $code;
+        $this->applycoupon();
+    }
     public function applycoupon()
     {
         /**

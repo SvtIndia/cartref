@@ -23,28 +23,28 @@
                                            wire:model.defer="phone" required=""/>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <label>Company Name
-                                        @if (Config::get('icrm.auth.fields.companyinfo') != true)
-                                            (Optional)
-                                        @endif
-                                    </label>
-                                    @error('companyname') <span class="error">{{ $message }}</span> @enderror
-                                    <input type="text" class="form-control @error('companyname') error @enderror"
-                                           wire:model.debounce.1s="companyname"/>
-                                </div>
-                                <div class="col-xs-6">
-                                    <label>GST
-                                        @if (Config::get('icrm.auth.fields.companyinfo') != true)
-                                            (Optional)
-                                        @endif
-                                    </label>
-                                    @error('gst') <span class="error">{{ $message }}</span> @enderror
-                                    <input type="text" class="form-control @error('gst') error @enderror"
-                                           wire:model.defer="gst"/>
-                                </div>
-                            </div>
+                            {{--                            <div class="row">--}}
+                            {{--                                <div class="col-xs-6">--}}
+                            {{--                                    <label>Company Name--}}
+                            {{--                                        @if (Config::get('icrm.auth.fields.companyinfo') != true)--}}
+                            {{--                                            (Optional)--}}
+                            {{--                                        @endif--}}
+                            {{--                                    </label>--}}
+                            {{--                                    @error('companyname') <span class="error">{{ $message }}</span> @enderror--}}
+                            {{--                                    <input type="text" class="form-control @error('companyname') error @enderror"--}}
+                            {{--                                           wire:model.debounce.1s="companyname"/>--}}
+                            {{--                                </div>--}}
+                            {{--                                <div class="col-xs-6">--}}
+                            {{--                                    <label>GST--}}
+                            {{--                                        @if (Config::get('icrm.auth.fields.companyinfo') != true)--}}
+                            {{--                                            (Optional)--}}
+                            {{--                                        @endif--}}
+                            {{--                                    </label>--}}
+                            {{--                                    @error('gst') <span class="error">{{ $message }}</span> @enderror--}}
+                            {{--                                    <input type="text" class="form-control @error('gst') error @enderror"--}}
+                            {{--                                           wire:model.defer="gst"/>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
 
                             <label>Country / Region <span class="required">*</span></label>
                             <div class="select-box">
@@ -169,18 +169,36 @@
                                             <div class="alert-body collapsed" id="alert-body2">
                                                 @foreach($this->coupons as $coupon)
                                                     <div>
-                                                        <p class="available-coupons">
-                                                            <span>
+                                                        <div class="available-coupons">
+                                                            <div class="coupon-body">
+                                                                <div style="width: 50%;">
+                                                                    <span class="code">{{ $coupon->code }}</span>
+                                                                </div>
                                                                 @if($coupon->is_applicable)
-                                                                    <span style="color: green;text-align: end;">{{ Config::get('icrm.currency.icon') }}{{ $coupon->applicable_discount }} </span>
-                                                                    Applicable on
+                                                                    <div class="info"
+                                                                         style="justify-content: space-between;">
+                                                                        <span class="applicable">{{ Config::get('icrm.currency.icon') }}{{ $coupon->applicable_discount }} Applicable</span>
+                                                                        @if(Session::get('appliedcouponcode') == $coupon->code)
+                                                                            <span class="applicable">Applied</span>
+                                                                        @else
+                                                                            <button type="button"
+                                                                                    class="btn btn-dark btn-rounded btn-outline apply-btn"
+                                                                                    wire:click="applyCirectCoupon('{{$coupon->code}}')">
+                                                                                Apply
+                                                                            </button>
+                                                                        @endif
+                                                                    </div>
+                                                                @else
+                                                                    <div class="info">
+                                                                        <span class="not-applicable">Not Applicable</span>
+                                                                        <span class="not-applicable">{{ $coupon->not_applicable_error }}</span>
+                                                                    </div>
                                                                 @endif
-                                                                {{ $coupon->code  }}
-                                                            </span><br>
+                                                            </div>
                                                             <span>
                                                                 {{ $coupon->description  }} minimum order of {{ Config::get('icrm.currency.icon') }}{{ $coupon->min_order_value  }}
                                                             </span>
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -277,7 +295,8 @@
                                                    @if($this->redeemedRewardPoints > 0) checked @endif />
                                             <label class="form-control-label" for="cod">
                                                 Use your reward points up to 20%.
-                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }})</font>
+                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }}
+                                                    )</font>
                                             </label>
                                         </div>
                                     @endif
@@ -287,7 +306,8 @@
                                                    @if($this->redeemedCredits > 0) checked @endif />
                                             <label class="form-control-label" for="cod">
                                                 Use your wallet credits
-                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }})</font>
+                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }}
+                                                    )</font>
                                             </label>
                                         </div>
                                     @endif

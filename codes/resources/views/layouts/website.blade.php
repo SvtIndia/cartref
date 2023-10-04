@@ -195,7 +195,47 @@
 
         .alert-body .available-coupons{
             margin-bottom: 10px;
+            border-bottom: 0.1px solid gray;
         }
+        .alert-body .available-coupons .coupon-body{
+            width: 100%;
+            display: flex;
+            /*justify-content: space-between;*/
+            /*gap: 4rem;*/
+            margin-bottom: 5px;
+            align-items: center;
+        }
+        .alert-body .available-coupons .coupon-body .info{
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            gap: 2rem;
+        }
+        .alert-body .available-coupons .coupon-body .code {
+            font-size: 18px;
+            font-weight: 500;
+            color: black;
+            border: 1px solid;
+            padding: 5px;
+            display: block;
+            width: fit-content;
+        }
+        .alert-body .available-coupons .coupon-body .apply-btn{
+            padding: 5px;
+            font-size: 15px;
+            font-weight: 200;
+            text-transform: unset;
+        }
+        .alert-body .available-coupons .coupon-body .applicable {
+            color: green;
+            text-align: end;
+            font-size: 16px;
+        }
+        .alert-body .available-coupons .coupon-body .not-applicable {
+            color: red;
+            text-align: end;
+        }
+
     </style>
 
     <style>
