@@ -1492,7 +1492,7 @@ class Checkout extends Component
             $order->save();
 
             if ($reward_point_discount > 0) {
-                auth()->user()->decrement('reward_points', $reward_point_discount);
+//                auth()->user()->decrement('reward_points', $reward_point_discount);
                 //make log
                 $reward_point = new RewardPointLog();
                 $reward_point->user_id = auth()->user()->id;
@@ -1504,7 +1504,7 @@ class Checkout extends Component
             }
 
             if ($user_credits_discount > 0) {
-                auth()->user()->decrement('credits', $user_credits_discount);
+//                auth()->user()->decrement('credits', $user_credits_discount);
                 //make log `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
@@ -1532,6 +1532,12 @@ class Checkout extends Component
 
         }
 
+        if($this->redeemedRewardPoints > 0){
+            auth()->user()->decrement('reward_points', $this->redeemedRewardPoints);
+        }
+        if($this->redeemedCredits > 0){
+            auth()->user()->decrement('credits', $this->redeemedCredits);
+        }
 
         //100% reward points on first order
         if (!auth()->user()->is_first_shopping) {

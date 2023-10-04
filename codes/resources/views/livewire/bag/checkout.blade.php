@@ -287,8 +287,7 @@
                                                    @if($this->redeemedCredits > 0) checked @endif />
                                             <label class="form-control-label" for="cod">
                                                 Use your wallet credits
-                                                ({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }}
-                                                )
+                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }})</font>
                                             </label>
                                         </div>
                                     @endif

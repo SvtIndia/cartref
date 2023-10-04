@@ -302,7 +302,7 @@ class BagController extends Controller
             $order->save();
 
             if ($reward_point_discount > 0) {
-                auth()->user()->decrement('reward_points', $reward_point_discount);
+                //auth()->user()->decrement('reward_points', $reward_point_discount);
                 //make log
                 $reward_point = new RewardPointLog();
                 $reward_point->user_id = auth()->user()->id;
@@ -314,7 +314,7 @@ class BagController extends Controller
             }
 
             if ($user_credits_discount > 0) {
-                auth()->user()->decrement('credits', $user_credits_discount);
+                //auth()->user()->decrement('credits', $user_credits_discount);
                 //make log `
                 $reward_point = new UserCreditLog();
                 $reward_point->user_id = auth()->user()->id;
@@ -340,6 +340,13 @@ class BagController extends Controller
                     'available_stock' => $updatestock->available_stock - $cart->quantity,
                 ]);
             }
+        }
+
+        if(request()->redeemed_reward_points > 0){
+            auth()->user()->decrement('reward_points', request()->redeemed_reward_points);
+        }
+        if(request()->redeemed_credits > 0){
+            auth()->user()->decrement('credits', request()->redeemed_credits);
         }
 
         //100% reward points on first order
