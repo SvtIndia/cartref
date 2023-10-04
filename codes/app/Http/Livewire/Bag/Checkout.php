@@ -279,7 +279,7 @@ class Checkout extends Component
                         $coupon->applicable_discount = $value ?? 0;
                     }
                     else{
-                        $coupon->not_applicable_error = 'Can not use with cashback';
+                        $coupon->not_applicable_error = 'Not applicable with reward points.';
                     }
                 }
                 else{
