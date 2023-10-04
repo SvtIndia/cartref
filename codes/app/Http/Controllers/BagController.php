@@ -166,7 +166,6 @@ class BagController extends Controller
 
             $ordervalue = $subtotal;
 
-
             $couponCondition = \Cart::session($userID)->getCondition('coupon');
             if(!empty($couponCondition))
             {
@@ -181,6 +180,10 @@ class BagController extends Controller
             {
                 $shipping = $shippingCondition->getCalculatedValue($subtotal);
             }else{
+                $shipping = 0;
+            }
+
+            if ($subtotal > 500) {
                 $shipping = 0;
             }
 

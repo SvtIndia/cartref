@@ -1218,7 +1218,7 @@ class Checkout extends Component
 
     private function applyRewardPoints()
     {
-        if (auth()->user()->reward_points > 0 && $this->ftotal >= 1500) {
+        if (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500) {
             $this->redeemedRewardPoints = auth()->user()->reward_points * 0.20;
             Session::put('redeemedRewardPoints', 1);
         }

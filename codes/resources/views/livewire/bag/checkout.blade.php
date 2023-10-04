@@ -271,14 +271,13 @@
                                                 </tr>
                                         </tbody>
                                     </table>
-                                    @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ftotal >= 1500))
+                                    @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ordervalue >= 1500))
                                         <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
                                             <input type="checkbox" class="custom-checkbox" disabled
                                                    @if($this->redeemedRewardPoints > 0) checked @endif />
                                             <label class="form-control-label" for="cod">
                                                 Use your reward points up to 20%.
-                                                ({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }}
-                                                )
+                                                <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }})</font>
                                             </label>
                                         </div>
                                     @endif
