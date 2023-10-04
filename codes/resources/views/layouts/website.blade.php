@@ -161,15 +161,13 @@
                 font-size: 2rem;
             }
 
-            .cart .cart .product-remove {
-                position: unset !important;
-            }
-
             .cart .product-close {
                 margin-bottom: 5px;
                 align-items: center;
+            }
+            .cart .product-close .product-remove{
+                position: unset !important;
                 display: flex !important;
-
             }
 
             .cart .save_text {
