@@ -1451,7 +1451,7 @@ class Checkout extends Component
 
             $order->order_value = $this->ordervalue;
             $order->order_discount = $this->discount;
-            $order->order_deliverycharges = $this->shipping;
+            $order->order_deliverycharges = $this->appliedShipping;
             $order->order_subtotal = $this->fsubtotal;
             $order->order_tax = $this->tax;
             $order->order_total = $this->ftotal;
