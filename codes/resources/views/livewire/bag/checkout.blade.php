@@ -303,14 +303,7 @@
                                                 </tr>
                                         </tbody>
                                     </table>
-                                    <span class="you-save">
-                                        Amaazzzzingg!! You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
-                                    </span><br>
-                                    <div class="happy-shopping">
-                                        <span class="keep shopping">Keep Shopping</span>
-                                        <span class="keep smiling">Keep Smiling</span>
-                                        <span class="keep saving">Keep Saving!</span>
-                                    </div>
+
 {{--                                    <p style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</p>--}}
                                     @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ordervalue >= 1500))
                                         <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
@@ -358,7 +351,14 @@
                                             </a><span class="required">*</span>
                                         </label>
                                     </div>
-
+                                    <span class="you-save">
+                                        Amaazzzzingg!! You <Saved></Saved> {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
+                                    </span><br>
+                                    <div class="happy-shopping">
+                                        <span class="keep shopping">Keep Shopping</span>
+                                        <span class="keep smiling">Keep Smiling</span>
+                                        <span class="keep saving">Keep Saving!</span>
+                                    </div>
                                     @if ($ftotal <= 0 && $this->redeemedCredits > 0)
                                         <div>
                                             <button type="submit" wire:loading.remove wire:model="disablebtn"

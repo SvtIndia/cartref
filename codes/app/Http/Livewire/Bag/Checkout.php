@@ -1520,17 +1520,17 @@ class Checkout extends Component
                 $reward_point->save();
             }
 
-            if ($user_credits_discount > 0) {
-//                auth()->user()->decrement('credits', $user_credits_discount);
-                //make log `
-                $reward_point = new UserCreditLog();
-                $reward_point->user_id = auth()->user()->id;
-                $reward_point->order_id = $order->id;
-                $reward_point->type = 'out';
-                $reward_point->amount = $user_credits_discount;
-                $reward_point->closing_bal = auth()->user()->credits;
-                $reward_point->save();
-            }
+//            if ($user_credits_discount > 0) {
+////                auth()->user()->decrement('credits', $user_credits_discount);
+//                //make log `
+//                $reward_point = new UserCreditLog();
+//                $reward_point->user_id = auth()->user()->id;
+//                $reward_point->order_id = $order->id;
+//                $reward_point->type = 'out';
+//                $reward_point->amount = $user_credits_discount;
+//                $reward_point->closing_bal = auth()->user()->credits;
+//                $reward_point->save();
+//            }
 
             if (Config::get('icrm.stock_management.feature') == 1) {
                 if (Config::get('icrm.product_sku.color') == 1) {

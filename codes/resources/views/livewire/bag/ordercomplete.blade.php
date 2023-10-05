@@ -107,18 +107,25 @@
                                     class="d-icon-arrow-left"></i> My Orders</a>
                     </div>
                     <div class="float-right">
-
                         {{-- If the order is already canelled then dont show cancel button --}}
-
                         @if ($this->canbecancelled == true)
                             <a wire:click="cancelorder" wire:loading.remove
                                class="btn btn-icon-right btn-light btn-rounded btn-md mb-4 ml-3">Cancel Order<i
-                                        class="fa fa-times-circle"></i></a>
+                                        class="fa fa-times-circle"></i>
+                            </a>
                             <a wire:loading wire:target="cancelorder"
                                class="btn btn-icon-right btn-alert btn-rounded btn-md mb-4 ml-3">
                                 Cancelling...<i class="fa fa-times-circle"></i>
                             </a>
                         @else
+                            {{--claim reward point--}}
+                            @if($this->is_first_order)
+                                <a wire:click="reedemRewardPoint" wire:loading.remove
+                                   class="btn btn-icon-right btn-light btn-rounded btn-md mb-4 ml-3">Claim Reward Point
+                                    <i class="fa fa-star"></i>
+                                </a>
+                                {{--<span>Return or Exchange window will be closed</span>--}}
+                            @endif
                             <a class="btn btn-icon-right btn-light btn-rounded btn-md mb-4 ml-3 btn-disabled"
                                title="Order cannot be cancelled!">Cancel Order<i class="fa fa-times-circle"></i></a>
                         @endif

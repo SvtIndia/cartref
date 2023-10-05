@@ -31,10 +31,12 @@
                         <li class="nav-item">
                             <a class="nav-links" href="javascript:void(0)" style="font-size: 1.6rem;">Cartref Currency :</a>
                             <li class="nav-item" style="text-align: center;">
-                                Reward Points: <span>{{ auth()->user()->reward_points ?? 0  }} </span><br>
+                                <span style="font-weight: 500;">Reward Points:</span>
+                                <span>{{ auth()->user()->reward_points ?? 0  }} </span><br>
                             </li>
                             <li class="nav-item" style="text-align: center;">
-                                Wallet Credits: <span>{{ Config::get('icrm.currency.icon') }}{{ auth()->user()->credits ?? 0 }} </span><br>
+                                <span style="font-weight: 500;">Wallet Credits:</span>
+                                <span>{{ Config::get('icrm.currency.icon') }}{{ auth()->user()->credits ?? 0 }} </span><br>
                             </li>
                         </li>
 

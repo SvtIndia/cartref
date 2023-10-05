@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Bag;
 
+use App\Models\RewardPointLog;
 use App\Order;
 use App\Productsku;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ class Ordercomplete extends Component
     public $canbecancelled = false;
     public $canbereturned = false;
     public $shiprockettoken;
+    public $is_first_order = false;
 
     public function mount()
     {
@@ -60,6 +62,21 @@ class Ordercomplete extends Component
         }else{
             $this->items = Order::where('order_id', $this->orderid)->where('user_id', auth()->user()->id)->get();
         }
+
+        $this->is_first_order = false;
+        if(!auth()->user()->is_first_shopping){
+            $order = Order::where('user_id', auth()->user()->id)->first();
+            if($this->items[0]->order_id = $order->order_id){
+                $this->is_first_order = true;
+                foreach($this->items as $o){
+                    if($o->order_status != 'Delivered'){
+                        $this->is_first_order = false;
+                        break;
+                    }
+                }
+            }
+        }
+//        dd($this->is_first_order);
 
         if(count($this->items) == 0)
         {
@@ -119,6 +136,27 @@ class Ordercomplete extends Component
          * Update item tracking info from shipping provider
          */
         $this->updateitemtrackinginfo();
+    }
+
+    public function  reedemRewardPoint(){
+        //100% reward points on first order
+        if (!auth()->user()->is_first_shopping && $this->is_first_order) {
+            $order = Order::where('user_id', auth()->user()->id)->first();
+            auth()->user()->increment('reward_points', $order->order_total);
+            Auth::user()->update(['is_first_shopping' => 1]);
+
+            //make log
+            $reward_point = new RewardPointLog();
+            $reward_point->user_id = auth()->user()->id;
+            $reward_point->order_id = $order->order_id;
+            $reward_point->type = 'in';
+            $reward_point->amount = $order->order_total;
+            $reward_point->closing_bal = auth()->user()->reward_points;
+            $reward_point->save();
+
+            $this->is_first_order = false;
+            $this->dispatchBrowserEvent('showToast', ['msg' => 'Reward point claimed successfully!', 'status' => 'success']);
+        }
     }
 
     private function updateitemtrackinginfo()

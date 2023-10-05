@@ -59,7 +59,7 @@
                                         $prev = $order->order_id;
                                     }
                                 @endphp
-                            <tr @if($count !== 1) style="border-top: 4px solid black;"@endif>
+                            <tr @if($count !== 1 && $is_show) style="border-top: 4px solid black;"@endif>
                                 <td style="width: 4em;">
                                     {{ $is_show ? $count : '' }}
                                     <?php $is_show = false; ?>

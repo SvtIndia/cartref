@@ -252,7 +252,8 @@
             font-family: 'BenguiatStd-Bold';
         }
         .checkout .happy-shopping{
-            display: inline-block;
+            display: flex;
+            justify-content: center;
             margin-top: 5px;
         }
         .checkout .happy-shopping .keep{
