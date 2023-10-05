@@ -238,11 +238,11 @@
         }
         @font-face {
             font-family: 'Benedict-Regular';
-            src: url('fonts/Benedict Regular.otf');
+            src: url('/fonts/Benedict Regular.otf');
         }
         @font-face {
             font-family: 'BenguiatStd-Bold';
-            src: url('fonts/BenguiatStd-Bold.otf');
+            src: url('/fonts/BenguiatStd-Bold.otf');
         }
 
         .checkout .you-save{
