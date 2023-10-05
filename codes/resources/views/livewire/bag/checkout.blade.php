@@ -286,7 +286,7 @@
                                                 </tr>
                                             @else
                                                 <tr>
-                                                    <td class="product-name" style="color: green">Inclusive of taxes
+                                                    <td class="product-name" style="color: green">Inclusive of all services and taxes
                                                     </td>
                                                     <td></td>
                                                 </tr>
@@ -295,8 +295,7 @@
                                                 </tr>
                                                 <tr class="summary-subtotal">
                                                     <td class="pb-0">
-                                                        <h4 class="summary-subtitle">Order Total</h4>
-                                                        <span style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</span>
+                                                        <h4 class="summary-subtitle">Net Payable Value</h4>
                                                     </td>
                                                     <td class="pb-0">
                                                         <p class="summary-total-price ls-s text-primary">{{ Config::get('icrm.currency.icon') }}{{ number_format($ftotal, 2) }}</p>
@@ -304,6 +303,12 @@
                                                 </tr>
                                         </tbody>
                                     </table>
+                                    <span style="color:#007bff; font-size: 2rem;font-weight: 550;">
+                                        Amazing!! You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
+                                    </span><br>
+                                    <span style="color: red;font-size: 18px;margin-right: 10px;">Keep Shopping</span>
+                                    <span style="color: black;font-size: 18px;margin-right: 10px;">Keep Smiling</span>
+                                    <span style="color: green;font-size: 18px;margin-right: 10px;">Keep Saving</span>
 {{--                                    <p style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</p>--}}
                                     @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ordervalue >= 1500))
                                         <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
