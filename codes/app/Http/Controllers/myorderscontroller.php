@@ -298,7 +298,6 @@ class myorderscontroller extends Controller
     }
 
 
-    
     public function ordercomplete()
     {
         $myorders = Order::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->with('product')->get();

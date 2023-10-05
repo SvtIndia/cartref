@@ -236,6 +236,66 @@
             text-align: start;
             font-size: 12px;
         }
+        @font-face {
+            font-family: 'Benedict-Regular';
+            src: url('{{config('app.url')}}/fonts/Benedict Regular.otf');
+        }
+        @font-face {
+            font-family: 'BenguiatStd-Bold';
+            src: url('{{config('app.url')}}/fonts/BenguiatStd-Bold.otf');
+        }
+
+        .checkout .you-save{
+            color:#57a1f0;
+            font-size: 2rem;
+            font-weight: 550;
+            font-family: 'BenguiatStd-Bold';
+        }
+        .checkout .happy-shopping{
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .checkout .happy-shopping .keep{
+            font-size: 35px;
+            margin-right: 2rem;
+            font-family:'Benedict-Regular';
+        }
+        .checkout .happy-shopping .shopping{
+           color: red;
+        }
+        .checkout .happy-shopping .smiling{
+           color: black;
+        }
+        .checkout .happy-shopping .saving{
+           color: green;
+        }
+        @media screen and (max-width: 481px) {
+            .checkout .you-save{
+                font-size: 14px;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .checkout .happy-shopping .keep{
+                font-size: 24px;
+                margin-right: 1rem;
+            }
+        }
+        @media screen and (max-width: 481px) {
+            .checkout .happy-shopping .keep{
+                font-size: 20px;
+                margin-right: 1rem;
+            }
+        }
+        @media screen and (min-width: 1000px) {
+            .checkout .checkout-form{
+                max-width: 58.3333%;
+                flex: 0 0 45.333%;
+            }
+            .checkout .sticky-sidebar-wrapper{
+                max-width: 50.667%;
+                flex: 0 0 50.667%;
+            }
+        }
 
     </style>
 

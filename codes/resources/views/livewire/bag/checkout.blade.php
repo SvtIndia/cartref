@@ -7,8 +7,8 @@
                 <form wire:submit.prevent="placeorder">
                     {{-- wire:submit.prevent="placeorder" --}}
                     <div class="row">
-                        <div class="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
-                            <h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
+                        <div class="checkout-form col-lg-7 mb-6 mb-lg-0 pr-lg-4">
+                            <h3 class="title title-simple text-left text-uppercase" style="font-size: 5rem;">Billing Details</h3>
                             <div class="row">
                                 <div class="col-xs-6">
                                     <label>Full Name <span class="required">*</span></label>
@@ -120,7 +120,7 @@
                             <textarea class="form-control pb-2 pt-2 mb-0" cols="30" rows="5"
                                 placeholder="Notes about your order, e.g. special notes for delivery"></textarea> --}}
                         </div>
-                        <aside class="col-lg-5 sticky-sidebar-wrapper">
+                        <aside style="" class="col-lg-5 sticky-sidebar-wrapper">
                             <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
                                 <div class="summary pt-5">
                                     <h3 class="title title-simple text-left text-uppercase">Your Order
@@ -303,12 +303,14 @@
                                                 </tr>
                                         </tbody>
                                     </table>
-                                    <span style="color:#007bff; font-size: 2rem;font-weight: 550;">
-                                        Amazing!! You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
+                                    <span class="you-save">
+                                        Amaazzzzingg!! You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
                                     </span><br>
-                                    <span style="color: red;font-size: 18px;margin-right: 10px;">Keep Shopping</span>
-                                    <span style="color: black;font-size: 18px;margin-right: 10px;">Keep Smiling</span>
-                                    <span style="color: green;font-size: 18px;margin-right: 10px;">Keep Saving</span>
+                                    <div class="happy-shopping">
+                                        <span class="keep shopping">Keep Shopping</span>
+                                        <span class="keep smiling">Keep Smiling</span>
+                                        <span class="keep saving">Keep Saving!</span>
+                                    </div>
 {{--                                    <p style="color:green; font-size: 2rem;">You Save {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }} on this order</p>--}}
                                     @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $ordervalue >= 1500))
                                         <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
