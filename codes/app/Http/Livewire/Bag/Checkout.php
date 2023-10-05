@@ -251,6 +251,7 @@ class Checkout extends Component
         $this->authfields();
 
         $sellers = [];
+        $this->totalMrp = 0;
         foreach ($carts as $cart) {
             $product = Product::where('id', $cart->attributes->product_id)->first();
             $this->totalMrp += $product->mrp * $cart->quantity;
