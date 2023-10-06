@@ -191,9 +191,9 @@ class Checkout extends Component
 
         if (!empty($shippingCondition)) {
             if ($shippingCondition->getCalculatedValue($subtotal) > 0) {
-                $this->shipping = number_format($shippingCondition->getCalculatedValue($subtotal), 0) + 1;
+                $this->shipping = $shippingCondition->getCalculatedValue($subtotal) + 1;
             } else {
-                $this->shipping = number_format($shippingCondition->getCalculatedValue($subtotal), 0);
+                $this->shipping = $shippingCondition->getCalculatedValue($subtotal);
             }
         } else {
             $this->shipping = 0;
