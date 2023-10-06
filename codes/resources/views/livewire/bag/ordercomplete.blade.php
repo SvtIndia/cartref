@@ -325,11 +325,11 @@
                                                 @endif
 
                                                 @if (Config::get('icrm.order_lifecycle.return.feature') == 1)
-                                                    @if ($item->order_status == 'Delivered' AND $item->type == 'Regular')
+                                                    @if ($item->order_status == 'Delivered' AND $item->type == 'Regular' AND !$item->is_return_window_closed)
                                                         @livewire('bag.returns', ['order' => $item], key($item->id))
                                                     @else
                                                         @if ($item->type == 'Regular')
-                                                            <a title="Will be enabled once the order is delivered"
+                                                            <a title="{{ $item->is_return_window_closed ? 'Window has been closed' : 'Will be enabled once the order is delivered' }}"
                                                                class="btn btn-sm btn-light btn-disabled">Returns</a>
                                                         @endif
                                                         {{-- <br><small>Disabled until order gets delivered!</small> --}}

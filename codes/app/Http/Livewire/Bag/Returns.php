@@ -56,6 +56,7 @@ class Returns extends Component
             'return_type' => $this->return_type,
             'return_reason' => $this->return_reason,
             'return_comment' => $this->return_comment,
+            'is_return_window_closed' => true,
         ]);
 
         return redirect()->route('ordercomplete', ['id' => $this->item->order_id])->with([

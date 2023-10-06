@@ -352,7 +352,7 @@
                                         </label>
                                     </div>
                                     <span class="you-save">
-                                        Amaazzzzingg!! You <Saved></Saved> {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
+                                        Amaazzzzingg!! You Saved {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
                                     </span><br>
                                     <div class="happy-shopping">
                                         <span class="keep shopping">Keep Shopping</span>

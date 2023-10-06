@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 
-    protected $fillable = ['requirement_document', 'customized_image', 'original_file', 'order_status', 'order_substatus', 'tracking_url', 'tax_invoice'];
+    protected $fillable = ['requirement_document', 'customized_image', 'original_file', 'order_status', 'order_substatus', 'tracking_url', 'tax_invoice', 'is_return_window_closed'];
 
     public function orderlifecycle()
     {
