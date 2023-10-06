@@ -14,6 +14,20 @@ class Coupon extends Model
     {
         return $this->belongsToMany(User::class);
     }
+    public function scopeRoleWise($query)
+    {
+        return $query
+            ->when(auth()->user()->hasRole(['admin', 'Client']), function($query){
+                return $query;
+            })
+            ->when(auth()->user()->hasRole(['Vendor']), function($q){
+                return $q->whereHas('sellers', function($q){
+                    return $q->where('users.id','=', auth()->user()->id);
+                });
+            })
+            ->orderBy('updated_at', 'desc');
+    }
+
 
     public function hasSellers($sellers)
     {

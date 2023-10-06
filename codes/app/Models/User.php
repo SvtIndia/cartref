@@ -67,17 +67,16 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 
     public function scopeVendors()
     {
-        if(auth()->user()->hasRole('Vendor'))
-        {
+        if (auth()->user()->hasRole('Vendor')) {
             return $this->where('status', '1')->where('id', auth()->user()->id);
-        }else{
+        } else {
             return $this->where('status', '1')
-            ->whereHas('roles', function($q){
-                $q->whereIn('name', ['Admin', 'Vendor']);
-            })
-            ->orWhereHas('role', function($q){
-                $q->whereIn('name', ['Admin', 'Vendor']);
-            });
+                ->whereHas('roles', function ($q) {
+                    $q->whereIn('name', ['Admin', 'Vendor']);
+                })
+                ->orWhereHas('role', function ($q) {
+                    $q->whereIn('name', ['Admin', 'Vendor']);
+                });
         }
     }
 
@@ -90,10 +89,10 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     {
 
         return $this->where('status', '1')
-            ->whereHas('role', function($q){
+            ->whereHas('role', function ($q) {
                 $q->whereIn('name', ['Delivery Boy']);
             })
-            ->whereDoesntHave('dbshowcases', function($q){
+            ->whereDoesntHave('dbshowcases', function ($q) {
                 $q->where('status', 1);
             })
             ->where('city', auth()->user()->city);
@@ -101,8 +100,17 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 
     public function scopeSeller($query)
     {
-        return  $query->whereHas('role', function($q){
-            $q->whereIn('name', ['Vendor']);
-        });
+        return $query
+            ->when(auth()->user()->hasRole(['admin', 'Client']), function($que) {
+                return $que->whereHas('role', function ($q) {
+                    $q->whereIn('name', ['Vendor']);
+                });
+            })
+            ->when(auth()->user()->hasRole(['Vendor']), function ($que) {
+                return $que->whereHas('role', function ($q) {
+                    $q->whereIn('name', ['Vendor']);
+                    $q->where('users.id', auth()->user()->id);
+                });
+            });
     }
 }
