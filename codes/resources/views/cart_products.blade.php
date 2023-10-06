@@ -19,9 +19,12 @@
 
     $objs = json_decode($content, true) ?? [];
     foreach ($objs as $key => $obj) {
-        // echo 'Key =>'. $key. ' obj => '. json_encode($obj). '<br><br>';
-        // echo 'Product =>'. App\Models\Product::find($obj['attributes']['product_id']).'<br><br><br>';
-        $objs[$key]['product'] = App\Models\Product::find($obj['attributes']['product_id']) ?? [];
+        if(isset($obj) && isset($obj['attributes'])&& isset($obj['attributes']['product_id'])){
+            $objs[$key]['product'] = App\Models\Product::find($obj['attributes']['product_id']) ?? [];
+        }
+        else{
+            unset($objs[$key]);
+        }
     }
 @endphp
 
