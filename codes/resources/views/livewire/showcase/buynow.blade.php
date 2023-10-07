@@ -107,6 +107,62 @@
                             <div class="summary mb-4">
                                 <h3 class="summary-title text-left">Totals</h3>
                                 <table class="shipping">
+                                    <div class="card accordion">
+                                        <p>If you have a coupon code, please apply it below.</p>
+                                        <div class="check-coupon-box d-flex">
+                                            <input type="text"
+                                                   class="input-text form-control text-grey ls-m mr-4 mb-4"
+                                                   wire:model.debounce.5s="couponcode" placeholder="Coupon code">
+                                            <button type="button" wire:click="applycoupon"
+                                                    class="btn btn-dark btn-rounded btn-outline mb-4">Apply
+                                                Coupon
+                                            </button>
+                                        </div>
+
+                                        <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span class="text-body">Available offers</span>
+                                            <a href="#alert-body2" class="text-primary">Click here to view all
+                                                coupons</a>
+                                        </div>
+
+                                        <div class="alert-body collapsed" id="alert-body2">
+                                            @foreach($this->coupons as $coupon)
+                                                <div>
+                                                    <div class="available-coupons">
+                                                        <div class="coupon-body">
+                                                            <div style="width: 50%;">
+                                                                <span class="code">{{ $coupon->code }}</span>
+                                                            </div>
+                                                            @if($coupon->is_applicable)
+                                                                <div class="info"
+                                                                     style="justify-content: space-between;">
+                                                                    <span class="applicable">{{ Config::get('icrm.currency.icon') }}{{ $coupon->applicable_discount }} Applicable</span>
+                                                                    @if(Session::get('showcase_appliedcouponcode') == $coupon->code)
+                                                                        <span class="applicable">Applied</span>
+                                                                    @else
+                                                                        <button type="button"
+                                                                                class="btn btn-dark btn-rounded btn-outline apply-btn"
+                                                                                wire:click="applyDirectCoupon('{{$coupon->code}}')">
+                                                                            Apply
+                                                                        </button>
+                                                                    @endif
+                                                                </div>
+                                                            @else
+                                                                <div class="info">
+                                                                    <span class="not-applicable">Not Applicable</span>
+                                                                    <span class="not-applicable">{{ $coupon->not_applicable_error }}</span>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <span>
+                                                                {{ $coupon->description  }} minimum order of {{ Config::get('icrm.currency.icon') }}{{ $coupon->min_order_value  }}
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
 
                                     <tr class="summary-subtotal">
                                         <td>
@@ -127,6 +183,30 @@
                                         </td>
                                     </tr>
 
+                                    @if ($this->discount > 0)
+                                        <tr class="discount">
+                                            <td class="product-name">Discount
+                                                ({{ Session::get('showcase_appliedcouponcode') }} coupon applied) <span
+                                                        class="d-icon-cancel" title="Remove coupon"
+                                                        style="color: blue;" wire:click="removecoupon"></span></td>
+                                            <td class="product-total text-body">
+                                                -{{ Config::get('icrm.currency.icon') }} {{ $this->discount }}</td>
+                                        </tr>
+                                    @endif
+                                    @if($this->redeemedRewardPoints > 0)
+                                        <tr>
+                                            <td class="product-name">Reward Points</td>
+                                            <td class="product-total text-body">
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
+                                        </tr>
+                                    @endif
+                                    @if($this->redeemedCredits > 0)
+                                        <tr>
+                                            <td class="product-name">Wallet Credits</td>
+                                            <td class="product-total text-body">
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedCredits, 2) }}</td>
+                                        </tr>
+                                    @endif
 
                                     <tr class="summary-subtotal">
                                         <td>
@@ -136,6 +216,7 @@
                                             <p class="summary-subtotal-price">{{ Config::get('icrm.currency.icon') }}{{ number_format($subtotal, 2) }}</p>
                                         </td>
                                     </tr>
+
 
                                     @if ($tax > 0)
                                         <tr class="summary-subtotal">
@@ -159,8 +240,43 @@
                                             <p class="summary-total-price ls-s">{{ Config::get('icrm.currency.icon') }} {{ number_format($total, 2) }}</p>
                                         </td>
                                     </tr>
+                                    @if($this->redeemedRewardPoints > 0)
+                                        <tr>
+                                            <td class="product-name">Reward Points</td>
+                                            <td class="product-total text-body">
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
+                                        </tr>
+                                    @endif
+                                    @if($this->redeemedCredits > 0)
+                                        <tr>
+                                            <td class="product-name">Wallet Credits</td>
+                                            <td class="product-total text-body">
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedCredits, 2) }}</td>
+                                        </tr>
+                                    @endif
                                 </table>
-
+                                @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500))
+                                    <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
+                                        <input type="checkbox" class="custom-checkbox" disabled
+                                               @if($this->redeemedRewardPoints > 0) checked @endif />
+                                        <label class="form-control-label" for="cod">
+                                            Use your reward points up to 20%.
+                                            <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }}
+                                                )</font>
+                                        </label>
+                                    </div>
+                                @endif
+                                @if ($this->redeemedCredits > 0 || (auth()->user()->credits > 0))
+                                    <div class="form-checkbox mt-4 mb-5" wire:click="redeemCredits">
+                                        <input type="checkbox" class="custom-checkbox" disabled
+                                               @if($this->redeemedCredits > 0) checked @endif />
+                                        <label class="form-control-label" for="cod">
+                                            Use your wallet credits
+                                            <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }}
+                                                )</font>
+                                        </label>
+                                    </div>
+                                @endif
                                 @if (auth()->user()->hasRole(['Delivery Boy', 'Delivery Head', 'admin', 'Client']))
                                     <div class="form-checkbox mt-4 mb-5" wire:click="scodneeded">
                                         <input type="checkbox" class="custom-checkbox" disabled @if(Session::get('showcasebagordermethod') == 'cod') checked @endif />

@@ -14,6 +14,7 @@
 use App\EmailNotification;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
+use Illuminate\Support\Facades\Session;
 use TCG\Voyager\Facades\Voyager;
 use App\Notifications\OrderEmail;
 use Seshac\Shiprocket\Shiprocket;
@@ -492,6 +493,8 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get',function(){
+    Session::remove('showcase_appliedcouponcode');
+
 //    $a = 'redeemedRewardPoints => '. Session::get('redeemedRewardPoints');
 //    $b = 'redeemedCredits => '. Session::get('redeemedCredits');
 //    dd($a,$b);

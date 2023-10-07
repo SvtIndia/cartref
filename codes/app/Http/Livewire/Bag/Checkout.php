@@ -1000,7 +1000,7 @@ class Checkout extends Component
         \Cart::session($userID)->condition($tax);
     }
 
-    public function applyCirectCoupon($code){
+    public function applyDirectCoupon($code){
         $this->couponcode = $code;
         $this->applycoupon();
     }

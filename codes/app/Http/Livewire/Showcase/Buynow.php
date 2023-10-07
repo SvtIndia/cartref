@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Showcase;
 
+use App\Coupon;
+use App\Models\User;
 use App\Order;
 use App\Showcase;
 use App\Productsku;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Darryldecode\Cart\Cart;
 use App\DeliveryServicableArea;
@@ -34,62 +37,129 @@ class Buynow extends Component
     protected $email;
     protected $phone;
 
+    public $buyshowcases;
+    public $couponcode;
+    public $coupons;
+    public $discount;
+    public $redeemedRewardPoints;
+    public $redeemedCredits;
+
     protected $listeners = ['showcasebag' => 'render'];
 
     public function mount()
-    {   
+    {
         $this->orderid = request('id');
         $this->deliverypincode = Session::get('deliverypincode');
+        // fetch applied coupon code in the code
+        $this->couponcode = Session::get('showcase_appliedcouponcode');
 
-        if(auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy']))
-        {
+        if (auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy'])) {
             $showcase = Showcase::where('order_id', $this->orderid)->whereIn('order_status', ['Moved to Bag', 'Showcased'])->first();
-        }else{
+        } else {
             $showcase = Showcase::where('order_id', $this->orderid)->where('user_id', auth()->user()->id)->where('order_status', 'Moved to Bag')->first();
         }
 
-        
-        if(!empty($showcase))
-        {
+
+        if (!empty($showcase)) {
             $this->rname = $showcase->customer_name;
             $this->remail = $showcase->customer_email;
             $this->rphone = $showcase->customer_contact_number;
-        }else{
+        } else {
             return redirect()->route('showcase.myorders')->with([
                 'success' => 'This showcase order has already being closed!'
             ]);
         }
-        
+
     }
 
+    public  function  calcTotal(){
+        $this->ordervalue = $this->buyshowcases->sum('product_offerprice');
+        $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
+        $this->subtotal = $this->ordervalue - $this->showcaserefund - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
+
+        $this->tax = $this->subtotal * Config::get('icrm.tax.fixedtax.perc') / 100;
+        if ($this->subtotal < 0) {
+            $this->subtotal = 0;
+        }
+        if ($this->tax < 0) {
+            $this->tax = 0;
+        }
+
+        $this->total = $this->subtotal + $this->tax;
+    }
 
     public function render()
     {
         $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
+        $this->buyshowcases = $buyshowcases;
 
-        $this->ordervalue = $buyshowcases->sum('product_offerprice');
-        $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
-        $this->subtotal = $this->ordervalue - $this->showcaserefund;
-        
-        $this->tax = $this->subtotal * Config::get('icrm.tax.fixedtax.perc') / 100;
+        $this->calcTotal();
 
-        if($this->subtotal < 0)
-        {
-            $this->subtotal = 0;
+
+        if ((int)$this->discount <= 0 && !empty(Session::get('showcase_appliedcouponcode'))) {
+            $this->applycoupon();
         }
 
-        if($this->tax < 0)
-        {
-            $this->tax = 0;
+        //fetch applied reward point and credits
+        if (empty($this->redeemedRewardPoints)) {
+            if (Session::get('showcase_redeemedRewardPoints')) {
+                $this->applyRewardPoints();
+            }
+        }
+        if (empty($this->redeemedCredits)) {
+            if (Session::get('showcase_redeemedCredits')) {
+                $this->applyCredits();
+            }
         }
 
 
-        $this->total = $this->subtotal + $this->tax;
+        $sellers = [];
+//        $this->totalMrp = 0;
+        foreach ($this->buyshowcases as $sc) {
+            $product = Product::where('id', $sc->product_id)->first();
+//            $this->totalMrp += $product->mrp * $sc->quantity;
+            array_push($sellers, User::find($product->seller_id));
+        }
+        $now = date('Y-m-d');
+        $coupons = Coupon::where('status', 1)->where('from', '<=', $now)->where('to', '>=', $now)->get();
 
-        if(Session::get('showcasebagacceptterms') != true){
+//        $this->totalSave = ($this->totalMrp - $this->ordervalue) + $this->discount + ($this->shipping - $this->appliedShipping);
+
+        foreach ($coupons as $coupon) {
+            $coupon->is_applicable = false;
+            $coupon->applicable_discount = 0;
+            $coupon->not_applicable_error = '';
+
+            if ($this->ordervalue >= $coupon->min_order_value) {
+                if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
+                    if ($coupon->is_uwc || $this->redeemedRewardPoints <= 0) {
+                        $coupon->is_applicable = true;
+
+                        // 1. Percentage off
+                        if ($coupon->type == 'PercentageOff') {
+                            $value = $this->subtotal * ($coupon->value / 100);
+                        }
+
+                        // 2. Fixed off
+                        if ($coupon->type == 'FixedOff') {
+                            $value = $coupon->value;
+                        }
+
+                        $coupon->applicable_discount = $value ?? 0;
+                    } else {
+                        $coupon->not_applicable_error = 'Not applicable with reward points.';
+                    }
+                } else {
+                    $coupon->not_applicable_error = 'Can not use with cart products';
+                }
+            }
+        }
+        $this->coupons = $coupons;
+
+        if (Session::get('showcasebagacceptterms') != true) {
             // 
             $this->disablebtn = true;
-        }else{
+        } else {
             $this->disablebtn = false;
         }
 
@@ -98,7 +168,6 @@ class Buynow extends Component
         ]);
     }
 
-    
 
     public function removeShowcaseBag($showcaseid)
     {
@@ -108,62 +177,152 @@ class Buynow extends Component
 
         $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
 
-        if(count($buyshowcases) == 0)
-        {
+        if (count($buyshowcases) == 0) {
             return redirect()->route('showcase.ordercomplete', $this->orderid);
-        }else{
+        } else {
             return redirect()->back();
         }
-        
 
+
+    }
+
+    public function applyDirectCoupon($code)
+    {
+        $this->couponcode = $code;
+        $this->applycoupon();
+    }
+
+    public function applycoupon()
+    {
+        if (!empty($this->couponcode)) {
+            $this->discount = 0;
+            Session::remove('showcase_appliedcouponcode');
+
+            $coupon = Coupon::where('code', $this->couponcode)->where('user_email', null)->first();
+            /**
+             * If the coupon is empty on above result then maybe user has unique coupon for his account
+             */
+            if (empty($coupon)) {
+                $coupon = Coupon::where('code', $this->couponcode)->where('user_email', auth()->user()->email)->first();
+            }
+            if (!empty($coupon)) {
+                //check coupon is applicable for cart products
+                $sellers = [];
+                $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
+                foreach ($buyshowcases as $sc) {
+                    $product = Product::where('id', $sc->product_id)->first();
+                    array_push($sellers, User::find($product->seller_id));
+                }
+
+                if (!$coupon->is_coupon_for_all && !$coupon->hasSellers($sellers)) {
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with cart products', 'status' => 'error']);
+                    return;
+                }
+
+                //check coupon is applied reward points
+                if ($this->redeemedRewardPoints > 0 && !$coupon->is_uwc) {
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with reward points', 'status' => 'error']);
+                    return;
+                    // return redirect()->route('checkout');
+                }
+
+                // check if coupon is valid and available for everyone
+
+                $currentDate = date('Y-m-d');
+                $currentDate = date('Y-m-d', strtotime($currentDate));
+                $startDate = date('Y-m-d', strtotime($coupon->from));
+                $endDate = date('Y-m-d', strtotime($coupon->to));
+
+                if (($currentDate >= $startDate) && ($currentDate <= $endDate)) {
+                    // coupon is valid and not expired
+
+                    /**
+                     * check if there is minimum order value exists in coupon
+                     * If minimum order value exists then check if the subtotal is lesser than order value and show error
+                    */
+                    if (!empty($coupon->min_order_value)) {
+                        // min order value exists
+                        if ($this->ordervalue < $coupon->min_order_value) {
+                            // show error message when the subtotal is lesser than order value
+                            $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon is valid only for orders above ' . Config::get('icrm.currency.icon') . $coupon->min_order_value, 'status' => 'warning']);
+                        }
+                    }
+
+                    // get the discount amount according to the coupon type calculation and apply coupon condition
+                    Session::remove('showcase_appliedcouponcode');
+
+                    // 1. Percentage off
+                    if ($coupon->type == 'PercentageOff') {
+                        $value = $this->ordervalue * ($coupon->value / 100);
+                        $this->discount = $value ?? 0;
+                    }
+                    // 2. Fixed off
+                    if ($coupon->type == 'FixedOff') {
+                        $value = $coupon->value;
+                        $this->discount = $value ?? 0;
+                    }
+
+//                    if(isset($this->coupons) && is_array($this->coupons) && count($this->coupons) > 0){
+//                        $this->coupons->where('code', $coupon->code);
+//                    }
+                    Session::put('showcase_appliedcouponcode', $coupon->code);
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon code "' . $this->couponcode . '" successfully applied', 'status' => 'success']);
+                    $this->calcTotal();
+                } else {
+                    // coupon expired
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon code "' . $this->couponcode . '" expired', 'status' => 'danger']);
+                }
+            } else {
+                // coupon does not exists
+                $this->dispatchBrowserEvent('showToast', ['msg' => 'Invalid coupon code "' . $this->couponcode . '"', 'status' => 'danger']);
+            }
+        }
+    }
+
+    public function removecoupon()
+    {
+        $this->discount = 0;
+        Session::remove('showcase_appliedcouponcode');
+        $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon successfully removed', 'status' => 'success']);
     }
 
 
     public function scodneeded()
     {
-        if(Session::get('showcasebagordermethod') == 'cod')
-        {
+        if (Session::get('showcasebagordermethod') == 'cod') {
             Session::remove('showcasebagordermethod');
-        }else{
+        } else {
             Session::put('showcasebagordermethod', 'cod');
         }
-
-        
     }
 
     public function sacceptterms()
     {
-        if(Session::get('showcasebagacceptterms') == true)
-        {
+        if (Session::get('showcasebagacceptterms') == true) {
             Session::remove('showcasebagacceptterms');
-        }else{
+        } else {
             Session::put('showcasebagacceptterms', true);
-        }        
+        }
     }
 
     public function placeorder()
     {
-
         /**
          * If order total is 0 then show error message
-        */
-
-        if($this->total <= 0)
-        {
+         */
+        if ($this->total <= 0) {
             Session::flash('danger', 'Order total cannot be zero');
             return redirect()->route('showcase.buynow', ['id' => $this->orderid]);
         }
 
-
-        if(Session::get('showcasebagordermethod') == 'cod')
-        {
+        if (Session::get('showcasebagordermethod') == 'cod') {
             // cash on delivery
             $this->carttoorder();
-        }else{
+        } else {
             // online payment
             $this->collectpayment();
         }
-        
+
     }
 
     private function collectpayment()
@@ -176,7 +335,7 @@ class Buynow extends Component
 
         /**
          * Catch payment with the payment gateway and redirect with payment info & status
-         */ 
+         */
         $this->razorpay();
     }
 
@@ -192,30 +351,28 @@ class Buynow extends Component
         $this->emit('srazorPay');
     }
 
-    
+
     private function carttoorder()
     {
-        
+
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
         $carts = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
         $notincarts = Showcase::where('order_id', $this->orderid)->where('order_status', '!=', 'Moved to Bag')->get();
 
-        foreach($carts as $key => $cart)
-        {
-            
+        foreach ($carts as $key => $cart) {
+
             $product = Product::where('id', $cart->product_id)->first();
 
             /**
              * Fetch pickup location
              */
 
-            if(Config::get('icrm.site_package.singel_brand_store') == 1)
-            {
+            if (Config::get('icrm.site_package.singel_brand_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => setting('seller-name.street_address_1'),
-                    'street_address_2' => setting('seller-name.street_address_2').' '.setting('seller-name.landmark'),
+                    'street_address_2' => setting('seller-name.street_address_2') . ' ' . setting('seller-name.landmark'),
                     'pincode' => setting('seller-name.pincode'),
                     'city' => setting('seller-name.city'),
                     'state' => setting('seller-name.state'),
@@ -224,11 +381,10 @@ class Buynow extends Component
                 ];
             }
 
-            if(Config::get('icrm.site_package.multi_vendor_store') == 1)
-            {
+            if (Config::get('icrm.site_package.multi_vendor_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => $product->vendor->street_address_1,
-                    'street_address_2' => $product->vendor->street_address_2.' '.$product->vendor->landmark,
+                    'street_address_2' => $product->vendor->street_address_2 . ' ' . $product->vendor->landmark,
                     'pincode' => $product->vendor->pincode,
                     'city' => $product->vendor->city,
                     'state' => $product->vendor->state,
@@ -293,26 +449,23 @@ class Buynow extends Component
                 'status' => '0',
             ]);
 
-            
+
         }
 
-        foreach($notincarts as $notincart)
-        {
+        foreach ($notincarts as $notincart) {
             $notincart->update([
                 'order_status' => 'Returned',
                 'status' => '0',
             ]);
 
-            if(Config::get('icrm.stock_management.feature') == 1)
-            {
-                if(Config::get('icrm.product_sku.color') == 1)
-                {
+            if (Config::get('icrm.stock_management.feature') == 1) {
+                if (Config::get('icrm.product_sku.color') == 1) {
                     $updatestock = Productsku::where('product_id', $notincart->product_id)->where('color', $notincart->color)->where('size', $notincart->size)->first();
-                }else{
+                } else {
                     $updatestock = Productsku::where('product_id', $notincart->product_id)->where('size', $notincart->size)->first();
                 }
-                
-                
+
+
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock + $notincart->qty,
                 ]);
@@ -320,7 +473,7 @@ class Buynow extends Component
         }
 
         $this->orderemail($orderid);
-        
+
         Session::remove('showcasebagordermethod');
         Session::remove('showcasebagacceptterms');
 
@@ -335,10 +488,9 @@ class Buynow extends Component
          * Send email to customer about showcase initiated
          */
 
-        if(Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1)
-        {
+        if (Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1) {
             Notification::route('mail', auth()->user()->email)->notify(new ShowcasePurchasedEmail($orderid));
         }
-        
+
     }
 }

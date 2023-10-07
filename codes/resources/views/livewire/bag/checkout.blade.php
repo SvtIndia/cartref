@@ -189,7 +189,7 @@
                                                                         @else
                                                                             <button type="button"
                                                                                     class="btn btn-dark btn-rounded btn-outline apply-btn"
-                                                                                    wire:click="applyCirectCoupon('{{$coupon->code}}')">
+                                                                                    wire:click="applyDirectCoupon('{{$coupon->code}}')">
                                                                                 Apply
                                                                             </button>
                                                                         @endif
