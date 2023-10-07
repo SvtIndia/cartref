@@ -1557,19 +1557,19 @@ class Checkout extends Component
         }
 
         //100% reward points on first order
-        if (!auth()->user()->is_first_shopping) {
-            auth()->user()->increment('reward_points', $this->ftotal);
-            Auth::user()->update(['is_first_shopping' => 1]);
-
-            //make log
-            $reward_point = new RewardPointLog();
-            $reward_point->user_id = auth()->user()->id;
-            $reward_point->order_id = $orderid;
-            $reward_point->type = 'in';
-            $reward_point->amount = $this->ftotal;
-            $reward_point->closing_bal = auth()->user()->reward_points;
-            $reward_point->save();
-        }
+//        if (!auth()->user()->is_first_shopping) {
+//            auth()->user()->increment('reward_points', $this->ftotal);
+//            Auth::user()->update(['is_first_shopping' => 1]);
+//
+//            //make log
+//            $reward_point = new RewardPointLog();
+//            $reward_point->user_id = auth()->user()->id;
+//            $reward_point->order_id = $orderid;
+//            $reward_point->type = 'in';
+//            $reward_point->amount = $this->ftotal;
+//            $reward_point->closing_bal = auth()->user()->reward_points;
+//            $reward_point->save();
+//        }
 
         Session::put('cartnotclear', true);
         \Cart::session($userID)->removeCartCondition('maxgplus');
