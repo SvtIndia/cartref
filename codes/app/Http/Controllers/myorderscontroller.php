@@ -504,7 +504,7 @@ class myorderscontroller extends Controller
 
         $url = $invoice->url();
         // dd('a');
-        return $invoice->stream();
+        return $invoice->toHtml();
         // $updateinvoiceurl = Order::where('order_id', $this->orderid)->update([
         //     'invoice_url' => $url,
         // ]);
