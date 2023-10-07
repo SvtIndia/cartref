@@ -136,7 +136,7 @@
                             Downloading Invoice...<i class="fa fa-cloud-download-alt"></i>
                         </a> --}}
 
-                        <form action="{{ route('downloadinvoice', ['id' => $this->orderid]) }}" method="post">
+                        <form  target="_blank" action="{{ route('downloadinvoice', ['id' => $this->orderid]) }}" method="post">
                             @csrf
                             <input type="hidden" name="order_id" value="{{ $this->orderid }}">
                             <button type="submit" class="btn btn-icon-right btn-light btn-rounded btn-md mb-4">Download

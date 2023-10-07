@@ -356,7 +356,8 @@ class myorderscontroller extends Controller
                 'email' => $orders->first()->customer_email,
                 'customer id' => substr(setting('site.title'), 0,1).''.auth()->user()->id,
                 'order number' => $orders->first()->order_id,
-                'payment method' => $orders->first()->order_method,
+                'Invoice Number' => 'Retail'.$orders->first()->id,
+                'payment Method' => $orders->first()->order_method,
                 'gst' => $orders->first()->gst_number,
             ],
         ]);
@@ -495,6 +496,7 @@ class myorderscontroller extends Controller
             ->subTotal($orders->first()->order_subtotal)
             ->totalTaxes($orders->first()->order_tax)
             ->finalTotal($orders->first()->order_total)
+            ->template('new_default')
             ->logo(setting('order-invoice.logo_url'));
             // ->logo(url('storage/'.setting('site.logo')))
             // You can additionally save generated invoice to configured disk

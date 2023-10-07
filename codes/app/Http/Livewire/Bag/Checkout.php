@@ -75,7 +75,7 @@ class Checkout extends Component
 
     protected $rules = [
         'name' => 'required',
-        'phone' => 'required|integer|digits:10',
+        'phone' => 'required',
         'companyname' => 'required|required_with:gst',
         // https://www.geeksforgeeks.org/how-to-validate-gst-goods-and-services-tax-number-using-regular-expression/
         'gst' => 'required|required_with:companyname|regex:"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"',

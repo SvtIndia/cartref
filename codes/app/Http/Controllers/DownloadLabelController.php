@@ -296,7 +296,7 @@ class DownloadLabelController extends Controller
 
         $url = $invoice->url();
         // dd('a');
-        return $invoice->toHtml();
+        return $invoice->stream();
 
     }
 

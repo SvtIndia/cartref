@@ -216,8 +216,8 @@
                                             <td class="summary-subtitle text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($this->totalMrp, 2) }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="">Cartref's Discount</td>
-                                            <td class="text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format(($this->totalMrp - $ordervalue), 2) }}</td>
+                                            <td class="" style="line-height: 0; padding-bottom: 2rem;">Cartrefs Convenance Discount</td>
+                                            <td class="text-body" style="line-height: 0; padding-bottom: 2rem;">-{{ Config::get('icrm.currency.icon') }}{{ number_format(($this->totalMrp - $ordervalue), 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td class="summary-subtitle">Order Value</td>

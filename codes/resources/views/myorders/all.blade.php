@@ -65,7 +65,7 @@
                                     <?php $is_show = false; ?>
                                 </td>
                                 <td style="max-width: 9em;">
-                                    <span>{{ $order->created_at }}</span>
+                                    <span>{{ $order->created_at->format('M d, Y \a\t H:i') }}</span>
                                 </td>
                                 <td class="product-thumbnail">
                                     @php
