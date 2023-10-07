@@ -193,18 +193,18 @@
                                                 -{{ Config::get('icrm.currency.icon') }} {{ $this->discount }}</td>
                                         </tr>
                                     @endif
-                                    @if($this->redeemedRewardPoints > 0)
+                                    @if($this->showcase_redeemedRewardPoints > 0)
                                         <tr>
                                             <td class="product-name">Reward Points</td>
                                             <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedRewardPoints, 2) }}</td>
                                         </tr>
                                     @endif
-                                    @if($this->redeemedCredits > 0)
+                                    @if($this->showcase_redeemedCredits > 0)
                                         <tr>
                                             <td class="product-name">Wallet Credits</td>
                                             <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedCredits, 2) }}</td>
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedCredits, 2) }}</td>
                                         </tr>
                                     @endif
 
@@ -240,25 +240,11 @@
                                             <p class="summary-total-price ls-s">{{ Config::get('icrm.currency.icon') }} {{ number_format($total, 2) }}</p>
                                         </td>
                                     </tr>
-                                    @if($this->redeemedRewardPoints > 0)
-                                        <tr>
-                                            <td class="product-name">Reward Points</td>
-                                            <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedRewardPoints, 2) }}</td>
-                                        </tr>
-                                    @endif
-                                    @if($this->redeemedCredits > 0)
-                                        <tr>
-                                            <td class="product-name">Wallet Credits</td>
-                                            <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->redeemedCredits, 2) }}</td>
-                                        </tr>
-                                    @endif
                                 </table>
-                                @if ($this->redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500))
+                                @if ($this->showcase_redeemedRewardPoints > 0 || (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500))
                                     <div class="form-checkbox mt-4 mb-5" wire:click="redeemRewardPoints">
                                         <input type="checkbox" class="custom-checkbox" disabled
-                                               @if($this->redeemedRewardPoints > 0) checked @endif />
+                                               @if($this->showcase_redeemedRewardPoints > 0) checked @endif />
                                         <label class="form-control-label" for="cod">
                                             Use your reward points up to 20%.
                                             <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->reward_points * 0.20, 2) }}
@@ -266,10 +252,10 @@
                                         </label>
                                     </div>
                                 @endif
-                                @if ($this->redeemedCredits > 0 || (auth()->user()->credits > 0))
+                                @if ($this->showcase_redeemedCredits > 0 || (auth()->user()->credits > 0))
                                     <div class="form-checkbox mt-4 mb-5" wire:click="redeemCredits">
                                         <input type="checkbox" class="custom-checkbox" disabled
-                                               @if($this->redeemedCredits > 0) checked @endif />
+                                               @if($this->showcase_redeemedCredits > 0) checked @endif />
                                         <label class="form-control-label" for="cod">
                                             Use your wallet credits
                                             <font style="color:green;">({{ Config::get('icrm.currency.icon') }} {{ number_format(auth()->user()->credits) }}

@@ -41,8 +41,8 @@ class Buynow extends Component
     public $couponcode;
     public $coupons;
     public $discount;
-    public $redeemedRewardPoints;
-    public $redeemedCredits;
+    public $showcase_redeemedRewardPoints;
+    public $showcase_redeemedCredits;
 
     protected $listeners = ['showcasebag' => 'render'];
 
@@ -75,7 +75,7 @@ class Buynow extends Component
     public  function  calcTotal(){
         $this->ordervalue = $this->buyshowcases->sum('product_offerprice');
         $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
-        $this->subtotal = $this->ordervalue - $this->showcaserefund - $this->discount - $this->redeemedRewardPoints - $this->redeemedCredits;
+        $this->subtotal = $this->ordervalue - $this->showcaserefund - $this->discount - $this->showcase_redeemedRewardPoints - $this->showcase_redeemedCredits;
 
         $this->tax = $this->subtotal * Config::get('icrm.tax.fixedtax.perc') / 100;
         if ($this->subtotal < 0) {
@@ -101,13 +101,13 @@ class Buynow extends Component
         }
 
         //fetch applied reward point and credits
-        if (empty($this->redeemedRewardPoints)) {
-            if (Session::get('showcase_redeemedRewardPoints')) {
+        if (empty($this->showcase_redeemedRewardPoints)) {
+            if (Session::get('showcase_showcase_redeemedRewardPoints')) {
                 $this->applyRewardPoints();
             }
         }
-        if (empty($this->redeemedCredits)) {
-            if (Session::get('showcase_redeemedCredits')) {
+        if (empty($this->showcase_redeemedCredits)) {
+            if (Session::get('showcase_showcase_redeemedCredits')) {
                 $this->applyCredits();
             }
         }
@@ -132,7 +132,7 @@ class Buynow extends Component
 
             if ($this->ordervalue >= $coupon->min_order_value) {
                 if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
-                    if ($coupon->is_uwc || $this->redeemedRewardPoints <= 0) {
+                    if ($coupon->is_uwc || $this->showcase_redeemedRewardPoints <= 0) {
                         $coupon->is_applicable = true;
 
                         // 1. Percentage off
@@ -220,7 +220,7 @@ class Buynow extends Component
                 }
 
                 //check coupon is applied reward points
-                if ($this->redeemedRewardPoints > 0 && !$coupon->is_uwc) {
+                if ($this->showcase_redeemedRewardPoints > 0 && !$coupon->is_uwc) {
                     $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon can not be applied with reward points', 'status' => 'error']);
                     return;
                     // return redirect()->route('checkout');
@@ -286,7 +286,58 @@ class Buynow extends Component
         $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon successfully removed', 'status' => 'success']);
     }
 
+    public function redeemRewardPoints()
+    {
+        if (Session::get('showcase_redeemedRewardPoints')) {
+            Session::remove('showcase_redeemedRewardPoints');
+            $this->showcase_redeemedRewardPoints = 0;
+            return;
+        }
 
+        Session::remove('showcase_redeemedRewardPoints');
+        $this->showcase_redeemedRewardPoints = 0;
+        $this->applyRewardPoints();
+
+    }
+
+    private function applyRewardPoints()
+    {
+        if (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500) {
+            $this->showcase_redeemedRewardPoints = auth()->user()->reward_points * 0.20;
+            Session::put('showcase_redeemedRewardPoints', 1);
+        }
+    }
+
+    public function redeemCredits()
+    {
+        if (Session::get('showcase_redeemedCredits')) {
+            Session::remove('showcase_redeemedCredits');
+            $this->showcase_redeemedCredits = 0;
+            return;
+        }
+
+        Session::remove('showcase_redeemedCredits');
+        $this->showcase_redeemedCredits = 0;
+
+        $this->applyCredits();
+
+    }
+
+    private function applyCredits()
+    {
+        $userCredits = auth()->user()->credits;
+        if ($userCredits > 0) {
+            if ($userCredits >= $this->subtotal) {
+                $this->showcase_redeemedCredits = $this->subtotal;
+                Session::put('ordermethod', 'cod');
+            } else {
+                $this->showcase_redeemedCredits = $userCredits;
+            }
+
+            // dd($this->showcase_redeemedCredits);
+            Session::put('showcase_redeemedCredits', 1);
+        }
+    }
     public function scodneeded()
     {
         if (Session::get('showcasebagordermethod') == 'cod') {
