@@ -20,6 +20,7 @@ class ShowcaseAtHomeProvider extends ServiceProvider
             $events = $app['events'];
             $instanceName = 'showcase';
             $session_key = '88uuiioo11838';
+
             return new Cart(
                 $storage,
                 $events,

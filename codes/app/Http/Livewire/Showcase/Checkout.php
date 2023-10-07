@@ -175,7 +175,21 @@ class Checkout extends Component
 
     public function render()
     {
-        $carts = app('showcase')->getContent();
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
+        $carts = app('showcase')->session($userID)->getContent();
         if(count($carts) > 0)
         {
             $this->fsubtotal = Config::get('icrm.showcase_at_home.delivery_charges');
@@ -335,8 +349,21 @@ class Checkout extends Component
     // runs after render
     public function dehydrate()
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
-        if(count(app('showcase')->getContent()) <= 0)
+        if(count(app('showcase')->session($userID)->getContent()) <= 0)
         {
             Session::flash('danger', 'Your showcase at home is empty');
             return $this->redirect('/showcase-at-home/bag');

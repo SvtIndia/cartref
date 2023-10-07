@@ -630,8 +630,22 @@ class Addskutobag extends Component
             return redirect()->route('login');
         }
 
-        $showcase = app('showcase');
-        $showcasecontent = app('showcase')->getContent();
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        
+        $showcase = app('showcase')->session($userID);
+        $showcasecontent = app('showcase')->session($userID)->getContent();
 
 
         /**
@@ -668,7 +682,7 @@ class Addskutobag extends Component
         /**
          * Check if the allowed showcase at home products count exceeds
          */
-        if(count(app('showcase')->getContent()) == Config::get('icrm.showcase_at_home.order_limit'))
+        if(count(app('showcase')->session($userID)->getContent()) == Config::get('icrm.showcase_at_home.order_limit'))
         {
             Session::flash('warning', 'You can showcase at home only '.Config::get('icrm.showcase_at_home.order_limit').' items in one order.');
             return redirect()->to(route('product.slug', ['slug' => $this->product->slug]))->with([

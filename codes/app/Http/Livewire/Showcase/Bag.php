@@ -9,6 +9,7 @@ use App\DeliveryServicableArea;
 use Seshac\Shiprocket\Shiprocket;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class Bag extends Component
 {
@@ -33,8 +34,21 @@ class Bag extends Component
     public function render()
     {
         // \Cart::clear();
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
-        $showcasecarts = app('showcase')->getContent();
+        $showcasecarts = app('showcase')->session($userID)->getContent();
 
         if(count($showcasecarts) == 0)
         {
@@ -65,7 +79,21 @@ class Bag extends Component
 
     public function removeShowcase($showcaseid)
     {
-        $showcase = app('showcase');
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+
+        $showcase = app('showcase')->session($userID);
         $showcase->remove($showcaseid);
 
         $this->emit('showcasecount');
@@ -73,6 +101,19 @@ class Bag extends Component
 
     public function checkserviceavailability()
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         /**
          * Find city for entered delivery pincode
          * Check if the city is under servicable area for showcase at home
@@ -98,7 +139,7 @@ class Bag extends Component
             return;
         }else{
 
-            $showcasecarts = app('showcase')->getContent();
+            $showcasecarts = app('showcase')->session($userID)->getContent();
 
             foreach($showcasecarts as $showcase)
             {

@@ -24,6 +24,7 @@ use LaravelDaily\Invoices\Facades\Invoice;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ShowcaseInitiatedEmail;
 use App\Notifications\ShowcasePurchasedEmail;
+use Illuminate\Support\Facades\Auth;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class ShowcaseAtHomeController extends Controller
@@ -51,6 +52,20 @@ class ShowcaseAtHomeController extends Controller
 
     public function activateshowcase(Request $request)
     {
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        
         $request->validate([
             'showcasepincode' => 'required'
         ]);
@@ -70,8 +85,8 @@ class ShowcaseAtHomeController extends Controller
             if(!empty($deliveryservicable))
             {
                 // check if the selected product is from the vendor who offers delivery in the customers city
-                $showcase = app('showcase');
-                $showcasecontents = app('showcase')->getContent();
+                $showcase = app('showcase')->session($userID);
+                $showcasecontents = app('showcase')->session($userID)->getContent();
 
                 if($showcasecontents->count() > 0)
                 {
@@ -87,7 +102,7 @@ class ShowcaseAtHomeController extends Controller
                         
                         foreach($showcasecontents as $showcasecontent)
                         {
-                            app('showcase')->remove($showcasecontent->id);
+                            app('showcase')->session($userID)->remove($showcasecontent->id);
                         }
 
                         Session::remove('showcasepincode');
@@ -291,10 +306,23 @@ class ShowcaseAtHomeController extends Controller
     public function carttoorder($payInfo)
     {
 
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
-        $carts = app('showcase')->getContent();
+        $carts = app('showcase')->session($userID)->getContent();
 
         foreach($carts as $key => $cart)
         {
@@ -408,7 +436,7 @@ class ShowcaseAtHomeController extends Controller
          */
         // $this->dtdcschedulepickup($carts, $total, $order, $orderid);
 
-        app('showcase')->clear();
+        app('showcase')->session($userID)->clear();
         
         
         Session::remove('ordermethod');

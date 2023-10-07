@@ -46,8 +46,22 @@ class Showcasecount extends Component
             return redirect(request()->header('Referer'));
         }
 
+        $userID = 0;
+        if(Auth::check()){
+            $userID = auth()->user()->id;
+        }
+        else{
+            if(session('session_id')){
+                $userID = session('session_id');
+            }
+            else{
+                $userID = rand(1111111111,9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
 
-        $showcase = app('showcase');
+
+        $showcase = app('showcase')->session($userID);
 
         // remove
         $showcase->remove($id);
