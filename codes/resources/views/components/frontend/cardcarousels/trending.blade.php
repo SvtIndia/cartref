@@ -10,7 +10,7 @@
                 'items': 4,
                 'nav': false,
                 'dots': true,
-                'autoplayTimeout': 5000,
+                'autoplayTimeout': 3000,
                 'loop': false,
                 'margin': 20,
                 'responsive': {

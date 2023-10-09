@@ -11,7 +11,7 @@
                 'nav': false,
                 'dots': true,
                 'loop': false,
-                'autoplayTimeout': 5000,
+                'autoplayTimeout': 3000,
                 'margin': 20,
                 'responsive': {
                     '0': {
