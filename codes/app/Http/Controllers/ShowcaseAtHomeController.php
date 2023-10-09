@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RewardPointLog;
+use App\Models\UserCreditLog;
 use App\Order;
 use Exception;
 use App\Payment;
@@ -544,6 +546,33 @@ class ShowcaseAtHomeController extends Controller
 
         foreach($carts as $key => $cart)
         {
+            //per product discount calculation
+            $ratio = 0;
+            $showcase_refund = 0; $coupon_discount = 0; $reward_point_discount = 0; $user_credits_discount = 0;
+
+            if(Session::get('sordervalue') >= 0){
+                $ratio  = ($cart->price_sum / Session::get('sordervalue'));
+            }
+
+            if(request()->showcaserefund > 0) {
+                //showcase refund discount
+                $showcase_refund = round(($ratio * request()->showcaserefund), 2);
+            }
+            if(request()->discount > 0){
+                //coupon discount
+                $coupon_discount = round(($ratio * request()->discount), 2);
+            }
+            if(request()->showcase_redeemedRewardPoints > 0){
+                //reward point discount uptoo 20%
+                if(auth()->user()->reward_points >= request()->showcase_redeemedRewardPoints)
+                    $reward_point_discount = round(($ratio * request()->showcase_redeemedRewardPoints), 2);
+            }
+            if(request()->showcase_redeemedCredits > 0){
+                //wallet credits discount
+                if(auth()->user()->credits >= request()->showcase_redeemedCredits)
+                    $user_credits_discount = round(($ratio * request()->showcase_redeemedCredits), 2);
+            }
+
             $product = Product::where('id', $cart->attributes->product_id)->first();
 
             /**
@@ -577,7 +606,7 @@ class ShowcaseAtHomeController extends Controller
                 ];
             }
 
-                        
+
 
             $order = new Order;
             $order->order_id = $orderid;
@@ -588,7 +617,7 @@ class ShowcaseAtHomeController extends Controller
             $order->product_offerprice = $cart->product_offerprice;
             $order->product_mrp = $cart->product->mrp;
             $order->qty = $cart->qty;
-            $order->price_sum = $cart->price_sum;
+            $order->price_sum = $cart->price_sum - ($showcase_refund + $coupon_discount + $reward_point_discount + $user_credits_discount);
             $order->size = $cart->size;
             $order->color = $cart->color;
             $order->order_value = Session::get('sordervalue');
@@ -626,8 +655,32 @@ class ShowcaseAtHomeController extends Controller
             $order->order_status = 'Delivered';
             $order->order_method = 'Prepaid';
             $order->exp_delivery_date = date('Y-m-d');
+
+            $order->used_reward_points = $reward_point_discount ?? 0;
+            $order->used_user_credits = $user_credits_discount ?? 0;
             $order->save();
 
+            if ($reward_point_discount > 0) {
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $reward_point_discount;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
+
+            if ($user_credits_discount > 0) {
+                //make log
+                $reward_point = new UserCreditLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $user_credits_discount;
+                $reward_point->closing_bal = auth()->user()->credits;
+                $reward_point->save();
+            }
 
             $cart->update([
                 'order_status' => 'Purchased',
@@ -641,6 +694,13 @@ class ShowcaseAtHomeController extends Controller
             Session::remove('stax');
             Session::remove('stotal');
             
+        }
+
+        if(request()->showcase_redeemedRewardPoints > 0){
+            auth()->user()->decrement('reward_points', request()->showcase_redeemedRewardPoints);
+        }
+        if(request()->showcase_redeemedCredits > 0){
+            auth()->user()->decrement('credits', request()->showcase_redeemedCredits);
         }
 
         foreach($notincarts as $notincart)

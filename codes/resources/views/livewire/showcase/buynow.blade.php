@@ -3,8 +3,10 @@
         <div class="page-content pt-7 pb-10">
 
             <div class="step-by pr-4 pl-4">
-                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif"><a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}">Showcase Order</a></h3>
-                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.buynow') active @endif"><a href="{{ route('showcase.buynow', ['id' => $this->orderid]) }}">Buy now</a></h3>
+                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif">
+                    <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}">Showcase Order</a></h3>
+                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.buynow') active @endif">
+                    <a href="{{ route('showcase.buynow', ['id' => $this->orderid]) }}">Buy now</a></h3>
             </div>
 
 
@@ -15,63 +17,66 @@
                         @if (count($buyshowcases) > 0)
                             <table class="shop-table cart-table">
                                 <thead>
-                                    <tr>
-                                        <th><span>Product</span></th>
-                                        <th><span>Details</span></th>
-                                        <th><span>Weight</span></th>
-                                        <th><span>Price</span></th>
-                                        {{-- <th>Action</th> --}}
-                                    </tr>
+                                <tr>
+                                    <th><span>Product</span></th>
+                                    <th><span>Details</span></th>
+                                    <th><span>Weight</span></th>
+                                    <th><span>Price</span></th>
+                                    {{-- <th>Action</th> --}}
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($buyshowcases as $showcase)
-                                        <tr>
-                                            <td class="product-thumbnail">
-                                                <figure>
-                                                    @php
-                                                        $productimage = App\Productcolor::where('product_id', $showcase->product_id)->where('color', $showcase->color)->first();
+                                @foreach ($buyshowcases as $showcase)
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <figure>
+                                                @php
+                                                    $productimage = App\Productcolor::where('product_id', $showcase->product_id)->where('color', $showcase->color)->first();
 
-                                                        if(empty($productimage->main_image))
-                                                        {
-                                                            $productimage = $showcase->product->image;
-                                                        }else{
-                                                            $productimage = $productimage->main_image;
-                                                        }
-                                                    @endphp
-                                                    <a href="{{ route('product.slug', ['slug' => $showcase->product->slug, 'color' => $showcase->color]) }}">
-                                                        <img src="{{ Voyager::image($productimage) }}" width="100" height="100"
-                                                            alt="{{ $showcase->product->name }} in {{ $showcase->color }} color">
-                                                    </a>
-                                                </figure>
-                                            </td>
-                                            <td class="product-name">
-                                                <div class="product-name-section">
-                                                    <a href="{{ route('product.slug', ['slug' => $showcase->product->slug, 'color' => $showcase->color]) }}">{{ $showcase->product->name }}</a>
-                                                    <br><span>Vendor: {{ $showcase->product->vendor->name }}</span>
-                                                    <br><span>Brand: {{ $showcase->product->brand_id }}</span>
-                                                    <br><span>Color: {{ $showcase->color }}</span>
-                                                    <br><span>Size: {{ $showcase->size }}</span>
-
-                                                    <br><span>Order type: {{ $showcase->type }}</span>
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">
-                                                <span class="amount">{{ $showcase->weight }}kg</span>
-                                            </td>
-                                            <td class="product-subtotal">
-                                                <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
-                                            </td>
-                                            <td class="product-close">
-                                                <a wire:click="removeShowcaseBag('{{ $showcase->id }}')" class="product-remove" title="Remove this product">
-                                                    <i class="fas fa-times"></i>
+                                                    if(empty($productimage->main_image))
+                                                    {
+                                                        $productimage = $showcase->product->image;
+                                                    }else{
+                                                        $productimage = $productimage->main_image;
+                                                    }
+                                                @endphp
+                                                <a href="{{ route('product.slug', ['slug' => $showcase->product->slug, 'color' => $showcase->color]) }}">
+                                                    <img src="{{ Voyager::image($productimage) }}" width="100"
+                                                         height="100"
+                                                         alt="{{ $showcase->product->name }} in {{ $showcase->color }} color">
                                                 </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </figure>
+                                        </td>
+                                        <td class="product-name">
+                                            <div class="product-name-section">
+                                                <a href="{{ route('product.slug', ['slug' => $showcase->product->slug, 'color' => $showcase->color]) }}">{{ $showcase->product->name }}</a>
+                                                <br><span>Vendor: {{ $showcase->product->vendor->name }}</span>
+                                                <br><span>Brand: {{ $showcase->product->brand_id }}</span>
+                                                <br><span>Color: {{ $showcase->color }}</span>
+                                                <br><span>Size: {{ $showcase->size }}</span>
+
+                                                <br><span>Order type: {{ $showcase->type }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount">{{ $showcase->weight }}kg</span>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
+                                        </td>
+                                        <td class="product-close">
+                                            <a wire:click="removeShowcaseBag('{{ $showcase->id }}')"
+                                               class="product-remove" title="Remove this product">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                             <div class="cart-actionss mb-6 pt-4">
-                                <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
+                                <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}"
+                                   class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
                                     <i class="d-icon-arrow-left"></i>
                                     Go to showcase order
                                 </a>
@@ -92,10 +97,13 @@
                         @else
                             <div class="p-20 mb-4 bg-light rounded-3 text-center">
                                 <div class="container-fluid py-5">
-                                    <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}" class="img-responsive" alt="wishlist empty">
+                                    <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}"
+                                         class="img-responsive" alt="wishlist empty">
                                     <h1 class="display-5 fw-bold text-dark">Your showcase bag is empty</h1>
-                                    <p class="fs-4 text-center">Go bag to your showcase order and move your favourite products to bag</p>
-                                    <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}" class="btn btn-primary btn-lg" type="button">View Complete Order</a>
+                                    <p class="fs-4 text-center">Go bag to your showcase order and move your favourite
+                                        products to bag</p>
+                                    <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}"
+                                       class="btn btn-primary btn-lg" type="button">View Complete Order</a>
                                 </div>
                             </div>
                         @endif
@@ -179,7 +187,8 @@
                                             <h4 class="summary-subtitle">Showcase At Home Charges Refund</h4>
                                         </td>
                                         <td>
-                                            <p class="summary-subtotal-price" style="color: red !important;">-{{ Config::get('icrm.currency.icon') }}{{ number_format($showcaserefund, 2) }}</p>
+                                            <p class="summary-subtotal-price" style="color: red !important;">
+                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($showcaserefund, 2) }}</p>
                                         </td>
                                     </tr>
 
@@ -199,7 +208,8 @@
                                                 <h4 class="summary-subtitle">Reward Points</h4>
                                             </td>
                                             <td>
-                                                <p class="summary-subtotal-price">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedRewardPoints, 2) }}</p>
+                                                <p class="summary-subtotal-price">
+                                                    -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedRewardPoints, 2) }}</p>
                                             </td>
                                         </tr>
                                     @endif
@@ -209,7 +219,8 @@
                                                 <h4 class="summary-subtitle">Wallet Credits</h4>
                                             </td>
                                             <td>
-                                                <p class="summary-subtotal-price">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedCredits, 2) }}</p>
+                                                <p class="summary-subtotal-price">
+                                                    -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedCredits, 2) }}</p>
                                             </td>
                                         </tr>
                                     @endif
@@ -230,7 +241,8 @@
                                                 <h4 class="summary-subtitle">GST</h4>
                                             </td>
                                             <td>
-                                                <p class="summary-subtotal-price" style="color: green !important;">+{{ Config::get('icrm.currency.icon') }}{{ number_format($tax, 2) }}</p>
+                                                <p class="summary-subtotal-price" style="color: green !important;">
+                                                    +{{ Config::get('icrm.currency.icon') }}{{ number_format($tax, 2) }}</p>
                                             </td>
                                         </tr>
                                     @endif
@@ -271,7 +283,8 @@
                                 @endif
                                 @if (auth()->user()->hasRole(['Delivery Boy', 'Delivery Head', 'admin', 'Client']))
                                     <div class="form-checkbox mt-4 mb-5" wire:click="scodneeded">
-                                        <input type="checkbox" class="custom-checkbox" disabled @if(Session::get('showcasebagordermethod') == 'cod') checked @endif />
+                                        <input type="checkbox" class="custom-checkbox" disabled
+                                               @if(Session::get('showcasebagordermethod') == 'cod') checked @endif />
                                         <label class="form-control-label" for="cod">
                                             I have received cash on delivery <span class="fa fa-money-bill-alt"></span>
                                         </label>
@@ -279,34 +292,39 @@
                                 @endif
 
                                 <div class="form-checkbox mt-4 mb-5" wire:click="sacceptterms">
-                                    <input type="checkbox" class="custom-checkbox" required="" @if(Session::get('showcasebagacceptterms') == true) checked @endif/>
+                                    <input type="checkbox" class="custom-checkbox" required=""
+                                           @if(Session::get('showcasebagacceptterms') == true) checked @endif/>
                                     <label class="form-control-label" for="terms-condition">
-                                        I have read and agree to the <a href="/page/terms-and-conditions" style="color: blue;">terms and conditions
+                                        I have read and agree to the <a href="/page/terms-and-conditions"
+                                                                        style="color: blue;">terms and conditions
                                         </a><span class="required">*</span>
                                     </label>
                                 </div>
 
                                 @if (Session::get('showcasebagordermethod') == 'cod')
 
-                                        <div>
-                                            <button type="submit" wire:click="placeorder" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-checkout btn-block"
+                                    <div>
+                                        <button type="submit" wire:click="placeorder" wire:loading.attr="disabled"
+                                                class="btn btn-dark btn-rounded btn-checkout btn-block"
                                                 @if($this->disablebtn == true) disabled="disabled" @endif
                                                 {{-- @if(Session::get('ordermethod') != 'cod') disabled="disabled" @endif --}}
-                                                >
-                                                Place Cash On Delivery Order
-                                            </button>
-                                        </div>
+                                        >
+                                            Place Cash On Delivery Order
+                                        </button>
+                                    </div>
 
-                                    @else
+                                @else
 
-                                        <div>
-                                            <button type="submit" wire:loading.attr="disabled" wire:click="placeorder" class="btn btn-dark btn-rounded btn-checkout btn-block" id="rzp-button1" @if($this->disablebtn == true) disabled="disabled" @endif>
-                                                Make Payment
-                                            </button>
+                                    <div>
+                                        <button type="submit" wire:loading.attr="disabled" wire:click="placeorder"
+                                                class="btn btn-dark btn-rounded btn-checkout btn-block" id="rzp-button1"
+                                                @if($this->disablebtn == true) disabled="disabled" @endif>
+                                            Make Payment
+                                        </button>
 
-                                        </div>
+                                    </div>
 
-                                    @endif
+                                @endif
 
                             </div>
                         </div>
@@ -320,93 +338,101 @@
 
 
 @push('scripts')
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    Livewire.on('srazorPay', function() {
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        Livewire.on('srazorPay', function () {
 
-        var full_name = "{{ $this->rname }}";
-        var email = "{{ $this->remail }}";
-        var contact_number = "{{ $this->rphone }}";
-        var amount = {{ number_format($total, 2) }};
-        var total_amount = amount * 100;
-        var showcaseorderid = {{ request('id') }};
+            var full_name = "{{ $this->rname }}";
+            var email = "{{ $this->remail }}";
+            var contact_number = "{{ $this->rphone }}";
+            var amount = {{ number_format($total, 2) }};
+            var total_amount = amount * 100;
+            var showcaseorderid = {{ request('id') }};
 
-        // var consent = $("#two-step:checkbox:checked").length;
+            var showcaserefund = {{ $this->showcaserefund ?? 0 }};
+            var discount = {{ $this->discount ?? 0 }};
+            var showcase_redeemedRewardPoints = {{ $this->showcase_redeemedRewardPoints ?? 0 }};
+            var showcase_redeemedCredits = {{ $this->showcase_redeemedCredits ?? 0 }};
 
-
-
-        // /<span class="required">*</span><span class="required">*</span> validate form fields <span class="required">*</span>/
-
-        if(full_name == ""){
-            alert('Please Enter Full Name');
-            return false;
-        }
+            // var consent = $("#two-step:checkbox:checked").length;
 
 
-        if(email == ""){
-            alert('Please Enter Email Address');
-            return false;
-        }
+            // /<span class="required">*</span><span class="required">*</span> validate form fields <span class="required">*</span>/
 
-        // if(contact_number == ""){
-        //     alert('Please Enter Contact Number');
-        //     return false;
-        // }
-
-        // if(consent == 0)
-        // {
-        //     alert('Please Agree To The Terms and Conditions');
-        //     return false;
-        // }
-
-        var options = {
-            "key": "{{ env('RAZORPAY_KEY') }}", // Enter the Key ID generated from the Dashboard
-            "amount": total_amount, // Amount is in currency subunits. Default currency is INR. Hence, 10 refers to 1000 paise
-            "currency": "INR",
-            "name": "{{ env('APP_NAME') }}",
-            "description": "Payment",
-            "image": "{{ Voyager::image(setting('razorpay.logo')) }}",
-            "order_id": "", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type:'POST',
-                    url:"{{ route('showcase.purchase.paynow') }}",
-                    data:{
-                        razorpay_payment_id:response.razorpay_payment_id,
-                        amount:total_amount,
-                        full_name:full_name,
-                        email:email,
-                        contact_number:contact_number,
-                        showcaseorderid:showcaseorderid
-                    },
-                    success:function(data){
-                        $('.success-message').text(data.success);
-                        $('.success-alert').fadeIn('slow', function(){
-                            $('.success-alert').delay(5000).fadeOut();
-                        });
-                        window.location.href = "/my-orders/all";
-                    }
-                });
-            },
-            "prefill": {
-                "name": full_name,
-                "email": email,
-                "contact": contact_number,
-            },
-            "notes": {
-                "address": "test test"
-            },
-            "theme": {
-                "color": "#0A0757"
+            if (full_name == "") {
+                alert('Please Enter Full Name');
+                return false;
             }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-    });
-</script>
+
+
+            if (email == "") {
+                alert('Please Enter Email Address');
+                return false;
+            }
+
+            // if(contact_number == ""){
+            //     alert('Please Enter Contact Number');
+            //     return false;
+            // }
+
+            // if(consent == 0)
+            // {
+            //     alert('Please Agree To The Terms and Conditions');
+            //     return false;
+            // }
+
+            var options = {
+                "key": "{{ env('RAZORPAY_KEY') }}", // Enter the Key ID generated from the Dashboard
+                "amount": total_amount, // Amount is in currency subunits. Default currency is INR. Hence, 10 refers to 1000 paise
+                "currency": "INR",
+                "name": "{{ env('APP_NAME') }}",
+                "description": "Payment",
+                "image": "{{ Voyager::image(setting('razorpay.logo')) }}",
+                "order_id": "", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('showcase.purchase.paynow') }}",
+                        data: {
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            amount: total_amount,
+                            full_name: full_name,
+                            email: email,
+                            contact_number: contact_number,
+                            showcaseorderid: showcaseorderid,
+                            showcaserefund: showcaserefund,
+                            discount: discount,
+                            showcase_redeemedRewardPoints: showcase_redeemedRewardPoints,
+                            showcase_redeemedCredits: showcase_redeemedCredits,
+                        },
+                        success: function (data) {
+                            $('.success-message').text(data.success);
+                            $('.success-alert').fadeIn('slow', function () {
+                                $('.success-alert').delay(5000).fadeOut();
+                            });
+                            window.location.href = "/my-orders/all";
+                        }
+                    });
+                },
+                "prefill": {
+                    "name": full_name,
+                    "email": email,
+                    "contact": contact_number,
+                },
+                "notes": {
+                    "address": "test test"
+                },
+                "theme": {
+                    "color": "#0A0757"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        });
+    </script>
 @endpush
