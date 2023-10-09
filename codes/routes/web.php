@@ -493,7 +493,10 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get',function(){
-    Session::remove('showcase_appliedcouponcode');
+    $a = Session::get('showcase_appliedcouponcode');
+    $b = Session::get('showcase_redeemedCredits');
+
+    dd($a, $b);
 
 //    $a = 'redeemedRewardPoints => '. Session::get('redeemedRewardPoints');
 //    $b = 'redeemedCredits => '. Session::get('redeemedCredits');

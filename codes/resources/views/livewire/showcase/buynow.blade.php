@@ -194,17 +194,23 @@
                                         </tr>
                                     @endif
                                     @if($this->showcase_redeemedRewardPoints > 0)
-                                        <tr>
-                                            <td class="product-name">Reward Points</td>
-                                            <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedRewardPoints, 2) }}</td>
+                                        <tr class="summary-subtotal">
+                                            <td>
+                                                <h4 class="summary-subtitle">Reward Points</h4>
+                                            </td>
+                                            <td>
+                                                <p class="summary-subtotal-price">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedRewardPoints, 2) }}</p>
+                                            </td>
                                         </tr>
                                     @endif
                                     @if($this->showcase_redeemedCredits > 0)
-                                        <tr>
-                                            <td class="product-name">Wallet Credits</td>
-                                            <td class="product-total text-body">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedCredits, 2) }}</td>
+                                        <tr class="summary-subtotal">
+                                            <td>
+                                                <h4 class="summary-subtitle">Wallet Credits</h4>
+                                            </td>
+                                            <td>
+                                                <p class="summary-subtotal-price">-{{ Config::get('icrm.currency.icon') }}{{ number_format($this->showcase_redeemedCredits, 2) }}</p>
+                                            </td>
                                         </tr>
                                     @endif
 

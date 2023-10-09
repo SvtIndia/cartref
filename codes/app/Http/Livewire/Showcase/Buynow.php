@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Showcase;
 
 use App\Coupon;
+use App\Models\RewardPointLog;
 use App\Models\User;
+use App\Models\UserCreditLog;
 use App\Order;
 use App\Showcase;
 use App\Productsku;
@@ -93,25 +95,24 @@ class Buynow extends Component
         $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
         $this->buyshowcases = $buyshowcases;
 
+        //calculate before all discounts
         $this->calcTotal();
 
-
+        //fetch applied coupon code
         if ((int)$this->discount <= 0 && !empty(Session::get('showcase_appliedcouponcode'))) {
             $this->applycoupon();
         }
-
-        //fetch applied reward point and credits
-        if (empty($this->showcase_redeemedRewardPoints)) {
-            if (Session::get('showcase_showcase_redeemedRewardPoints')) {
-                $this->applyRewardPoints();
-            }
+        //fetch applied reward point
+        if (empty($this->showcase_redeemedRewardPoints) && Session::get('showcase_redeemedRewardPoints')) {
+            $this->applyRewardPoints();
         }
-        if (empty($this->showcase_redeemedCredits)) {
-            if (Session::get('showcase_showcase_redeemedCredits')) {
-                $this->applyCredits();
-            }
+        //fetch applied wallet credits
+        if (empty($this->showcase_redeemedCredits) && Session::get('showcase_redeemedCredits')) {
+            $this->applyCredits();
         }
 
+        //calculate after applied all discounts
+        $this->calcTotal();
 
         $sellers = [];
 //        $this->totalMrp = 0;
@@ -125,6 +126,7 @@ class Buynow extends Component
 
 //        $this->totalSave = ($this->totalMrp - $this->ordervalue) + $this->discount + ($this->shipping - $this->appliedShipping);
 
+        //fetch all coupons list
         foreach ($coupons as $coupon) {
             $coupon->is_applicable = false;
             $coupon->applicable_discount = 0;
@@ -133,11 +135,12 @@ class Buynow extends Component
             if ($this->ordervalue >= $coupon->min_order_value) {
                 if ($coupon->is_coupon_for_all || $coupon->hasSellers($sellers)) {
                     if ($coupon->is_uwc || $this->showcase_redeemedRewardPoints <= 0) {
+
                         $coupon->is_applicable = true;
 
                         // 1. Percentage off
                         if ($coupon->type == 'PercentageOff') {
-                            $value = $this->subtotal * ($coupon->value / 100);
+                            $value = $this->ordervalue * ($coupon->value / 100);
                         }
 
                         // 2. Fixed off
@@ -329,12 +332,11 @@ class Buynow extends Component
         if ($userCredits > 0) {
             if ($userCredits >= $this->subtotal) {
                 $this->showcase_redeemedCredits = $this->subtotal;
-                Session::put('ordermethod', 'cod');
+                Session::put('showcasebagordermethod', 'cod');
             } else {
                 $this->showcase_redeemedCredits = $userCredits;
             }
 
-            // dd($this->showcase_redeemedCredits);
             Session::put('showcase_redeemedCredits', 1);
         }
     }
@@ -361,7 +363,7 @@ class Buynow extends Component
         /**
          * If order total is 0 then show error message
          */
-        if ($this->total <= 0) {
+        if ($this->showcase_redeemedRewardPoints <= 0 && $this->showcase_redeemedCredits <= 0 && $this->total <= 0) {
             Session::flash('danger', 'Order total cannot be zero');
             return redirect()->route('showcase.buynow', ['id' => $this->orderid]);
         }
@@ -413,7 +415,28 @@ class Buynow extends Component
         $notincarts = Showcase::where('order_id', $this->orderid)->where('order_status', '!=', 'Moved to Bag')->get();
 
         foreach ($carts as $key => $cart) {
+            //per product discount calculation
+            $ratio  = ($cart->price_sum / $this->ordervalue);
+            $showcase_refund = 0; $coupon_discount = 0; $reward_point_discount = 0; $user_credits_discount = 0;
 
+            if($this->showcaserefund > 0) {
+                //showcase refund discount
+                $showcase_refund = round(($ratio * $this->showcaserefund), 2);
+            }
+            if($this->discount > 0){
+                //coupon discount
+                $coupon_discount = round(($ratio * $this->discount), 2);
+            }
+            if($this->showcase_redeemedRewardPoints > 0){
+                //reward point discount uptoo 20%
+                if(auth()->user()->reward_points >= $this->showcase_redeemedRewardPoints)
+                    $reward_point_discount = round(($ratio * $this->showcase_redeemedRewardPoints), 2);
+            }
+            if($this->showcase_redeemedCredits > 0){
+                //wallet credits discount
+                if(auth()->user()->credits >= $this->showcase_redeemedCredits)
+                    $user_credits_discount = round(($ratio * $this->showcase_redeemedCredits), 2);
+            }
             $product = Product::where('id', $cart->product_id)->first();
 
             /**
@@ -454,11 +477,11 @@ class Buynow extends Component
             $order->product_offerprice = $cart->product_offerprice;
             $order->product_mrp = $cart->product->mrp;
             $order->qty = $cart->qty;
-            $order->price_sum = $cart->price_sum;
+            $order->price_sum = $cart->price_sum - ($showcase_refund + $coupon_discount + $reward_point_discount + $user_credits_discount);
             $order->size = $cart->size;
             $order->color = $cart->color;
             $order->order_value = $this->ordervalue;
-            $order->order_discount = 0;
+            $order->order_discount = $this->discount;
             $order->order_deliverycharges = $this->showcaserefund;
             $order->order_subtotal = $this->subtotal;
             $order->order_tax = $this->tax;
@@ -490,17 +513,48 @@ class Buynow extends Component
             $order->user_id = $cart->user_id;
             $order->order_weight = $cart->order_weight;
             $order->order_status = 'Delivered';
-            $order->order_method = 'COD';
+            $order->order_method = (($this->showcase_redeemedRewardPoints > 0 || $this->showcase_redeemedCredits > 0) && $this->total <= 0) ? 'Prepaid' : 'COD';
             $order->exp_delivery_date = date('Y-m-d');
-            $order->save();
 
+            $order->used_reward_points = $reward_point_discount ?? 0;
+            $order->used_user_credits = $user_credits_discount ?? 0;
+            $order->save();
+//            dd($order);
+
+            if ($reward_point_discount > 0) {
+                //make log
+                $reward_point = new RewardPointLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $reward_point_discount;
+                $reward_point->closing_bal = auth()->user()->reward_points;
+                $reward_point->save();
+            }
+
+            if ($user_credits_discount > 0) {
+                //make log
+                $reward_point = new UserCreditLog();
+                $reward_point->user_id = auth()->user()->id;
+                $reward_point->order_id = $order->id;
+                $reward_point->type = 'out';
+                $reward_point->amount = $user_credits_discount;
+                $reward_point->closing_bal = auth()->user()->credits;
+                $reward_point->save();
+            }
 
             $cart->update([
                 'order_status' => 'Purchased',
                 'status' => '0',
             ]);
 
+        }
 
+        if($this->showcase_redeemedRewardPoints > 0){
+            auth()->user()->decrement('reward_points', $this->showcase_redeemedRewardPoints);
+        }
+        if($this->showcase_redeemedCredits > 0){
+            auth()->user()->decrement('credits', $this->showcase_redeemedCredits);
         }
 
         foreach ($notincarts as $notincart) {
@@ -516,7 +570,6 @@ class Buynow extends Component
                     $updatestock = Productsku::where('product_id', $notincart->product_id)->where('size', $notincart->size)->first();
                 }
 
-
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock + $notincart->qty,
                 ]);
@@ -527,6 +580,10 @@ class Buynow extends Component
 
         Session::remove('showcasebagordermethod');
         Session::remove('showcasebagacceptterms');
+
+        Session::remove('showcase_appliedcouponcode');
+        Session::remove('showcase_redeemedRewardPoints');
+        Session::remove('showcase_redeemedCredits');
 
         Session::flash('success', 'Showcase At Home Order Successfully Placed');
         return redirect()->route('myorders');
