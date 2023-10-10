@@ -459,11 +459,17 @@ class ShowcaseAtHomeController extends Controller
         /**
          * Send email to customer about showcase initiated
          */
+        try{
 
-        if(Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1)
-        {
-            Notification::route('mail', auth()->user()->email)->notify(new ShowcaseInitiatedEmail($orderid));
+            if(Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1)
+            {
+                Notification::route('mail', auth()->user()->email)->notify(new ShowcaseInitiatedEmail($orderid));
+            }
         }
+        catch(Exception $e){
+
+        }
+
 
         
     }

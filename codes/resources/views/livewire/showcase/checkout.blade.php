@@ -143,7 +143,7 @@
                                             @endforeach
                                             <tr class="summary-subtotal">
                                                 <td>
-                                                    <h4 class="summary-subtitle">Items Allowed</h4>
+                                                    <h4 class="summary-subtitle">No. of Items</h4>
                                                 </td>
                                                 <td>
                                                     <p class="summary-subtotal-price">{{ count($carts) }}/{{ Config::get('icrm.showcase_at_home.order_limit') }}</p>
@@ -152,7 +152,7 @@
                                             <tr class="summary-subtotal">
                                                 <tr>
                                                     <td class="summary-subtitle">
-                                                        <span>Service Charges</span>
+                                                        <span>Cartref's Convenience Charges</span><br>
                                                         <small>(Refundable if you purchase any product)</small>
                                                     </td>
                                                     <td class="summary-subtitle text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($fsubtotal, 2) }}</td>

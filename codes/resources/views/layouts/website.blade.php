@@ -292,9 +292,17 @@
                 max-width: 58.3333%;
                 flex: 0 0 45.333%;
             }
+            .custom-checkout-form{
+                max-width: 58.3333%;
+                flex: 0 0 58.333%;
+            }
             .checkout .sticky-sidebar-wrapper{
                 max-width: 50.667%;
                 flex: 0 0 50.667%;
+            }
+            .custom-sticky-sidebar-wrapper{
+                max-width: 40%;
+                flex: 0 0 40%;
             }
         }
 
