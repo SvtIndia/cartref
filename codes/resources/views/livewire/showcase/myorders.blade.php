@@ -27,6 +27,7 @@
                 <table class="shop-table wishlist-table mt-2 mb-4">
                     <thead>
                         <tr>
+                            <th>S.no</th>
                             <th>Date</th>
                             <th class="product-name"><span>Product</span></th>
                             <th></th>
@@ -39,11 +40,26 @@
                         </tr>
                     </thead>
                     <tbody class="wishlist-items-wrapper">
-                        
-                        @foreach ($myorders as $order)
-                            <tr>
-                                <td>
-                                    <span>{{ $order->created_at }}</span>
+                        @php
+                            $prev = 0;
+                            $count = 0;
+                            $is_show = false;
+                        @endphp
+                        @foreach ($myorders as $key => $order)
+                            @php
+                                if($prev !== $order->order_id){
+                                    $count++;
+                                    $is_show = true;
+                                    $prev = $order->order_id;
+                                }
+                            @endphp
+                            <tr @if($count !== 1 && $is_show) style="border-top: 4px solid black;"@endif>
+                                <td style="width: 4em;">
+                                    {{ $is_show ? $count : '' }}
+                                        <?php $is_show = false; ?>
+                                </td>
+                                <td style="max-width: 9em;">
+                                    <span>{{ $order->created_at->format('M d, Y \a\t H:i') }}</span>
                                 </td>
                                 <td class="product-thumbnail">
                                     @php

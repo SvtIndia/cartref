@@ -37,7 +37,11 @@
                     @endif
                 </div>
                 <br><br><br>
-                <a href="{{ route('products') }}" class="btn btn-default btn-sm"><i class="d-icon-arrow-left"></i> Back</a>
+                @if (empty(Session::get('showcasecity')))
+                    <a href="{{ route('products') }}" class="btn btn-default btn-sm"><i class="d-icon-arrow-left"></i> Back</a>
+                @else
+                    <a href="{{ route('products') }}" class="btn btn-default btn-sm"><i class="d-icon-arrow-left"></i> View Stores</a>
+                @endif
                 {{-- @if (Config::get('icrm.frontend.socialpagelinks.feature') == 1)
                     <div class="social-links mt-4 text-white">
                         @if (!empty(Config::get('icrm.frontend.socialpagelinks.facebook')))

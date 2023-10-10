@@ -740,15 +740,18 @@ class Addskutobag extends Component
 
         Session::remove('quickviewid');
 
-        Session::flash('success', 'Product successfully added to showcase at home');
+        $this->dispatchBrowserEvent('showToast', ['msg' => 'Product successfully added to showcase at home', 'status' => 'success']);
+//        Session::flash('success', 'Product successfully added to showcase at home');
+
 
         if(Session::get('showcasecity') == null)
         {
             return redirect()->route('showcase.getstarted');
         }
 
+        $this->emit('showcasecount');
 
-        return redirect()->route('showcase.bag');
+//        return redirect()->route('showcase.bag');
 
     }
 
