@@ -167,7 +167,7 @@
                                             wire:model.defer="deliverypincode" 
                                             placeholder="Delivery Pincode" />
                                         @if (Session::has('sdeliveryavailable') == true)
-                                            <small class="available">{{ Session::get('sdeliveryavailable') }}</small> <br>   
+                                            <small class="available" style="line-height: 1 !important;">{{ Session::get('sdeliveryavailable') }}</small> <br>
                                         @endif
                                         @if (Session::has('sdeliverynotavailable') == true)
                                             <small class="notavailable">{{ Session::get('sdeliverynotavailable') }}</small> <br>   
