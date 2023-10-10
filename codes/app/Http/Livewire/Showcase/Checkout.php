@@ -60,7 +60,7 @@ class Checkout extends Component
     
     protected $rules = [
         'name' => 'required',
-        'phone' => 'required|integer|digits:10',
+        'phone' => 'required',
         'companyname' => 'nullable|required_with:gst',
         'gst' => 'nullable|regex:"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"',
         'country' => 'required',

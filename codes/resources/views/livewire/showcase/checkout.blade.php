@@ -1,7 +1,7 @@
 <div>
     <main class="main checkout">
         <div class="page-content pt-7 pb-10 mb-10">
-            @include('livewire.showcase.bag_header')1
+            @include('livewire.showcase.bag_header')
             <div class="container mt-7">
                 {{-- <div class="card accordion">
                     <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
@@ -25,7 +25,7 @@
                 <form wire:submit.prevent="placeorder">
                     {{-- wire:submit.prevent="placeorder" --}}
                     <div class="row">
-                        <div class="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
+                        <div class="checkout-form col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                             <h3 class="title title-simple text-left text-uppercase">Billing Details</h3>
                             <div class="row">
                                 <div class="col-xs-6">
@@ -39,18 +39,18 @@
                                     <input type="text" class="form-control @error('phone') error @enderror" wire:model.defer="phone" required="" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <label>Company Name (Optional)</label>
-                                    @error('companyname') <span class="error">{{ $message }}</span> @enderror
-                                    <input type="text" class="form-control @error('companyname') error @enderror" wire:model.debounce.1s="companyname" />
-                                </div>
-                                <div class="col-xs-6">
-                                    <label>GST (Optional)</label>
-                                    @error('gst') <span class="error">{{ $message }}</span> @enderror
-                                    <input type="text" class="form-control @error('gst') error @enderror" wire:model.defer="gst"  />
-                                </div>
-                            </div>
+{{--                            <div class="row">--}}
+{{--                                <div class="col-xs-6">--}}
+{{--                                    <label>Company Name (Optional)</label>--}}
+{{--                                    @error('companyname') <span class="error">{{ $message }}</span> @enderror--}}
+{{--                                    <input type="text" class="form-control @error('companyname') error @enderror" wire:model.debounce.1s="companyname" />--}}
+{{--                                </div>--}}
+{{--                                <div class="col-xs-6">--}}
+{{--                                    <label>GST (Optional)</label>--}}
+{{--                                    @error('gst') <span class="error">{{ $message }}</span> @enderror--}}
+{{--                                    <input type="text" class="form-control @error('gst') error @enderror" wire:model.defer="gst"  />--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <label>Country / Region <span class="required">*</span></label>
                             <div class="select-box">

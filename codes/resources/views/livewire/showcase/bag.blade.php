@@ -12,9 +12,10 @@
                                     <tr>
                                         <th><span>Product</span></th>
                                         <th><span>Details</span></th>
-                                        <th><span>Weight</span></th>
+{{--                                        <th><span>Weight</span></th>--}}
                                         <th><span>Price</span></th>
                                         {{-- <th>Action</th> --}}
+                                        <th colspan="2">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,7 +43,7 @@
 
                                         @endphp
                                         @if (!empty($product))
-                                        <tr>
+                                        <tr class="cart-tr">
                                             <td class="product-thumbnail">
                                                 <figure>
                                                     <a href="{{ route('product.slug', ['slug' => $showcase->attributes->slug, 'color' => $showcase->attributes->color]) }}">
@@ -63,26 +64,34 @@
                                                     </a>
                                                 </figure>
                                             </td>
-                                            <td class="product-name">
+                                            <td class="product-name" style="width: 50% !important;">
                                                 <div class="product-name-section">
                                                     <a href="{{ route('product.slug', ['slug' => $showcase->attributes->slug, 'color' => $showcase->attributes->color]) }}">{{ $showcase->name }}</a>
-                                                    <br><span>Vendor: <a href="{{ route('products.vendor', ['slug' => $product->vendor->id]) }}" style="color: blue;">{{ $product->vendor->brand_name }}</a></span>
-                                                    <br><span>Brand: {{ $product->brand_id }}</span>
-                                                    <br><span>Color: {{ $showcase->attributes->color }}</span>
-                                                    <br><span>Size: {{ $showcase->attributes->size }}</span>
-                                                    
-                                                    <br><span>Order type: {{ $showcase->attributes->type }}</span>                                                    
+                                                    <p>
+                                                        <br><span>Vendor: <a href="{{ route('products.vendor', ['slug' => $product->vendor->id]) }}" style="color: blue;">{{ $product->vendor->brand_name }}</a></span>
+                                                        <br><span>Brand: {{ $product->brand_id }}</span>
+                                                        <br><span>Color: {{ $showcase->attributes->color }}</span>
+                                                        <br><span>Size: {{ $showcase->attributes->size }}</span>
+                                                        <br><span>Order type: {{ $showcase->attributes->type }}</span>
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="product-subtotal">
-                                                <span class="amount">{{ $showcase->attributes->weight }}kg</span>
-                                            </td>
+{{--                                            <td class="product-subtotal">--}}
+{{--                                                <span class="amount">{{ $showcase->attributes->weight }}kg</span>--}}
+{{--                                            </td>--}}
                                             <td class="product-subtotal">
                                                 <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $showcase->price }}</span>
                                             </td>
                                             <td class="product-close">
                                                 <a wire:click="removeShowcase('{{ $showcase->id }}')" class="product-remove" title="Remove this product">
                                                     <i class="fas fa-times"></i>
+                                                </a>
+                                            </td>
+                                            <td class="product-close">
+                                                <a wire:click="wishlist('{{ $product->id }}','{{ $showcase->id }}')"
+                                                   class="product-remove"
+                                                   title="Move to wishlist" style="color:red; border-color:red;">
+                                                    <i class="d-icon-heart"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -94,7 +103,7 @@
                                 <a href="{{ route('products.showcase.vendor', ['vendor_id' => $showcasecarts->first()->attributes->vendor_id]) }}" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
                                     <i class="d-icon-arrow-left"></i>
                                     Continue Shopping From {{ App\Models\User::where('id', $showcasecarts->first()->attributes->vendor_id)->first()->brand_name }}
-                                </a>
+                                </a><br>
                                 <small>At a time you can only request showcase at home from one vendor</small>
                                 
                                 {{-- <button type="submit"
