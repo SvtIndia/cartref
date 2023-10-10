@@ -579,7 +579,7 @@ class ShowcaseAtHomeController extends Controller
                     $user_credits_discount = round(($ratio * request()->showcase_redeemedCredits), 2);
             }
 
-            $product = Product::where('id', $cart->attributes->product_id)->first();
+            $product = Product::where('id', $cart->product_id)->first();
 
             /**
              * Fetch pickup location
