@@ -4,6 +4,7 @@ namespace App\Actions\Showcases;
 
 use App\Order;
 use App\Showcase;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -128,7 +129,8 @@ class MarkAsShowcased extends AbstractAction
         Showcase::whereIn('id', $ids)
                 ->whereIn('order_status', ['Out For Showcase'])
                 ->update([
-                    'order_status' => 'Showcased'
+                    'order_status' => 'Showcased',
+                    'showcase_timer' => Carbon::now()->addMinutes($orders->count() * 5)
                 ]);
 
         return redirect($comingFrom)->with([

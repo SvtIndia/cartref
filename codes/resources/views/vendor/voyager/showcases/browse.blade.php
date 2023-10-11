@@ -493,6 +493,7 @@
                                                             <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}" target="_blank" class="btn btn-sm btn-info"><i class="voyager-truck"></i> Order</a>
                                                         @endif
                                                     @endif
+                                                    
                                                 @endif
 
                                             </ul>
