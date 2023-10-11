@@ -322,6 +322,8 @@ Route::prefix('showcase-at-home')->middleware(['auth', 'verified'])->group(funct
         Route::get('/all', [ShowcaseAtHomeController::class, 'myorders'])->name('showcase.myorders');
         Route::get('/order/{id}', [ShowcaseAtHomeController::class, 'ordercomplete'])->name('showcase.ordercomplete');
         Route::get('/order/{id}/buynow', [ShowcaseAtHomeController::class, 'buynow'])->name('showcase.buynow');
+        Route::get('/order/{id}/add-time', [ShowcaseAtHomeController::class, 'addTime'])->name('showcase.add-time');
+        Route::post('/order/{id}/cancel', [ShowcaseAtHomeController::class, 'cancelOrder'])->name('showcase.cancel');
     });
 });
 
@@ -492,16 +494,6 @@ Route::get('/backup-clean', function () {
 
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
-Route::get('/get',function(){
-    $a = Session::get('showcase_appliedcouponcode');
-    $b = Session::get('showcase_redeemedCredits');
-
-    dd($a, $b);
-
-//    $a = 'redeemedRewardPoints => '. Session::get('redeemedRewardPoints');
-//    $b = 'redeemedCredits => '. Session::get('redeemedCredits');
-//    dd($a,$b);
-    $coupon = \App\Coupon::find(1);
-    return $coupon->is_there = $coupon->hasSellers([\App\Models\User::find(139), \App\Models\User::find(2)]) ? 'Yes' : 'No';
-    return $coupon;
+Route::get('/get', function () {
+    //    return date('','')
 });

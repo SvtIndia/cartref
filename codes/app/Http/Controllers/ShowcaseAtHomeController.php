@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RewardPointLog;
 use App\Models\UserCreditLog;
 use App\Order;
+use Carbon\Carbon;
 use Exception;
 use App\Payment;
 use App\Showcase;
@@ -55,25 +56,22 @@ class ShowcaseAtHomeController extends Controller
     public function activateshowcase(Request $request)
     {
         $userID = 0;
-        if(Auth::check()){
+        if (Auth::check()) {
             $userID = auth()->user()->id;
-        }
-        else{
-            if(session('session_id')){
+        } else {
+            if (session('session_id')) {
                 $userID = session('session_id');
-            }
-            else{
-                $userID = rand(1111111111,9999999999);
+            } else {
+                $userID = rand(1111111111, 9999999999);
                 session(['session_id' => $userID]);
             }
         }
-        
+
         $request->validate([
             'showcasepincode' => 'required'
         ]);
 
-        if(!empty($request->showcasepincode))
-        {
+        if (!empty($request->showcasepincode)) {
 
             /**
              * Check if the showcasepincode is part of servicable city
@@ -81,29 +79,25 @@ class ShowcaseAtHomeController extends Controller
              */
 
             $this->mapcitystate($request->showcasepincode);
-            
+
             $deliveryservicable = DeliveryServicableArea::where('city', Session::get('city'))->where('status', 1)->first();
 
-            if(!empty($deliveryservicable))
-            {
+            if (!empty($deliveryservicable)) {
                 // check if the selected product is from the vendor who offers delivery in the customers city
                 $showcase = app('showcase')->session($userID);
                 $showcasecontents = app('showcase')->session($userID)->getContent();
 
-                if($showcasecontents->count() > 0)
-                {
+                if ($showcasecontents->count() > 0) {
                     // check if the customer and vendor city is same else show error
-                    if($showcasecontents->first()->attributes->vendor_city == Session::get('city'))
-                    {
+                    if ($showcasecontents->first()->attributes->vendor_city == Session::get('city')) {
                         // same city
                         Session::put('showcasepincode', $request->showcasepincode);
                         Session::put('showcasecity', Session::get('city'));
-                    }else{
+                    } else {
                         // not same city
                         // dd($showcasecontent->first());
-                        
-                        foreach($showcasecontents as $showcasecontent)
-                        {
+
+                        foreach ($showcasecontents as $showcasecontent) {
                             app('showcase')->session($userID)->remove($showcasecontent->id);
                         }
 
@@ -113,45 +107,44 @@ class ShowcaseAtHomeController extends Controller
                         Session::put('showcasepincode', $request->showcasepincode);
                         Session::put('showcasecity', Session::get('city'));
 
-                        
-                        Session::flash('danger', 'Selected product is not deliverable in '.Session::get('city').' - '.$request->showcasepincode.' area.');
-                        
+
+                        Session::flash('danger', 'Selected product is not deliverable in ' . Session::get('city') . ' - ' . $request->showcasepincode . ' area.');
+
                         return redirect()->route('product.slug', ['slug' => $showcasecontents->first()->attributes->slug])->with([
-                            'danger' => 'Selected product is not deliverable in '.Session::get('city').' - '.$request->showcasepincode.' area.',
+                            'danger' => 'Selected product is not deliverable in ' . Session::get('city') . ' - ' . $request->showcasepincode . ' area.',
                         ]);
                     }
                 }
 
-                
+
 
                 Session::put('showcasepincode', $request->showcasepincode);
                 Session::put('showcasecity', Session::get('city'));
 
 
-                if($showcasecontents->count() == 0)
-                {
-                    Session::flash('success', 'Showcase At Home activated on your catalog for '.Session::get('city').' - '.$request->showcasepincode.' area.');
+                if ($showcasecontents->count() == 0) {
+                    Session::flash('success', 'Showcase At Home activated on your catalog for ' . Session::get('city') . ' - ' . $request->showcasepincode . ' area.');
                     return redirect()->route('products');
                 }
-                
-                Session::flash('success', 'Showcase At Home activated on your catalog for '.Session::get('city').' - '.$request->showcasepincode.' area.');
+
+                Session::flash('success', 'Showcase At Home activated on your catalog for ' . Session::get('city') . ' - ' . $request->showcasepincode . ' area.');
                 return redirect()->route('showcase.bag');
-            }else{
-                Session::flash('danger', 'Showcase At Home service is not available in '.Session::get('city').' area.');
+            } else {
+                Session::flash('danger', 'Showcase At Home service is not available in ' . Session::get('city') . ' area.');
                 Session::remove('showcasepincode');
                 Session::remove('showcasecity');
                 return redirect()->route('products');
             }
 
-            
-        }else{
+
+        } else {
             Session::remove('showcasepincode');
             Session::remove('showcasecity');
             Session::flash('danger', 'Please enter your delivery pincode to activate Showcase At Home');
             return redirect()->back();
         }
 
-        
+
     }
 
     private function mapcitystate($pincode)
@@ -159,27 +152,30 @@ class ShowcaseAtHomeController extends Controller
         Session::remove('city');
         Session::remove('state');
         Session::remove('country');
-        
+
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.postalpincode.in/pincode/{$pincode}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => array(
-        // "Authorization: Basic ZTA4MjE1MGE3YTQxNWVlZjdkMzE0NjhkMWRkNDY1Og==",
-        // "Postman-Token: c096d7ba-830d-440a-9de4-10425e62e52f",
-        // "api-key: eb6e38f684ef558a1d64fcf8a75967",
-        "cache-control: no-cache",
-        // "customerId: 259",
-        // "organisation-id: 1",
-        'Content-Type: 	application/json; charset=utf-8',
-        ),
-        ));
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => "https://api.postalpincode.in/pincode/{$pincode}",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
+                CURLOPT_HTTPHEADER => array(
+                    // "Authorization: Basic ZTA4MjE1MGE3YTQxNWVlZjdkMzE0NjhkMWRkNDY1Og==",
+                    // "Postman-Token: c096d7ba-830d-440a-9de4-10425e62e52f",
+                    // "api-key: eb6e38f684ef558a1d64fcf8a75967",
+                    "cache-control: no-cache",
+                    // "customerId: 259",
+                    // "organisation-id: 1",
+                    'Content-Type: 	application/json; charset=utf-8',
+                ),
+            )
+        );
 
 
         $response = curl_exec($curl);
@@ -195,8 +191,7 @@ class ShowcaseAtHomeController extends Controller
             $collection = json_encode(collect($response));
             $collection = json_decode(json_decode($collection)[0])[0];
 
-            if(collect($collection)['Status'] == '404')
-            {
+            if (collect($collection)['Status'] == '404') {
                 Session::flash('danger', 'Invalid Pincode');
                 // return;
                 Session::remove('city');
@@ -205,12 +200,10 @@ class ShowcaseAtHomeController extends Controller
                 exit;
                 $refresh;
             }
-            
-            
-            if(collect($collection)['Status'] != 'Error')
-            {
-                if(collect($collection)['PostOffice'][0]->Country == 'India')
-                {
+
+
+            if (collect($collection)['Status'] != 'Error') {
+                if (collect($collection)['PostOffice'][0]->Country == 'India') {
                     // dd($this->city = collect($collection)['PostOffice'][0]);
                     $this->city = collect($collection)['PostOffice'][0]->District;
                     Session::put('city', collect($collection)['PostOffice'][0]->District);
@@ -227,7 +220,7 @@ class ShowcaseAtHomeController extends Controller
 
         }
 
-        
+
     }
 
 
@@ -257,7 +250,7 @@ class ShowcaseAtHomeController extends Controller
     }
 
 
-    
+
     public function paynow(Request $request)
     {
         /** Proceed Razorpay payment */
@@ -266,20 +259,20 @@ class ShowcaseAtHomeController extends Controller
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
         $payment = $api->payment->fetch($request->razorpay_payment_id);
-        
-        if(count($input)  && !empty($input['razorpay_payment_id'])) {
+
+        if (count($input) && !empty($input['razorpay_payment_id'])) {
             try {
 
-                $payment->capture(array('amount'=>$request->amount));
+                $payment->capture(array('amount' => $request->amount));
 
             } catch (\Exception $e) {
-                return  $e->getMessage();
-                \Session::put('error',$e->getMessage());
+                return $e->getMessage();
+                \Session::put('error', $e->getMessage());
                 return redirect()->back();
             }
         }
-        
-    
+
+
         /** if payment successful then insert transaction data into the database */
         $payInfo = [
             'payment_id' => $request->razorpay_payment_id,
@@ -289,17 +282,17 @@ class ShowcaseAtHomeController extends Controller
             'currency' => $payment->currency,
             'payment_status' => $payment->status,
             'method' => $payment->method,
-         ];
+        ];
 
-         Payment::insertGetId($payInfo);
-         
+        Payment::insertGetId($payInfo);
+
         /**
          * after successfull payment add order information in the orders table
          * Clear cart
-        */
+         */
         $this->carttoorder($payInfo);
-         
-        Session::flash('success', 'Showcase At Home order successfully placed! You can expect delivery within '.Config::get('icrm.showcase_at_home.delivery_tat').' '.Config::get('icrm.showcase_at_home.delivery_tat_name').'.');
+
+        Session::flash('success', 'Showcase At Home order successfully placed! You can expect delivery within ' . Config::get('icrm.showcase_at_home.delivery_tat') . ' ' . Config::get('icrm.showcase_at_home.delivery_tat_name') . '.');
         // return redirect()->route('myorders');
         return response()->json(['success' => 'Payment successful']);
     }
@@ -309,15 +302,13 @@ class ShowcaseAtHomeController extends Controller
     {
 
         $userID = 0;
-        if(Auth::check()){
+        if (Auth::check()) {
             $userID = auth()->user()->id;
-        }
-        else{
-            if(session('session_id')){
+        } else {
+            if (session('session_id')) {
                 $userID = session('session_id');
-            }
-            else{
-                $userID = rand(1111111111,9999999999);
+            } else {
+                $userID = rand(1111111111, 9999999999);
                 session(['session_id' => $userID]);
             }
         }
@@ -326,8 +317,7 @@ class ShowcaseAtHomeController extends Controller
 
         $carts = app('showcase')->session($userID)->getContent();
 
-        foreach($carts as $key => $cart)
-        {
+        foreach ($carts as $key => $cart) {
             // fetch product information
             $product = Product::where('id', $cart->attributes->product_id)->first();
 
@@ -336,11 +326,10 @@ class ShowcaseAtHomeController extends Controller
              * Fetch pickup location
              */
 
-            if(Config::get('icrm.site_package.singel_brand_store') == 1)
-            {
+            if (Config::get('icrm.site_package.singel_brand_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => setting('seller-name.street_address_1'),
-                    'street_address_2' => setting('seller-name.street_address_2').' '.setting('seller-name.landmark'),
+                    'street_address_2' => setting('seller-name.street_address_2') . ' ' . setting('seller-name.landmark'),
                     'pincode' => setting('seller-name.pincode'),
                     'city' => setting('seller-name.city'),
                     'state' => setting('seller-name.state'),
@@ -349,11 +338,10 @@ class ShowcaseAtHomeController extends Controller
                 ];
             }
 
-            if(Config::get('icrm.site_package.multi_vendor_store') == 1)
-            {
+            if (Config::get('icrm.site_package.multi_vendor_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => $product->vendor->street_address_1,
-                    'street_address_2' => $product->vendor->street_address_2.' '.$product->vendor->landmark,
+                    'street_address_2' => $product->vendor->street_address_2 . ' ' . $product->vendor->landmark,
                     'pincode' => $product->vendor->pincode,
                     'city' => $product->vendor->city,
                     'state' => $product->vendor->state,
@@ -413,21 +401,19 @@ class ShowcaseAtHomeController extends Controller
             $order->status = '1';
             $order->save();
 
-            if(Config::get('icrm.stock_management.feature') == 1)
-            {
-                if(Config::get('icrm.product_sku.color') == 1)
-                {
+            if (Config::get('icrm.stock_management.feature') == 1) {
+                if (Config::get('icrm.product_sku.color') == 1) {
                     $updatestock = Productsku::where('product_id', $product->id)->where('color', $cart->attributes->color)->where('size', $cart->attributes->size)->first();
-                }else{
+                } else {
                     $updatestock = Productsku::where('product_id', $product->id)->where('size', $cart->attributes->size)->first();
                 }
-                
-                
+
+
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock - $cart->quantity,
                 ]);
             }
-            
+
         }
 
         // send order email
@@ -439,14 +425,14 @@ class ShowcaseAtHomeController extends Controller
         // $this->dtdcschedulepickup($carts, $total, $order, $orderid);
 
         app('showcase')->session($userID)->clear();
-        
-        
+
+
         Session::remove('ordermethod');
         Session::remove('acceptterms');
         Session::remove('deliverypincode');
         Session::remove('sdeliveryavailable');
         Session::remove('sdeliverynotavailable');
-        
+
         Session::remove('city');
         Session::remove('state');
         Session::remove('country');
@@ -459,19 +445,17 @@ class ShowcaseAtHomeController extends Controller
         /**
          * Send email to customer about showcase initiated
          */
-        try{
+        try {
 
-            if(Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1)
-            {
+            if (Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1) {
                 Notification::route('mail', auth()->user()->email)->notify(new ShowcaseInitiatedEmail($orderid));
             }
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
 
         }
 
 
-        
+
     }
 
 
@@ -481,7 +465,7 @@ class ShowcaseAtHomeController extends Controller
         return view('showcase.myorders');
     }
 
-    
+
     public function ordercomplete()
     {
         return view('showcase.ordercomplete');
@@ -490,6 +474,50 @@ class ShowcaseAtHomeController extends Controller
     public function buynow()
     {
         return view('showcase.buynow');
+    }
+
+    public function addTime($id)
+    {
+        $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
+        foreach ($orders as $order) {
+            if (!$order->is_timer_extended) {
+                $order->showcase_timer = Carbon::parse($order->showcase_timer)->addMinutes(10);
+                $order->is_timer_extended = true;
+                $order->save();
+            }
+        }
+        return redirect()->back()->with([
+            'message' => "Showcase order time has been added successfully",
+            'alert-type' => 'success',
+        ]);
+    }
+
+    public function cancelOrder($id)
+    {
+        $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
+        foreach ($orders as $order) {
+
+            $order->update([
+                'order_status' => 'Returned',
+                'status' => '0',
+            ]);
+
+            if (Config::get('icrm.stock_management.feature') == 1) {
+                if (Config::get('icrm.product_sku.color') == 1) {
+                    $updatestock = Productsku::where('product_id', $order->product_id)->where('color', $order->color)->where('size', $order->size)->first();
+                } else {
+                    $updatestock = Productsku::where('product_id', $order->product_id)->where('size', $order->size)->first();
+                }
+
+                $updatestock->update([
+                    'available_stock' => $updatestock->available_stock + $order->qty,
+                ]);
+            }
+        }
+        return redirect()->route('voyager.showcases.index',['label'=>'Returned'])->with([
+            'message' => "Showcase order has been cancelled",
+            'alert-type' => 'warning',
+        ]);
     }
 
 
@@ -501,20 +529,20 @@ class ShowcaseAtHomeController extends Controller
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
         $payment = $api->payment->fetch($request->razorpay_payment_id);
-        
-        if(count($input)  && !empty($input['razorpay_payment_id'])) {
+
+        if (count($input) && !empty($input['razorpay_payment_id'])) {
             try {
 
-                $payment->capture(array('amount'=>$request->amount));
+                $payment->capture(array('amount' => $request->amount));
 
             } catch (\Exception $e) {
-                return  $e->getMessage();
-                \Session::put('error',$e->getMessage());
+                return $e->getMessage();
+                \Session::put('error', $e->getMessage());
                 return redirect()->back();
             }
         }
-        
-    
+
+
         /** if payment successful then insert transaction data into the database */
         $payInfo = [
             'payment_id' => $request->razorpay_payment_id,
@@ -524,18 +552,18 @@ class ShowcaseAtHomeController extends Controller
             'currency' => $payment->currency,
             'payment_status' => $payment->status,
             'method' => $payment->method,
-         ];
+        ];
 
-         Payment::insertGetId($payInfo);
-         
+        Payment::insertGetId($payInfo);
+
         /**
          * after successfull payment add order information in the orders table
          * Clear cart
-        */
+         */
         $this->purchasecarttoorder($request->showcaseorderid);
 
-        
-         
+
+
         Session::flash('success', 'Showcase At Home order successfully placed! You can now collect product from our delivery boy.');
         // return redirect()->route('myorders');
         return response()->json(['success' => 'Payment successful']);
@@ -543,39 +571,41 @@ class ShowcaseAtHomeController extends Controller
 
     private function purchasecarttoorder($showcaseorderid)
     {
-        
+
         // Generate random order id
         $orderid = mt_rand(100000, 999999);
 
         $carts = Showcase::where('order_id', $showcaseorderid)->where('order_status', 'Moved to Bag')->get();
         $notincarts = Showcase::where('order_id', $showcaseorderid)->where('order_status', '!=', 'Moved to Bag')->get();
 
-        foreach($carts as $key => $cart)
-        {
+        foreach ($carts as $key => $cart) {
             //per product discount calculation
             $ratio = 0;
-            $showcase_refund = 0; $coupon_discount = 0; $reward_point_discount = 0; $user_credits_discount = 0;
+            $showcase_refund = 0;
+            $coupon_discount = 0;
+            $reward_point_discount = 0;
+            $user_credits_discount = 0;
 
-            if(Session::get('sordervalue') >= 0){
-                $ratio  = ($cart->price_sum / Session::get('sordervalue'));
+            if (Session::get('sordervalue') >= 0) {
+                $ratio = ($cart->price_sum / Session::get('sordervalue'));
             }
 
-            if(request()->showcaserefund > 0) {
+            if (request()->showcaserefund > 0) {
                 //showcase refund discount
                 $showcase_refund = round(($ratio * request()->showcaserefund), 2);
             }
-            if(request()->discount > 0){
+            if (request()->discount > 0) {
                 //coupon discount
                 $coupon_discount = round(($ratio * request()->discount), 2);
             }
-            if(request()->showcase_redeemedRewardPoints > 0){
+            if (request()->showcase_redeemedRewardPoints > 0) {
                 //reward point discount uptoo 20%
-                if(auth()->user()->reward_points >= request()->showcase_redeemedRewardPoints)
+                if (auth()->user()->reward_points >= request()->showcase_redeemedRewardPoints)
                     $reward_point_discount = round(($ratio * request()->showcase_redeemedRewardPoints), 2);
             }
-            if(request()->showcase_redeemedCredits > 0){
+            if (request()->showcase_redeemedCredits > 0) {
                 //wallet credits discount
-                if(auth()->user()->credits >= request()->showcase_redeemedCredits)
+                if (auth()->user()->credits >= request()->showcase_redeemedCredits)
                     $user_credits_discount = round(($ratio * request()->showcase_redeemedCredits), 2);
             }
 
@@ -586,11 +616,10 @@ class ShowcaseAtHomeController extends Controller
              */
 
 
-            if(Config::get('icrm.site_package.singel_brand_store') == 1)
-            {
+            if (Config::get('icrm.site_package.singel_brand_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => setting('seller-name.street_address_1'),
-                    'street_address_2' => setting('seller-name.street_address_2').' '.setting('seller-name.landmark'),
+                    'street_address_2' => setting('seller-name.street_address_2') . ' ' . setting('seller-name.landmark'),
                     'pincode' => setting('seller-name.pincode'),
                     'city' => setting('seller-name.city'),
                     'state' => setting('seller-name.state'),
@@ -599,11 +628,10 @@ class ShowcaseAtHomeController extends Controller
                 ];
             }
 
-            if(Config::get('icrm.site_package.multi_vendor_store') == 1)
-            {
+            if (Config::get('icrm.site_package.multi_vendor_store') == 1) {
                 $pickuplocation = [
                     'street_address_1' => $product->vendor->street_address_1,
-                    'street_address_2' => $product->vendor->street_address_2.' '.$product->vendor->landmark,
+                    'street_address_2' => $product->vendor->street_address_2 . ' ' . $product->vendor->landmark,
                     'pincode' => $product->vendor->pincode,
                     'city' => $product->vendor->city,
                     'state' => $product->vendor->state,
@@ -699,33 +727,30 @@ class ShowcaseAtHomeController extends Controller
             Session::remove('ssubtotal');
             Session::remove('stax');
             Session::remove('stotal');
-            
+
         }
 
-        if(request()->showcase_redeemedRewardPoints > 0){
+        if (request()->showcase_redeemedRewardPoints > 0) {
             auth()->user()->decrement('reward_points', request()->showcase_redeemedRewardPoints);
         }
-        if(request()->showcase_redeemedCredits > 0){
+        if (request()->showcase_redeemedCredits > 0) {
             auth()->user()->decrement('credits', request()->showcase_redeemedCredits);
         }
 
-        foreach($notincarts as $notincart)
-        {
+        foreach ($notincarts as $notincart) {
             $notincart->update([
                 'order_status' => 'Returned',
                 'status' => '0',
             ]);
 
-            if(Config::get('icrm.stock_management.feature') == 1)
-            {
-                if(Config::get('icrm.product_sku.color') == 1)
-                {
+            if (Config::get('icrm.stock_management.feature') == 1) {
+                if (Config::get('icrm.product_sku.color') == 1) {
                     $updatestock = Productsku::where('product_id', $notincart->product_id)->where('color', $notincart->color)->where('size', $notincart->size)->first();
-                }else{
+                } else {
                     $updatestock = Productsku::where('product_id', $notincart->product_id)->where('size', $notincart->size)->first();
                 }
-                
-                
+
+
                 $updatestock->update([
                     'available_stock' => $updatestock->available_stock + $notincart->qty,
                 ]);
@@ -733,7 +758,7 @@ class ShowcaseAtHomeController extends Controller
         }
 
         $this->purchaseorderemail($orderid);
-        
+
         Session::remove('showcasebagordermethod');
         Session::remove('showcasebagacceptterms');
 
@@ -751,10 +776,9 @@ class ShowcaseAtHomeController extends Controller
          * Send email to customer about showcase initiated
          */
 
-        if(Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1)
-        {
+        if (Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1) {
             Notification::route('mail', auth()->user()->email)->notify(new ShowcasePurchasedEmail($orderid));
         }
-        
+
     }
 }
