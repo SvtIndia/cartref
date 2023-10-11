@@ -737,6 +737,9 @@ class ShowcaseAtHomeController extends Controller
         Session::remove('showcasebagordermethod');
         Session::remove('showcasebagacceptterms');
 
+        Session::remove('showcase_appliedcouponcode');
+        Session::remove('showcase_redeemedRewardPoints');
+        Session::remove('showcase_redeemedCredits');
         // Session::flash('success', 'Showcase At Home Order Successfully Placed');
         // return redirect()->route('myorders');
     }

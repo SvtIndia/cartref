@@ -95,9 +95,20 @@
                         </div>
                     @endif
 
+                    @if ($items[0]->deliveryboy_id)
+                        <div class="overview-item">
+                            <span>Delivery Boy:</span>
+                            @if ($items[0]->deliveryboy_id)
+                                <strong>{{ $items[0]->deliveryboy->name }}</strong>
+                                <a href="tel:{{ $items[0]->deliveryboy->mobile }}"> {{ $items[0]->deliveryboy->mobile }} </a>
+                            @else
+                                <strong>Not Assigned</strong>
+                            @endif
+                        </div>
+                    @endif
                 </div>
 
-                
+
                 <div class="order-actions">
                     <div class="float-left">
                         <a href="{{ route('showcase.myorders') }}" class="btn btn-icon-left btn-dark btn-rounded btn-md mb-4"><i class="d-icon-arrow-left"></i> My Showcases</a>

@@ -505,7 +505,9 @@ class Buynow extends Component
             $order->customer_email = $cart->customer_email;
             $order->customer_contact_number = $cart->customer_contact_number;
             $order->customer_alt_contact_number = $cart->customer_alt_contact_number;
-            $order->registered_contact_number = auth()->user()->mobile;
+            if($cart->user_id && User::find($cart->user_id)){
+                $order->registered_contact_number = User::find($cart->user_id)->mobile;
+            }
             $order->height = $cart->height;
             $order->length = $cart->length;
             $order->width = $cart->breadth;
@@ -518,8 +520,8 @@ class Buynow extends Component
 
             $order->used_reward_points = $reward_point_discount ?? 0;
             $order->used_user_credits = $user_credits_discount ?? 0;
-            $order->save();
 //            dd($order);
+            $order->save();
 
             if ($reward_point_discount > 0) {
                 //make log
