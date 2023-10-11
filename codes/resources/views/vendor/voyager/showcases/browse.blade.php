@@ -474,12 +474,16 @@
                                     <tr @if($data->order_status == 'Showcased') style="background: #fce5c1;" @elseif($data->order_status == 'Out For Showcase') style="background: #c2e6fa;" @elseif($data->order_status == 'Purchased' OR $data->order_status == 'Moved to Bag') style="background: #d4fae4;" @endif>
                                         <td class="no-sort no-click bread-actions">
                                             <ul style="display: inline-flex;">
-                                                @foreach($actions as $action)
-                                                    @if (!method_exists($action, 'massAction'))
-                                                        @include('voyager::bread.partials.actions', ['action' => $action])
-                                                    @endif
-                                                    
-                                                @endforeach
+                                                @if(auth()->user()->hasRole(['Delivery Head']))
+                                                    <a href="{{ route('voyager.showcases.edit', $data->id) }}" target="_blank" class="btn btn-sm btn-info"><i class="voyager-edit"></i> Assign</a>
+                                                    <a href="{{ route('voyager.showcases.edit', $data->id) }}" target="_blank" class="btn btn-sm btn-warning"><i class="voyager-eye"></i> View</a>
+                                                @else
+                                                    @foreach($actions as $action)
+                                                        @if (!method_exists($action, 'massAction'))
+                                                            @include('voyager::bread.partials.actions', ['action' => $action])
+                                                        @endif
+                                                    @endforeach
+                                                @endif
                                                 
                                                 @if (auth()->user()->hasRole(['Delivery Head', 'Delivery Boy', 'Client', 'admin']))
                                                     @if (request('label') == 'Showcased')
