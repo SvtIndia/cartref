@@ -25,8 +25,8 @@
         @can('delete', app($dataType->model_name))
             @if ($usesSoftDeletes)
                 <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes"
-                    data-toggle="toggle" data-on="{{ __('voyager::bread.soft_deletes_off') }}"
-                    data-off="{{ __('voyager::bread.soft_deletes_on') }}">
+                       data-toggle="toggle" data-on="{{ __('voyager::bread.soft_deletes_off') }}"
+                       data-off="{{ __('voyager::bread.soft_deletes_on') }}">
             @endif
         @endcan
 
@@ -80,7 +80,7 @@
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->where('order_status', 'New Order')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'New Order')->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -95,7 +95,7 @@
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->where('order_status', 'Out For Showcase')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'Out For Showcase')->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -106,13 +106,12 @@
                             </a>
 
 
-
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Showcased">
                                 <div class="item @if (request('label') == 'Showcased') showcased active @endif">
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->whereIn('order_status', ['Showcased', 'Moved to Bag'])->count() }}</span>
+                                                class="count">{{ $showcases->whereIn('order_status', ['Showcased', 'Moved to Bag'])->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -127,7 +126,7 @@
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->where('order_status', 'Purchased')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'Purchased')->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -142,7 +141,7 @@
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->where('order_status', 'Returned')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'Returned')->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -158,7 +157,7 @@
 
                                     <div class="stat">
                                         <span
-                                            class="count">{{ $showcases->where('order_status', 'Cancelled')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'Cancelled')->count() }}</span>
                                     </div>
 
                                     <div class="info">
@@ -193,23 +192,25 @@
                                         <select id="search_key" name="key">
                                             @foreach ($searchNames as $key => $name)
                                                 <option value="{{ $key }}"
-                                                    @if ($search->key == $key || (empty($search->key) && $key == $defaultSearchKey)) selected @endif>{{ $name }}
+                                                        @if ($search->key == $key || (empty($search->key) && $key == $defaultSearchKey)) selected @endif>{{ $name }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-2">
                                         <select id="filter" name="filter">
-                                            <option value="contains" @if ($search->filter == 'contains') selected @endif>
-                                                contains</option>
+                                            <option value="contains"
+                                                    @if ($search->filter == 'contains') selected @endif>
+                                                contains
+                                            </option>
                                             <option value="equals" @if ($search->filter == 'equals') selected @endif>=
                                             </option>
                                         </select>
                                     </div>
                                     <div class="input-group col-md-12">
                                         <input type="text" class="form-control"
-                                            placeholder="{{ __('voyager::generic.search') }}" name="s"
-                                            value="{{ $search->value }}">
+                                               placeholder="{{ __('voyager::generic.search') }}" name="s"
+                                               value="{{ $search->value }}">
                                         <span class="input-group-btn">
                                             <button class="btn btn-info btn-lg" type="submit">
                                                 <i class="voyager-search"></i>
@@ -471,363 +472,377 @@
                         <div class="table-responsive">
                             <table id="dataTable" class="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th class="actions text-right dt-not-orderable">
-                                            {{ __('voyager::generic.actions') }}</th>
-                                        <th>ID</th>
-                                        @if ($showCheckboxColumn)
-                                            <th class="dt-not-orderable">
-                                                <input type="checkbox" class="select_all">
-                                            </th>
-                                        @endif
-                                        <th>Order</th>
-                                        <th style="border-right:none;">Product Information</th>
-                                        <th style="border-right:none;"></th>
-                                        <th></th>
-                                        <th>Amount</th>
-                                        <th>Logistic Details</th>
+                                <tr>
+                                    <th class="actions text-right dt-not-orderable">
+                                        {{ __('voyager::generic.actions') }}</th>
+                                    <th>ID</th>
+                                    @if ($showCheckboxColumn)
+                                        <th class="dt-not-orderable">
+                                            <input type="checkbox" class="select_all">
+                                        </th>
+                                    @endif
+                                    <th>Order</th>
+                                    <th style="border-right:none;">Product Information</th>
+                                    <th style="border-right:none;"></th>
+                                    <th></th>
+                                    <th>Amount</th>
+                                    <th>Logistic Details</th>
 
-                                        @if (auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy']))
-                                            <th>Vendor Details</th>
-                                            <th>Buyer Details</th>
-                                        @endif
-                                    </tr>
+                                    @if (auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy']))
+                                        <th>Vendor Details</th>
+                                        <th>Buyer Details</th>
+                                    @endif
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dataTypeContent as $data)
-                                        <tr
-                                            @if ($data->order_status == 'Showcased') style="background: #fce5c1;" @elseif($data->order_status == 'Out For Showcase') style="background: #c2e6fa;" @elseif($data->order_status == 'Purchased' or $data->order_status == 'Moved to Bag') style="background: #d4fae4;" @endif>
-                                            <td class="no-sort no-click bread-actions">
-                                                <ul style="display: inline-flex;">
-                                                    @if (auth()->user()->hasRole(['Delivery Head']))
-                                                        <a href="{{ route('voyager.showcases.edit', $data->id) }}"
-                                                            target="_blank" class="btn btn-sm btn-info"><i
+                                @php
+                                    $orderStatus = true;
+                                    foreach($dataTypeContent as $item){
+                                        if($item->order_status != 'Showcased'){
+                                            $orderStatus = false;
+                                            break;
+                                        }
+                                    }
+                                @endphp
+                                @foreach ($dataTypeContent as $data)
+                                    <tr
+                                            @if ($data->order_status == 'Showcased') style="background: #fce5c1;"
+                                            @elseif($data->order_status == 'Out For Showcase') style="background: #c2e6fa;"
+                                            @elseif($data->order_status == 'Purchased' or $data->order_status == 'Moved to Bag') style="background: #d4fae4;" @endif>
+                                        <td class="no-sort no-click bread-actions">
+                                            <ul style="display: inline-flex;">
+                                                @if (auth()->user()->hasRole(['Delivery Head']))
+                                                    <a href="{{ route('voyager.showcases.edit', $data->id) }}"
+                                                       target="_blank" class="btn btn-sm btn-info"><i
                                                                 class="voyager-edit"></i> Assign</a>
-                                                        <a href="{{ route('voyager.showcases.edit', $data->id) }}"
-                                                            target="_blank" class="btn btn-sm btn-warning"><i
+                                                    <a href="{{ route('voyager.showcases.edit', $data->id) }}"
+                                                       target="_blank" class="btn btn-sm btn-warning"><i
                                                                 class="voyager-eye"></i> View</a>
-                                                    @else
-                                                        @foreach ($actions as $action)
-                                                            @if (!method_exists($action, 'massAction'))
-                                                                @include(
-                                                                    'voyager::bread.partials.actions',
-                                                                    ['action' => $action]
-                                                                )
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
+                                                @else
+                                                    @foreach ($actions as $action)
+                                                        @if (!method_exists($action, 'massAction'))
+                                                            @include(
+                                                                'voyager::bread.partials.actions',
+                                                                ['action' => $action]
+                                                            )
+                                                        @endif
+                                                    @endforeach
+                                                @endif
 
-                                                    @if (auth()->user()->hasRole(['Delivery Head', 'Delivery Boy', 'Client', 'admin']))
-                                                        @if (request('label') == 'Showcased')
-                                                            @if ($data->order_status == 'Showcased')
-                                                                <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}/buynow"
-                                                                    target="_blank" class="btn btn-sm btn-info"><i
+                                                @if (auth()->user()->hasRole(['Delivery Head', 'Delivery Boy', 'Client', 'admin']))
+                                                    @if (request('label') == 'Showcased')
+                                                        @if ($data->order_status == 'Showcased')
+                                                            <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}/buynow"
+                                                               target="_blank" class="btn btn-sm btn-info"><i
                                                                         class="voyager-truck"></i> Order</a>
-                                                            @elseif($data->order_status == 'Moved to Bag')
-                                                                <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}"
-                                                                    target="_blank" class="btn btn-sm btn-info"><i
+                                                        @elseif($data->order_status == 'Moved to Bag')
+                                                            <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}"
+                                                               target="_blank" class="btn btn-sm btn-info"><i
                                                                         class="voyager-truck"></i> Order</a>
-                                                            @endif
                                                         @endif
                                                     @endif
-                                                </ul>
-                                                @if ($data->order_status == 'Showcased')
-                                                    @php
-                                                        $timer = Carbon\Carbon::parse($data->showcase_timer);
-                                                        $current = Carbon\Carbon::now();
-                                                        $diff = $current->diff($timer)->format('%I:%S');
-                                                    @endphp
-                                                    @if (strtotime($data->showcase_timer) > time())
-                                                        <p style="color:blue;font-size: 20px;text-align: center;">
+                                                @endif
+                                            </ul>
+
+                                            @if (auth()->user()->hasRole(['Delivery Boy']) && $orderStatus)
+                                                @php
+                                                    $timer = Carbon\Carbon::parse($data->showcase_timer);
+                                                    $current = Carbon\Carbon::now();
+                                                    $diff = $current->diff($timer)->format('%I:%S');
+                                                @endphp
+                                                @if (strtotime($data->showcase_timer) > time())
+                                                    <p style="color:blue;font-size: 20px;text-align: center;">
                                                             <span style="font-weight:500;" class="showcase_timer"
-                                                                data-timer="{{ $data->showcase_timer }}">{{ $diff }}</span>
-                                                            mins left
-                                                        </p>
-                                                        @if ($data->is_timer_extended)
-                                                            <form
+                                                                  data-timer="{{ $data->showcase_timer }}">{{ $diff }}</span>
+                                                        mins left
+                                                    </p>
+                                                    @if ($data->is_timer_extended)
+                                                        <form
                                                                 action="/showcase-at-home/my-orders/order/{{ $data->order_id }}/cancel"
                                                                 class="d-none" id="cancel-form" method="POST">
-                                                                @csrf
-                                                            </form>
-                                                        @endif
-                                                    @else
-                                                        <p style="color:red;font-size: 14px;text-align: center;">
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                @else
+                                                    <p style="color:red;font-size: 14px;text-align: center;">
                                                             <span style="font-weight:500;">Time ended
                                                                 at{{ date('H:i', strtotime($data->showcase_timer)) }}</span>
-                                                        </p>
-                                                        @if (!$data->is_timer_extended)
-                                                            <ul style="display: inline-flex;">
-                                                                <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}/add-time"
-                                                                    class="btn btn-lg btn-info">
-                                                                    <i class="voyager-watch"></i> More Time
-                                                                </a>
-                                                            </ul>
-                                                        @endif
+                                                    </p>
+                                                    @if (!$data->is_timer_extended)
+                                                        <ul style="display: inline-flex;">
+                                                            <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}/add-time"
+                                                               class="btn btn-lg btn-info">
+                                                                <i class="voyager-watch"></i> More Time
+                                                            </a>
+                                                        </ul>
                                                     @endif
                                                 @endif
-                                            </td>
-                                            <td>
-                                                {{ $data->id }}
-                                            </td>
-                                            @if ($showCheckboxColumn)
-                                                <td>
-                                                    <input type="checkbox" name="row_id"
-                                                        id="checkbox_{{ $data->getKey() }}"
-                                                        value="{{ $data->getKey() }}">
-                                                </td>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $data->id }}
+                                        </td>
+                                        @if ($showCheckboxColumn)
+                                            <td>
+                                                <input type="checkbox" name="row_id"
+                                                       id="checkbox_{{ $data->getKey() }}"
+                                                       value="{{ $data->getKey() }}">
+                                            </td>
+                                        @endif
+                                        <td>
+                                            <div>
+                                                {{ $data->created_at }}
+                                            </div>
+
+                                            <br>
+
+                                            <div>
+                                                <a
+                                                        href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?order_id={{ $data->order_id }}">
+                                                    {{ $data->order_id }}
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="product-information">
+                                                @if (!empty($data->color))
+                                                    <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
+                                                       class="name" target="_blank">
+                                                        @else
+                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
+                                                               class="name" target="_blank">
+                                                                @endif
+                                                                @if (!empty($data->color))
+                                                                    @php
+                                                                        $colorimage = App\Productcolor::where('color', $data->color)
+                                                                            ->where('product_id', $data->product_id)
+                                                                            ->first();
+                                                                    @endphp
+
+                                                                    @if (!empty($colorimage))
+                                                                        @if (!empty($colorimage->main_image))
+                                                                            <img src="{{ Voyager::image($colorimage->main_image) }}"
+                                                                                 alt="{{ $data->product->name }}">
+                                                                        @else
+                                                                            <img src="{{ Voyager::image($data->product->image) }}"
+                                                                                 alt="{{ $data->product->name }}">
+                                                                        @endif
+                                                                    @else
+                                                                        <img src="{{ Voyager::image($data->product->image) }}"
+                                                                             alt="{{ $data->product->name }}">
+                                                                    @endif
+                                                                @else
+                                                                    <img src="{{ Voyager::image($data->product->image) }}"
+                                                                         alt="{{ $data->product->name }}">
+                                                                @endif
+
+                                                            </a>
+                                                            <div class="info">
+                                                                @if (!empty($data->color))
+                                                                    <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
+                                                                       class="name" target="_blank">
+                                                                        @else
+                                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
+                                                                               class="name" target="_blank">
+                                                                                @endif
+                                                                                {{ Str::limit($data->product->name, 30) }}
+                                                                            </a>
+                                                                            <div>
+                                                                                <div>
+                                                                                    SKU: {{ $data->product_sku }}
+                                                                                </div>
+
+                                                                                @if (!empty($data->size))
+                                                                                    <div>
+                                                                                        Size: {{ $data->size }}
+                                                                                    </div>
+                                                                                @endif
+
+                                                                                @if (!empty($data->color))
+                                                                                    <div>
+                                                                                        Color: {{ $data->color }}
+                                                                                    </div>
+                                                                                @endif
+
+
+                                                                                @if (!empty($data->g_plus))
+                                                                                    <div>
+                                                                                        G+: {{ $data->g_plus }}
+                                                                                    </div>
+                                                                                @endif
+
+                                                                                @if (!empty($data->requirement_document))
+                                                                                    <div>
+                                                                                        Requirements: <a
+                                                                                                href="{{ $data->requirement_document }}"
+                                                                                                style="color: blue;">Download</a>
+                                                                                    </div>
+                                                                                @endif
+
+                                                                                @if (!empty($data->customized_image))
+                                                                                    <div>
+                                                                                        Customized Image:
+                                                                                        <a href="{{ $data->customized_image }}"
+                                                                                           style="color: blue;">Download</a>
+                                                                                    </div>
+                                                                                @endif
+
+                                                                                @if (!empty($data->original_file))
+                                                                                    <div>
+                                                                                        Original File:
+                                                                                        @php
+                                                                                            $originalfiles = collect(json_decode($data->original_file));
+                                                                                        @endphp
+                                                                                        @foreach ($originalfiles as $key => $originalfile)
+                                                                                            <a href="{{ $originalfile }}"
+                                                                                               target="_blank"
+                                                                                               style="color: blue;">Attachment
+                                                                                                {{ $key + 1 }} @if ($loop->last)
+                                                                                                @else
+                                                                                                    ,
+                                                                                                @endif
+                                                                                            </a>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                @endif
+
+                                                                                <div>
+                                                                                    Brand: {{ $data->product->brand_id }}
+                                                                                </div>
+
+                                                                                @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
+                                                                                    @if (!empty($data->vendor_id))
+                                                                                        <div>
+                                                                                            Vendor: {{ $data->vendor->brand_name }}
+                                                                                        </div>
+                                                                                    @endif
+                                                                                @endif
+                                                                            </div>
+                                                            </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                Item ID:
+                                                @if (!empty($data->color))
+                                                    <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
+                                                       target="_blank">
+                                                        @else
+                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
+                                                               target="_blank">
+                                                                @endif
+                                                                {{ $data->product_id }}
+                                                            </a>
+                                            </div>
+                                            <div>
+                                                HSN: {{ $data->product->productsubcategory->hsn }}
+                                            </div>
+                                            <div>
+                                                Type: {{ $data->type }}
+                                            </div>
+                                            <div>
+                                                Service Charges:
+                                                {{ Config::get('icrm.currency.icon') . $data->order_value }}/-
+                                            </div>
+                                        </td>
+                                        <td>
+                                            Qty: {{ $data->qty }}
+                                        </td>
+                                        <td>
+                                            <div>
+                                                {{ Config::get('icrm.currency.icon') . ' ' . $data->product_offerprice }}
+                                            </div>
+                                            <div>{{ $data->order_method }}</div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                @if ($data->order_status == 'Under manufacturing')
+                                                    <span style="color: orange">{{ $data->order_status }}</span>
+                                                @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
+                                                    <span style="color: green">{{ $data->order_status }}</span>
+                                                @else
+                                                    <span>{{ $data->order_status }}</span>
+                                                @endif
+                                            </div>
+
+                                            @if (!empty($data->order_substatus))
+                                                <div>
+                                                    {{ $data->order_substatus }}
+                                                </div>
+                                            @endif
+
+                                            @if ($data->deliveryboy_id)
+                                                <br>
+                                                <div>
+                                                    {{ $data->deliveryboy->name }}
+                                                    <a href="tel:{{ $data->deliveryboy->mobile }}">
+                                                        {{ $data->deliveryboy->mobile }} </a>
+                                                </div>
+                                            @else
+                                                <div>
+                                                    Not Assigned
+                                                </div>
+                                            @endif
+
+
+                                            @if ($data->deliveryhead_id)
+                                                <br>
+                                                <div>
+                                                    {{ $data->deliveryhead->name }}
+                                                    <a
+                                                            href="tel:{{ $data->deliveryhead->mobile }}">{{ $data->deliveryhead->mobile }}</a>
+                                                </div>
+                                            @else
+                                                <div>
+                                                    Not Assigned
+                                                </div>
+                                            @endif
+
+
+                                        </td>
+
+                                        @if (auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy']))
                                             <td>
                                                 <div>
-                                                    {{ $data->created_at }}
+                                                    {{ $data->vendor->brand_name }}
                                                 </div>
-
-                                                <br>
-
+                                                <div>
+                                                    {{ $data->pickup_streetaddress1 . ' ' . $data->pickup_streetaddress2 . ' ' . $data->pickup_pincode . ' ' . $data->pickup_city . ' ' . $data->pickup_state . ' ' . $data->pickup_country }}
+                                                </div>
                                                 <div>
                                                     <a
-                                                        href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?order_id={{ $data->order_id }}">
-                                                        {{ $data->order_id }}
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="product-information">
-                                                    @if (!empty($data->color))
-                                                        <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
-                                                            class="name" target="_blank">
-                                                        @else
-                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
-                                                                class="name" target="_blank">
-                                                    @endif
-                                                    @if (!empty($data->color))
-                                                        @php
-                                                            $colorimage = App\Productcolor::where('color', $data->color)
-                                                                ->where('product_id', $data->product_id)
-                                                                ->first();
-                                                        @endphp
-
-                                                        @if (!empty($colorimage))
-                                                            @if (!empty($colorimage->main_image))
-                                                                <img src="{{ Voyager::image($colorimage->main_image) }}"
-                                                                    alt="{{ $data->product->name }}">
-                                                            @else
-                                                                <img src="{{ Voyager::image($data->product->image) }}"
-                                                                    alt="{{ $data->product->name }}">
-                                                            @endif
-                                                        @else
-                                                            <img src="{{ Voyager::image($data->product->image) }}"
-                                                                alt="{{ $data->product->name }}">
-                                                        @endif
-                                                    @else
-                                                        <img src="{{ Voyager::image($data->product->image) }}"
-                                                            alt="{{ $data->product->name }}">
-                                                    @endif
-
-                                                    </a>
-                                                    <div class="info">
-                                                        @if (!empty($data->color))
-                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
-                                                                class="name" target="_blank">
-                                                            @else
-                                                                <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
-                                                                    class="name" target="_blank">
-                                                        @endif
-                                                        {{ Str::limit($data->product->name, 30) }}
-                                                        </a>
-                                                        <div>
-                                                            <div>
-                                                                SKU: {{ $data->product_sku }}
-                                                            </div>
-
-                                                            @if (!empty($data->size))
-                                                                <div>
-                                                                    Size: {{ $data->size }}
-                                                                </div>
-                                                            @endif
-
-                                                            @if (!empty($data->color))
-                                                                <div>
-                                                                    Color: {{ $data->color }}
-                                                                </div>
-                                                            @endif
-
-
-                                                            @if (!empty($data->g_plus))
-                                                                <div>
-                                                                    G+: {{ $data->g_plus }}
-                                                                </div>
-                                                            @endif
-
-                                                            @if (!empty($data->requirement_document))
-                                                                <div>
-                                                                    Requirements: <a
-                                                                        href="{{ $data->requirement_document }}"
-                                                                        style="color: blue;">Download</a>
-                                                                </div>
-                                                            @endif
-
-                                                            @if (!empty($data->customized_image))
-                                                                <div>
-                                                                    Customized Image:
-                                                                    <a href="{{ $data->customized_image }}"
-                                                                        style="color: blue;">Download</a>
-                                                                </div>
-                                                            @endif
-
-                                                            @if (!empty($data->original_file))
-                                                                <div>
-                                                                    Original File:
-                                                                    @php
-                                                                        $originalfiles = collect(json_decode($data->original_file));
-                                                                    @endphp
-                                                                    @foreach ($originalfiles as $key => $originalfile)
-                                                                        <a href="{{ $originalfile }}" target="_blank"
-                                                                            style="color: blue;">Attachment
-                                                                            {{ $key + 1 }} @if ($loop->last)
-                                                                            @else,
-                                                                            @endif
-                                                                        </a>
-                                                                    @endforeach
-                                                                </div>
-                                                            @endif
-
-                                                            <div>
-                                                                Brand: {{ $data->product->brand_id }}
-                                                            </div>
-
-                                                            @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                                                @if (!empty($data->vendor_id))
-                                                                    <div>
-                                                                        Vendor: {{ $data->vendor->brand_name }}
-                                                                    </div>
-                                                                @endif
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    Item ID:
-                                                    @if (!empty($data->color))
-                                                        <a href="{{ route('product.slug', ['slug' => $data->product->slug, 'color' => $data->color]) }}"
-                                                            target="_blank">
-                                                        @else
-                                                            <a href="{{ route('product.slug', ['slug' => $data->product->slug]) }}"
-                                                                target="_blank">
-                                                    @endif
-                                                    {{ $data->product_id }}
-                                                    </a>
-                                                </div>
-                                                <div>
-                                                    HSN: {{ $data->product->productsubcategory->hsn }}
-                                                </div>
-                                                <div>
-                                                    Type: {{ $data->type }}
-                                                </div>
-                                                <div>
-                                                    Service Charges:
-                                                    {{ Config::get('icrm.currency.icon') . $data->order_value }}/-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                Qty: {{ $data->qty }}
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    {{ Config::get('icrm.currency.icon') . ' ' . $data->product_offerprice }}
-                                                </div>
-                                                <div>{{ $data->order_method }}</div>
-                                            </td>
-
-                                            <td>
-                                                <div>
-                                                    @if ($data->order_status == 'Under manufacturing')
-                                                        <span style="color: orange">{{ $data->order_status }}</span>
-                                                    @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
-                                                        <span style="color: green">{{ $data->order_status }}</span>
-                                                    @else
-                                                        <span>{{ $data->order_status }}</span>
-                                                    @endif
-                                                </div>
-
-                                                @if (!empty($data->order_substatus))
-                                                    <div>
-                                                        {{ $data->order_substatus }}
-                                                    </div>
-                                                @endif
-
-                                                @if ($data->deliveryboy_id)
-                                                    <br>
-                                                    <div>
-                                                        {{ $data->deliveryboy->name }}
-                                                        <a href="tel:{{ $data->deliveryboy->mobile }}">
-                                                            {{ $data->deliveryboy->mobile }} </a>
-                                                    </div>
-                                                @else
-                                                    <div>
-                                                        Not Assigned
-                                                    </div>
-                                                @endif
-
-
-                                                @if ($data->deliveryhead_id)
-                                                    <br>
-                                                    <div>
-                                                        {{ $data->deliveryhead->name }}
-                                                        <a
-                                                            href="tel:{{ $data->deliveryhead->mobile }}">{{ $data->deliveryhead->mobile }}</a>
-                                                    </div>
-                                                @else
-                                                    <div>
-                                                        Not Assigned
-                                                    </div>
-                                                @endif
-
-
-                                            </td>
-
-                                            @if (auth()->user()->hasRole(['admin', 'Client', 'Delivery Head', 'Delivery Boy']))
-                                                <td>
-                                                    <div>
-                                                        {{ $data->vendor->brand_name }}
-                                                    </div>
-                                                    <div>
-                                                        {{ $data->pickup_streetaddress1 . ' ' . $data->pickup_streetaddress2 . ' ' . $data->pickup_pincode . ' ' . $data->pickup_city . ' ' . $data->pickup_state . ' ' . $data->pickup_country }}
-                                                    </div>
-                                                    <div>
-                                                        <a
                                                             href="tel:{{ $data->vendor->mobile }}">{{ $data->vendor->mobile }}</a>
-                                                    </div>
-                                                </td>
+                                                </div>
+                                            </td>
 
-                                                <td>
-                                                    <div>
-                                                        {{ $data->customer_name }}
-                                                    </div>
-                                                    <div>
-                                                        {{ $data->dropoff_streetaddress1 . ' ' . $data->dropoff_streetaddress2 . ' ' . $data->dropoff_pincode . ' ' . $data->dropoff_city . ' ' . $data->dropoff_state . ' ' . $data->dropoff_country }}
-                                                    </div>
-                                                    <div>
-                                                        <a
+                                            <td>
+                                                <div>
+                                                    {{ $data->customer_name }}
+                                                </div>
+                                                <div>
+                                                    {{ $data->dropoff_streetaddress1 . ' ' . $data->dropoff_streetaddress2 . ' ' . $data->dropoff_pincode . ' ' . $data->dropoff_city . ' ' . $data->dropoff_state . ' ' . $data->dropoff_country }}
+                                                </div>
+                                                <div>
+                                                    <a
                                                             href="tel:{{ $data->customer_contact_number }}">{{ $data->customer_contact_number }}</a>
-                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <a
+                                                            href="tel:{{ $data->customer_alt_contact_number }}">{{ $data->customer_alt_contact_number }}</a>
+                                                </div>
+
+                                                @if ($data->customer_contact_number != $data->registered_contact_number)
                                                     <div>
                                                         <a
-                                                            href="tel:{{ $data->customer_alt_contact_number }}">{{ $data->customer_alt_contact_number }}</a>
-                                                    </div>
-
-                                                    @if ($data->customer_contact_number != $data->registered_contact_number)
-                                                        <div>
-                                                            <a
                                                                 href="tel:{{ $data->registered_contact_number }}">{{ $data->registered_contact_number }}</a>
-                                                        </div>
-                                                    @endif
-                                                </td>
-                                            @endif
+                                                    </div>
+                                                @endif
+                                            </td>
+                                        @endif
 
-                                        </tr>
-                                    @endforeach
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -916,9 +931,9 @@
         <script src="{{ voyager_asset('lib/js/dataTables.responsive.min.js') }}"></script>
     @endif
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             @if (!$dataType->server_side)
-                var table = $('#dataTable').DataTable({!! json_encode(
+            var table = $('#dataTable').DataTable({!! json_encode(
                     array_merge(
                         [
                             'order' => $orderColumn,
@@ -930,26 +945,26 @@
                     true,
                 ) !!});
             @else
-                $('#search-input select').select2({
-                    minimumResultsForSearch: Infinity
-                });
+            $('#search-input select').select2({
+                minimumResultsForSearch: Infinity
+            });
             @endif
 
             @if ($isModelTranslatable)
-                $('.side-body').multilingual();
-                //Reinitialise the multilingual features when they change tab
-                $('#dataTable').on('draw.dt', function() {
-                    $('.side-body').data('multilingual').init();
-                })
+            $('.side-body').multilingual();
+            //Reinitialise the multilingual features when they change tab
+            $('#dataTable').on('draw.dt', function () {
+                $('.side-body').data('multilingual').init();
+            })
             @endif
-            $('.select_all').on('click', function(e) {
+            $('.select_all').on('click', function (e) {
                 $('input[name="row_id"]').prop('checked', $(this).prop('checked')).trigger('change');
             });
         });
 
 
         var deleteFormAction;
-        $('td').on('click', '.delete', function(e) {
+        $('td').on('click', '.delete', function (e) {
             $('#delete_form')[0].action = '{{ route('voyager.' . $dataType->slug . '.destroy', '__id') }}'
                 .replace(
                     '__id', $(this).data('id'));
@@ -957,34 +972,34 @@
         });
 
         @if ($usesSoftDeletes)
-            @php
-                $params = [
-                    's' => $search->value,
-                    'filter' => $search->filter,
-                    'key' => $search->key,
-                    'order_by' => $orderBy,
-                    'sort_order' => $sortOrder,
-                ];
-            @endphp
-            $(function() {
-                $('#show_soft_deletes').change(function() {
-                    if ($(this).prop('checked')) {
-                        $('#dataTable').before(
-                            '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 1]), true) }}"></a>'
-                        );
-                    } else {
-                        $('#dataTable').before(
-                            '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 0]), true) }}"></a>'
-                        );
-                    }
+        @php
+            $params = [
+                's' => $search->value,
+                'filter' => $search->filter,
+                'key' => $search->key,
+                'order_by' => $orderBy,
+                'sort_order' => $sortOrder,
+            ];
+        @endphp
+        $(function () {
+            $('#show_soft_deletes').change(function () {
+                if ($(this).prop('checked')) {
+                    $('#dataTable').before(
+                        '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 1]), true) }}"></a>'
+                    );
+                } else {
+                    $('#dataTable').before(
+                        '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 0]), true) }}"></a>'
+                    );
+                }
 
-                    $('#redir')[0].click();
-                })
+                $('#redir')[0].click();
             })
+        })
         @endif
-        $('input[name="row_id"]').on('change', function() {
+        $('input[name="row_id"]').on('change', function () {
             var ids = [];
-            $('input[name="row_id"]').each(function() {
+            $('input[name="row_id"]').each(function () {
                 if ($(this).is(':checked')) {
                     ids.push($(this).val());
                 }
@@ -996,7 +1011,7 @@
         var countDownDate = new Date($('.showcase_timer')[0].dataset.timer).getTime();
 
         // Update the count down every 1 second
-        var x = setInterval(function() {
+        var x = setInterval(function () {
 
             // Get today's date and time
             var now = new Date().getTime();
@@ -1009,14 +1024,21 @@
             var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Output the result in an element with id="demo"
+            minutes = minutes.toString().padStart(2, '0'); // 00:00 format
+            seconds = seconds.toString().padStart(2, '0');
+
+            console.log(diff);
+
             $('.showcase_timer').html(minutes + ":" + seconds);
 
             // If the count down is over, write some text
             if (diff < 0) {
                 clearInterval(x);
-                console.log('object');
-                $('#cancel-form').submit();
+                if ($('#cancel-form').length) {
+                    $('#cancel-form').submit();
+                } else {
+                    window.location.reload();
+                }
                 $('.showcase_timer').html("0");
             }
         }, 1000);

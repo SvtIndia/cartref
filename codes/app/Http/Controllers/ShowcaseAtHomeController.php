@@ -494,30 +494,48 @@ class ShowcaseAtHomeController extends Controller
 
     public function cancelOrder($id)
     {
-        $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
-        foreach ($orders as $order) {
+        $orders = Showcase::where('order_id', $id)->get();
 
-            $order->update([
-                'order_status' => 'Returned',
-                'status' => '0',
-            ]);
-
-            if (Config::get('icrm.stock_management.feature') == 1) {
-                if (Config::get('icrm.product_sku.color') == 1) {
-                    $updatestock = Productsku::where('product_id', $order->product_id)->where('color', $order->color)->where('size', $order->size)->first();
-                } else {
-                    $updatestock = Productsku::where('product_id', $order->product_id)->where('size', $order->size)->first();
-                }
-
-                $updatestock->update([
-                    'available_stock' => $updatestock->available_stock + $order->qty,
-                ]);
+        $orderStatus = true;
+        foreach($orders as $item){
+            if($item->order_status != 'Showcased'){
+                $orderStatus = false;
+                break;
             }
         }
-        return redirect()->route('voyager.showcases.index',['label'=>'Returned'])->with([
-            'message' => "Showcase order has been cancelled",
-            'alert-type' => 'warning',
-        ]);
+        if($orderStatus){
+            $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
+            foreach ($orders as $order) {
+
+                $order->update([
+                    'order_status' => 'Returned',
+                    'status' => '0',
+                ]);
+
+                if (Config::get('icrm.stock_management.feature') == 1) {
+                    if (Config::get('icrm.product_sku.color') == 1) {
+                        $updatestock = Productsku::where('product_id', $order->product_id)->where('color', $order->color)->where('size', $order->size)->first();
+                    } else {
+                        $updatestock = Productsku::where('product_id', $order->product_id)->where('size', $order->size)->first();
+                    }
+
+                    $updatestock->update([
+                        'available_stock' => $updatestock->available_stock + $order->qty,
+                    ]);
+                }
+            }
+
+            return redirect()->route('voyager.showcases.index',['label'=>'Returned'])->with([
+                'message' => "Showcase order has been cancelled",
+                'alert-type' => 'warning',
+            ]);
+        }
+        else{
+            return redirect()->route('voyager.showcases.index')->with([
+                'message' => "Failed to cancel the order",
+                'alert-type' => 'error',
+            ]);
+        }
     }
 
 
