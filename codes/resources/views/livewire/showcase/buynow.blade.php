@@ -111,7 +111,7 @@
 
 
                     </div>
-                    <aside class="col-lg-4 custom-sticky-sidebar-wrapper">
+                    <aside class="col-lg-4 custom-sticky-sidebar-wrapper custom-total">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
                             <div class="summary mb-4">
                                 <h3 class="summary-title text-left">Totals</h3>
@@ -175,6 +175,14 @@
                                         </div>
                                     @endif
 
+                                    <tr>
+                                        <td class="summary-subtitle">Total</td>
+                                        <td class="summary-subtitle text-body">{{ Config::get('icrm.currency.icon') }}{{ number_format($this->totalMrp, 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="">Cartrefs Convenance Discount</td>
+                                        <td class="text-body">-{{ Config::get('icrm.currency.icon') }}{{ number_format(($this->totalMrp - $ordervalue), 2) }}</td>
+                                    </tr>
                                     <tr class="summary-subtotal">
                                         <td>
                                             <h4 class="summary-subtitle">Order Value</h4>
@@ -309,6 +317,14 @@
                                     </label>
                                 </div>
 
+                                <span class="you-save">
+                                    Amaazzzzingg!! You Saved {{ Config::get('icrm.currency.icon') }}{{ $this->totalSave }}/- on this order.
+                                </span><br>
+                                <div class="happy-shopping">
+                                    <span class="keep shopping">Keep Shopping</span>
+                                    <span class="keep smiling">Keep Smiling</span>
+                                    <span class="keep saving">Keep Saving!</span>
+                                </div>
                                 @if (Session::get('showcasebagordermethod') == 'cod')
 
                                     <div>

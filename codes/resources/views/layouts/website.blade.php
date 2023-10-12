@@ -306,6 +306,49 @@
             }
         }
 
+        /*  Showcase Form Checkout  */
+        .custom-total .you-save{
+            color:#57a1f0;
+            font-size: 2rem;
+            font-weight: 550;
+            font-family: 'BenguiatStd-Bold';
+        }
+        .custom-total .happy-shopping{
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        .custom-total .happy-shopping .keep{
+            font-size: 35px;
+            margin-right: 2rem;
+            font-family:'Benedict-Regular';
+        }
+        .custom-total .happy-shopping .shopping{
+            color: red;
+        }
+        .custom-total .happy-shopping .smiling{
+            color: black;
+        }
+        .custom-total .happy-shopping .saving{
+            color: green;
+        }
+        @media screen and (max-width: 481px) {
+            .custom-total .you-save{
+                font-size: 14px;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .custom-total .happy-shopping .keep{
+                font-size: 24px;
+                margin-right: 1rem;
+            }
+        }
+        @media screen and (max-width: 481px) {
+            .custom-total .happy-shopping .keep{
+                font-size: 20px;
+                margin-right: 1rem;
+            }
+        }
     </style>
 
     <style>

@@ -39,6 +39,9 @@ class Buynow extends Component
     protected $email;
     protected $phone;
 
+    public $totalMrp;
+    public $totalSave;
+
     public $buyshowcases;
     public $couponcode;
     public $coupons;
@@ -115,18 +118,18 @@ class Buynow extends Component
         $this->calcTotal();
 
         $sellers = [];
-//        $this->totalMrp = 0;
+        $this->totalMrp = 0;
         foreach ($this->buyshowcases as $sc) {
             $product = Product::where('id', $sc->product_id)->first();
-//            $this->totalMrp += $product->mrp * $sc->quantity;
+            $this->totalMrp += $product->mrp * 1;
             array_push($sellers, User::find($product->seller_id));
         }
         $now = date('Y-m-d');
         $coupons = Coupon::where('status', 1)->where('from', '<=', $now)->where('to', '>=', $now)->get();
 
-//        $this->totalSave = ($this->totalMrp - $this->ordervalue) + $this->discount + ($this->shipping - $this->appliedShipping);
+        $this->totalSave = ($this->totalMrp - $this->ordervalue) + $this->discount;
 
-        //fetch all coupons list
+            //fetch all coupons list
         foreach ($coupons as $coupon) {
             $coupon->is_applicable = false;
             $coupon->applicable_discount = 0;
