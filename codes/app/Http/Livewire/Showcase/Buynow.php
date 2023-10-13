@@ -103,8 +103,13 @@ class Buynow extends Component
     public function render()
     {
         $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
-        $this->buyshowcases = $buyshowcases;
-        $this->user = User::find($buyshowcases[0]->user_id);
+        if($buyshowcases && count($buyshowcases) > 0){
+            $this->buyshowcases = $buyshowcases;
+            $this->user = User::find($buyshowcases[0]->user_id);
+        }
+        else{
+            abort(404);
+        }
 
         //calculate before all discounts
         $this->calcTotal();
@@ -275,6 +280,7 @@ class Buynow extends Component
                         $value = $coupon->value;
                         $this->discount = $value ?? 0;
                     }
+                    Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_discount_applied' => true]);
 
 //                    if(isset($this->coupons) && is_array($this->coupons) && count($this->coupons) > 0){
 //                        $this->coupons->where('code', $coupon->code);
@@ -297,6 +303,7 @@ class Buynow extends Component
     {
         $this->discount = 0;
         Session::remove('showcase_appliedcouponcode');
+        Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_discount_applied' => false]);
         $this->dispatchBrowserEvent('showToast', ['msg' => 'Coupon successfully removed', 'status' => 'success']);
     }
 
@@ -304,6 +311,7 @@ class Buynow extends Component
     {
         if (Session::get('showcase_redeemedRewardPoints')) {
             Session::remove('showcase_redeemedRewardPoints');
+            Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_reward_point_applied' => false]);
             $this->showcase_redeemedRewardPoints = 0;
             return;
         }
@@ -318,6 +326,7 @@ class Buynow extends Component
     {
         if (auth()->user()->reward_points > 0 && $this->ordervalue >= 1500) {
             $this->showcase_redeemedRewardPoints = auth()->user()->reward_points * 0.20;
+            Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_reward_point_applied' => true]);
             Session::put('showcase_redeemedRewardPoints', 1);
         }
     }
@@ -326,6 +335,7 @@ class Buynow extends Component
     {
         if (Session::get('showcase_redeemedCredits')) {
             Session::remove('showcase_redeemedCredits');
+            Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_credit_applied' => false]);
             $this->showcase_redeemedCredits = 0;
             return;
         }
@@ -347,7 +357,7 @@ class Buynow extends Component
             } else {
                 $this->showcase_redeemedCredits = $userCredits;
             }
-
+            Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->update(['is_credit_applied' => true]);
             Session::put('showcase_redeemedCredits', 1);
         }
     }
@@ -356,7 +366,21 @@ class Buynow extends Component
         if (Session::get('showcasebagordermethod') == 'cod') {
             Session::remove('showcasebagordermethod');
         } else {
-            Session::put('showcasebagordermethod', 'cod');
+            if(auth()->user()->hasRole(['Delivery Boy', 'Delivery Head', 'admin', 'Client'])){
+                $flag = 0;
+                foreach ($this->buyshowcases as $item){
+                    if($item->is_discount_applied || $item->is_reward_point_applied || $item->is_credit_applied){
+                        $flag = 1;
+                        break;
+                    }
+                }
+                if($flag){
+                    $this->dispatchBrowserEvent('showToast', ['msg' => 'Customer has applied some coupon or cashback', 'status' => 'error']);
+                    return;
+                }else{
+                    Session::put('showcasebagordermethod', 'cod');
+                }
+            }
         }
     }
 
@@ -418,6 +442,19 @@ class Buynow extends Component
 
     private function carttoorder()
     {
+        if(auth()->user()->hasRole(['Delivery Boy', 'Delivery Head', 'admin', 'Client'])){
+            $flag = 0;
+            foreach ($this->buyshowcases as $item){
+                if($item->is_discount_applied || $item->is_reward_point_applied || $item->is_credit_applied){
+                    $flag = 1;
+                    break;
+                }
+            }
+            if($flag){
+                $this->dispatchBrowserEvent('showToast', ['msg' => 'Customer has applied some coupon or cashback', 'status' => 'error']);
+                return;
+            }
+        }
 
         // Generate random order id
         $orderid = mt_rand(100000, 999999);

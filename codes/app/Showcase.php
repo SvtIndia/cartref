@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Showcase extends Model
 {
 
-    protected $fillable = ['order_status', 'status' ,'showcase_timer', 'is_timer_extended'];
+    protected $fillable = ['order_status', 'status' ,'showcase_timer', 'is_timer_extended', 'is_discount_applied'];
 
     public function scopeRolewise($query)
     {
