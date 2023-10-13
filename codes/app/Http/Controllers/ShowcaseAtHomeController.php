@@ -481,13 +481,13 @@ class ShowcaseAtHomeController extends Controller
         $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
         foreach ($orders as $order) {
             if (!$order->is_timer_extended) {
-                $order->showcase_timer = Carbon::parse($order->showcase_timer)->addMinutes(10);
+                $order->showcase_timer = Carbon::parse($order->showcase_timer)->addMinutes($orders->count() * 2.5);
                 $order->is_timer_extended = true;
                 $order->save();
             }
         }
         return redirect()->back()->with([
-            'message' => "Showcase order time has been added successfully",
+            'message' => "Showcase order time has been extended successfully",
             'alert-type' => 'success',
         ]);
     }
