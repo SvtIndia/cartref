@@ -294,7 +294,7 @@
             }
             .custom-checkout-form{
                 max-width: 58.3333%;
-                flex: 0 0 58.333%;
+                flex: 0 0 55.333%;
             }
             .checkout .sticky-sidebar-wrapper{
                 max-width: 50.667%;
@@ -302,7 +302,7 @@
             }
             .custom-sticky-sidebar-wrapper{
                 max-width: 50%;
-                flex: 0 0 40%;
+                flex: 0 0 42%;
             }
         }
 
@@ -319,7 +319,7 @@
             margin-top: 5px;
         }
         .custom-total .happy-shopping .keep{
-            font-size: 35px;
+            font-size: 34px;
             margin-right: 2rem;
             font-family:'Benedict-Regular';
         }

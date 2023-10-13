@@ -49,6 +49,8 @@ class Buynow extends Component
     public $showcase_redeemedRewardPoints;
     public $showcase_redeemedCredits;
 
+    public $user;
+
     protected $listeners = ['showcasebag' => 'render'];
 
     public function mount()
@@ -79,7 +81,7 @@ class Buynow extends Component
 
     public  function  calcTotal(){
         $this->ordervalue = $this->buyshowcases->sum('product_offerprice');
-        if(Config::get('icrm.showcase_at_home.delivery_charges') && auth()->user()->used_showcase_refund < 3){
+        if(Config::get('icrm.showcase_at_home.delivery_charges') && $this->user->used_showcase_refund < 3){
             $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
         }
         else{
@@ -102,6 +104,7 @@ class Buynow extends Component
     {
         $buyshowcases = Showcase::where('order_id', $this->orderid)->where('order_status', 'Moved to Bag')->get();
         $this->buyshowcases = $buyshowcases;
+        $this->user = User::find($buyshowcases[0]->user_id);
 
         //calculate before all discounts
         $this->calcTotal();
@@ -567,7 +570,7 @@ class Buynow extends Component
             auth()->user()->decrement('credits', $this->showcase_redeemedCredits);
         }
         if($this->showcaserefund > 0) {
-            auth()->user()->increment('used_showcase_refund', 1);
+            $this->user->increment('used_showcase_refund', 1);
         }
 
         foreach ($notincarts as $notincart) {
