@@ -498,6 +498,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+                    $('#custom-overlay').show();
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('bag.paynow') }}",
@@ -515,10 +516,17 @@
                             $('.success-alert').fadeIn('slow', function () {
                                 $('.success-alert').delay(5000).fadeOut();
                             });
+                            $('#custom-overlay').hide();
                             window.location.href = "/my-orders/all";
                             // url:"{{ route('bag.paynow') }}",
                         }
                     });
+                },
+                "modal": {
+                    "ondismiss": function () {
+                        $('#custom-overlay').hide();
+                        alert('Payment Cancelled');
+                    }
                 },
                 "prefill": {
                     "name": full_name,

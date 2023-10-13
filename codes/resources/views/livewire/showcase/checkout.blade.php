@@ -6,7 +6,7 @@
                 {{-- <div class="card accordion">
                     <div class="alert alert-light alert-primary alert-icon mb-4 card-header">
                         <i class="fas fa-exclamation-circle"></i>
-                        <span class="text-body">Have a coupon?</span>
+                        <span class="text-body">Have a cou  pon?</span>
                         <a href="#alert-body2" class="text-primary">Click here to enter your code</a>
                     </div>
                     <div class="alert-body collapsed" id="alert-body2">
@@ -269,6 +269,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+                $('#custom-overlay').show();
                 $.ajax({
                     type:'POST',
                     url:"{{ route('showcase.paynow') }}",
@@ -278,9 +279,16 @@
                         $('.success-alert').fadeIn('slow', function(){
                             $('.success-alert').delay(5000).fadeOut();
                         });
+                        $('#custom-overlay').hide();
                         window.location.href = "/showcase-at-home/my-orders/all";
                     }
                 });
+            },
+            "modal": {
+                "ondismiss": function () {
+                    $('#custom-overlay').hide();
+                    alert('Payment Cancelled');
+                }
             },
             "prefill": {
                 "name": full_name,
