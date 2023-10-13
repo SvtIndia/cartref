@@ -79,7 +79,12 @@ class Buynow extends Component
 
     public  function  calcTotal(){
         $this->ordervalue = $this->buyshowcases->sum('product_offerprice');
-        $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
+        if(Config::get('icrm.showcase_at_home.delivery_charges') && auth()->user()->used_showcase_refund < 3){
+            $this->showcaserefund = Config::get('icrm.showcase_at_home.delivery_charges');
+        }
+        else{
+            $this->showcaserefund = 0;
+        }
         $this->subtotal = $this->ordervalue - $this->showcaserefund - $this->discount - $this->showcase_redeemedRewardPoints - $this->showcase_redeemedCredits;
 
         $this->tax = $this->subtotal * Config::get('icrm.tax.fixedtax.perc') / 100;
@@ -404,7 +409,7 @@ class Buynow extends Component
         Session::put('stax', $this->tax);
         Session::put('stotal', $this->total);
 
-        $this->emit('srazorPay');
+        $this->emit('srazorPay', $this->total, $this->showcaserefund, $this->discount, $this->showcase_redeemedRewardPoints, $this->showcase_redeemedCredits);
     }
 
 
@@ -560,6 +565,9 @@ class Buynow extends Component
         }
         if($this->showcase_redeemedCredits > 0){
             auth()->user()->decrement('credits', $this->showcase_redeemedCredits);
+        }
+        if($this->showcaserefund > 0) {
+            auth()->user()->increment('used_showcase_refund', 1);
         }
 
         foreach ($notincarts as $notincart) {

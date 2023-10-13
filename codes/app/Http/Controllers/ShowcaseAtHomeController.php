@@ -608,7 +608,7 @@ class ShowcaseAtHomeController extends Controller
                 $ratio = ($cart->price_sum / Session::get('sordervalue'));
             }
 
-            if (request()->showcaserefund > 0) {
+            if (request()->showcaserefund > 0 && auth()->user()->used_showcase_refund < 3) {
                 //showcase refund discount
                 $showcase_refund = round(($ratio * request()->showcaserefund), 2);
             }
@@ -673,8 +673,8 @@ class ShowcaseAtHomeController extends Controller
             $order->size = $cart->size;
             $order->color = $cart->color;
             $order->order_value = Session::get('sordervalue');
-            $order->order_discount = Session::get('sshowcaserefund');
-            $order->order_deliverycharges = 0;
+            $order->order_discount = request()->discount ?? 0;
+            $order->order_deliverycharges = request()->showcaserefund ?? 0;
             $order->order_subtotal = Session::get('ssubtotal');
             $order->order_tax = Session::get('stax');
             $order->order_total = Session::get('stotal');
@@ -710,6 +710,7 @@ class ShowcaseAtHomeController extends Controller
 
             $order->used_reward_points = $reward_point_discount ?? 0;
             $order->used_user_credits = $user_credits_discount ?? 0;
+//            dd($order);
             $order->save();
 
             if ($reward_point_discount > 0) {
@@ -740,19 +741,22 @@ class ShowcaseAtHomeController extends Controller
             ]);
 
 
-            Session::remove('sordervalue');
-            Session::remove('sshowcaserefund');
-            Session::remove('ssubtotal');
-            Session::remove('stax');
-            Session::remove('stotal');
 
         }
+        Session::remove('sordervalue');
+        Session::remove('sshowcaserefund');
+        Session::remove('ssubtotal');
+        Session::remove('stax');
+        Session::remove('stotal');
 
         if (request()->showcase_redeemedRewardPoints > 0) {
             auth()->user()->decrement('reward_points', request()->showcase_redeemedRewardPoints);
         }
         if (request()->showcase_redeemedCredits > 0) {
             auth()->user()->decrement('credits', request()->showcase_redeemedCredits);
+        }
+        if(request()->showcaserefund > 0) {
+            auth()->user()->increment('used_showcase_refund', 1);
         }
 
         foreach ($notincarts as $notincart) {

@@ -63,7 +63,14 @@
                                         {{--                                            <span class="amount">{{ $showcase->weight }}kg</span>--}}
                                         {{--                                        </td>--}}
                                         <td class="product-subtotal">
-                                            <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
+                                            <span class="amount" >{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
+                                            <span style="color: black;font-size: 16px;margin-left: 5px;">
+                                                <del style="color:black; margin-left:1rem;">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->mrp }}</del>
+                                            </span><br>
+                                            <text class="save_text">
+                                                You Save {{ Config::get('icrm.currency.icon') }}
+                                                {{ $showcase->product->mrp - $showcase->product->offer_price }}
+                                            </text>
                                         </td>
                                         <td class="product-close">
                                             <a wire:click="removeShowcaseBag('{{ $showcase->id }}')"
@@ -192,17 +199,17 @@
                                         </td>
                                     </tr>
 
-
-                                    <tr class="summary-subtotal">
-                                        <td>
-                                            <h4 class="summary-subtitle">Showcase At Home Charges Refund</h4>
-                                        </td>
-                                        <td>
-                                            <p class="summary-subtotal-price" style="color: red !important;">
-                                                -{{ Config::get('icrm.currency.icon') }}{{ number_format($showcaserefund, 2) }}</p>
-                                        </td>
-                                    </tr>
-
+                                    @if($showcaserefund > 0)
+                                        <tr class="summary-subtotal">
+                                            <td>
+                                                <h4 class="summary-subtitle">Showcase At Home Charges Refund</h4>
+                                            </td>
+                                            <td>
+                                                <p class="summary-subtotal-price" style="color: red !important;">
+                                                    -{{ Config::get('icrm.currency.icon') }}{{ number_format($showcaserefund, 2) }}</p>
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @if (auth()->user()->hasRole(['user']))
                                         @if ($this->discount > 0)
                                             <tr class="discount">
@@ -364,20 +371,25 @@
 @push('scripts')
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        Livewire.on('srazorPay', function () {
-
+        Livewire.on('srazorPay', function (payee_amount,showcaserefund,discount,showcase_redeemedRewardPoints,showcase_redeemedCredits ) {
+            // alert(payee_amount);
             var full_name = "{{ $this->rname }}";
             var email = "{{ $this->remail }}";
             var contact_number = "{{ $this->rphone }}";
-            var amount = {{ number_format($total, 2) }};
-            var total_amount = amount * 100;
+{{--            var amount = {{ str_replace(',', '', $this->total) }};--}}
+            var amount = payee_amount;
+            var total_amount = Number(amount).toFixed(2) * 100;
             var showcaseorderid = {{ request('id') }};
 
-            var showcaserefund = {{ $this->showcaserefund ?? 0 }};
-            var discount = {{ $this->discount ?? 0 }};
-            var showcase_redeemedRewardPoints = {{ $this->showcase_redeemedRewardPoints ?? 0 }};
-            var showcase_redeemedCredits = {{ $this->showcase_redeemedCredits ?? 0 }};
+            showcaserefund = showcaserefund ?? 0;
+            discount = discount ?? 0;
+            showcase_redeemedRewardPoints = showcase_redeemedRewardPoints ?? 0;
+            showcase_redeemedCredits = showcase_redeemedCredits ?? 0;
 
+            // console.log('showcaserefund' +showcaserefund);
+            // console.log('discount' +discount);
+            // console.log('showcase_redeemedRewardPoints' +showcase_redeemedRewardPoints);
+            // console.log('showcase_redeemedCredits' +showcase_redeemedCredits);
             // var consent = $("#two-step:checkbox:checked").length;
 
 

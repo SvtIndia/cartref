@@ -445,7 +445,6 @@
     <script>
         Livewire.on('razorPay', function () {
 
-
             var full_name = "{{ $this->name }}";
             var email = "{{ $this->email }}";
             var contact_number = "{{ $this->phone }}";

@@ -301,7 +301,7 @@
                 flex: 0 0 50.667%;
             }
             .custom-sticky-sidebar-wrapper{
-                max-width: 40%;
+                max-width: 50%;
                 flex: 0 0 40%;
             }
         }
@@ -331,6 +331,17 @@
         }
         .custom-total .happy-shopping .saving{
             color: green;
+        }
+        .custom-total .alert.card-header {
+            padding-top: 1.2rem;
+            padding-bottom: 1.3rem;
+            background-color: #fff;
+            border: 1px dashed #cacbcc;
+            text-transform: none;
+        }
+        .custom-total .accordion .card-header a {
+            padding: 0 !important;
+            padding-top: 2rem !important;
         }
         @media screen and (max-width: 481px) {
             .custom-total .you-save{
