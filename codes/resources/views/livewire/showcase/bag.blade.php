@@ -100,7 +100,7 @@
                                 </tbody>
                             </table>
                             <div class="cart-actionss mb-6 pt-4">
-                                <a href="{{ route('products.showcase.vendor', ['vendor_id' => $showcasecarts->first()->attributes->vendor_id]) }}" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
+                                <a href="javascript:void(0)" wire:click="continueShopping" class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
                                     <i class="d-icon-arrow-left"></i>
                                     Continue Shopping From {{ App\Models\User::where('id', $showcasecarts->first()->attributes->vendor_id)->first()->brand_name }}
                                 </a><br>

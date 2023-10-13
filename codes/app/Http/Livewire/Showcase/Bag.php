@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Showcase;
 
 use App\Models\Product;
+use App\Models\User;
+use App\ProductSubcategory;
 use Carbon\Carbon;
 use Livewire\Component;
 use Darryldecode\Cart\Cart;
@@ -202,6 +204,40 @@ class Bag extends Component
             Session::flash('sdeliveryavailable', 'Showroom at Home is available in your area ' . $this->area . ' till ' . Carbon::now()->addHours(3)->format('H:i A') . ' for today');
             Session::put('deliverypincode', $this->deliverypincode);
             return;
+        }
+    }
+
+    public function continueShopping(){
+        $userID = 0;
+        if (Auth::check()) {
+            $userID = auth()->user()->id;
+        } else {
+            if (session('session_id')) {
+                $userID = session('session_id');
+            } else {
+                $userID = rand(1111111111, 9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
+        $carts = app('showcase')->session($userID)->getContent();
+
+        //Main code
+        if(count($carts) <= 0){
+            return;
+        }
+
+        if(count($carts) == 1){
+            $cart = $carts->first();
+            $product = Product::where('id', $cart->attributes->product_id)->first();
+            $subCategory = ProductSubcategory::find($product->subcategory_id);
+            $vendor = User::find($product->seller_id);
+            $link = route('products.subcategory', ['subcategory' => $subCategory->slug, 'brands[' . $vendor->brands . ']' => $vendor->brands]);
+            return redirect($link);
+        }
+        else{
+
+            $vendorId = $carts->first()->attributes->vendor_id;
+            return redirect()->route('products-category', ['vendor_id' => $vendorId]);
         }
     }
 
