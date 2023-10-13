@@ -288,12 +288,12 @@
                 <h2 class="title title-simple text-left pt-10 mb-2">Billing Address</h2>
                 <div class="address-info pb-8 mb-6">
 
-                    @if (!empty($items[0]->company_name))
-                        <div class="email">
-                            {{ $items[0]->company_name }}<br>
-                            {{ $items[0]->gst_number }}
-                        </div>                        
-                    @endif
+{{--                    @if (!empty($items[0]->company_name))--}}
+{{--                        <div class="email">--}}
+{{--                            {{ $items[0]->company_name }}<br>--}}
+{{--                            {{ $items[0]->gst_number }}--}}
+{{--                        </div>                        --}}
+{{--                    @endif--}}
 
                     <p class="address-detail pb-2">
                         {{ $items[0]->dropoff_streetaddress1 }}<br>
