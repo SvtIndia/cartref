@@ -310,20 +310,18 @@
                 max-width: 58.3333%;
                 flex: 0 0 45.333%;
             }
-
-            .custom-checkout-form {
-                max-width: 58.3333%;
-                flex: 0 0 55.333%;
-            }
-
             .checkout .sticky-sidebar-wrapper {
                 max-width: 50.667%;
                 flex: 0 0 50.667%;
             }
 
+            .custom-checkout-form {
+                max-width: 55.3333%;
+                flex: 0 0 53.333%;
+            }
             .custom-sticky-sidebar-wrapper {
-                max-width: 50%;
-                flex: 0 0 42%;
+                max-width: 45%;
+                flex: 0 0 45%;
             }
         }
 
@@ -378,16 +376,30 @@
             }
         }
 
+        @media screen and (max-width: 1200px) {
+            .custom-total .happy-shopping .keep {
+                font-size: 25px;
+                margin-right: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 980px) {
+            .custom-total .happy-shopping .keep {
+                font-size: 34px;
+                margin-right: 1rem;
+            }
+        }
+
         @media screen and (max-width: 768px) {
             .custom-total .happy-shopping .keep {
-                font-size: 24px;
+                font-size: 30px;
                 margin-right: 1rem;
             }
         }
 
         @media screen and (max-width: 481px) {
             .custom-total .happy-shopping .keep {
-                font-size: 20px;
+                font-size: 24px;
                 margin-right: 1rem;
             }
         }

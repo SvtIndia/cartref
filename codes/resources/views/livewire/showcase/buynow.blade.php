@@ -62,8 +62,8 @@
                                         {{--                                        <td class="product-subtotal">--}}
                                         {{--                                            <span class="amount">{{ $showcase->weight }}kg</span>--}}
                                         {{--                                        </td>--}}
-                                        <td class="product-subtotal">
-                                            <span class="amount" >{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
+                                        <td class="product-price">
+                                            <span class="amount">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->offer_price }}</span>
                                             <span style="color: black;font-size: 16px;margin-left: 5px;">
                                                 <del style="color:black; margin-left:1rem;">{{ Config::get('icrm.currency.icon') }} {{ $showcase->product->mrp }}</del>
                                             </span><br>
