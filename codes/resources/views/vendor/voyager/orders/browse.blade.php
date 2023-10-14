@@ -925,7 +925,7 @@
                                                             </div>
                                                             <div style="display: none">
                                                                 <a>
-                                                                    <form action="{{ route('downloadtaxinvoice') }}"
+                                                                    <form action="{{ route('downloadtaxinvoice') }}" target="_blank"
                                                                         method="post" id="downloadtaxinvoiceForm">
                                                                         @csrf
                                                                         <input type="text" hidden name="order_awb"
