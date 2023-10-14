@@ -768,8 +768,12 @@
                                                     <span style="color: orange">{{ $data->order_status }}</span>
                                                 @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
                                                     <span style="color: green">{{ $data->order_status }}</span>
+                                                @elseif($data->order_status == 'Out For Showcase')
+                                                    <span>Pickup </span>
+                                                @elseif($data->order_status == 'Showcased')
+                                                    <span>Handover</span>
                                                 @else
-                                                    <span>{{ $data->order_status }}</span>
+                                                    <span>{{ $order->order_status }}</span>
                                                 @endif
                                             </div>
 
