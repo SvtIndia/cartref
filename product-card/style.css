@@ -1,0 +1,165 @@
+@font-face {
+  font-family: "Lexend Peta";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Lexend Peta Regular"),
+    url("fonts/LexendPeta-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Cambay";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Cambay Regular"), url("fonts/Cambay-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Krona One";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Krona One Regular"),
+    url("fonts/KronaOne-Regular.woff") format("woff");
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-wrap {
+  width: 250px;
+  /* max-width: 33.333%; */
+  max-height: 550px;
+  margin: 10px 8px;
+}
+.product {
+  position: relative;
+}
+.image {
+  height: 300px;
+  position: relative;
+}
+.image .product-image {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 15px;
+}
+
+.content {
+  width: 100%;
+  max-height: 100px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: inline-flex;
+}
+.brand-name {
+  align-self: stretch;
+  text-align: center;
+  color: black;
+  font-size: 12px;
+  font-family: Lexend Peta;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  word-wrap: break-word;
+}
+.product-name {
+  width: 100%;
+  height: 12px;
+  color: black;
+  font-size: 12px;
+  font-family: Cambay;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 1.2px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.product-price {
+  width: 100%;
+  text-align: center;
+}
+.mrp {
+  color: #0e7865;
+  font-size: 9px;
+  font-family: Lexend Peta;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-wrap: break-word;
+}
+.sp {
+  color: #857a7a;
+  font-size: 9px;
+  font-family: Lexend Peta;
+  font-weight: 400;
+  text-decoration: line-through;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-wrap: break-word;
+}
+.off {
+  width: 100%;
+  color: black;
+  font-size: 9px;
+  font-family: Lexend Peta;
+  font-weight: 700;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.product-action-vertical {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+.wishlist {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+.product-rating-horizontal{
+  max-width: 60%;
+  display: flex;
+  position: absolute;
+  left: 5px;
+  bottom: 25px;
+  border: 1px black solid;
+  background: linear-gradient(180deg, #58CBE0 0%, rgba(244.49, 248.87, 249.69, 0) 90%);
+}
+.star{
+  width: auto;
+  height: inherit;
+  color: black;
+  font-size: 12px;
+  font-family: Krona One;
+  font-weight: 400;
+  word-wrap: break-word;
+  align-items: center;
+  display: flex;
+  margin: 0px 5px;
+}
+.dash{
+  font-weight: 800;
+  font-size: 16px;
+}
+.book{
+  width: auto;
+  height: inherit;
+  color: black;
+  font-size: 12px; 
+  font-family: Krona One; 
+  font-weight: 400; 
+  word-wrap: break-word;
+  align-items: center;
+  display: flex;
+  margin: 0px 5px;
+}
