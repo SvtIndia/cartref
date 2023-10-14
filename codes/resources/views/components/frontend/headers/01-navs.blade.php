@@ -146,14 +146,27 @@
                     @if (count($menu_item->children) > 0)
                         <a href="{{ route('category.dynamic', $menu_item->title) }}">{{ $menu_item->title }}</a>
                     @else
-                        <a href="{{ $menu_item->link() }}">{{ $menu_item->title }}</a>
+                        <a href="{{ $menu_item->link() }}">
+                            @if($menu_item->title == "Products" && Session::get('showcasecity'))
+                                Stores
+                            @else
+                                {{ $menu_item->title }}
+                            @endif
+                        </a>
                     @endif
 
                     @if (count($menu_item->children) > 0)
                         <ul>
                             @foreach ($menu_item->children as $children)
                                 <li>
-                                    <a href="{{ $children->link() }}">{{ $children->title }}</a>
+                                    <a href="{{ $children->link() }}">
+{{--                                        {{ $children->title }}--}}
+                                        @if($children->title == "Products" && Session::get('showcasecity'))
+                                            Stores
+                                        @else
+                                            {{ $children->title }}
+                                        @endif
+                                    </a>
 
                                     @if (count($children->children) > 0)
                                         <ul>
