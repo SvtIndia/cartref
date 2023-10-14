@@ -452,6 +452,11 @@
                 transform: rotate(360deg);
             }
         }
+        @media screen and (max-width: 768px) {
+            .cart-toggle{
+                pointer-events: none;
+            }
+        }
     </style>
     @livewireStyles
     <script src="{{ asset('php_ua/assets/js/scripts/phpUaJS.js') }}"></script>
