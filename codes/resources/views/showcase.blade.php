@@ -1,7 +1,7 @@
 @extends('layouts.website')
 
 @section('meta-seo')
-    <title>Showcase At Home</title>
+    <title>Showroom At Home</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Riode - Ultimate eCommerce Template">
 @endsection
@@ -11,7 +11,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{ route('welcome') }}"><i class="d-icon-home"></i></a></li>
-            <li>Showcase At Home</li>
+            <li>Showroom At Home</li>
         </ul>
     </div>
 </nav>
@@ -22,13 +22,13 @@
     <p class="page-desc text-white mb-0">{{setting('showcase-at-home.description')}}</p>
 </div>
 <div class="page-content mt-10 pt-10">
-    
+
     @if (!empty(setting('showcase-at-home.body')))
         <div class="container">
             {!! setting('showcase-at-home.body') !!}
-        </div>    
+        </div>
     @endif
-    
+
 
     <section class="about-section pb-10 appear-animate fadeIn appear-animation-visible" style="animation-duration: 1.2s;">
         <div class="container">
@@ -120,9 +120,9 @@
                     </section>
 
                 @endif
-                
-        
-                
+
+
+
             @endforeach
         @endif
     @endisset

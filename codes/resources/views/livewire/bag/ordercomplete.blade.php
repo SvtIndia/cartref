@@ -386,7 +386,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <h4 class="summary-subtitle">Showcase At Home Refund:</h4>
+                                    <h4 class="summary-subtitle">Showroom At Home Refund:</h4>
                                 </td>
                                 <td class="summary-subtotal-price" style="text-align: left; color: red;">
                                     -{{ Config::get('icrm.currency.icon') }}{{ number_format($item->order_deliverycharges, 2) }}</td>

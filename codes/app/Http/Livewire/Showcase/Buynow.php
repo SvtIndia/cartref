@@ -73,7 +73,7 @@ class Buynow extends Component
             $this->rphone = $showcase->customer_contact_number;
         } else {
             return redirect()->route('showcase.myorders')->with([
-                'success' => 'This showcase order has already being closed!'
+                'success' => 'This Showroom order has already being closed!'
             ]);
         }
 

@@ -137,8 +137,8 @@
                 {{-- @if ($products->onFirstPage()) --}}
                     <div class="row">
                         <div class="showcase jumbotron">
-                            <h1>Showcase At Home <a href="{{ route('showcase.introduction') }}"><span
-                                        class="fas fa-info-circle" title="What is showcase at home?"></span></a>
+                            <h1>Showroom At Home <a href="{{ route('showcase.introduction') }}"><span
+                                        class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                             </h1>
                             <p>Order <span>upto {{ Config::get('icrm.showcase_at_home.order_limit') }} products
                                     from any one vendor</span> and get the delivery done <span>within
@@ -152,12 +152,12 @@
                             <p class="lead">
                                 @if (Session::get('showcasecity') != null)
                                     @if (Session::get('showcasevendorid') != null)
-                                        <p><span>Showing showcase at home products from
+                                        <p><span>Showing showroom at home products from
                                                 <span>{{ Session::get('showcasevendor') }}</span> for
                                                 {{ Session::get('showcasecity') }} city
                                                 {{ Session::get('showcasepincode') }} area.</span></p>
                                     @else
-                                        <p><span>Showing showcase at home products for
+                                        <p><span>Showing showroom at home products for
                                                 {{ Session::get('showcasecity') }} city
                                                 {{ Session::get('showcasepincode') }} area.</span></p>
                                     @endif

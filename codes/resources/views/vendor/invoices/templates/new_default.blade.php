@@ -380,7 +380,7 @@
                                             @if ($invoice->shipping_amount)
                                                 <tr>
                                                     @if ($invoice->ordertype == 'Showcase At Home')
-                                                        <td class="text-right">Showcase At Home Refund</td>
+                                                        <td class="text-right">Showroom At Home Refund</td>
                                                     @else
                                                         <td class="text-right">
                                                             {{ __('invoices::invoice.shipping') }}</td>

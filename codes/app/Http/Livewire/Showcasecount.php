@@ -66,7 +66,7 @@ class Showcasecount extends Component
         // remove
         $showcase->remove($id);
 
-        Session::flash('success', 'Product successfully removed from the showcase at home!');
+        Session::flash('success', 'Product successfully removed from the Showroom at home!');
 
         $this->emit('showcasebag');
         // return redirect(request()->header('Referer'));

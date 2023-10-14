@@ -2,7 +2,7 @@
 @extends('layouts.website')
 
 @section('meta-seo')
-    <title>Showcase At Home</title>
+    <title>Showroom At Home</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Riode - Ultimate eCommerce Template">
 @endsection
@@ -17,7 +17,7 @@
             <div class="banner-content">
                 <img src="{{ Voyager::image(setting('site.logo')) }}" alt="{{ setting('site.title') }}" style="max-height: 100px;">
                 <br><br><br><br><br>
-                <h3 class="banner-title font-weight-bold text-white"><span style="color: #00B48E">Activate</span> Showcase At Home</h3>
+                <h3 class="banner-title font-weight-bold text-white"><span style="color: #00B48E">Activate</span> Showroom At Home</h3>
                 <br>
                 <p class="text-lights ls-s" style="margin: 0; color: #ccc;">Enter your delivery pin code to <span style="color: rgb(56, 142, 234);">check the availibity of this service in your area</span> and activate showcase at home on your catalog</p>
                 <p class="text-lights ls-s" style="color: #ccc;">After successful activation you will only see products from vendors who offer showcase at home</p>

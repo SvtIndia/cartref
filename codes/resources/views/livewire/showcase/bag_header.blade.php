@@ -17,7 +17,7 @@
 </style>
 <div class="step-by pr-4 pl-4">
     <h3 class="title title-simple title-step step-label @if(\Request::route()->getName() == 'showcase.bag') active @endif">
-        <a href="{{ route('showcase.bag') }}">1. Showcase At Home
+        <a href="{{ route('showcase.bag') }}">1. Showroom At Home
             @if (\Request::route()->getName() == 'showcase.checkout')
                 <i class="d-icon-check"></i>
             @endif

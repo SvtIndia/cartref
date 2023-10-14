@@ -332,9 +332,9 @@
                             wire:click="addtoshowcaseathome"
                         >
                             <i class="d-icon-home"></i>
-                            Showcase At Homes
+                            Showroom At Homes
                         </button>
-                        <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showcase at home?"></span></a>
+                        <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                     @endif
                 @else
                     {{-- @php
@@ -352,17 +352,17 @@
                                 wire:click="addtoshowcaseathome"
                             >
                                 <i class="d-icon-home"></i>
-                                Showcase At Home
+                                Shoroom At Home
                             </button>
-                            <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showcase at home?"></span></a>
+                            <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                         @else
                             <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold" 
-                                disabled="disabled" title="Showcase at home not available for this product at {{ Session::get('showcasecity') }} area."
+                                disabled="disabled" title="Showroom at home not available for this product at {{ Session::get('showcasecity') }} area."
                             >
                                 <i class="d-icon-home"></i>
-                                Showcase At Home
+                                Shoroom At Home
                             </button>
-                            <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showcase at home?"></span></a>
+                            <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                         @endif
                     @endif
                 @endif

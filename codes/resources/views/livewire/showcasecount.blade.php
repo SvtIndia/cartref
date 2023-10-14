@@ -12,7 +12,7 @@
     <div class="dropdown-box">
         @if (count($ssproducts) == 0)
 
-            <label>Your showcase at home bag is empty</label>
+            <label>Your showroom at home bag is empty</label>
             <br><br>
             <div class="cart-action">
                 <a href="{{ route('products.showcase') }}" class="btn btn-dark"><span>Browse Products</span></a>
@@ -67,7 +67,7 @@
 
             <div class="cart-action">
                 {{-- <a href="{{ route('bag') }}" class="btn btn-dark btn-link">View Bag</a> --}}
-                <a href="{{ route('showcase.bag') }}" class="btn btn-dark"><span>GO TO SHOWCASE BAG</span></a>
+                <a href="{{ route('showcase.bag') }}" class="btn btn-dark"><span>GO TO SHOWROOM BAG</span></a>
             </div>
             <!-- End of Cart Action -->
 
@@ -80,7 +80,7 @@
                     <form action="{{ route('showcase.deactivate') }}" method="post" class="input-wrappers input-wrapper-rounds input-wrapper-inlines ml-lg-auto">
                         @csrf
                         <input type="hidden" class="form-control font-secondary form-solid" name="showcasepincode" id="showcasepincode" placeholder="Delivery pincode..." required="">
-                        <button class="btn btn-sm btn-link" type="submit" style="color: red;">Deactivate Showcase At Home</button>
+                        <button class="btn btn-sm btn-link" type="submit" style="color: red;">Deactivate Showroom At Home</button>
                     </form>
                 </div>
             @endif

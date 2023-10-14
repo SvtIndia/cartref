@@ -658,7 +658,7 @@ class Addskutobag extends Component
 
             if(empty($notsamevendor))
             {
-                $msg = 'At a time you can request showcase at home only from one vendor. <a href="'.url('/products/vendor/'.$this->product->seller_id).'" style="text-decoration: underline; color: black; font-weight: 600;"> Click here </a> to browse products from '.ucwords($this->product->vendor->brand_name).' vendor';
+                $msg = 'At a time you can request Showroom at home only from one vendor. <a href="'.url('/products/vendor/'.$this->product->seller_id).'" style="text-decoration: underline; color: black; font-weight: 600;"> Click here </a> to browse products from '.ucwords($this->product->vendor->brand_name).' vendor';
 
                 // dd('a');
                 Session::flash('warning', $msg);
@@ -684,9 +684,9 @@ class Addskutobag extends Component
          */
         if(count(app('showcase')->session($userID)->getContent()) == Config::get('icrm.showcase_at_home.order_limit'))
         {
-            Session::flash('warning', 'You can showcase at home only '.Config::get('icrm.showcase_at_home.order_limit').' items in one order.');
+            Session::flash('warning', 'You can Showroom at home only '.Config::get('icrm.showcase_at_home.order_limit').' items in one order.');
             return redirect()->to(route('product.slug', ['slug' => $this->product->slug]))->with([
-                'warning' => 'You can showcase at home only '.Config::get('icrm.showcase_at_home.order_limit').' items in one order.',
+                'warning' => 'You can Showroom at home only '.Config::get('icrm.showcase_at_home.order_limit').' items in one order.',
             ]);
         }
 
@@ -694,7 +694,7 @@ class Addskutobag extends Component
          * Check if same product is already is showcase
         */
         if(count($showcase->getContent()->where('attributes.product_id', $this->product->id)->where('attributes.size', $this->size)->where('attributes.color', $this->color)) > 0){
-            Session::flash('warning', 'This product has already been added in the showcase at home');
+            Session::flash('warning', 'This product has already been added in the Showroom at home');
             return redirect()->route('product.slug', ['slug' => $this->product->slug]);
         }
 

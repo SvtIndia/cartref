@@ -5,7 +5,7 @@
             <div class="container mt-7 mb-2">
                 <div class="row">
                     <div class="col-lg-8 col-md-12 pr-lg-4">
-                        
+
                         @if (count($showcasecarts) > 0)
                             <table class="shop-table cart-table">
                                 <thead>
@@ -58,7 +58,7 @@
                                                                 $colorimage = $product->image;
                                                             }
                                                         @endphp
-                                                    
+
                                                         <img src="{{ Voyager::image($colorimage) }}" width="100" height="100"
                                                             alt="{{ $showcase->name }} in {{ $showcase->attributes->color }} color">
                                                     </a>
@@ -104,8 +104,8 @@
                                     <i class="d-icon-arrow-left"></i>
                                     Continue Shopping From {{ App\Models\User::where('id', $showcasecarts->first()->attributes->vendor_id)->first()->brand_name }}
                                 </a><br>
-                                <small>At a time you can only request showcase at home from one vendor</small>
-                                
+                                <small>At a time you can only request showroom at home from one vendor</small>
+
                                 {{-- <button type="submit"
                                     class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled">Update
                                     Cart</button> --}}
@@ -122,14 +122,14 @@
                             <div class="p-20 mb-4 bg-light rounded-3 text-center">
                                 <div class="container-fluid py-5">
                                     <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}" class="img-responsive" alt="wishlist empty">
-                                    <h1 class="display-5 fw-bold text-dark">Your showcase at home is empty</h1>
-                                    <p class="fs-4 text-center">Browse products and add your favourite ones in showcase at home bag</p>
+                                    <h1 class="display-5 fw-bold text-dark">Your showroom at home is empty</h1>
+                                    <p class="fs-4 text-center">Browse products and add your favourite ones in showroom at home bag</p>
                                     <a href="{{ route('products.showcase') }}" class="btn btn-primary btn-lg" type="button">Browse Products</a>
                                 </div>
                             </div>
                         @endif
-                            
-                        
+
+
                     </div>
                     <aside class="col-lg-4 sticky-sidebar-wrapper">
                         <div class="sticky-sidebar" data-sticky-options="{'bottom': 20}">
@@ -147,13 +147,13 @@
 
                                     <tr class="summary-subtotal">
                                         <td>
-                                            <h4 class="summary-subtitle">Showcase At Home Charges</h4>
+                                            <h4 class="summary-subtitle">Showroom At Home Charges</h4>
                                         </td>
                                         <td>
                                             <p class="summary-subtotal-price">{{ Config::get('icrm.currency.icon') }}{{ number_format($subtotal, 2) }}</p>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr class="sumnary-shipping shipping-row-last">
                                         <td colspan="2">
                                             <h4 class="summary-subtitle">Check Service Availability</h4>
@@ -162,18 +162,18 @@
                                 </table>
                                 <div class="shipping-address">
                                     <form wire:submit.prevent="checkserviceavailability">
-                                        <input type="text" 
-                                            class="form-control @if(Session::has('sdeliveryavailable')) available @endif @if(Session::has('sdeliverynotavailable')) notavailable @endif" 
-                                            wire:model.defer="deliverypincode" 
+                                        <input type="text"
+                                            class="form-control @if(Session::has('sdeliveryavailable')) available @endif @if(Session::has('sdeliverynotavailable')) notavailable @endif"
+                                            wire:model.defer="deliverypincode"
                                             placeholder="Delivery Pincode" />
                                         @if (Session::has('sdeliveryavailable') == true)
                                             <small class="available" style="line-height: 1 !important;">{{ Session::get('sdeliveryavailable') }}</small> <br>
                                         @endif
                                         @if (Session::has('sdeliverynotavailable') == true)
-                                            <small class="notavailable">{{ Session::get('sdeliverynotavailable') }}</small> <br>   
+                                            <small class="notavailable">{{ Session::get('sdeliverynotavailable') }}</small> <br>
                                         @endif
-                                        
-                                        
+
+
                                         <button type="submit" class="btn btn-md btn-dark btn-rounded btn-outline">Check</button>
                                     </form>
                                 </div>
@@ -201,6 +201,6 @@
                 </div>
             </div>
         </div>
-    
+
     </main>
 </div>

@@ -311,7 +311,7 @@
 
                                             @if (ucfirst(strtolower(trans($deliveryservicablearea->city))) == ucfirst(strtolower(trans($dataTypeContent->city))))
                                                 <div class="form-group">
-                                                    <label for="showcase_at_home">Showcase At Home</label><br>
+                                                    <label for="showcase_at_home">Showroom At Home</label><br>
                                                     <?php $checked = false; ?>
                                                     @if(isset($dataTypeContent->showcase_at_home) || old('showcase_at_home'))
                                                         <?php $checked = old('showcase_at_home', $dataTypeContent->showcase_at_home); ?>

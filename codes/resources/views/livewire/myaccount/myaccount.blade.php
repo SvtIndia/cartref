@@ -20,11 +20,11 @@
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="#password-change">Password Change</a>
                         </li> --}}
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="#address">Address</a>
                         </li>
-    
+
                         <li class="nav-item">
                             <a class="nav-links" href="{{ route('myorders') }}" style="font-size: 1.6rem;">My Orders</a>
                         </li>
@@ -42,13 +42,13 @@
 
                         @if (Config::get('icrm.showcase_at_home.feature') == 1)
                             <li class="nav-item">
-                                <a class="nav-links" href="{{ route('showcase.myorders') }}" style="font-size: 1.6rem;">Showcase Orders</a>
+                                <a class="nav-links" href="{{ route('showcase.myorders') }}" style="font-size: 1.6rem;">Showroom Orders</a>
                             </li>
                         @endif
-    
+
                         <li class="nav-item">
                             <a  class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: red;"> Logout </a>
-    
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                             </form>
@@ -56,7 +56,7 @@
                     </ul>
                     <div class="tab-content col-lg-9 col-md-8">
                         <div class="tab-pane active in" id="account">
-                            
+
                             <div class="alert alert-message alert-light alert-primary alert-link mb-10">
                                 <h4 class="alert-title">Message</h4>
                                 <p>Keep your account information updated!</p>
@@ -64,7 +64,7 @@
                                     <i class="d-icon-times"></i>
                                 </button>
                             </div>
-    
+
                             <form wire:submit.prevent="updateAccount" method="post" class="form">
                                 @csrf
                                 <div class="row">
@@ -98,7 +98,7 @@
                                         @error('mobile') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                
+
                                 @if (Config::get('icrm.auth.fields.companyinfo') == true)
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -113,14 +113,14 @@
                                         </div>
                                     </div>
                                 @endif
-                                
+
                                 <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
                             </form>
                         </div>
 
 
                         <div class="tab-pane" id="password-change">
-                            
+
                             <div class="alert alert-message alert-light alert-primary alert-link mb-10">
                                 <h4 class="alert-title">Message</h4>
                                 <p>Change your account password!</p>
@@ -128,26 +128,26 @@
                                     <i class="d-icon-times"></i>
                                 </button>
                             </div>
-    
+
                             <form action="#" class="form">
                                 <fieldset>
                                     <legend>Password Change</legend>
                                     <label>Current password (leave blank to leave unchanged)</label>
                                     <input type="password" class="form-control" name="current_password">
-    
+
                                     <label>New password (leave blank to leave unchanged)</label>
                                     <input type="password" class="form-control" name="new_password">
-    
+
                                     <label>Confirm new password</label>
                                     <input type="password" class="form-control" name="confirm_password">
                                 </fieldset>
-    
+
                                 <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
                             </form>
                         </div>
 
                         <div class="tab-pane" id="address">
-                            
+
                             <div class="alert alert-message alert-light alert-primary alert-link mb-10">
                                 <h4 class="alert-title">Message</h4>
                                 <p>You can mention your delivery address here for quick checkout!</p>
@@ -155,10 +155,10 @@
                                     <i class="d-icon-times"></i>
                                 </button>
                             </div>
-    
+
                             <form wire:submit.prevent="updateAddress" method="post" class="form">
                                 @csrf
-                                
+
 
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -196,8 +196,8 @@
                                         </select>
                                     </div>
                                 </div>
-    
-                                
+
+
                                 <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
                             </form>
                         </div>

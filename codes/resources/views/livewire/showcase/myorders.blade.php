@@ -3,23 +3,23 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li><a href="{{ route('welcome') }}"><i class="d-icon-home"></i></a></li>
-                <li><a href="{{ route('showcase.introduction') }}">Showcase At Home</a></li>
+                <li><a href="{{ route('showcase.introduction') }}">Showroom At Home</a></li>
                 <li>My Orders</li>
             </ul>
         </div>
     </nav>
     <div class="page-content pt-10 pb-10 mb-2">
         <div class="container">
-            
+
             @if (count($myorders) == 0)
                 <div class="p-20 mb-4 bg-light rounded-3 text-center">
                     <div class="container-fluid py-5">
                         <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}" class="img-responsive" alt="wishlist empty">
-                        <h1 class="display-5 fw-bold text-dark">Your showcase at home is empty</h1>
-                        <p class="fs-4 text-center">Looks like you have not placed any showcase at home order</p>
-                        <p class="fs-4 text-center">Browse products and add to your favourite ones in showcase bag</p>
+                        <h1 class="display-5 fw-bold text-dark">Your showroom at home is empty</h1>
+                        <p class="fs-4 text-center">Looks like you have not placed any showroom at home order</p>
+                        <p class="fs-4 text-center">Browse products and add to your favourite ones in showroom bag</p>
                         <a href="{{ route('products.showcase') }}" class="btn btn-primary btn-lg" type="button">Browse Products</a>
-                        <a href="{{ route('showcase.bag') }}" class="btn btn-secondary btn-lg" type="button">Showcase Bag</a>
+                        <a href="{{ route('showcase.bag') }}" class="btn btn-secondary btn-lg" type="button">Showroom Bag</a>
                     </div>
                 </div>
             @else
@@ -35,7 +35,7 @@
                             <th class="product-price">Weight</th>
                             <th class="product-price"><span>Price</span></th>
                             <th class="product-price"><span>Status</span></th>
-                            
+
                             <th class="product-add-to-cart"></th>
                         </tr>
                     </thead>
@@ -65,16 +65,16 @@
                                     @php
 
                                         if (Config::get('icrm.multi_color_products.feature') == 1) {
-                                            $productcolorimage = App\Productcolor::where('product_id', $order->product_id)->where('color', $order->color)->first();                                            
+                                            $productcolorimage = App\Productcolor::where('product_id', $order->product_id)->where('color', $order->color)->first();
                                         }
 
 
                                         if(isset($productcolorimage))
                                         {
-                                            
+
                                             if(!empty($productcolorimage->main_image))
                                             {
-                                                $productimage = $productcolorimage->main_image;  
+                                                $productimage = $productcolorimage->main_image;
                                             }else{
                                                 $productimage = $order->product->image;
                                             }
@@ -83,8 +83,8 @@
                                             $productimage = $order->product->image;
                                         }
 
-                                        
-                                        
+
+
                                     @endphp
                                     <a href="{{ route('product.slug', ['slug' => $order->product->slug, 'color' => $order->color]) }}">
                                         <figure>
@@ -98,7 +98,7 @@
                                     <br><span>Brand: {{ $order->product->brand_id }}</span>
                                     <br><span>Color: {{ $order->color }}</span>
                                     <br><span>Size: {{ $order->size }}</span>
-                                                                    
+
                                     <br><span>Order type: {{ $order->type }}</span>
 
                                     <br><span>Hsn: {{ $order->product->productsubcategory->hsn }}</span>
@@ -121,7 +121,7 @@
                                 <td class="product-price">
                                     <span class="amount">{{ $order->order_status }}</span>
                                 </td>
-                                
+
                                 <td class="product-add-to-cart">
                                     <a href="{{ route('showcase.ordercomplete', ['id' => $order->order_id]) }}" class="btn btn-sm btn-light" title="View complete order info"><span>View Complete Order</span></a>
                                     {{-- <br>
@@ -131,12 +131,12 @@
                                 </td>
                             </tr>
                             @endforeach
-                        
+
                     </tbody>
                 </table>
             @endif
-                        
-            
+
+
         </div>
     </div>
 

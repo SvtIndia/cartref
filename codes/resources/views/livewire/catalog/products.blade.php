@@ -57,7 +57,7 @@
                                                 <input type="checkbox"
                                                     wire:key="producttypes.showcaseathome.{{ time() + 3 }}"
                                                     wire:model="producttypes.showcaseathome" value="showcaseathome">
-                                                Showcase At Home
+                                                Showroom At Home
                                             </li>
                                         @endif
                                     </ul>
@@ -426,7 +426,7 @@
                         {{-- @if (!empty(Session::get('showcasecity')))
                             <div class="toolbox-item toolbox-sort select-boxs text-light">
                                 <a wire:click="deactivateshowcaseathome" class="btn btn-rounded btn-ellipse btn-secondary btn-block" style="padding: 10px;" title="Showcase At Home Activated for delivery pincode {{ Session::get('showcasepincode') }}">
-                                    Deactivate Showcase At Home
+                                    Deactivate Showroom At Home
                                 </a>
                             </div>
                         @endif --}}
@@ -488,8 +488,8 @@
                     @if ($products->onFirstPage())
                         <div class="row">
                             <div class="showcase jumbotron">
-                                <h1>Showcase At Home <a href="{{ route('showcase.introduction') }}"><span
-                                            class="fas fa-info-circle" title="What is showcase at home?"></span></a>
+                                <h1>Showroom At Home <a href="{{ route('showcase.introduction') }}"><span
+                                            class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                                 </h1>
                                 <p>Order <span>upto {{ Config::get('icrm.showcase_at_home.order_limit') }} products
                                         from any one vendor</span> and get the delivery done <span>within
@@ -502,12 +502,12 @@
                                 <p class="lead">
                                     @if (Session::get('showcasecity') != null)
                                         @if (Session::get('showcasevendorid') != null)
-                                            <p><span>Showing showcase at home products from
+                                            <p><span>Showing showroom at home products from
                                                     <span>{{ Session::get('showcasevendor') }}</span> for
                                                     {{ Session::get('showcasecity') }} city
                                                     {{ Session::get('showcasepincode') }} area.</span></p>
                                         @else
-                                            <p><span>Showing showcase at home products for
+                                            <p><span>Showing showroom at home products for
                                                     {{ Session::get('showcasecity') }} city
                                                     {{ Session::get('showcasepincode') }} area.</span></p>
                                         @endif
@@ -542,7 +542,7 @@
                                                 $firstcolorimage = App\Productcolor::where('status', 1)
                                                     ->where('product_id', $product->id)
                                                     ->first();
-                                                
+
                                                 if (isset($firstcolorimage)) {
                                                     if (!empty($firstcolorimage->main_image)) {
                                                         $firstcolorimage = $firstcolorimage->main_image;
@@ -636,7 +636,7 @@
                                     @if (!empty(Session::get('showcasecity')))
                                         <a href="{{ route('products') }}" class="btn btn-danger btn-lg"
                                             style="background: red; color: whitesmoke;" type="button">Deactivate
-                                            Showcase At Home</a>
+                                            Showroom At Home</a>
                                     @endif
                                 </div>
                             </div>
@@ -656,7 +656,7 @@
                                                     $firstcolorimage = App\Productcolor::where('status', 1)
                                                         ->where('product_id', $product->id)
                                                         ->first();
-                                                    
+
                                                     if (isset($firstcolorimage)) {
                                                         if (!empty($firstcolorimage->main_image)) {
                                                             $firstcolorimage = $firstcolorimage->main_image;
@@ -762,10 +762,10 @@
                                                 value="{{ Session::get('showcasepincode') }}"
                                                 placeholder="Delivery pincode..." required="">
                                             <button class="btn btn-secondary btn-lg" type="submit"
-                                                style="background: red; color: whitesmoke;">Deactivate Showcase At
+                                                style="background: red; color: whitesmoke;">Deactivate Showroom At
                                                 Home</button>
                                         </form>
-                                        {{-- <a href="{{ route('products') }}" class="btn btn-danger btn-lg" style="background: red; color: whitesmoke;" type="button">Deactivate Showcase At Home</a> --}}
+                                        {{-- <a href="{{ route('products') }}" class="btn btn-danger btn-lg" style="background: red; color: whitesmoke;" type="button">Deactivate Showroom At Home</a> --}}
                                     @endif
                                 </div>
                             </div>

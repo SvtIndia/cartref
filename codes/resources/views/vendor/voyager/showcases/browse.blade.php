@@ -570,9 +570,16 @@
                                                     </p>
                                                     @if (!$data->is_timer_extended)
                                                         <ul style="display: inline-flex;">
+
+                                                            <form action="/showcase-at-home/my-orders/order/{{ $data->order_id }}/cancel" method="POST">
+                                                                @csrf
+                                                                <button class="btn btn-lg btn-danger">
+                                                                    <i class="voyager-watch"></i>No
+                                                                </button>
+                                                            </form>
                                                             <a href="/showcase-at-home/my-orders/order/{{ $data->order_id }}/add-time"
                                                                class="btn btn-lg btn-info">
-                                                                <i class="voyager-watch"></i> More Time
+                                                                <i class="voyager-watch"></i>Need More Time ?
                                                             </a>
                                                         </ul>
                                                     @endif

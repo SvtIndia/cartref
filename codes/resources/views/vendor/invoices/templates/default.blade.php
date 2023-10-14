@@ -38,7 +38,7 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            
+
 
             table.items thead tr{
                 background: #f1f1f1;
@@ -91,7 +91,7 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            
+
 
             table.items thead tr{
                 background: #f1f1f1;
@@ -223,7 +223,7 @@
                         @else
                             {{ __('invoices::invoice.seller') }}
                         @endif
-                        
+
                     </th>
                     <th class="border-0" width="3%"></th>
                     <th class="border-0 pl-0 party-header">
@@ -398,7 +398,7 @@
                         </td>
                     </tr>
                 @endif
-                
+
                 @if ($invoice->total_discount > 0)
                     @if($invoice->hasItemOrInvoiceDiscount())
                         <tr>
@@ -412,12 +412,12 @@
                 @endif
 
 
-                
+
                 @if($invoice->shipping_amount)
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
                         @if ($invoice->ordertype == 'Showcase At Home')
-                            <td class="text-right pl-0">Showcase At Home Refund</td>
+                            <td class="text-right pl-0">Showroom At Home Refund</td>
                         @else
                             <td class="text-right pl-0">{{ __('invoices::invoice.shipping') }}</td>
                         @endif
@@ -426,7 +426,7 @@
                                 - {{ $invoice->formatCurrency($invoice->shipping_amount) }}
                             @else
                                 + {{ $invoice->formatCurrency($invoice->shipping_amount) }}
-                            @endif                            
+                            @endif
                         </td>
                     </tr>
                 @else
@@ -434,7 +434,7 @@
                         <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.shipping') }}</td>
                         <td class="text-center pr-0" style="text-align: center;">
-                            Free Shipping                         
+                            Free Shipping
                         </td>
                     </tr>
                 @endif
@@ -481,7 +481,7 @@
                         @endif
                     @endif
                 @endif
-                
+
 
 
                 @if($invoice->finaltotal)
@@ -520,10 +520,10 @@
                 <p>
                     lorem
                     <img src="{{ Voyager::image($value) }}" alt="">
-                </p>    
+                </p>
             @endif
         @endforeach
-        
+
         {{-- <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p> --}}

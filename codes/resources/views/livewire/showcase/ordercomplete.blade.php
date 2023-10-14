@@ -4,18 +4,18 @@
             <div class="container">
                 <ul class="breadcrumb">
                     <li><a href="{{ route('welcome') }}"><i class="d-icon-home"></i></a></li>
-                    <li><a href="{{ route('showcase.myorders') }}">My Showcase Orders</a></li>
-                    <li>Showcase Order</li>
+                    <li><a href="{{ route('showcase.myorders') }}">My Showroom Orders</a></li>
+                    <li>Showroom Order</li>
                 </ul>
             </div>
         </nav>
         <div class="page-content pt-7 pb-10 mb-10">
-            
+
             <div class="step-by pr-4 pl-4">
-                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif"><a href="{{ route('showcase.ordercomplete', ['id' => $items->first()->order_id]) }}">Showcase Order</a></h3>
+                <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif"><a href="{{ route('showcase.ordercomplete', ['id' => $items->first()->order_id]) }}">Showroom Order</a></h3>
                 <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.buynow') active @endif"><a href="#">Buy now</a></h3>
             </div>
-            
+
             <div class="container mt-8">
                 @if ($items[0]->order_status != 'Cancelled')
                     <div class="order-message mr-auto ml-auto">
@@ -31,7 +31,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            
+
                             <div class="icon-box-content text-left">
                                 <h5 class="icon-box-title font-weight-bold lh-1 mb-1">Thank You!</h5>
                                 <p class="lh-1 ls-m">Your order has been received</p>
@@ -56,7 +56,7 @@
                         <span>Order type:</span>
                         <strong>{{ $items[0]->type }}</strong>
                     </div> --}}
-                    
+
                     <div class="overview-item">
                         <span>Items:</span>
                         <strong>{{ count($items) }}</strong>
@@ -111,10 +111,10 @@
 
                 <div class="order-actions">
                     <div class="float-left">
-                        <a href="{{ route('showcase.myorders') }}" class="btn btn-icon-left btn-dark btn-rounded btn-md mb-4"><i class="d-icon-arrow-left"></i> My Showcases</a>
+                        <a href="{{ route('showcase.myorders') }}" class="btn btn-icon-left btn-dark btn-rounded btn-md mb-4"><i class="d-icon-arrow-left"></i> My Showrooms</a>
                     </div>
                     <div class="float-right">
-                        
+
                         {{-- If any of the product is already purchased then hide --}}
                         {{-- If the order has already cancelled then hide --}}
                         @if(!$items->where('order_status', '==','Purchased')->first())
@@ -124,7 +124,7 @@
                                 Cancelling...<i class="fa fa-times-circle"></i>
                             </a>
                         @endif
-                        
+
 
                     </div>
                 </div>
@@ -160,9 +160,9 @@
                         </thead>
                         <tbody>
                             @isset($items)
-                            
+
                             @if (count($items) > 0)
-                            
+
                                 @foreach ($items as $item)
                                     <tr>
                                         <td class="product-name">
@@ -187,7 +187,7 @@
                                             <br><span>Brand: {{ $item->product->brand_id }}</span>
                                             <br><span>Color: {{ $item->color }}</span>
                                             <br><span>Size: {{ $item->size }}</span>
-                                                                            
+
                                             <br><span>Order type: {{ $item->type }}</span>
 
                                             <br><span>Hsn: {{ $item->product->productsubcategory->hsn }}</span>
@@ -203,7 +203,7 @@
                                             {{ $item->qty }}
                                         </td>
                                         <td class="product-amount">
-                                            
+
                                             @if ($items->whereIn('order_status', ['Purchased', 'Returns'])->count() == 0)
                                                 @if ($item->order_status == 'Showcased')
                                                     <a wire:click="movetobag({{ $item->id }})" class="btn btn-sm btn-dark btn-light">Move to Bag</a>
@@ -236,13 +236,13 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <h4 class="summary-subtitle">Showcase At Home Charges:</h4>
+                                    <h4 class="summary-subtitle">Showroom At Home Charges:</h4>
                                 </td>
                                 <td class="summary-subtotal-price" style="text-align: left;">{{ Config::get('icrm.currency.icon') }}{{ $item->order_value }}</td>
                             </tr>
 
 
-                            
+
                             <tr class="summary-subtotal">
                                 <td></td>
                                 <td></td>
@@ -305,9 +305,9 @@
                     </p>
                 </div>
 
-                
+
             </div>
         </div>
-    
+
     </main>
 </div>

@@ -4,7 +4,7 @@
 
             <div class="step-by pr-4 pl-4">
                 <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.ordercomplete') active @endif">
-                    <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}">Showcase Order</a></h3>
+                    <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}">Showroom Order</a></h3>
                 <h3 class="title title-simple title-step @if(\Request::route()->getName() == 'showcase.buynow') active @endif">
                     <a href="{{ route('showcase.buynow', ['id' => $this->orderid]) }}">Buy now</a></h3>
             </div>
@@ -86,9 +86,9 @@
                                 <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}"
                                    class="btn btn-dark btn-md btn-rounded btn-icon-left mr-4 mb-4">
                                     <i class="d-icon-arrow-left"></i>
-                                    Go to showcase order
+                                    Go to showroom order
                                 </a><br>
-                                <small>At a time you can only request showcase at home from one vendor</small>
+                                <small>At a time you can only request showroom at home from one vendor</small>
 
                                 {{-- <button type="submit"
                                     class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled">Update
@@ -107,8 +107,8 @@
                                 <div class="container-fluid py-5">
                                     <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}"
                                          class="img-responsive" alt="wishlist empty">
-                                    <h1 class="display-5 fw-bold text-dark">Your showcase bag is empty</h1>
-                                    <p class="fs-4 text-center">Go bag to your showcase order and move your favourite
+                                    <h1 class="display-5 fw-bold text-dark">Your showroom bag is empty</h1>
+                                    <p class="fs-4 text-center">Go bag to your showroom order and move your favourite
                                         products to bag</p>
                                     <a href="{{ route('showcase.ordercomplete', ['id' => $this->orderid]) }}"
                                        class="btn btn-primary btn-lg" type="button">View Complete Order</a>
@@ -202,7 +202,7 @@
                                     @if($showcaserefund > 0)
                                         <tr class="summary-subtotal">
                                             <td>
-                                                <h4 class="summary-subtitle">Showcase At Home Charges Refund</h4>
+                                                <h4 class="summary-subtitle">Showroom At Home Charges Refund</h4>
                                             </td>
                                             <td>
                                                 <p class="summary-subtotal-price" style="color: red !important;">
