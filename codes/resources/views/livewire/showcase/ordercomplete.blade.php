@@ -193,8 +193,13 @@
                                             <br><span>Hsn: {{ $item->product->productsubcategory->hsn }}</span>
                                         </td>
                                         <td class="product-amount">
-                                            <strong>{{ $item->order_status }}</strong>
-                                            <br><span>{{ $item->order_substatus }}</span>
+                                            @if($item->order_status == 'Out For Showcase')
+                                                <strong>Pickup </strong>
+                                            @elseif($item->order_status == 'Showcased')
+                                                <strong>Handover</strong>
+                                            @else
+                                                <strong>{{ $item->order_status }}</strong>
+                                            @endif
                                         </td>
                                         <td class="product-amount">
                                             {{ $item->type }}

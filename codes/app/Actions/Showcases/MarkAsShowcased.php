@@ -20,12 +20,12 @@ class MarkAsShowcased extends AbstractAction
 
     public function getConfirmationContent()
     {
-        return 'Are you sure you want to mark as showcased';
+        return 'Are you sure you want to mark as handovered';
     }
 
     public function getNoRowContent()
     {
-        return "You haven't selected any order to mark as showcased";
+        return "You haven't selected any order to mark as handovered";
     }
 
     public function getColor()
@@ -35,7 +35,7 @@ class MarkAsShowcased extends AbstractAction
 
     public function getTitle()
     {
-        return 'Mark as Showcased';
+        return 'Mark as Handover';
     }
 
     public function getIcon()
@@ -74,14 +74,14 @@ class MarkAsShowcased extends AbstractAction
                 }
             }
         }
-        
+
     }
 
 
     public function massAction($ids, $comingFrom)
     {
         // Do something with the IDs
-        
+
         /**
          * Check if the order is selected
          */
@@ -89,9 +89,9 @@ class MarkAsShowcased extends AbstractAction
         if($ids[0] == 0)
         {
             return redirect($comingFrom)->with([
-                'message' => "You haven't selected any order to mark as showcased",
+                'message' => "You haven't selected any order to mark as handovered",
                 'alert-type' => 'warning',
-            ]); 
+            ]);
         }
 
 
@@ -101,12 +101,12 @@ class MarkAsShowcased extends AbstractAction
 
         $this->markasshowcased($ids, $comingFrom);
 
-        
+
         // return redirect($comingFrom);
         return redirect('/'.Config::get('icrm.admin_panel.prefix').'/showcases?label=Showcased');
 
     }
-    
+
 
     private function markasshowcased($ids, $comingFrom)
     {
@@ -120,9 +120,9 @@ class MarkAsShowcased extends AbstractAction
         if(count($orders) == 0)
         {
             return redirect($comingFrom)->with([
-                'message' => "You can only mark out for showcase orders as showcased",
+                'message' => "You can only mark out for showcase orders as handovered",
                 'alert-type' => 'error',
-            ]); 
+            ]);
         }
 
 
@@ -134,9 +134,9 @@ class MarkAsShowcased extends AbstractAction
                 ]);
 
         return redirect($comingFrom)->with([
-            'message' => "Selected orders successfully marked as showcased",
+            'message' => "Selected orders successfully marked as handovered",
             'alert-type' => 'success',
-        ]); 
+        ]);
 
     }
 

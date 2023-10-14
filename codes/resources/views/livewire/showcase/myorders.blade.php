@@ -119,7 +119,14 @@
                                 </td>
 
                                 <td class="product-price">
-                                    <span class="amount">{{ $order->order_status }}</span>
+                                    @if($order->order_status == 'Out For Showcase')
+                                        <span class="amount">Pickup </span>
+                                    @elseif($order->order_status == 'Showcased')
+                                        <span class="amount">Handover</span>
+                                    @else
+                                        <span class="amount">{{ $order->order_status }}</span>
+                                    @endif
+                                    {{-- <span class="amount">{{ $order->order_status }}</span> --}}
                                 </td>
 
                                 <td class="product-add-to-cart">

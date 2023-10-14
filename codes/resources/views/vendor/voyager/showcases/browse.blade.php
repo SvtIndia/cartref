@@ -99,7 +99,7 @@
                                     </div>
 
                                     <div class="info">
-                                        <span class="title">Out For Showcase</span>
+                                        <span class="title">Pickup</span>
                                     </div>
 
                                 </div>
@@ -115,7 +115,7 @@
                                     </div>
 
                                     <div class="info">
-                                        <span class="title">Showcased</span>
+                                        <span class="title">Handover</span>
                                     </div>
 
                                 </div>
