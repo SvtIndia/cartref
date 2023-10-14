@@ -773,7 +773,7 @@
                                                 @elseif($data->order_status == 'Showcased')
                                                     <span>Handover</span>
                                                 @else
-                                                    <span>{{ $order->order_status }}</span>
+                                                    <span>{{ $data->order_status }}</span>
                                                 @endif
                                             </div>
 
