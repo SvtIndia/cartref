@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Session;
 class Quickview extends Component
 {
     public $product;
+    public $view;
 
-    public function mount($product)
+    public function mount($product, $view = null)
     {
         $this->product = $product;
+        $this->view = $view;
     }
 
 

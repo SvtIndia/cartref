@@ -69,6 +69,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cartrefs.min.css') }}">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/product-card.css') }}">
+
     @if (env('#APP_URL') == 'https://hawkwings.in')
         <link rel="stylesheet" type="text/css" href="{{ asset('css/hawkwings.css') }}">
     @endif
@@ -246,7 +248,7 @@
 
         @font-face {
             font-family: 'Benedict-Regular';
-            src: url('/fonts/Benedict Regular.otf');
+                src: url('/fonts/Benedict Regular.otf');
         }
 
         @font-face {
