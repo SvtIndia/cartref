@@ -25,9 +25,13 @@
         let action = 'inactive';
 
         window.addEventListener('makeInactive', (e) => {
-            // console.log('in');
             $('#loader').hide();
             action = 'inactive';
+        });
+
+        window.addEventListener('reachedMaxLimit', (e) => {
+            $('#loader').hide();
+            action = 'reached-max-limit';
         });
 
         $(window).scroll(function() {
@@ -36,6 +40,9 @@
                 $('#loader').show();
                 window.livewire.emit('load-more');
             }
+        });
+        window.addEventListener('scrollByCustom', (e) => {
+            window.scrollBy(e.detail.x ?? 0, e.detail.y ?? 0);
         });
     </script>
 @endpush

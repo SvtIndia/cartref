@@ -62,7 +62,7 @@ class Products extends Component
     public $page = 1;
     public $sort;
     public $paginate = '';
-
+    public $totalProductsCount = 0;
     protected $queryString = [
         // 'categorys' => ['except' => '', 'as' => 'category'],
         // 'subcategorys' => ['except' => '', 'as' => 'subcategory'],
@@ -306,7 +306,12 @@ class Products extends Component
     ];
     public function loadMore()
     {
-        $this->paginate = $this->paginate + 12;
+        if($this->totalProductsCount > $this->paginate + 12){
+            $this->paginate = $this->paginate + 12;
+        }
+        else{
+            $this->dispatchBrowserEvent('reachedMaxLimit');
+        }
     }
 
 
@@ -505,12 +510,13 @@ class Products extends Component
         ;
 
 
-
+        $this->totalProductsCount = $products->count();
         $products = $products->paginate($this->paginate);
 
         $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
 
         $this->dispatchBrowserEvent('makeInactive');
+        $this->dispatchBrowserEvent('scrollByCustom',['x' => 0, 'y' => 10]);
         return view('livewire.catalog.products', [
             'categories' => $categories,
             // 'subcategories' => $subcategories,
