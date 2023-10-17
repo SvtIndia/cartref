@@ -2,7 +2,7 @@
 
     @if (count($blogs) > 0)
 
-    <section class="mt-10 pt-6">
+    <section class="">
         <div class="container">
             <h2 class="title title-center">From Our Blog</h2>
             <br>

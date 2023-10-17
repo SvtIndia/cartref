@@ -56,7 +56,6 @@
 
     @include('components/frontend/collections/dynamiccollections')
 
-    <br><br>
     @include('components/frontend/collections/3column')
 
     @include('components/frontend/collections/2columnfreerows')
@@ -72,7 +71,6 @@
     @include('components.frontend.cardcarousels.trending')
 
     @include('components.frontend.cardcolumns.blogs01')
-    <br><br>
     @include('components.frontend.cardcarousels.recentlyviewed')
 @endsection
 

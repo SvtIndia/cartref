@@ -1,7 +1,7 @@
 @if(isset($trendings))
 
     @if (count($trendings) > 0)
-    <section class="mt-7 appear-animate fadeIn appear-animation-visible home-product" data-animation-options="{
+    <section class="appear-animate fadeIn appear-animation-visible home-product" data-animation-options="{
         'delay': '.2s'
     }" style="animation-duration: 1.2s;">
         <div class="container">
