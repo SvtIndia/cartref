@@ -461,7 +461,7 @@ class WelcomeController extends Controller
             ->whereHas('vendor', function ($q) {
                 $q->where('status', 1);
             })
-            ->take(8)
+            ->take(15)
             ->get();
 
 

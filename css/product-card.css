@@ -20,17 +20,8 @@
     url("/fonts/KronaOne-Regular.woff") format("woff");
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .new-product-wrap {
-  width: 215px;
+  width: 215px !important;
   /* max-width: 33.333%; */
   max-height: 550px;
   margin: 10px 0px;
@@ -47,7 +38,7 @@
 .new-product-wrap .image {
   height: 300px;
   position: relative;
-  border: 2px solid #4f4c4cc4;
+  border: 2px solid #4f4c4c5e;
   border-radius: 15px;
 }
 .new-product-wrap .image .product-image {
@@ -70,7 +61,7 @@
   text-align: center;
   color: black;
   font-size: 12px;
-  font-family: Lexend Peta;
+  font-family: Lexend Peta, serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.2px;
@@ -81,7 +72,7 @@
   height: 12px;
   color: black;
   font-size: 12px;
-  font-family: Cambay;
+  font-family: Cambay, serif;
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1.2px;

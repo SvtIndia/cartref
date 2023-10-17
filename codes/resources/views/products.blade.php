@@ -13,6 +13,7 @@
 
     <meta name="keywords" content="{{ Config::get('seo.catalog.keywords') }}">
     <meta name="description" content="{{ Config::get('seo.catalog.description') }}">
+
 @endsection
 
 
