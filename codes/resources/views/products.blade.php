@@ -31,6 +31,7 @@
 
         window.addEventListener('reachedMaxLimit', (e) => {
             $('#loader').hide();
+
             action = 'reached-max-limit';
         });
 

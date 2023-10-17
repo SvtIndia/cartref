@@ -306,10 +306,11 @@ class Products extends Component
     ];
     public function loadMore()
     {
-        if($this->totalProductsCount > $this->paginate + 12){
+        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate + 12){
             $this->paginate = $this->paginate + 12;
         }
         else{
+            $this->dispatchBrowserEvent('makeInactive');
             $this->dispatchBrowserEvent('reachedMaxLimit');
         }
     }

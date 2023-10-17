@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Productcolor;
 use App\Size;
 use App\Brand;
 use App\Color;
@@ -33,6 +34,7 @@ class WelcomeController extends Controller
     {
         // $this->middleware(['verified']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -91,7 +93,6 @@ class WelcomeController extends Controller
         } else {
             $collections5cfr = [];
         }
-
 
 
         if (Config::get('icrm.frontend.trendingproducts.feature') == 1) {
@@ -202,7 +203,6 @@ class WelcomeController extends Controller
         } else {
             $collections5cfr = [];
         }
-
 
 
         // if(Config::get('icrm.frontend.trendingproducts.feature') == 1)
@@ -420,8 +420,6 @@ class WelcomeController extends Controller
     }
 
 
-
-
     /**
      * Display a listing of the resource.
      *
@@ -456,13 +454,51 @@ class WelcomeController extends Controller
             return abort(404);
         }
 
+//
+
         $relatedproducts = Product::where('admin_status', 'Accepted')
             ->where('subcategory_id', $product->subcategory_id)
             ->whereHas('vendor', function ($q) {
                 $q->where('status', 1);
             })
-            ->take(8)->get();
+            ->take(8)
+            ->get();
 
+
+        $subCat = ProductSubcategory::find($product->subcategory_id);
+
+        /*
+         * More "Sub Category name" from “Brand Name”
+            as "More Formal Shoes from Maeve & Shelby"
+        */
+        $brandMoreText = 'More ' . $subCat->name . ' From ' . $product->brand_id;
+        $brandLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'brands[' . $product->brand_id . ']' => $product->brand_id]);
+        /*
+         * More "Style id"  “Sub Category Name”
+            as "More Floral-Print Formal-Shoes"
+        */
+        $moreStyleText = 'More ' . $product->style_id . ' ' . $subCat->name;
+        $styleLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'style[' . $product->style_id . ']' => $product->style_id]);
+
+        /*
+         * Colour
+        */
+        if (request('color') != null) {
+            $selectedColor = request('color');
+            $selectedColor = Productcolor::where('status', 1)->where('color', $selectedColor)->first();
+
+        } else {
+            $firstcolor = Productcolor::where('status', 1)->where('product_id', $product->id)->first();
+
+            if (isset($firstcolor)) {
+                if (!empty($firstcolor->color)) {
+                    $selectedColor = $firstcolor;
+                }
+            }
+        }
+
+        $moreColourText = 'More ' . $selectedColor->color . ' ' . $subCat->name;
+        $colourLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'color[' . $selectedColor->id . ']' => $selectedColor->id]);
 
         if (Config::get('icrm.frontend.recentlyviewed.feature') == 1) {
             // add product in recently viewed list
@@ -518,6 +554,14 @@ class WelcomeController extends Controller
 
         return view('product')->with([
             'product' => $product,
+            'brandLink' => $brandLink,
+            'brandMoreText' => $brandMoreText,
+
+            'styleLink' => $styleLink,
+            'moreStyleText' => $moreStyleText,
+
+            'colourLink' => $colourLink,
+            'moreColourText' => $moreColourText,
             // 'morecolors' => $morecolors,
             'relatedproducts' => $relatedproducts,
             'shareComponent' => $shareComponent,
@@ -539,19 +583,16 @@ class WelcomeController extends Controller
         })->with('productsku')->first();
 
 
-
         $morecolors = Productsku::groupBy('color', 'main_image')
             ->select('color', DB::raw('count(*) as total'), 'main_image')
             ->where('product_id', $product->id)->where('status', 1)
             ->get();
 
 
-
         $similarproducts = Product::where('admin_status', 'Accepted')->where('id', '!=', $product->id)->take(10)->get();
 
         // add product in recently viewed list
         $this->recentlyviewed($product);
-
 
 
         return view('product')->with([
@@ -577,7 +618,6 @@ class WelcomeController extends Controller
         $this->recentlyviewed($product);
 
 
-
         return view('product')->with([
             'product' => $product,
             'morecolors' => $morecolors,
@@ -601,8 +641,6 @@ class WelcomeController extends Controller
     }
 
 
-
-
     /**
      * Display a listing of the resource.
      *
@@ -612,8 +650,6 @@ class WelcomeController extends Controller
     {
         return view('contactus');
     }
-
-
 
 
     /**
@@ -659,8 +695,6 @@ class WelcomeController extends Controller
     }
 
 
-
-
     /**
      * Display a listing of the resource.
      *
@@ -682,8 +716,6 @@ class WelcomeController extends Controller
             'next' => $next
         ]);
     }
-
-
 
 
     /**

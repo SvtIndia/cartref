@@ -55,7 +55,7 @@
     </section>
 
     @include('components.frontend.cardcarousels.recentlyviewed')
-    
+
     @include('components/frontend/collections/dynamiccollections')
 
     @include('components/frontend/collections/3column')

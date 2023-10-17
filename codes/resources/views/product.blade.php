@@ -422,9 +422,9 @@
             @isset($relatedproducts)
                 @if (count($relatedproducts) > 0)
                     <section class="pt-3 mt-10">
-                        <h2 class="title justify-content-center">Related Products</h2>
+                        <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar Products</h1>
 
-                        <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product" data-owl-options="{
+                        <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product mt-4" data-owl-options="{
                             'items': 5,
                             'nav': false,
                             'loop': true,
@@ -514,6 +514,11 @@
                     </section>
                 @endif
             @endisset
+            <section style="display: flex;gap: 10px;margin-top: 2rem;">
+                <a href="{{ $brandLink  }}" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $brandMoreText  }}</a>
+                <a href="{{ $styleLink  }}" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $moreStyleText  }}</a>
+                <a href="{{ $colourLink  }}" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $moreColourText  }}</a>
+            </section>
         </div>
     </div>
 </div>
