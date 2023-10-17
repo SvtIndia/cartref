@@ -802,7 +802,7 @@
                                                     'wishlist',
                                                     [
                                                     'wishlistproductid' => $product->id,
-                                                    'view' => 'product-card',
+                                                    'view' => 'new-product-card',
                                                     ],
                                                     key($product->id . time())
                                                 )

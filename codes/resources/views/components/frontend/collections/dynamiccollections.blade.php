@@ -56,7 +56,7 @@
             @endif
 
             <section id="dynamiccollections{{ $dynamiccollection->id }}">
-                <div class="containers pt-10 pb-6 pr-4 pl-4  dynamic-hero{{ $dynamiccollection->id }}">
+                <div class="containers pt-2 pb-6 pr-4 pl-4  dynamic-hero{{ $dynamiccollection->id }}">
 
                     <h2 class="title title-center mb-4">
                         {{ $dynamiccollection->group_name }}
