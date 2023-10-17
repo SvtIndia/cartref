@@ -518,6 +518,11 @@ class Addskutobag extends Component
         //     ]);
         // }
 
+        $p = Product::find($this->product->id);
+        if(auth()->user() && isset($p)){
+            $p->attachUser(auth()->user()->id);
+        }
+
         $this->added = true;
 
         $this->emit('cartcount');

@@ -5,7 +5,7 @@
         'delay': '.2s'
     }" style="animation-duration: 1.2s;">
         <div class="container">
-            <h2 class="title title-center">Trending Now</h2>
+            <h2 class="title title-center">BE A SHOWSTOPPER</h2>
             <div class="owl-carousel owl-theme owl-nav-full owl-shadow-carousel owl-loaded owl-drag" data-owl-options="{
                 'items': 4,
                 'nav': false,

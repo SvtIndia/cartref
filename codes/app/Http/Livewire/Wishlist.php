@@ -76,6 +76,11 @@ class Wishlist extends Component
             );
 
             $this->wishlistchecked = true;
+
+            $p = Product::find($this->wishlistproductid);
+            if(auth()->user() && isset($p)){
+                $p->attachUser(auth()->user()->id);
+            }
             // Session::flash('success', 'Product successfully added in the wishlist!');
         }
 

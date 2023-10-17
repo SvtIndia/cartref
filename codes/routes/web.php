@@ -495,5 +495,14 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    //    return date('','')
+
+//    $product = \App\Models\Product::find(2970);
+//    $product->attachUser(1);
+//
+//    $product->detachUser(1);
+
+    $product = \App\Models\Product::withCount('users')->whereIn('id',[85,90, 2970])->orderBy('users_count', 'desc')->get();
+//    $product = $product->orderBy('users_count', 'desc')->get();
+
+    return $product;
 });

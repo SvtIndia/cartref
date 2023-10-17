@@ -273,27 +273,32 @@ class WelcomeController extends Controller
          * Fetch most purchased top 10 products from order table
          */
 
-        $orders = DB::table('orders')
-            ->select('product_id', DB::raw('count(*) as productcount'))
-            ->groupBy('product_id')
-            ->orderBy('productcount', 'desc')
-            ->inRandomOrder()
-            ->limit(Config::get('icrm.frontend.trendingproducts.count'))
+//        $orders = DB::table('orders')
+//            ->select('product_id', DB::raw('count(*) as productcount'))
+//            ->groupBy('product_id')
+//            ->orderBy('productcount', 'desc')
+//            ->inRandomOrder()
+//            ->limit(Config::get('icrm.frontend.trendingproducts.count'))
+//            ->get();
+//
+//        if (count($orders) > 0) {
+//            $trendings = Product::where('admin_status', 'Accepted')
+//                ->whereIn('id', $orders->pluck('product_id'))
+//                ->whereHas('vendor', function ($q) {
+//                    $q->where('status', 1);
+//                })
+//                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+//                ->get();
+//        } else {
+//            $trendings = Product::where('admin_status', 'Accepted')
+//                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+//                ->get();
+//        }
+        $trendings = Product::withCount('users')
+            ->where('admin_status', 'Accepted')
+            ->take(Config::get('icrm.frontend.trendingproducts.count'))
+            ->orderBy('users_count', 'desc')
             ->get();
-
-        if (count($orders) > 0) {
-            $trendings = Product::where('admin_status', 'Accepted')
-                ->whereIn('id', $orders->pluck('product_id'))
-                ->whereHas('vendor', function ($q) {
-                    $q->where('status', 1);
-                })
-                ->take(Config::get('icrm.frontend.trendingproducts.count'))
-                ->get();
-        } else {
-            $trendings = Product::where('admin_status', 'Accepted')
-                ->take(Config::get('icrm.frontend.trendingproducts.count'))
-                ->get();
-        }
 
         return $trendings;
     }

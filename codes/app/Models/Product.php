@@ -25,6 +25,8 @@ class Product extends Model
     use HasFactory;
     use Resizable;
     use Translatable;
+    use HasImpression;
+
     protected $translatable = ['name', 'description'];
     protected $perPage = 50;
 
@@ -458,5 +460,7 @@ class Product extends Model
     {
         return $this->belongsTo(ProductSubcategory::class, 'subcategory_id');
     }
+
+
 
 }

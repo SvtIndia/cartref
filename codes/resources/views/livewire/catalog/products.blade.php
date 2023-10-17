@@ -740,6 +740,7 @@
                                     }
                                 @endphp
                                 <div class="new-product-wrap">
+                                    <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
                                     <div class="new-product">
                                         <div class="image">
                                             <img class="product-image" src="{{ Voyager::image($firstcolorimage) }}" alt="{{ $product->name }}"/>
@@ -810,6 +811,7 @@
 
                                         </div>
                                     </div>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>
