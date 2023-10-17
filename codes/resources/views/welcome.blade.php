@@ -54,6 +54,8 @@
         </div>
     </section>
 
+    @include('components.frontend.cardcarousels.recentlyviewed')
+    
     @include('components/frontend/collections/dynamiccollections')
 
     @include('components/frontend/collections/3column')
@@ -71,7 +73,6 @@
     @include('components.frontend.cardcarousels.trending')
 
     @include('components.frontend.cardcolumns.blogs01')
-    @include('components.frontend.cardcarousels.recentlyviewed')
 @endsection
 
 
