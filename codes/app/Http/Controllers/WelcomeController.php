@@ -466,19 +466,28 @@ class WelcomeController extends Controller
 
 
         $subCat = ProductSubcategory::find($product->subcategory_id);
+        $gender = $product->gender_id;
 
         /*
          * More "Sub Category name" from “Brand Name”
             as "More Formal Shoes from Maeve & Shelby"
         */
         $brandMoreText = 'More ' . $subCat->name . ' From ' . $product->brand_id;
-        $brandLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'brands[' . $product->brand_id . ']' => $product->brand_id]);
+        $brandLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'brands[' . $product->brand_id . ']' => $product->brand_id,
+            'gender[' . $gender . ']' => $gender
+        ]);
         /*
          * More "Style id"  “Sub Category Name”
             as "More Floral-Print Formal-Shoes"
         */
         $moreStyleText = 'More ' . $product->style_id . ' ' . $subCat->name;
-        $styleLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'style[' . $product->style_id . ']' => $product->style_id]);
+        $styleLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'style[' . $product->style_id . ']' => $product->style_id,
+            'gender[' . $gender . ']' => $gender
+        ]);
 
         /*
          * Colour
@@ -497,8 +506,14 @@ class WelcomeController extends Controller
             }
         }
 
-        $moreColourText = 'More ' . $selectedColor->color . ' ' . $subCat->name;
-        $colourLink = route('products.subcategory', ['subcategory' => $subCat->slug, 'color[' . $selectedColor->id . ']' => $selectedColor->id]);
+        $selectedColor = Color::where('name', 'Like', '%' . $selectedColor->color . '%')->first();
+        $moreColourText = 'More ' . $selectedColor->name . ' ' . $subCat->name;
+
+        $colourLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'color[' . $selectedColor->id . ']' => $selectedColor->id,
+            'gender[' . $gender . ']' => $gender
+        ]);
 
         if (Config::get('icrm.frontend.recentlyviewed.feature') == 1) {
             // add product in recently viewed list

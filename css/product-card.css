@@ -90,7 +90,7 @@
 }
 .product-price .mrp {
   color: #0e7865;
-  font-size: 15px;
+  font-size: 18px;
   font-family: Lexend Peta;
   font-weight: 400;
   text-transform: uppercase;
@@ -110,8 +110,8 @@
 }
 .new-product-wrap .new-product .content .off {
   width: 100%;
-  color: black;
-  font-size: 10px;
+  color: #e6003a;
+  font-size: 12px;
   font-family: Lexend Peta;
   font-weight: 700;
   text-transform: uppercase;
