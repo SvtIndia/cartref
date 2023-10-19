@@ -455,18 +455,21 @@ class WelcomeController extends Controller
         }
 
 //
+        $gender = $product->gender_id;
 
         $relatedproducts = Product::where('admin_status', 'Accepted')
             ->where('subcategory_id', $product->subcategory_id)
             ->whereHas('vendor', function ($q) {
                 $q->where('status', 1);
             })
-            ->take(15)
+            ->when($gender, function ($query) use($gender){
+                $query->whereIn('gender_id', array_values([$gender]));
+            })
+            ->take(20)
             ->get();
 
 
         $subCat = ProductSubcategory::find($product->subcategory_id);
-        $gender = $product->gender_id;
 
         /*
          * More "Sub Category name" from “Brand Name”

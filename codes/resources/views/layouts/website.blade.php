@@ -460,6 +460,8 @@
             }
         }
     </style>
+
+
     @livewireStyles
     <script src="{{ asset('php_ua/assets/js/scripts/phpUaJS.js') }}"></script>
 </head>
