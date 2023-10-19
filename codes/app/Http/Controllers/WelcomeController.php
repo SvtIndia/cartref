@@ -478,6 +478,8 @@ class WelcomeController extends Controller
             'brands[' . $product->brand_id . ']' => $product->brand_id,
             'gender[' . $gender . ']' => $gender
         ]);
+        $brandCount = $this->getNumberMoreButton($subCat->slug, [$gender], [$product->brand_id]);
+
         /*
          * More "Style id"  “Sub Category Name”
             as "More Floral-Print Formal-Shoes"
@@ -489,6 +491,7 @@ class WelcomeController extends Controller
             'gender[' . $gender . ']' => $gender
         ]);
 
+        $styleCount = $this->getNumberMoreButton($subCat->slug, [$gender], [], [], [$product->style_id]);
         /*
          * Colour
         */
@@ -508,6 +511,7 @@ class WelcomeController extends Controller
 
         $selectedColor = Color::where('name', 'Like', '%' . $selectedColor->color . '%')->first();
         $moreColourText = 'More ' . $selectedColor->name . ' ' . $subCat->name;
+        $colourCount = $this->getNumberMoreButton($subCat->slug, [$gender], null, [$selectedColor->id]);
 
         $colourLink = route('products.subcategory', [
             'subcategory' => $subCat->slug,
@@ -567,15 +571,20 @@ class WelcomeController extends Controller
 
         // }
 
+//        dd($brandCount, $styleCount, $colourCount);
+
         return view('product')->with([
             'product' => $product,
             'brandLink' => $brandLink,
             'brandMoreText' => $brandMoreText,
+            'brandCount' => $brandCount,
 
             'styleLink' => $styleLink,
+            'styleCount' => $styleCount,
             'moreStyleText' => $moreStyleText,
 
             'colourLink' => $colourLink,
+            'colourCount' => $colourCount,
             'moreColourText' => $moreColourText,
             // 'morecolors' => $morecolors,
             'relatedproducts' => $relatedproducts,
@@ -583,6 +592,34 @@ class WelcomeController extends Controller
             'previous' => $previous,
             'next' => $next
         ]);
+    }
+
+    private function getNumberMoreButton($selectedsubcategory, $genders, $brands = [], $colors = [], $styles = []){
+        $products = Product::where('admin_status', 'Accepted')
+            ->when($selectedsubcategory, function ($query) use($selectedsubcategory){
+                $query->whereHas('productsubcategory', function ($q) use($selectedsubcategory){
+                    $q->where('slug', $selectedsubcategory);
+                });
+            })
+            ->when($genders, function ($query) use($genders){
+                $query->whereIn('gender_id', array_values($genders));
+            })
+
+            ->when($brands, function ($query) use($brands){
+                $query->whereIn('brand_id', array_values($brands));
+            })
+            ->when($colors, function ($query) use($colors){
+                $query->whereHas('colors', function ($q) use($colors){
+                    $q->whereIn('id', array_values($colors));
+                });
+            })
+            ->when($styles, function ($query) use($styles){
+                $query->whereIn('style_id', array_values($styles));
+            })
+        ;
+
+
+        return $products->count();
     }
 
 

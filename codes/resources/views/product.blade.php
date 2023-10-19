@@ -6,6 +6,35 @@
     <meta name="description" content="{{ $product->description }}">
 @endsection
 
+@section('headerlinks')
+    <style>
+        .more-button-custom{
+            position: relative;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 16px !important;
+            letter-spacing: 2px !important;
+            box-shadow: 5px 5px 10px rgb(128, 128, 128);
+        }
+        .badge-count {
+            position: absolute;
+            top: 0;
+            border-radius: 50rem !important;
+            background-color: #e6003a !important;
+            transform: translate(-50%,-50%) !important;
+            left: 98% !important;
+            display: inline-block;
+            padding: .35em .65em;
+            font-size: .75em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+        }
+    </style>
+@endsection
+
 
 @section('content')
     @section('mainclass')
@@ -605,9 +634,18 @@
                 @endif
             @endisset
             <section style="display: flex;gap: 10px;margin-top: 2rem;">
-                <a href="{{ $brandLink  }}" style="text-align: center;" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $brandMoreText  }}</a>
-                <a href="{{ $styleLink  }}" style="text-align: center;" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $moreStyleText  }}</a>
-                <a href="{{ $colourLink  }}" style="text-align: center;" target="_blank" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">{{ $moreColourText  }}</a>
+                <a href="{{ $brandLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom  ">
+                    {{ $brandMoreText  }}
+                    <div class="badge-count">{{ $brandCount }}</div>
+                </a>
+                <a href="{{ $styleLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreStyleText  }}
+                    <div class="badge-count">{{ $styleCount }}</div>
+                </a>
+                <a href="{{ $colourLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreColourText  }}
+                    <div class="badge-count">{{ $colourCount }}</div>
+                </a>
             </section>
         </div>
     </div>
