@@ -8476,6 +8476,7 @@ button.mfp-arrow {
  font-size:1.4rem;
  color:#999;
  transition:0.3s;
+ border-radius: 20px;
 }
 
 .product-wrap .product{

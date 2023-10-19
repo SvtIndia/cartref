@@ -5,13 +5,14 @@
         <ins class="new-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($offer_price, 0) }}/-</ins>
         <del class="old-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($mrp, 0) }}</del>
     </div>
-    
+
+
     <div class="ratings-container">
         <div class="ratings-full">
-            <span class="ratings" style="width: 
+            <span class="ratings" style="width:
             @if($product->productreviews)
             {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
-            @else   
+            @else
             0%
             @endif"></span>
             <span class="tooltiptext tooltip-top"></span>

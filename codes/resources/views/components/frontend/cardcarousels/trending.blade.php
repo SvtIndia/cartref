@@ -56,29 +56,32 @@
                     </figure>
                     <div class="product-details">
                         <div class="product-cat">
-                            <a href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>
+{{--                            <a href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>--}}
+                            <a href="javascript:void(0)">{{ $product->brand_id }}</a>
                         </div>
                         <h3 class="product-name">
                             <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</a>
                         </h3>
                         <div class="product-price">
                             <ins class="new-price">{{ Config::get('icrm.currency.icon') }}{{ $product->offer_price }}</ins><del class="old-price">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}</del>
-                            @if (Config::get('icrm.site_package.multi_vendor_store'))
-                                <span class="product-name"> by {{ $product->vendor->brand_name }}</span>
-                            @endif
+{{--                            @if (Config::get('icrm.site_package.multi_vendor_store'))--}}
+{{--                                <span class="product-name"> by {{ $product->vendor->brand_name }}</span>--}}
+{{--                            @endif--}}
                         </div>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width:
-                                @if($product->productreviews)
-                                {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
-                                @else
-                                0%
-                                @endif"></span>
-                                <span class="tooltiptext tooltip-top"></span>
+                        @if($product->productreviews()->count() > 0)
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:
+                                    @if($product->productreviews)
+                                    {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
+                                    @else
+                                    0%
+                                    @endif"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="{{ route('product.slug', ['slug' => $product->slug]) }}" class="link-to-tab rating-reviews">( @if($product->productreviews) {{ $product->productreviews()->count() }} @else 0 @endif reviews )</a>
                             </div>
-                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}" class="link-to-tab rating-reviews">( @if($product->productreviews) {{ $product->productreviews()->count() }} @else 0 @endif reviews )</a>
-                        </div>
+                        @endif
                         {{-- @if (isset($product->productcolors))
                             @if (count($product->productcolors) > 0)
                                 <div class="product-variations">
