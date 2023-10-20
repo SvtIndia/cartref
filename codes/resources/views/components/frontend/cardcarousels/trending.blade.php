@@ -46,6 +46,10 @@
                                     'wishlistproductid' => $product->id,
                                     'view' => 'product-card',
                                 ], key($product->id.time()))
+                            @livewire('quickview', [
+                                'product' => $product,
+                                'view' => 'old-product-card',
+                            ], key($product->id.time()))
                         </div>
                         <div class="product-action">
                             {{-- <a href="#" class="btn-product btn-quickview" title="Quick View">Quick View</a> --}}
