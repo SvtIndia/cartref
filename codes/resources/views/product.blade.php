@@ -2,44 +2,188 @@
 
 
 @section('meta-seo')
-    <title>{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</title>
-    <meta name="description" content="{{ $product->description }}">
+<title>{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</title>
+<meta name="description" content="{{ $product->description }}">
 @endsection
 
 @section('headerlinks')
-    <style>
-        .more-button-custom{
-            position: relative;
-            text-align: center;
-            border-radius: 15px;
-            font-size: 16px !important;
-            letter-spacing: 2px !important;
-            box-shadow: 5px 5px 10px rgb(128, 128, 128);
+<style>
+    .more-button-custom {
+        position: relative;
+        text-align: center;
+        border-radius: 15px;
+        font-size: 16px !important;
+        letter-spacing: 2px !important;
+        box-shadow: 5px 5px 10px rgb(128, 128, 128);
+    }
+
+    .badge-count {
+        position: absolute;
+        top: 0;
+        border-radius: 50rem !important;
+        background-color: #e6003a !important;
+        transform: translate(-50%, -50%) !important;
+        left: 98% !important;
+        display: inline-block;
+        padding: .35em .65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .prod-content {
+        margin-left: 0;
+    }
+
+    .pdp-promotion {
+        text-align: center;
+        width: 400px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+    }
+
+    .pdp-promo-block {
+        padding: 10px;
+        border: 1px dashed #d8d8d8;
+    }
+
+    .pdp-promo-block,
+    .plp-promo-block {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-bottom: 8px;
+    }
+
+    .ic-offer-tag {
+        display: inline;
+    }
+
+    [class*=" ic-"],
+    [class^=ic-] {
+        font-family: jioicons !important;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        display: inline-block;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .ic-offer-tag::before {
+        content: "\e914";
+        display: inline-block;
+        position: absolute;
+        top: -8px;
+        left: 15px;
+        background-color: #fff;
+        font-size: 16px;
+        color: #b19975;
+    }
+
+    .promo-blck {
+        width: 100%;
+    }
+
+    .promo-title-blck {
+        width: 25%;
+        padding-right: 5px;
+        border-right: 1px solid #d8d8d8;
+        word-wrap: break-word;
+        font-size: 12px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .promo-title {
+        font-weight: 600;
+        color: #b19975;
+    }
+
+    .main-view.product-view a {
+        color: #176d93;
+    }
+
+    .promo-desc-block {
+        width: 73%;
+        word-wrap: break-word;
+        display: inline-block;
+        vertical-align: super;
+    }
+
+    .promo-desc-block .promo-discounted-price {
+        font-size: 13px;
+        position: absolute;
+        border: 1px dashed #d8d8d8;
+        width: 73%;
+        top: -12px;
+        background-color: #fff8eb;
+        padding: 1px 10px;
+        text-align: left;
+    }
+
+    .promo-desc-block .promo-discounted-price span {
+        color: #39b54a;
+        font-family: SourceSansProSemiBold;
+    }
+
+    .promo-desc-block .promo-desc {
+        display: block;
+        color: #939393;
+        font-size: 12px;
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .promo-desc-block .promo-desc a {
+        color: #176d93;
+        text-decoration: none;
+    }
+
+    @media only screen and (max-width: 400px) {
+        .pdp-promotion {
+            width: 300px;
+            padding-top: 0;
+            padding-bottom: 0;
         }
-        .badge-count {
-            position: absolute;
-            top: 0;
-            border-radius: 50rem !important;
-            background-color: #e6003a !important;
-            transform: translate(-50%,-50%) !important;
-            left: 98% !important;
-            display: inline-block;
-            padding: .35em .65em;
-            font-size: .75em;
-            font-weight: 700;
-            line-height: 1;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
+    }
+
+    @media (min-width: 400px) and (max-width: 600px) {
+        .pdp-promotion {
+            width: 350px;
+            padding-top: 0;
+            padding-bottom: 0;
         }
-    </style>
+    }
+</style>
+<style>
+    .product-btn {
+        display: flex;
+        gap: 10px;
+        margin-top: 2rem;
+    }
+    @media only screen and (max-width: 693px) {
+        .product-btn {
+        display: block;
+        gap: 10px;
+        margin-top: 2rem;
+    }
+    }
+</style>
 @endsection
 
 
 @section('content')
-    @section('mainclass')
-        mt-6 single-product
-    @endsection
+@section('mainclass')
+mt-6 single-product
+@endsection
 <div class="container">
     <div class="page-content mb-10 pb-6">
         <div class="container">
@@ -56,34 +200,38 @@
 
                             <ul class="product-nav">
                                 @isset($previous)
-                                    @if (!empty($previous))
-                                    <li class="product-nav-prev">
-                                        <a href="{{ route('product.slug', ['slug' => $previous->slug]) }}">
-                                            <i class="d-icon-arrow-left"></i> Prev
-                                            <span class="product-nav-popup">
-                                                <img src="{{ Voyager::image($previous->image) }}" alt="{{ $previous->name }} thumbnail" width="110" height="123">
-                                                <span class="product-name">
-                                                    {{ Str::limit($previous->getTranslatedAttribute('name', App::getLocale(), 'en'), 10) }}
-                                                </span>
+                                @if (!empty($previous))
+                                <li class="product-nav-prev">
+                                    <a href="{{ route('product.slug', ['slug' => $previous->slug]) }}">
+                                        <i class="d-icon-arrow-left"></i> Prev
+                                        <span class="product-nav-popup">
+                                            <img src="{{ Voyager::image($previous->image) }}"
+                                                alt="{{ $previous->name }} thumbnail" width="110" height="123">
+                                            <span class="product-name">
+                                                {{ Str::limit($previous->getTranslatedAttribute('name',
+                                                App::getLocale(), 'en'), 10) }}
                                             </span>
-                                        </a>
-                                    </li>
-                                    @endif
+                                        </span>
+                                    </a>
+                                </li>
+                                @endif
                                 @endisset
                                 @isset($next)
-                                    @if (!empty($next))
-                                    <li class="product-nav-next">
-                                        <a href="{{ route('product.slug', ['slug' => $next->slug]) }}">
-                                            Next <i class="d-icon-arrow-right"></i>
-                                            <span class="product-nav-popup">
-                                                <img src="{{ Voyager::image($next->image) }}" alt="{{ $next->name }} thumbnail" width="110" height="123">
-                                                <span class="product-name">
-                                                    {{ Str::limit($next->getTranslatedAttribute('name', App::getLocale(), 'en'), 10) }}
-                                                </span>
+                                @if (!empty($next))
+                                <li class="product-nav-next">
+                                    <a href="{{ route('product.slug', ['slug' => $next->slug]) }}">
+                                        Next <i class="d-icon-arrow-right"></i>
+                                        <span class="product-nav-popup">
+                                            <img src="{{ Voyager::image($next->image) }}"
+                                                alt="{{ $next->name }} thumbnail" width="110" height="123">
+                                            <span class="product-name">
+                                                {{ Str::limit($next->getTranslatedAttribute('name', App::getLocale(),
+                                                'en'), 10) }}
                                             </span>
-                                        </a>
-                                    </li>
-                                    @endif
+                                        </span>
+                                    </a>
+                                </li>
+                                @endif
                                 @endisset
                             </ul>
                         </div>
@@ -97,11 +245,12 @@
                             SKU: <span class="product-sku">{{ strtoupper($product->sku )}}</span>
                             BRAND: <span class="product-brand">{{ ucwords($product->brand_id) }}</span>
                             @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                Vendor: <span class="product-brand">
-                                    <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}" target="_blank">
-                                        {{ ucwords($product->vendor->brand_name) }}
-                                    </a>
-                                </span>
+                            Vendor: <span class="product-brand">
+                                <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                                    target="_blank">
+                                    {{ ucwords($product->vendor->brand_name) }}
+                                </a>
+                            </span>
                             @endif
                         </div>
 
@@ -112,7 +261,7 @@
 
                 {{-- Product Images Livewire --}}
                 @livewire('product.productimages', [
-                    'product' => $product
+                'product' => $product
                 ])
 
 
@@ -127,34 +276,38 @@
 
                             <ul class="product-nav">
                                 @isset($previous)
-                                    @if (!empty($previous))
-                                    <li class="product-nav-prev">
-                                        <a href="{{ route('product.slug', ['slug' => $previous->slug]) }}">
-                                            <i class="d-icon-arrow-left"></i> Prev
-                                            <span class="product-nav-popup">
-                                                <img src="{{ Voyager::image($previous->image) }}" alt="{{ $previous->name }} thumbnail" width="110" height="123">
-                                                <span class="product-name">
-                                                    {{ Str::limit($previous->getTranslatedAttribute('name', App::getLocale(), 'en'), 10) }}
-                                                </span>
+                                @if (!empty($previous))
+                                <li class="product-nav-prev">
+                                    <a href="{{ route('product.slug', ['slug' => $previous->slug]) }}">
+                                        <i class="d-icon-arrow-left"></i> Prev
+                                        <span class="product-nav-popup">
+                                            <img src="{{ Voyager::image($previous->image) }}"
+                                                alt="{{ $previous->name }} thumbnail" width="110" height="123">
+                                            <span class="product-name">
+                                                {{ Str::limit($previous->getTranslatedAttribute('name',
+                                                App::getLocale(), 'en'), 10) }}
                                             </span>
-                                        </a>
-                                    </li>
-                                    @endif
+                                        </span>
+                                    </a>
+                                </li>
+                                @endif
                                 @endisset
                                 @isset($next)
-                                    @if (!empty($next))
-                                    <li class="product-nav-next">
-                                        <a href="{{ route('product.slug', ['slug' => $next->slug]) }}">
-                                            Next <i class="d-icon-arrow-right"></i>
-                                            <span class="product-nav-popup">
-                                                <img src="{{ Voyager::image($next->image) }}" alt="{{ $next->name }} thumbnail" width="110" height="123">
-                                                <span class="product-name">
-                                                    {{ Str::limit($next->getTranslatedAttribute('name', App::getLocale(), 'en'), 10) }}
-                                                </span>
+                                @if (!empty($next))
+                                <li class="product-nav-next">
+                                    <a href="{{ route('product.slug', ['slug' => $next->slug]) }}">
+                                        Next <i class="d-icon-arrow-right"></i>
+                                        <span class="product-nav-popup">
+                                            <img src="{{ Voyager::image($next->image) }}"
+                                                alt="{{ $next->name }} thumbnail" width="110" height="123">
+                                            <span class="product-name">
+                                                {{ Str::limit($next->getTranslatedAttribute('name', App::getLocale(),
+                                                'en'), 10) }}
                                             </span>
-                                        </a>
-                                    </li>
-                                    @endif
+                                        </span>
+                                    </a>
+                                </li>
+                                @endif
                                 @endisset
                             </ul>
                         </div>
@@ -168,17 +321,18 @@
                             SKU: <span class="product-sku">{{ strtoupper($product->sku )}}</span>
                             BRAND: <span class="product-brand">{{ ucwords($product->brand_id) }}</span>
                             @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                Vendor: <span class="product-brand">
-                                    <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}" target="_blank">
-                                        {{ ucwords($product->vendor->brand_name) }}
-                                    </a>
-                                </span>
+                            Vendor: <span class="product-brand">
+                                <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                                    target="_blank">
+                                    {{ ucwords($product->vendor->brand_name) }}
+                                </a>
+                            </span>
                             @endif
                         </div>
 
 
                         @livewire('addskutobag', [
-                            'product' => $product
+                        'product' => $product
                         ])
 
                         <hr class="product-divider mb-3">
@@ -194,16 +348,18 @@
                             {{-- <a href="#" class="btn-product btn-wishlist mr-6"><i class="d-icon-heart"></i>Add to
                                 wishlist</a> --}}
                             @livewire('wishlist', [
-                                'wishlistproductid' => $product->id,
-                                'view' => 'product-page',
+                            'wishlistproductid' => $product->id,
+                            'view' => 'product-page',
                             ])
 
                             {{-- <span class="divider d-lg-show"></span> --}}
 
                             @if (!empty($product->brochure))
-                                @foreach (json_decode($product->brochure) as $key => $brochure)
-                                    <a href="{{ asset('/storage/'.$brochure->download_link) }}" target="_blank" class="btn-product btn-product-down mr-6 link"><i class="fa fa-download"></i>Download {{ Config::get('icrm.frontend.brochure.name') }} {{ number_format($key+1, 0) }}</a>
-                                @endforeach
+                            @foreach (json_decode($product->brochure) as $key => $brochure)
+                            <a href="{{ asset('/storage/'.$brochure->download_link) }}" target="_blank"
+                                class="btn-product btn-product-down mr-6 link"><i class="fa fa-download"></i>Download {{
+                                Config::get('icrm.frontend.brochure.name') }} {{ number_format($key+1, 0) }}</a>
+                            @endforeach
                             @endif
 
                         </div>
@@ -225,7 +381,8 @@
                     </li>
                     @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="#product-tab-reviews">Reviews ( @if($product->productreviews()) {{ $product->productreviews()->count() }} @else 0 @endif)</a>
+                        <a class="nav-link" href="#product-tab-reviews">Reviews ( @if($product->productreviews()) {{
+                            $product->productreviews()->count() }} @else 0 @endif)</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -240,10 +397,10 @@
                                 <table class="table">
                                     <tbody>
                                         @if (!empty($product->type_id))
-                                            <tr>
-                                                <th class="font-weight-semi-bold text-dark pl-0">Type</th>
-                                                <td class="pl-4">{{ $product->type_id }}</td>
-                                            </tr>
+                                        <tr>
+                                            <th class="font-weight-semi-bold text-dark pl-0">Type</th>
+                                            <td class="pl-4">{{ $product->type_id }}</td>
+                                        </tr>
                                         @endif
 
                                         @if (!empty($product->mount_id))
@@ -333,7 +490,8 @@
                                 {{-- <h5 class="description-title font-weight-semi-bold ls-m mb-5">Video Description
                                 </h5>
                                 <figure class="p-relative d-inline-block mb-2">
-                                    <img src="{{ asset('images/product/product.jpg') }}" alt="Product" width="559" height="370">
+                                    <img src="{{ asset('images/product/product.jpg') }}" alt="Product" width="559"
+                                        height="370">
                                     <a class="btn-play btn-iframe" href="https://www.youtube.com/embed/e0sl9rp8Ny0">
                                         <i class="d-icon-play-solid"></i>
                                     </a>
@@ -367,50 +525,51 @@
                         <ul class="list-none">
 
                             @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
-                                <li><label>Vendor:</label>
-                                    <p>
-                                        <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}" style="color: blue;">
-                                            {{ $product->vendor->name }}
-                                        </a>
-                                    </p>
-                                </li>
+                            <li><label>Vendor:</label>
+                                <p>
+                                    <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                                        style="color: blue;">
+                                        {{ $product->vendor->name }}
+                                    </a>
+                                </p>
+                            </li>
                             @endif
 
 
                             <li><label>Brand:</label>
                                 <p>{{ $product->brand_id }}</p>
                             </li>
-{{--
+                            {{--
                             @if (count($product->productcolors) > 0)
-                                <li><label>Color:</label>
-                                    <p>
-                                        @foreach ($product->productcolors as $key => $color)
-                                            {{ $color->color }},
-                                        @endforeach
-                                    </p>
-                                </li>
+                            <li><label>Color:</label>
+                                <p>
+                                    @foreach ($product->productcolors as $key => $color)
+                                    {{ $color->color }},
+                                    @endforeach
+                                </p>
+                            </li>
                             @endif
 
                             @if (count($product->productskus) > 0)
-                                <li><label>Size:</label>
-                                    <p>
-                                        @foreach ($product->productskus as $key => $size)
-                                            {{ $size->size }},
-                                        @endforeach
-                                    </p>
-                                </li>
+                            <li><label>Size:</label>
+                                <p>
+                                    @foreach ($product->productskus as $key => $size)
+                                    {{ $size->size }},
+                                    @endforeach
+                                </p>
+                            </li>
                             @endif --}}
 
                             @if (!empty($product->max_g))
-                                <li><label>Maximum G+:</label>
-                                    <p>{{ $product->max_g }}</p>
-                                </li>
+                            <li><label>Maximum G+:</label>
+                                <p>{{ $product->max_g }}</p>
+                            </li>
                             @endif
 
                             @if (!empty($product->cost_per_g))
-                                <li><label>Cost per G:</label>
-                                    <p>{{ Config::get('icrm.currency.icon') }}{{ $product->cost_per_g }}</p>
-                                </li>
+                            <li><label>Cost per G:</label>
+                                <p>{{ Config::get('icrm.currency.icon') }}{{ $product->cost_per_g }}</p>
+                            </li>
                             @endif
 
                             <li><label>Length:</label>
@@ -433,27 +592,29 @@
                     </div>
 
                     @if (!empty($product->size_guide))
-                        <div class="tab-pane" id="product-tab-size-guide">
-                            <figure class="mt-4 mb-4" style="margin: auto;">
-                                <img src="{{ Voyager::image($product->size_guide) }}" alt="Size Guide {{ $product->name }}" class="img-responsive">
-                            </figure>
-                        </div>
+                    <div class="tab-pane" id="product-tab-size-guide">
+                        <figure class="mt-4 mb-4" style="margin: auto;">
+                            <img src="{{ Voyager::image($product->size_guide) }}" alt="Size Guide {{ $product->name }}"
+                                class="img-responsive">
+                        </figure>
+                    </div>
                     @endif
 
                     <div class="tab-pane" id="product-tab-reviews">
                         @livewire('product.reviews', [
-                            'product' => $product
+                        'product' => $product
                         ])
                     </div>
                 </div>
             </div>
 
             @isset($relatedproducts)
-                @if (count($relatedproducts) > 0)
-                    <section class="pt-3 mt-10">
-                        <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar Products</h1>
+            @if (count($relatedproducts) > 0)
+            <section class="pt-3 mt-10">
+                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar Products</h1>
 
-{{--                        <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product mt-4" data-owl-options="{--}}
+                {{-- <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product mt-4"
+                    data-owl-options="{--}}
 {{--                            'items': 5,--}}
 {{--                            'nav': false,--}}
 {{--                            'loop': true,--}}
@@ -477,126 +638,141 @@
 
 
 
-                        <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
-{{--                            <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">--}}
-                                @foreach ($relatedproducts as $key => $product)
-                                    @php
-                                        $firstcolorimage = App\Productcolor::where('status', 1)
-                                            ->where('product_id', $product->id)
-                                            ->first();
+                    <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
+                        {{-- <div class="owl-stage"
+                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
+                            --}}
+                            @foreach ($relatedproducts as $key => $product)
+                            @php
+                            $firstcolorimage = App\Productcolor::where('status', 1)
+                            ->where('product_id', $product->id)
+                            ->first();
 
-                                        if (isset($firstcolorimage)) {
-                                            if (!empty($firstcolorimage->main_image)) {
-                                                $firstcolorimage = $firstcolorimage->main_image;
-                                                // $firstcolorimage = $product->image;
-                                            } else {
-                                                $firstcolorimage = $product->image;
-                                            }
-                                        } else {
-                                            $firstcolorimage = $product->image;
-                                        }
-                                    @endphp
-                                    <div class="new-product-wrap owl-item @if($key == 0) active @endif">
-                                        <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
-                                            <div class="new-product">
-                                                <div class="image">
-                                                    <img class="product-image" src="{{ Voyager::image($firstcolorimage) }}" alt="{{ $product->name }}"/>
+                            if (isset($firstcolorimage)) {
+                            if (!empty($firstcolorimage->main_image)) {
+                            $firstcolorimage = $firstcolorimage->main_image;
+                            // $firstcolorimage = $product->image;
+                            } else {
+                            $firstcolorimage = $product->image;
+                            }
+                            } else {
+                            $firstcolorimage = $product->image;
+                            }
+                            @endphp
+                            <div class="new-product-wrap owl-item @if($key == 0) active @endif">
+                                <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
+                                    <div class="new-product">
+                                        <div class="image">
+                                            <img class="product-image" src="{{ Voyager::image($firstcolorimage) }}"
+                                                alt="{{ $product->name }}" />
 
-                                                    @if($product->productreviews && $product->productreviews()->count())
-                                                        <div class="product-rating-horizontal">
-                                                            <div class="star">
-                                                                @if ($product->productreviews)
-                                                                    {{ ($product->productreviews()->where('status', 1)->sum('rate') /($product->productreviews()->where('status', 1)->count() *5)) * 5 }}
-                                                                @else
-                                                                    0
-                                                                @endif &nbsp;
-                                                                <img src="{{ asset('/images/icons/star.svg') }}" alt="star">
-                                                            </div>
-                                                            <span class="dash">|</span>
-                                                            <div class="book">
-                                                                {{ $product->productreviews()->count()  }} &nbsp;
-                                                                <img src="{{ asset('/images/icons/book.svg') }}" alt="book">
-                                                            </div>
-                                                        </div>
-                                                    @endif
+                                            @if($product->productreviews && $product->productreviews()->count())
+                                            <div class="product-rating-horizontal">
+                                                <div class="star">
+                                                    @if ($product->productreviews)
+                                                    {{ ($product->productreviews()->where('status', 1)->sum('rate')
+                                                    /($product->productreviews()->where('status', 1)->count() *5)) * 5
+                                                    }}
+                                                    @else
+                                                    0
+                                                    @endif &nbsp;
+                                                    <img src="{{ asset('/images/icons/star.svg') }}" alt="star">
                                                 </div>
-
-                                                <div class="content">
-                                                    <div class="brand-name">{{ $product->brand_id }}</div>
-                                                    <div class="product-name">{{ Str::limit($product->getTranslatedAttribute('name', App::getLocale(), 'en'), 45) }}</div>
-                                                    <div class="product-price">
-                                                        <span class="mrp">{{ Config::get('icrm.currency.icon') }}{{ $product->offer_price }}/- </span>
-                                                        <span class="sp">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }} <br/></span>
-                                                    </div>
-                                                    @if($product->mrp > $product->offer_price)
-                                                        @php
-                                                            $discount = $product->mrp - $product->offer_price;
-                                                            $discountPercent = ($discount / $product->mrp) * 100;
-                                                        @endphp
-                                                        <div class="off">({{ round($discountPercent)  }}% off)</div>
-                                                    @endif
-                                                </div>
-
-                                                <div class="product-action-vertical-new">
-                                                    {{--                                            <a href="#" class="wishlist">--}}
-                                                    {{--                                                <img src="{{ asset('/images/icons/wishlist.svg') }}" alt="wishlist">--}}
-                                                    {{--                                            </a>--}}
-                                                    {{--                                            <a class="cart">--}}
-                                                    {{--                                                <img src="{{ asset('/images/icons/cart.svg') }}" alt="cart">--}}
-                                                    {{--                                            </a>--}}
-                                                    <div>
-                                                        @livewire(
-                                                        'quickview',
-                                                        [
-                                                        'product' => $product,
-                                                        'view' => 'product-card',
-                                                        ],
-                                                        key($product->id . time())
-                                                        )
-                                                    </div>
-
-                                                    <div>
-                                                        @livewire(
-                                                        'wishlist',
-                                                        [
-                                                        'wishlistproductid' => $product->id,
-                                                        'view' => 'new-product-card',
-                                                        ],
-                                                        key($product->id . time())
-                                                        )
-                                                    </div>
-
+                                                <span class="dash">|</span>
+                                                <div class="book">
+                                                    {{ $product->productreviews()->count() }} &nbsp;
+                                                    <img src="{{ asset('/images/icons/book.svg') }}" alt="book">
                                                 </div>
                                             </div>
-                                        </a>
+                                            @endif
+                                        </div>
+
+                                        <div class="content">
+                                            <div class="brand-name">{{ $product->brand_id }}</div>
+                                            <div class="product-name">{{
+                                                Str::limit($product->getTranslatedAttribute('name', App::getLocale(),
+                                                'en'), 45) }}</div>
+                                            <div class="product-price">
+                                                <span class="mrp">{{ Config::get('icrm.currency.icon') }}{{
+                                                    $product->offer_price }}/- </span>
+                                                <span class="sp">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp
+                                                    }} <br /></span>
+                                            </div>
+                                            @if($product->mrp > $product->offer_price)
+                                            @php
+                                            $discount = $product->mrp - $product->offer_price;
+                                            $discountPercent = ($discount / $product->mrp) * 100;
+                                            @endphp
+                                            <div class="off">({{ round($discountPercent) }}% off)</div>
+                                            @endif
+                                        </div>
+
+                                        <div class="product-action-vertical-new">
+                                            {{-- <a href="#" class="wishlist">--}}
+                                                {{-- <img src="{{ asset('/images/icons/wishlist.svg') }}"
+                                                    alt="wishlist">--}}
+                                                {{-- </a>--}}
+                                            {{-- <a class="cart">--}}
+                                                {{-- <img src="{{ asset('/images/icons/cart.svg') }}" alt="cart">--}}
+                                                {{-- </a>--}}
+                                            <div>
+                                                @livewire(
+                                                'quickview',
+                                                [
+                                                'product' => $product,
+                                                'view' => 'product-card',
+                                                ],
+                                                key($product->id . time())
+                                                )
+                                            </div>
+
+                                            <div>
+                                                @livewire(
+                                                'wishlist',
+                                                [
+                                                'wishlistproductid' => $product->id,
+                                                'view' => 'new-product-card',
+                                                ],
+                                                key($product->id . time())
+                                                )
+                                            </div>
+
+                                        </div>
                                     </div>
-                                @endforeach
-{{--                            </div>--}}
-                        </div>
-{{--                            <div class="owl-nav disabled">--}}
-{{--                                <button type="button" title="presentation" class="owl-prev disabled">--}}
-{{--                                    <i class="d-icon-angle-left"></i>--}}
-{{--                                </button>--}}
-{{--                                <button type="button" title="presentation" class="owl-next disabled">--}}
-{{--                                    <i class="d-icon-angle-right"></i>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                            <div class="owl-dots disabled"></div>--}}
-{{--                    </div>--}}
-                    </section>
-                @endif
+                                </a>
+                            </div>
+                            @endforeach
+                            {{--
+                        </div>--}}
+                    </div>
+                    {{-- <div class="owl-nav disabled">--}}
+                        {{-- <button type="button" title="presentation" class="owl-prev disabled">--}}
+                            {{-- <i class="d-icon-angle-left"></i>--}}
+                            {{-- </button>--}}
+                        {{-- <button type="button" title="presentation" class="owl-next disabled">--}}
+                            {{-- <i class="d-icon-angle-right"></i>--}}
+                            {{-- </button>--}}
+                        {{-- </div>--}}
+                    {{-- <div class="owl-dots disabled"></div>--}}
+                    {{--
+                </div>--}}
+            </section>
+            @endif
             @endisset
-            <section style="display: flex;gap: 10px;margin-top: 2rem;">
-                <a href="{{ $brandLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom  ">
-                    {{ $brandMoreText  }}
+            <section class="product-btn">
+                <a href="{{ $brandLink  }}"
+                    class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $brandMoreText }}
                     <div class="badge-count">{{ $brandCount }}</div>
                 </a>
-                <a href="{{ $styleLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
-                    {{ $moreStyleText  }}
+                <a href="{{ $styleLink  }}"
+                    class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreStyleText }}
                     <div class="badge-count">{{ $styleCount }}</div>
                 </a>
-                <a href="{{ $colourLink  }}" class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
-                    {{ $moreColourText  }}
+                <a href="{{ $colourLink  }}"
+                    class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreColourText }}
                     <div class="badge-count">{{ $colourCount }}</div>
                 </a>
             </section>

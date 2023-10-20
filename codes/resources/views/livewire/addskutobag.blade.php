@@ -1,10 +1,12 @@
 <div>
-    
+
     <div class="product-price">
 
         <ins class="new-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($offer_price, 0) }}/-</ins>
         <del class="old-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($mrp, 0) }}</del>
+
     </div>
+
 
 
     <div class="ratings-container">
@@ -24,9 +26,30 @@
     <p class="product-short-desc">
         {{ $product->getTranslatedAttribute('description', App::getLocale(), 'en') }}
     </p>
-
+    <div class="pdp-promotion">
+        <div class="pdp-promo-block">
+            {{-- <div class="ic-offer-tag"></div> --}}
+            <div class="promo-blck">
+                <div class="promo-title-blck">
+                    <div class="promo-title">Use Code <br>SUPERSTAR</div>
+                    <div class="promo-tnc-blck">
+                        <span class="promo-tnc">
+                            <a href="undefined"  target="_blank"></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="promo-desc-block">
+                    <div class="promo-discounted-price">Get it for <span>{{ Config::get('icrm.currency.icon') }}{{ number_format($offer_price, 0) }}/-</span>
+                    </div>
+                    <div class="promo-desc">Get upto 35% Off on 3490 and Above. Max Discount Rs. 1200.
+                        <a target="_blank" href="">View All Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @isset($product->productcolors)
-        
+
         @if (count($product->productcolors->where('color', '!=', 'NA')) > 0)
             <div class="product-form product-color">
                 <label>Color: <span class="outofstock">*</span></label>
@@ -34,22 +57,22 @@
                     @foreach ($product->productcolors->where('color', '!=', 'NA') as $key => $color)
                         @if (empty($color->main_image))
                             {{-- Fetch default image --}}
-                            <a class="color @if($this->color == $color->color) active @endif" 
-                                data-src="{{ Voyager::image($product->image) }}" 
+                            <a class="color @if($this->color == $color->color) active @endif"
+                                data-src="{{ Voyager::image($product->image) }}"
                                 style="background-color: @if(!empty($color->colors->rgb)) {{ $color->colors->rgb }} @else {{ $color->colors->name }} @endif"
                                 wire:key="selectcolor.{{ $color->color.$key }}"
-                                wire:click="selectcolor('{{ $color->color }}')" 
+                                wire:click="selectcolor('{{ $color->color }}')"
                                 value="{{ $color->color }}"
                                 title="{{ $color->color }}"
                                 >
                             </a>
                         @else
                             {{-- Fetch color image --}}
-                            <a class="color @if($this->color == $color->color) active @endif" 
-                                data-src="{{ Voyager::image($color->main_image) }}" 
+                            <a class="color @if($this->color == $color->color) active @endif"
+                                data-src="{{ Voyager::image($color->main_image) }}"
                                 style="background-color: @if(!empty($color->colors->rgb)) {{ $color->colors->rgb }} @else {{ $color->colors->name }} @endif"
                                 wire:key="selectcolor.{{ $color->color.$key }}"
-                                wire:click="selectcolor('{{ $color->color }}')" 
+                                wire:click="selectcolor('{{ $color->color }}')"
                                 value="{{ $color->color }}"
                                 title="{{ $color->color }}"
                                 >
@@ -71,25 +94,25 @@
                 $productsizesforcolor = App\Productsku::where('product_id', $product->id)->where('color', $this->color)->where('status', 1)->get();
             @endphp
             @isset($productsizesforcolor)
-                    
+
                 @if (count($productsizesforcolor) > 0)
                     <div class="product-form product-size">
                         <label>Size: <span class="outofstock">*</span></label>
                         <div class="product-form-group">
                             <div class="product-size-variations">
                                 @foreach ($productsizesforcolor as $key => $size)
-                                    <a class="newsize @if($this->size == $size->size) active @endif @if ($size->available_stock <= 0) outofstock @endif" 
+                                    <a class="newsize @if($this->size == $size->size) active @endif @if ($size->available_stock <= 0) outofstock @endif"
                                         {{-- data-src="{{ Voyager::image($size->main_image) }}"  --}}
                                         style="width: auto !important;"
                                         wire:key="selectsize.{{ $size->size.$key }}"
-                                        wire:click="selectsize('{{ $size->size }}')" 
+                                        wire:click="selectsize('{{ $size->size }}')"
                                         value="{{ $size->size }}"
 
-                                        @if ($size->available_stock <= 0) 
+                                        @if ($size->available_stock <= 0)
                                             disabled="disabled"
                                             title="{{ Config::get('icrm.frontend.outofstock.name') }}"
                                         @endif
-                                        
+
                                         >
                                         {{ $size->size }}
 
@@ -97,7 +120,7 @@
                                             <br><span class="outofstock">{{ Config::get('icrm.frontend.outofstock.name') }}</span>
                                         @endif --}}
                                     </a>
-                                    
+
                                 @endforeach
                             </div>
 
@@ -109,7 +132,7 @@
                         </div>
                     </div>
                 @endif
-                <br>                
+                <br>
             @endisset
         @else
             {{-- Disabled - First select color --}}
@@ -122,24 +145,24 @@
 
             @endphp
             @isset($productsizesforcolor)
-                    
+
                 @if (count($productsizesforcolor) > 0)
                     <div class="product-form product-size">
                         <label>Size: <span class="outofstock">*</span></label>
                         <div class="product-form-group">
                             <div class="product-size-variations">
                                 @foreach ($productsizesforcolor as $key => $size)
-                                <a class="newsize @if($this->size == $size->size) active @endif" 
+                                <a class="newsize @if($this->size == $size->size) active @endif"
                                     {{-- data-src="{{ Voyager::image($size->main_image) }}"  --}}
                                         style="width: auto !important;"
 
                                         wire:attr="disabled"
-                                        
+
                                         >
                                         {{ $size->size }}
 
                                     </a>
-                                    
+
                                 @endforeach
                             </div>
 
@@ -150,13 +173,13 @@
                         </div>
                     </div>
                 @endif
-                <br>                
+                <br>
             @endisset
         @endif
     @else
 
         @isset($product->productskus)
-            
+
         @if (count($product->productskus->where('size', '!=', 'NA')) > 0)
             <div class="product-form product-size">
                 <label>Size: <span class="outofstock">*</span></label>
@@ -171,18 +194,18 @@
                             }
                         @endphp
                         @foreach ($productskus as $key => $size)
-                            <a class="newsize @if($this->size == $size->size) active @endif @if ($size->available_stock <= 0) outofstock @endif" 
-                                data-src="{{ Voyager::image($size->main_image) }}" 
+                            <a class="newsize @if($this->size == $size->size) active @endif @if ($size->available_stock <= 0) outofstock @endif"
+                                data-src="{{ Voyager::image($size->main_image) }}"
                                 style="width: auto !important;"
                                 wire:key="selectsize.{{ $size->size.$key }}"
-                                wire:click="selectsize('{{ $size->size }}')" 
+                                wire:click="selectsize('{{ $size->size }}')"
                                 value="{{ $size->size }}"
 
-                                @if ($size->available_stock <= 0) 
+                                @if ($size->available_stock <= 0)
                                     {{-- disabled="disabled" --}}
                                     title="{{ Config::get('icrm.frontend.outofstock.name') }}"
                                 @endif
-                                
+
                                 >
                                 {{ $size->size }}
 
@@ -190,7 +213,7 @@
                                     <br><span class="outofstock">Out of stock</span>
                                 @endif --}}
                             </a>
-                            
+
                         @endforeach
                     </div>
 
@@ -208,8 +231,8 @@
     @endif
 
 
-    
-            
+
+
     @if ($product->productsubcategory->name == 'COP')
         <div class="product-form">
             <label>G+: <span class="outofstock">*</span></label>
@@ -234,23 +257,23 @@
         <div class="product-form">
             <label>Custom Requirements: <span class="outofstock">*</span></label>
             <div class="product-variations" @if(!empty($this->requireddocument)) style="box-shadow: inset 0 0 0 2px blue;" @endif>
-                
+
                 @if (!empty($product->requirement_document))
                     @foreach (json_decode($product->requirement_document) as $key => $document)
                     <br><small class="outofstock"><a href="{{ asset('storage/'.$document->download_link) }}" style="color: blue;">Click here</a> to download document format and reupload here with your custom requirements</small>
                     @endforeach
                 @endif
-                
+
                 <input type="file" wire:model="requireddocument" class="required" required>
-                                
+
                 <br><div wire:loading wire:target="requireddocument">Uploading...</div>
                 <br>@error('requireddocument') <span class="error">{{ $message }}</span> @enderror
             </div>
-            
+
         </div>
     @endif
 
-    
+
 
     {{-- <div class="product-variation-price">
         <span>{{ $this->size.'-'.$this->color.'-'.$this->max_g_need }}</span>
@@ -260,22 +283,22 @@
     @if ($this->disablebtn == true)
         <span class="outofstock">FIRST SELECT REQUIRED FIELDS:</span>
     @else
-    <label for="">You're buying:         
+    <label for="">You're buying:
     </label>
         @if (!empty($this->color) AND $this->color != 'NA')
             <span>Color: {{ $this->color }}</span>,
         @endif
-        
+
         @if (!empty($this->size) AND $this->size != 'NA')
-            <span>Size: {{ $this->size }}</span>, 
+            <span>Size: {{ $this->size }}</span>,
         @endif
-        
+
         @if (!empty($this->max_g_need))
             <span>G+: {{ $this->max_g_need }}</span>,
         @endif
 
         @if (!empty($this->requireddocument))
-            <span>Custom Requirement: Attached</span>    
+            <span>Custom Requirement: Attached</span>
         @endif
     @endif
     <br><br>
@@ -286,10 +309,10 @@
                 <button class="quantity-minus d-icon-minus" wire:click="minusqty"></button>
                 <input class="quantity form-control" type="number" min="1" max="1000000" wire:model="qty" readonly>
                 <button class="quantity-plus d-icon-plus" wire:click="plusqty" @if($this->availablestock == 0) disabled="disabled" @endif></button>
-            </div>            
-      
+            </div>
 
-            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"  
+
+            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"
                 @if ($this->disablebtn == true)
                     disabled="disabled" title="First select required fields!"
                 @endif
@@ -299,7 +322,7 @@
                 <i class="d-icon-bag"></i>
                 Add to {{ ucwords(Config::get('icrm.cart.name')) }}
             </button>
-            
+
             @if (Config::get('icrm.customize.feature') == 1)
                 @if (!empty($this->product->customize_images))
                     <button class="btn-product btn-cart btn-warning text-normal ls-normal font-weight-semi-bold"
@@ -319,16 +342,16 @@
             {{-- @php
                 dd($this->product->vendor());
             @endphp --}}
-            
+
             @if (Config::get('icrm.showcase_at_home.feature') == 1)
                 @if (empty(Session::get('showcasecity')))
                     {{-- activate showcase --}}
                     @if ($this->product->vendor->showcase_at_home == 1)
-                        <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold" 
+                        <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"
                             @if ($this->disablebtn == true)
                                 disabled="disabled" title="First select required fields!"
                             @endif
-                            
+
 
                             wire:click="addtoshowcaseathome"
                         >
@@ -345,7 +368,7 @@
                     {{-- check if the showcase at home is available for selected city --}}
                     @if ($this->product->vendor->showcase_at_home == 1)
                         @if ($this->product->vendor->city == Session::get('showcasecity'))
-                            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold" 
+                            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"
                                 @if ($this->disablebtn == true)
                                     disabled="disabled" title="First select required fields!"
                                 @endif
@@ -357,7 +380,7 @@
                             </button>
                             <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>
                         @else
-                            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold" 
+                            <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold"
                                 disabled="disabled" title="Showroom at home not available for this product at {{ Session::get('showcasecity') }} area."
                             >
                                 <i class="d-icon-home"></i>
@@ -367,7 +390,7 @@
                         @endif
                     @endif
                 @endif
-                
+
             @endif
 
                 {{-- disabled="disabled" --}}
