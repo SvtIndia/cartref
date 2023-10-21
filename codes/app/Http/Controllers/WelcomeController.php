@@ -10,6 +10,7 @@ use App\Order;
 use App\Contact;
 use App\Component;
 use App\Collection;
+use App\Coupon;
 use App\HomeSlider;
 use App\Newsletter;
 use App\Productsku;
@@ -273,27 +274,27 @@ class WelcomeController extends Controller
          * Fetch most purchased top 10 products from order table
          */
 
-//        $orders = DB::table('orders')
-//            ->select('product_id', DB::raw('count(*) as productcount'))
-//            ->groupBy('product_id')
-//            ->orderBy('productcount', 'desc')
-//            ->inRandomOrder()
-//            ->limit(Config::get('icrm.frontend.trendingproducts.count'))
-//            ->get();
-//
-//        if (count($orders) > 0) {
-//            $trendings = Product::where('admin_status', 'Accepted')
-//                ->whereIn('id', $orders->pluck('product_id'))
-//                ->whereHas('vendor', function ($q) {
-//                    $q->where('status', 1);
-//                })
-//                ->take(Config::get('icrm.frontend.trendingproducts.count'))
-//                ->get();
-//        } else {
-//            $trendings = Product::where('admin_status', 'Accepted')
-//                ->take(Config::get('icrm.frontend.trendingproducts.count'))
-//                ->get();
-//        }
+        //        $orders = DB::table('orders')
+        //            ->select('product_id', DB::raw('count(*) as productcount'))
+        //            ->groupBy('product_id')
+        //            ->orderBy('productcount', 'desc')
+        //            ->inRandomOrder()
+        //            ->limit(Config::get('icrm.frontend.trendingproducts.count'))
+        //            ->get();
+        //
+        //        if (count($orders) > 0) {
+        //            $trendings = Product::where('admin_status', 'Accepted')
+        //                ->whereIn('id', $orders->pluck('product_id'))
+        //                ->whereHas('vendor', function ($q) {
+        //                    $q->where('status', 1);
+        //                })
+        //                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+        //                ->get();
+        //        } else {
+        //            $trendings = Product::where('admin_status', 'Accepted')
+        //                ->take(Config::get('icrm.frontend.trendingproducts.count'))
+        //                ->get();
+        //        }
         $trendings = Product::withCount('users')
             ->where('admin_status', 'Accepted')
             ->take(Config::get('icrm.frontend.trendingproducts.count'))
@@ -454,7 +455,7 @@ class WelcomeController extends Controller
             return abort(404);
         }
 
-//
+        //
         $gender = $product->gender_id;
 
         $relatedproducts = Product::where('admin_status', 'Accepted')
@@ -462,7 +463,7 @@ class WelcomeController extends Controller
             ->whereHas('vendor', function ($q) {
                 $q->where('status', 1);
             })
-            ->when($gender, function ($query) use($gender){
+            ->when($gender, function ($query) use ($gender) {
                 $query->whereIn('gender_id', array_values([$gender]));
             })
             ->take(20)
@@ -501,7 +502,6 @@ class WelcomeController extends Controller
         if (request('color') != null) {
             $selectedColor = request('color');
             $selectedColor = Productcolor::where('status', 1)->where('color', $selectedColor)->first();
-
         } else {
             $firstcolor = Productcolor::where('status', 1)->where('product_id', $product->id)->first();
 
@@ -574,7 +574,9 @@ class WelcomeController extends Controller
 
         // }
 
-//        dd($brandCount, $styleCount, $colourCount);
+        //        dd($brandCount, $styleCount, $colourCount);
+
+
 
         return view('product')->with([
             'product' => $product,
@@ -593,33 +595,33 @@ class WelcomeController extends Controller
             'relatedproducts' => $relatedproducts,
             'shareComponent' => $shareComponent,
             'previous' => $previous,
-            'next' => $next
+            'next' => $next,
         ]);
     }
 
-    private function getNumberMoreButton($selectedsubcategory, $genders, $brands = [], $colors = [], $styles = []){
+    private function getNumberMoreButton($selectedsubcategory, $genders, $brands = [], $colors = [], $styles = [])
+    {
         $products = Product::where('admin_status', 'Accepted')
-            ->when($selectedsubcategory, function ($query) use($selectedsubcategory){
-                $query->whereHas('productsubcategory', function ($q) use($selectedsubcategory){
+            ->when($selectedsubcategory, function ($query) use ($selectedsubcategory) {
+                $query->whereHas('productsubcategory', function ($q) use ($selectedsubcategory) {
                     $q->where('slug', $selectedsubcategory);
                 });
             })
-            ->when($genders, function ($query) use($genders){
+            ->when($genders, function ($query) use ($genders) {
                 $query->whereIn('gender_id', array_values($genders));
             })
 
-            ->when($brands, function ($query) use($brands){
+            ->when($brands, function ($query) use ($brands) {
                 $query->whereIn('brand_id', array_values($brands));
             })
-            ->when($colors, function ($query) use($colors){
-                $query->whereHas('colors', function ($q) use($colors){
+            ->when($colors, function ($query) use ($colors) {
+                $query->whereHas('colors', function ($q) use ($colors) {
                     $q->whereIn('id', array_values($colors));
                 });
             })
-            ->when($styles, function ($query) use($styles){
+            ->when($styles, function ($query) use ($styles) {
                 $query->whereIn('style_id', array_values($styles));
-            })
-        ;
+            });
 
 
         return $products->count();

@@ -26,12 +26,13 @@
     <p class="product-short-desc">
         {{ $product->getTranslatedAttribute('description', App::getLocale(), 'en') }}
     </p>
+    @foreach ( $this->offer_coupons as $coupon )
     <div class="pdp-promotion">
         <div class="pdp-promo-block">
             {{-- <div class="ic-offer-tag"></div> --}}
             <div class="promo-blck">
                 <div class="promo-title-blck">
-                    <div class="promo-title">Use Code <br>SUPERSTAR</div>
+                    <div class="promo-title">Use Code <br>{{ $coupon->code }}</div>
                     <div class="promo-tnc-blck">
                         <span class="promo-tnc">
                             <a href="undefined"  target="_blank"></a>
@@ -39,15 +40,17 @@
                     </div>
                 </div>
                 <div class="promo-desc-block">
-                    <div class="promo-discounted-price">Get it for <span>{{ Config::get('icrm.currency.icon') }}{{ number_format($offer_price, 0) }}/-</span>
+                    <div class="promo-discounted-price">Get it for <span>{{ Config::get('icrm.currency.icon') }}{{ number_format($coupon->discounted_value, 0) }}/-</span>
                     </div>
-                    <div class="promo-desc">Get upto 35% Off on 3490 and Above. Max Discount Rs. 1200.
+                    <div class="promo-desc">{{ $coupon->description }}
                         <a target="_blank" href="">View All Products</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endforeach
+
     @isset($product->productcolors)
 
         @if (count($product->productcolors->where('color', '!=', 'NA')) > 0)
