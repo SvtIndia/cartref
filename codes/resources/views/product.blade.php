@@ -171,12 +171,24 @@
         gap: 10px;
         margin-top: 2rem;
     }
-    @media only screen and (max-width: 693px) {
+
+    @media only screen and (max-width: 480px) {
         .product-btn {
-        display: block;
-        gap: 10px;
-        margin-top: 2rem;
-    }
+            display: block;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .more-button-custom {
+            position: relative;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 14px !important;
+            letter-spacing: 2px !important;
+            box-shadow: 5px 5px 10px rgb(128, 128, 128);
+            margin-inline: 40px;
+            margin-bottom: 10px;
+        }
     }
 </style>
 @endsection
