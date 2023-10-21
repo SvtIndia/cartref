@@ -310,7 +310,6 @@ class Products extends Component
             $this->paginate = $this->paginate + 12;
         }
         else{
-            $this->dispatchBrowserEvent('makeInactive');
             $this->dispatchBrowserEvent('reachedMaxLimit');
         }
     }
@@ -516,8 +515,13 @@ class Products extends Component
 
         $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
 
-        $this->dispatchBrowserEvent('makeInactive');
-        $this->dispatchBrowserEvent('scrollByCustom',['x' => 0, 'y' => 10]);
+        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate + 12){
+            $this->dispatchBrowserEvent('makeInactive');
+        }
+        else{
+            $this->dispatchBrowserEvent('reachedMaxLimit');
+        }
+
         return view('livewire.catalog.products', [
             'categories' => $categories,
             // 'subcategories' => $subcategories,
