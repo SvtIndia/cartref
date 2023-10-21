@@ -46,8 +46,8 @@
     }
 
     .pdp-promo-block {
-        padding: 10px;
-        border: 1px dashed #d8d8d8;
+        padding: 5px 8px;
+        border: 1px dashed #000000;
     }
 
     .pdp-promo-block,
@@ -97,7 +97,7 @@
         padding-right: 5px;
         border-right: 1px solid #d8d8d8;
         word-wrap: break-word;
-        font-size: 12px;
+        /* font-size: 12px; */
         text-align: center;
         display: inline-block;
     }
@@ -121,12 +121,13 @@
     .promo-desc-block .promo-discounted-price {
         font-size: 13px;
         position: absolute;
-        border: 1px dashed #d8d8d8;
+        border: 1px dashed #000000;
         width: 73%;
         top: -12px;
         background-color: #fff8eb;
         padding: 1px 10px;
         text-align: left;
+        font-weight: bold
     }
 
     .promo-desc-block .promo-discounted-price span {
@@ -140,6 +141,7 @@
         font-size: 12px;
         text-align: left;
         padding-left: 10px;
+        margin-top: 10px;
     }
 
     .promo-desc-block .promo-desc a {
