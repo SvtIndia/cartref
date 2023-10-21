@@ -472,7 +472,7 @@
             }
         }
     </style>
-    <style>
+    {{-- <style>
         .recent-wishlist {
             cursor: pointer;
             width: 24px;
@@ -488,7 +488,7 @@
                 margin: auto;
             }
         }
-    </style>
+    </style> --}}
 
 
     @livewireStyles
