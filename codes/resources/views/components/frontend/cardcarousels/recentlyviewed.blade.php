@@ -58,7 +58,7 @@
 {{--                        </div>--}}
                     </figure>
                     <div class="product-details">
-                        <div class="product-cat">
+                        <div class="product-cat" style="font-size: 12px">
 {{--                            <a href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>--}}
                             <a href="javascript:void(0)">{{ $product->brand_id }}</a>
                         </div>
