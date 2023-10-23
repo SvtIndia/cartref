@@ -119,7 +119,7 @@
     }
 
     .promo-desc-block .promo-discounted-price {
-        font-size: 13px;
+        font-size: 15px;
         position: absolute;
         border: 1px dashed #000000;
         /* width: 73%; */
@@ -196,7 +196,7 @@
 
 @section('content')
 @section('mainclass')
-mt-6 single-product
+
 @endsection
 <div class="container">
     <div class="page-content mb-10 pb-6">
@@ -255,6 +255,7 @@ mt-6 single-product
                                 {{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}
                             </a>
                         </h1>
+
                         <div class="product-meta">
                             SKU: <span class="product-sku">{{ strtoupper($product->sku )}}</span>
                             BRAND: <span class="product-brand">{{ ucwords($product->brand_id) }}</span>

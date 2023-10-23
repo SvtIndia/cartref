@@ -22,6 +22,11 @@
         type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="{{ asset('vendor/fontawesome-free/webfonts/fa-brands-400.woff2') }}" as="font"
         type="font/woff2" crossorigin="anonymous">
+    <!-- Zoom in photo link and cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <!-- end -->
 
     <script src="{{ asset('js/webfont.js') }}" async=""></script>
     <script>
@@ -701,6 +706,13 @@
         } else {
             document.getElementById('no_internet').style.display = 'block'
         }
+    </script>
+    <script>
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: ["slideShow", "thumbs", "zoom", "fullScreen", "share", "close"],
+            loop: false,
+            protect: true
+        });
     </script>
     @stack('scripts')
 </body>
