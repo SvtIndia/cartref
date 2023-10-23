@@ -94,7 +94,7 @@
 
     .promo-title-blck {
         width: 25%;
-        padding-right: 5px;
+        padding-right: 2px;
         border-right: 1px solid #d8d8d8;
         word-wrap: break-word;
         /* font-size: 12px; */
@@ -122,7 +122,7 @@
         font-size: 13px;
         position: absolute;
         border: 1px dashed #000000;
-        width: 73%;
+        /* width: 73%; */
         top: -12px;
         background-color: #fff8eb;
         padding: 1px 10px;
