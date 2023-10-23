@@ -395,7 +395,6 @@ class WelcomeController extends Controller
     public function productssubcategory($subcategory)
     {
         // filter accordig to subcategory
-
         return view('products')->with([]);
     }
 

@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
@@ -59,6 +60,8 @@ class Products extends Component
     public $minprice;
     public $maxprice;
 
+    public $vendor_slug;
+    
     public $page = 1;
     public $sort;
     public $paginate = '';
@@ -317,6 +320,7 @@ class Products extends Component
 
     public function render()
     {
+
         $products = Product::where('admin_status', 'Accepted')
             // ->whereLike('name', $this->search ?? '')
             ->whereHas('vendor', function ($query) {
@@ -465,7 +469,7 @@ class Products extends Component
                     }
                 }
             })
-            ->when(\Request::route()->getName() == 'products.vendor', function ($query) {
+            ->when($this->vendor_slug, function ($query) {
                 /**
                  * If the catalog route is products.vendor
                  * then fetch products for selected vendor
@@ -474,7 +478,7 @@ class Products extends Component
                 // dd(request('slug'));
                 $query->whereHas('vendor', function ($q) {
                     $q->where('status', 1);
-                })->where('seller_id', request('slug'));
+                })->where('seller_id', $this->vendor_slug);
             })
             ->when(!empty(Session::get('showcasecity')), function ($query) {
                 /**

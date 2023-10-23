@@ -1,29 +1,29 @@
 @extends('layouts.website')
 
 @section('meta-seo')
-    <title>
-        @if (request('category'))
-            {{ ucwords(str_replace('-', ' ', request('category'))) . ' - ' }}
-        @elseif(request('subcategory'))
-            {{ ucwords(str_replace('-', ' ', request('subcategory'))) . ' - ' }}
-        @endif
+<title>
+    @if (request('category'))
+    {{ ucwords(str_replace('-', ' ', request('category'))) . ' - ' }}
+    @elseif(request('subcategory'))
+    {{ ucwords(str_replace('-', ' ', request('subcategory'))) . ' - ' }}
+    @endif
 
-        {{ Config::get('seo.catalog.title') }}
-    </title>
+    {{ Config::get('seo.catalog.title') }}
+</title>
 
-    <meta name="keywords" content="{{ Config::get('seo.catalog.keywords') }}">
-    <meta name="description" content="{{ Config::get('seo.catalog.description') }}">
+<meta name="keywords" content="{{ Config::get('seo.catalog.keywords') }}">
+<meta name="description" content="{{ Config::get('seo.catalog.description') }}">
 
 @endsection
 
 
 @section('content')
-    @livewire('catalog.products')
+@livewire('catalog.products', ['vendor_slug' => request('slug') ?? ''])
 @endsection
 
 @push('scripts')
-    <script type="text/javascript">
-        let action = 'inactive';
+<script type="text/javascript">
+    let action = 'inactive';
 
         window.addEventListener('makeInactive', (e) => {
             $('#loader').hide();
@@ -44,5 +44,5 @@
                 window.livewire.emit('load-more');
             }
         });
-    </script>
+</script>
 @endpush
