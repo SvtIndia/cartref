@@ -43,6 +43,11 @@
                     <div class="promo-discounted-price">Get it for <span>{{ Config::get('icrm.currency.icon') }}{{ number_format($coupon->discounted_value, 0) }}/-</span>
                     </div>
                     <div class="promo-desc">{{ $coupon->description }}
+                        <br>    
+                        <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                            target="_blank">
+                            View All Products
+                        </a>
                         {{-- <a target="_blank" href="">View All Products</a> --}}
                     </div>
                 </div>
