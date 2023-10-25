@@ -251,12 +251,19 @@
                         </div>
 
                         <h1 class="product-name">
+                            <u>
+                                <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                                    target="_blank">
+                                    {{ ucwords($product->brand_id) }}
+                                </a>
+                            </u>
+                            <br>
                             <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
                                 {{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}
                             </a>
                         </h1>
 
-                        <div class="product-meta">
+                        {{-- <div class="product-meta">
                             SKU: <span class="product-sku">{{ strtoupper($product->sku )}}</span>
                             BRAND: <span class="product-brand">{{ ucwords($product->brand_id) }}</span>
                             @if (Config::get('icrm.site_package.multi_vendor_store') == 1)
@@ -267,7 +274,7 @@
                                 </a>
                             </span>
                             @endif
-                        </div>
+                        </div> --}}
 
 
 
@@ -331,7 +338,7 @@
                             <u>
                                 <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
                                     target="_blank">
-                                    {{ ucwords($product->vendor->brand_name) }}
+                                    {{ ucwords($product->brand_id) }}
                                 </a>
                             </u>
                             <br>
