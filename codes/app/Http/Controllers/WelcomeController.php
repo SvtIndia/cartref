@@ -601,6 +601,9 @@ class WelcomeController extends Controller
     private function getNumberMoreButton($selectedsubcategory, $genders, $brands = [], $colors = [], $styles = [])
     {
         $products = Product::where('admin_status', 'Accepted')
+            ->whereHas('vendor', function ($query) {
+                $query->where('status', 1);
+            })
             ->when($selectedsubcategory, function ($query) use ($selectedsubcategory) {
                 $query->whereHas('productsubcategory', function ($q) use ($selectedsubcategory) {
                     $q->where('slug', $selectedsubcategory);
