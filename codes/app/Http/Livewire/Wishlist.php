@@ -37,7 +37,6 @@ class Wishlist extends Component
     public function wishlist()
     {
 
-
         if(Config::get('icrm.frontend.wishlist.auth') == true)
         {
             if(!Auth::check())
@@ -57,6 +56,17 @@ class Wishlist extends Component
             return redirect()->back();
         }
 
+        $userID = 0;
+        if (Auth::check()) {
+            $userID = auth()->user()->id;
+        } else {
+            if (session('session_id')) {
+                $userID = session('session_id');
+            } else {
+                $userID = rand(1111111111, 9999999999);
+                session(['session_id' => $userID]);
+            }
+        }
         $wishlist = app('wishlist');
 
         if($this->wishlistchecked == true)
