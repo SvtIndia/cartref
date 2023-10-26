@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\OtpController;
 
 Auth::routes(['verify' => true]);
 
@@ -23,6 +24,14 @@ Route::middleware('guest')->prefix('auth')->group(function () {
                 ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('otp-login', [OtpController::class, 'otp_login'])->name('otp.login');
+
+    Route::post('otp-login', [OtpController::class, 'otp_login_store'])->name('otp_login');
+
+    Route::get('otp-verification', [OtpController::class, 'otp_verification'])->name('otp.verification');
+
+    Route::post('otp-verification', [OtpController::class, 'otp_verification_store'])->name('otp_verification');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
@@ -39,7 +48,7 @@ Route::middleware('guest')->prefix('auth')->group(function () {
     Route::get('/redirect/{client}', [RegisteredUserController::class, 'redirect'])->name('auth.redirect');
     Route::get('/callback/google', [RegisteredUserController::class, 'googlecallback']);
     Route::get('/callback/facebook', [RegisteredUserController::class, 'facebookcallback']);
-                
+
 });
 
 Route::middleware(['auth'])->group(function () {

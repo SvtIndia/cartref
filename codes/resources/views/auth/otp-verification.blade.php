@@ -1,36 +1,44 @@
 @extends('layouts.website')
 
+@section('meta-seo')
+<title>{{ Config::get('seo.login.title') }}</title>
+<meta name="keywords" content="{{ Config::get('seo.login.keywords') }}">
+<meta name="description" content="{{ Config::get('seo.login.description') }}">
+@endsection
+
 @section('css')
+
 
 @endsection
 
 @section('content')
-{{-- @include('partials.breadcrumb') --}}
-    <div class="signup-page">
-        <div class="title">
-            <span>Mobile Verification</span>
-            <p>We have sent you OTP on your registered mobile to verify</p>
-        </div>
-        <div class="form">
-            <form action="" method="post">
-                @csrf
-                <div class="form-row">
-                    <label for="" class="required">OTP</label>
-                    <input type="text" name="otp">
+<div class="login-popup" style="margin: auto;">
+    <div class="form-box">
+        <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active border-no lh-1 ls-normal" href="#">Enter OTP</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <!-- Register start -->
+                <div class="tab-pane active in" id="register">
+                    <form action="{{  route('otp_verification') }}" method="post">
+                        @csrf
+
+                        <div class="form-group mb-3">
+                            <input type="num" class="form-control" name="otp" min="6" max="6"
+                                placeholder="Enter the OTP" required />
+                        </div>
+                        <button class="btn btn-dark btn-block btn-rounded" type="submit">Submit</button>
+                    </form>
                 </div>
-                
-                <div class="form-row">
-                    <button type="submit" class="btn btn-primary">Continue</button>
-                </div>
-                <div class="form-row">
-                    <span>Din't received? <a href="{{ route('login') }}">Resend now</a></span>
-                </div>
-            </form>
+                <!-- Register end -->
+            </div>
         </div>
     </div>
-    <br><br><br><br><br><br><br><br>
+</div>
 @endsection
 
 @section('bottomscripts')
-
 @endsection
