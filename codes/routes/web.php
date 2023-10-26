@@ -12,6 +12,7 @@
 */
 
 use App\EmailNotification;
+use App\Notifications\CodOrderEmail;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Session;
@@ -495,14 +496,18 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-
-//    $product = \App\Models\Product::find(2970);
-//    $product->attachUser(1);
+//    return Notification::route('mail', 'lakshyasvt419@gmail.com')->notify(new CodOrderEmail(\App\Order::take(1)->first()));
+////    $product = \App\Models\Product::find(2970);
+////    $product->attachUser(1);
+////
+////    $product->detachUser(1);
 //
-//    $product->detachUser(1);
-
-    $product = \App\Models\Product::withCount('users')->whereIn('id',[85,90, 2970])->orderBy('users_count', 'desc')->get();
+//    $product = \App\Models\Product::withCount('users')->whereIn('id',[85,90, 2970])->orderBy('users_count', 'desc')->get();
 //    $product = $product->orderBy('users_count', 'desc')->get();
 
     return $product;
+});
+
+Route::post('/shiprocket-test', function (){
+   return;
 });
