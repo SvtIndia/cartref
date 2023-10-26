@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class CartrefCredit extends Notification
+class ProductPurchased extends Notification
 {
     use Queueable;
 
@@ -18,12 +18,16 @@ class CartrefCredit extends Notification
      *
      * @return void
      */
-    public function __construct($order,$customer,$cashback,$purchase_date,$product,$review_link)
+    public function __construct($order, $customer, $cashback, $purchase_date, $product, $review_link)
     {
         $this->customer = $customer;
-        $this->cashback = $cashback;
+        $this->order_no = $order;
         $this->purchase_date = $purchase_date;
-        $this->order = $order;
+        $this->total_amt = $total_amt;
+        $this->items = $items; // Array of items
+        $this->shipping_add = $shipping_add; // Array of shipping
+        $this->payment_method = $payment_method; 
+        $this->cashback = $cashback;
         $this->product = $product;
         $this->review_link = $review_link;
     }
@@ -48,15 +52,21 @@ class CartrefCredit extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Cashback Credited to Your Wallet!')
+            ->subject('Purchase Confirmation')
             ->line('Dear ' . $this->customer)
-            ->line('We have some great news! We’re excited to let you know that you’ve received a cashback credit in your wallet as a reward for your recent purchase with '.env('APP_URL'))
-            ->line('Cashback Amount: '.$this->cashback.'Original')
-            ->line('Order Number: '.$this->order)
-            ->line('Date of Purchase: '.$this->purchase_date)
-            ->line('Your cashback is now available in your cartrefs customer wallet and can be used for your next purchase. Shop for your favorite products and enjoy the savings!')
-            ->line('To use your cashback, simply choose "Wallet" as your payment method during checkout, and the amount will be applied automatically.')
-            ->line('Thank you for choosing us for your shopping needs. We hope you enjoy your cashback and continue to have a great shopping experience with us!')
+            ->line('We are excited to confirm your recent purchase with ' . env('APP_URL'))
+            ->line('Order Details:')
+            ->line('Order Number: ' . $this->order_no)
+            ->line('Date of Purchase: ' . $this->purchase_date)
+            ->line('Total Amount: ' . $this->total_amt)
+            ->line('Items Purchased:')
+            ->line($this->items)
+            ->line('Shipping Address:')
+            ->line($this->shipping_add)
+            ->line('Payment Method:')
+            ->line($this->payment_method)
+            ->line('If you have any questions or concerns about your order, please don’t hesitate to contact our customer support team at helpdesk@cartrefs.com ')
+            ->line('Thank you for choosing '.env('APP_URL'). ' for your purchase. We appreciate your business and look forward to serving you again in the future.')
             ->line('Best regards')
             ->line(env('APP_URL'));
     }

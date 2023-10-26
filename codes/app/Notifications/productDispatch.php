@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class CodOrderEmail extends Notification
+class ProductDispatch extends Notification
 {
     use Queueable;
 

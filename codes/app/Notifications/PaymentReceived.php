@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ProductRatingMail extends Notification
+class PaymentReceived extends Notification
 {
     use Queueable;
 
@@ -18,11 +18,11 @@ class ProductRatingMail extends Notification
      *
      * @return void
      */
-    public function __construct($customer,$product,$review_link)
+    public function __construct($seller, $support_email, $support_number)
     {
-        $this->customer = $customer;
-        $this->product = $product;
-        $this->review_link = $review_link;
+        $this->seller = $seller;
+        $this->support_email = $support_email;
+        $this->support_number = $support_number;
     }
 
     /**
@@ -45,15 +45,13 @@ class ProductRatingMail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Quick Follow-Up: Your Recent Purchase')
-            ->line('Hi ' . $this->customer)
-            ->line('We just wanted to follow up on your recent purchase. We hope you’re loving your new '.$this->product.'from '.env('APP_URL').'. If you haven’t had a chance yet, we’d greatly appreciate it if you could take a moment to share your thoughts with a review.')
-            ->line('Here: '.$this->review_link)
-            ->line('Your feedback helps us serve you better and assists others in finding the perfect products.')
-            ->line('Thank you for choosing us!')
-            ->line('Warm regards,')
-            ->line(env('APP_URL'))
-        ;
+            ->subject('Payment Successfully Transferred to Your Bank Account')
+            ->line('Dear ' . $this->seller)
+            ->line('We’re pleased to inform you that a payment for your recent sales on our platform has been successfully transferred to your registered bank account')
+            ->line('You should see this payment reflected in your bank account within the standard processing time of your financial institution. If you encounter any issues or have questions regarding this transaction, please do not hesitate to contact our support team at '.$this->support_email .' or '.$this->support_number)
+            ->line('Thank you for your continued partnership with us.')
+            ->line('Best regards')
+            ->line(env('APP_URL'));
     }
 
     /**

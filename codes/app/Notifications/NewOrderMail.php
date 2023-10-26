@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ProductRatingMail extends Notification
+class NewOrderMail extends Notification
 {
     use Queueable;
 
@@ -18,11 +18,13 @@ class ProductRatingMail extends Notification
      *
      * @return void
      */
-    public function __construct($customer,$product,$review_link)
+    public function __construct($order, $seller, $customer_name, $customer_email)
     {
-        $this->customer = $customer;
-        $this->product = $product;
-        $this->review_link = $review_link;
+        $this->order_no = $order;
+        $this->seller = $seller;
+        $this->customer_name = $customer_name;
+        $this->customer_email = $customer_email;
+
     }
 
     /**
@@ -45,15 +47,16 @@ class ProductRatingMail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Quick Follow-Up: Your Recent Purchase')
-            ->line('Hi ' . $this->customer)
-            ->line('We just wanted to follow up on your recent purchase. We hope you’re loving your new '.$this->product.'from '.env('APP_URL').'. If you haven’t had a chance yet, we’d greatly appreciate it if you could take a moment to share your thoughts with a review.')
-            ->line('Here: '.$this->review_link)
-            ->line('Your feedback helps us serve you better and assists others in finding the perfect products.')
-            ->line('Thank you for choosing us!')
-            ->line('Warm regards,')
-            ->line(env('APP_URL'))
-        ;
+            ->subject('New Order Alert: '.$this->order_no)
+            ->line('Dear ' . $this->seller)
+            ->line('We’re pleased to inform you that you have received a new order on Cartrefs.com')
+            ->line('Order Number: '.$this->order_no)
+            ->line('Customer: '.$this->customer_name)
+            ->line('Email: '.$this->customer_email)
+            ->line('Please check your seller dashboard for complete order details and proceed with fulfilling the order promptly. If you have any questions or need assistance, feel free to reach out to our support team at info@cartrefs.com')
+            ->line('Thank you for being a valued seller on our platform.')
+            ->line('Best regards')
+            ->line(env('APP_URL'));
     }
 
     /**
