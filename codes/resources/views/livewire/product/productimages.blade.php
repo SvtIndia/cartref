@@ -1,5 +1,5 @@
-<div class="col-md-5 sticky-sidebar-wrapper">
-    <div class="pin-wrapper" style="height: 518.433px;">
+<div class="col-md-6 sticky-sidebar-wrapper">
+    <div class="pin-wrapper" style="height: 60px;">
         <div class="product-gallery pg-vertical sticky-sidebar" data-sticky-options="{'minWidth': 767}" style="border-bottom: 0px none rgb(102, 102, 102); width: 580px;">
         @include('product.badges')
         <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner owl-loaded owl-drag">
