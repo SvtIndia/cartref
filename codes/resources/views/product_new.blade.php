@@ -364,7 +364,7 @@
                                                     onclick="slideToggle('sizes-list')">
                                                 <span class="color-dropdown-span">Maat kiezen</span>
                                                 <div class="color-dropdown-div">
-                                                    <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                                    <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
                                                          fill="currentColor" class="color-dropdown-svg"
                                                          id="sizes-list-chevron-down" focusable="false"
                                                          aria-hidden="true">
@@ -372,7 +372,7 @@
                                                     </svg>
 
                                                     <svg class="color-dropdown-svg" id="sizes-list-chevron-up"
-                                                         style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                          viewBox="0 0 24 24" width="1em"
                                                          height="1em" fill="currentColor" focusable="false"
                                                          aria-hidden="true">
                                                         <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
@@ -566,7 +566,7 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
                                                  fill="currentColor" class="color-dropdown-svg"
                                                  id="desc-detail-list-chevron-down" focusable="false"
                                                  aria-hidden="true">
@@ -574,7 +574,7 @@
                                             </svg>
 
                                             <svg class="color-dropdown-svg" id="desc-detail-list-chevron-up"
-                                                 style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                 viewBox="0 0 24 24" width="1em"
                                                  height="1em" fill="currentColor" focusable="false"
                                                  aria-hidden="true">
                                                 <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
@@ -616,7 +616,7 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
                                                  fill="currentColor" class="color-dropdown-svg"
                                                  id="desc-detail-list2-chevron-down" focusable="false"
                                                  aria-hidden="true">
@@ -624,7 +624,7 @@
                                             </svg>
 
                                             <svg class="color-dropdown-svg" id="desc-detail-list2-chevron-up"
-                                                 style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                  viewBox="0 0 24 24" width="1em"
                                                  height="1em" fill="currentColor" focusable="false"
                                                  aria-hidden="true">
                                                 <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
@@ -942,11 +942,11 @@
             if ($("#" + id)) {
                 $("#" + id).slideToggle(300, function () {
                     if ($("#" + id).is(':visible')) {
-                        $("#" + id + '-chevron-down').hide();
-                        $("#" + id + '-chevron-up').show();
-                    } else {
                         $("#" + id + '-chevron-down').show();
                         $("#" + id + '-chevron-up').hide();
+                    } else {
+                        $("#" + id + '-chevron-down').hide();
+                        $("#" + id + '-chevron-up').show();
                     }
                 });
             }
