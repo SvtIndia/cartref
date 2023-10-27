@@ -29,9 +29,9 @@ Route::middleware('guest')->prefix('auth')->group(function () {
 
     Route::post('otp-login', [OtpController::class, 'otp_login_store'])->name('otp_login');
 
-    Route::get('otp-verification', [OtpController::class, 'otp_verification'])->name('otp.verification');
+    // Route::get('otp-verification', [OtpController::class, 'otp_verification'])->name('otp.verification');
 
-    Route::post('otp-verification', [OtpController::class, 'otp_verification_store'])->name('otp_verification');
+    Route::post('otp-verification', [OtpController::class, 'otp_verification'])->name('otp_verification');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

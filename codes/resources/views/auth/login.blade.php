@@ -6,12 +6,26 @@
 <meta name="description" content="{{ Config::get('seo.login.description') }}">
 @endsection
 
-@section('css')
+@section('headerlinks')
+
+<style>
+    .page-content {
+        background-image: url('/images/auth.png');
+        background-size: cover;
+        /* background-position: center; */
+        background-repeat: no-repeat;
+        /* opacity: 0.5; */
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>
 
 @endsection
 
 @section('content')
-<div class="login-popup" style="margin: auto;">
+<div class="login-popup" style="margin: auto; background: white;">
     <div class="form-box">
         <div class="tab tab-nav-simple tab-nav-boxed form-tab">
             <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
@@ -49,7 +63,8 @@
                             <a href="{{ route('password.request') }}" class="lost-link">Forgot password?</a>
                         </div>
                         <div class="form-footer">
-                            <a href="{{ route('otp.login') }}" class="lost-link">Login with OTP</a>
+                            <a href="{{ route('otp.login') }}" class="lost-link"
+                                style="color: black;font-size: 12px;">Login with OTP</a>
                         </div>
                         <button class="btn btn-dark btn-block btn-rounded" type="submit">Login</button>
                     </form>
@@ -67,10 +82,10 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-choice text-center mt-2">
+                    {{-- <div class="form-choice text-center mt-2">
                         <label class="ls-m">or Login With</label>
                         <button class="btn btn-dark btn-rounded" style="padding: 10px;">Login with OTP</button>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Login end -->
 

@@ -6,37 +6,26 @@
 <meta name="description" content="{{ Config::get('seo.login.description') }}">
 @endsection
 
-@section('css')
+@section('headerlinks')
+
 <style>
-    .form-group {
-        border: 1px solid #ced4da;
-        padding: 5px;
-        border-radius: 6px;
-        width: auto;
+    .page-content {
+        background-image: url('/images/auth.png');
+        background-size: cover;
+        /* background-position: center; */
+        background-repeat: no-repeat;
+        /* opacity: 0.5; */
     }
 
-    .form-group:focus {
-        color: #212529;
-        background-color: #fff;
-        border-color: #86b7fe;
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
-    }
-
-    .form-group input {
-        display: inline-block;
-        width: auto;
-        border: none;
-    }
-
-    .form-group input:focus {
-        box-shadow: none;
+    .text-danger {
+        color: red;
     }
 </style>
+
 @endsection
 
 @section('content')
-<div class="login-popup" style="margin: auto;">
+<div class="login-popup" style="margin: auto; background: white;">
     <div class="form-box">
         <div class="tab tab-nav-simple tab-nav-boxed form-tab">
             <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center mb-5" role="tablist">
@@ -54,17 +43,20 @@
                             <input type="text" class="form-control ml-1" name="mobile_no" minlength=10
                                 placeholder="Your Contact Number *" required />
                         </div>
-                      
+                        @if(isset($error))
+                        <p class="text-danger">{{ $error }}</p>
+                        @endif
                         <div class="form-footer">
-                            <a href="{{ route('login') }}" class="lost-link">Login with Email</a>
+                            <a href="{{ route('login') }}" class="lost-link" style="color: black;font-size: 12px;">Login
+                                with Email</a>
                         </div>
                         <button class="btn btn-dark btn-block btn-rounded" type="submit">Request For OTP</button>
                     </form>
 
-                    <div class="form-choice text-center mt-2">
+                    {{-- <div class="form-choice text-center mt-2">
                         <label class="ls-m">or Login With</label>
                         <button class="btn btn-dark btn-rounded" style="padding: 10px;">Login with Email</button>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- Register end -->
             </div>
