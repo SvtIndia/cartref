@@ -198,17 +198,22 @@
             position: sticky;
             top: 0px !important;
         }
-        .fancybox-content{
+
+        .fancybox-content {
             transform: translate(0px, 0px) !important;
-            width:100% !important;
-            height:100% !important;
+            width: 100% !important;
+            height: 100% !important;
         }
-        .fancybox-image{
+
+        .fancybox-image {
             object-fit: contain;
         }
-        .container{
-            padding-left: 5px; !important;
-            padding-right: 5px; !important;
+
+        .container {
+            padding-left: 5px;
+        !important;
+            padding-right: 5px;
+        !important;
             margin-top: 10px;
         }
 
@@ -271,7 +276,7 @@
                                                     <div class="color-img-container">
                                                         <div class="color-img-div">
                                                             <img class="color-image" alt="Geselecteerd, black"
-                                                                src="https://img01.ztat.net/article/spp-media-p1/ef27f54df2764a14a25eb2072fb4995d/b69897ea68304f8abfce040103bb5eca.jpg?imwidth=156&amp;filter=packshot"
+                                                                 src="https://img01.ztat.net/article/spp-media-p1/ef27f54df2764a14a25eb2072fb4995d/b69897ea68304f8abfce040103bb5eca.jpg?imwidth=156&amp;filter=packshot"
                                                             />
                                                         </div>
                                                     </div>
@@ -355,19 +360,31 @@
                                     <div class="color-dropdown-container">
                                         <div class="color-dropdown-container2">
                                             <div class="color-dropdown-border"></div>
-                                            <button class="color-dropdown-button" type="button" tabindex="0" id="picker-trigger">
+                                            <button class="color-dropdown-button" type="button" tabindex="0"
+                                                    onclick="slideToggle('sizes-list')">
                                                 <span class="color-dropdown-span">Maat kiezen</span>
                                                 <div class="color-dropdown-div">
-                                                    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="color-dropdown-svg" focusable="false" aria-hidden="true">
+                                                    <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                                         fill="currentColor" class="color-dropdown-svg"
+                                                         id="sizes-list-chevron-down" focusable="false"
+                                                         aria-hidden="true">
+                                                        <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
+                                                    </svg>
+
+                                                    <svg class="color-dropdown-svg" id="sizes-list-chevron-up"
+                                                         style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                         height="1em" fill="currentColor" focusable="false"
+                                                         aria-hidden="true">
                                                         <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
                                                     </svg>
                                                 </div>
                                             </button>
 
-                                            <div class="size-list-wrapper">
+                                            <div id="sizes-list" style="display: none;" class="size-list-wrapper">
                                                 <div class="size-list-container">
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -378,8 +395,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -390,8 +408,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -402,8 +421,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -414,8 +434,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -426,8 +447,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -438,8 +460,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -450,8 +473,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                    <div class="size-div" >
-                                                        <input type="checkbox" class="size-input" name="size-picker" value="" />
+                                                    <div class="size-div">
+                                                        <input type="checkbox" class="size-input" name="size-picker"
+                                                               value=""/>
                                                         <div class="size-div2">
                                                             <label class="size-label">
                                                                 <span class="size-span">
@@ -474,9 +498,11 @@
                                     <div class="new-wishlist-wrapper">
                                         <button class="new-wishlist-btn" type="button">
                                             <span class="new-wishlist-span">
-                                                <svg viewBox="0 0 24 24" style="font-size: 24px;" width="1em" height="1em" fill="currentColor" aria-labelledby="wishlist-:R4k:" focusable="false" aria-hidden="false" role="img">
+                                                <svg viewBox="0 0 24 24" style="font-size: 24px;" width="1em"
+                                                     height="1em" fill="currentColor" aria-labelledby="wishlist-:R4k:"
+                                                     focusable="false" aria-hidden="false" role="img">
                                                     <title>Wishlist</title>
-                                                    <path d="M17.488 1.11h-.146a6.552 6.552 0 0 0-5.35 2.81A6.57 6.57 0 0 0 6.62 1.116 6.406 6.406 0 0 0 .09 7.428c0 7.672 11.028 15.028 11.497 15.338a.745.745 0 0 0 .826 0c.47-.31 11.496-7.666 11.496-15.351a6.432 6.432 0 0 0-6.42-6.306zM12 21.228C10.018 19.83 1.59 13.525 1.59 7.442c.05-2.68 2.246-4.826 4.934-4.826h.088c2.058-.005 3.93 1.251 4.684 3.155.226.572 1.168.572 1.394 0 .755-1.907 2.677-3.17 4.69-3.16h.02c2.7-.069 4.96 2.118 5.01 4.817 0 6.089-8.429 12.401-10.41 13.8z"                                                    ></path>
+                                                    <path d="M17.488 1.11h-.146a6.552 6.552 0 0 0-5.35 2.81A6.57 6.57 0 0 0 6.62 1.116 6.406 6.406 0 0 0 .09 7.428c0 7.672 11.028 15.028 11.497 15.338a.745.745 0 0 0 .826 0c.47-.31 11.496-7.666 11.496-15.351a6.432 6.432 0 0 0-6.42-6.306zM12 21.228C10.018 19.83 1.59 13.525 1.59 7.442c.05-2.68 2.246-4.826 4.934-4.826h.088c2.058-.005 3.93 1.251 4.684 3.155.226.572 1.168.572 1.394 0 .755-1.907 2.677-3.17 4.69-3.16h.02c2.7-.069 4.96 2.118 5.01 4.817 0 6.089-8.429 12.401-10.41 13.8z"></path>
                                                 </svg>
                                             </span>
                                         </button>
@@ -504,7 +530,8 @@
                                 </div>
                                 <div class="free-shipping-return">
                                     <div class="free-shipping-return-wrapper">
-                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="free-shipping-return-svg" focusable="false" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
+                                             class="free-shipping-return-svg" focusable="false" aria-hidden="true">
                                             <path d="m16.5 14.5-4.2-1.9c-.2-.1-.4-.1-.6 0l-4.2 1.9V6.9l2-5.6h5l2 5.9v7.3zM9 7.3v4.9l2.1-.9c.6-.3 1.2-.3 1.8 0l2.1.9V7.3l-1.6-4.5h-2.9L9 7.3z"></path>
                                             <path
                                                     d="M20.5 22.8h-17c-1.2 0-2.2-1-2.2-2.2V19c0-.4.3-.8.8-.8s.8.3.8.8v1.5c0 .4.3.8.8.8h17c.4 0 .8-.3.8-.8V7.3c0-.1 0-.2-.1-.3l-1.5-3.8c-.1-.3-.4-.5-.7-.5H5c-.3 0-.6.2-.7.5L2.8 7c0 .1-.1.2-.1.3V10c0 .4-.3.8-.8.8s-.7-.4-.7-.8V7.3c0-.3.1-.6.2-.8l1.5-3.8c.4-.9 1.2-1.5 2.1-1.5h14c.9 0 1.7.6 2.1 1.4l1.5 3.8c.1.3.2.5.2.8v13.2c0 1.3-1.1 2.4-2.3 2.4z"
@@ -516,7 +543,8 @@
                                 </div>
                                 <div class="seven-day-return">
                                     <div class="seven-day-return-wrapper">
-                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="seven-day-return-svg" focusable="false" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
+                                             class="seven-day-return-svg" focusable="false" aria-hidden="true">
                                             <path
                                                     d="M14.25 4.33H1.939l3.056-3.055A.75.75 0 0 0 3.934.215L.658 3.49a2.252 2.252 0 0 0 0 3.182l3.276 3.275a.75.75 0 0 0 1.06-1.06L1.94 5.83h12.31c4.557 0 8.251 3.694 8.251 8.25s-3.695 8.42-8.251 8.42h-12a.75.75 0 0 0 0 1.5h12c5.385 0 9.75-4.534 9.75-9.919s-4.365-9.75-9.75-9.75z"
                                             ></path>
@@ -526,205 +554,92 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="XKeLfu">
-                            <style data-trckng-component="F7vKnWK0eUjkhmWYUwTAc">
-                                @media (max-width: 767px) {
-                                    .z-pdp__escape-grid {
-                                        margin: 0 -24px;
-                                    }
-                                }
-                            </style>
-                            <div class="z-pdp__escape-grid">
-                                <div class="QsQR-j NN8L-8 JT3_zV _8sTSoF MxUWj-" data-testid="pdp-accordion-material_care">
-                                    <h2 class="heWLCX">
-                                        <button
-                                                class="_ZDS_REF_SCOPE_ SX0LGY DJxzzA u9KIT8 uEg2FS U_OhzR ZkIJC- Vn-7c- FCIprz heWLCX Wu1CzW Md_Vex NN8L-8 _d3F40 P3OKTW mo6ZnF K82if3 VWL_Ot HlZ_Tf _13ipK_ LyRfpJ Z1Xqqm _8xiD-i sKmkSN pMa0tB"
-                                                type="button"
-                                                tabindex="0"
-                                                aria-expanded="false"
-                                        >
-                                            <span class="JCuRr_">
-                                                <span class="_0xLoFW _78xIQ- P3OKTW">
-                                                    <span class="sDq_FX _2kjxJ6 dgII7d"><h5 class="sDq_FX EKH5rj FxZV-M HlZ_Tf">Materiaal &amp; wasvoorschrift</h5></span>
-                                                </span>
-                                            </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="zds-icon RC794g X9n9TI DlJ4rT _5Yd-hZ _4GmiZN nXkCf3 I_qHp3" focusable="false" aria-hidden="true">
-                                                <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div class="ZDZONQ ZkIJC- i8_8W0" style="max-height: 0px;">
-                                        <div class="Z1Xqqm sb1S7G sKmkSN pMa0tB">
-                                            <div class="" style="white-space: pre-line;">
-                                                <dl>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Materiaal buitenlaag:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">100% katoen</dd>
-                                                    </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Materiaalverwerking:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Jersey</dd>
-                                                    </div>
-                                                    <div class="">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Wasvoorschrift:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Machinewas tot 30 °C, niet geschikt voor de droger, niet bleken</dd>
-                                                    </div>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="QsQR-j NN8L-8 JT3_zV _8sTSoF MxUWj-" data-testid="pdp-accordion-details">
-                                    <h2 class="heWLCX">
-                                        <button
-                                                class="_ZDS_REF_SCOPE_ SX0LGY DJxzzA u9KIT8 uEg2FS U_OhzR ZkIJC- Vn-7c- FCIprz heWLCX Wu1CzW Md_Vex NN8L-8 _d3F40 P3OKTW mo6ZnF K82if3 VWL_Ot HlZ_Tf _13ipK_ LyRfpJ Z1Xqqm _8xiD-i sKmkSN pMa0tB"
-                                                type="button"
-                                                tabindex="0"
-                                                aria-expanded="false"
-                                        >
-                                            <span class="JCuRr_">
-                                                <span class="_0xLoFW _78xIQ- P3OKTW">
-                                                    <span class="sDq_FX _2kjxJ6 dgII7d"><h5 class="sDq_FX EKH5rj FxZV-M HlZ_Tf">Alles over dit product</h5></span>
-                                                </span>
-                                            </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="zds-icon RC794g X9n9TI DlJ4rT _5Yd-hZ _4GmiZN nXkCf3 I_qHp3" focusable="false" aria-hidden="true">
-                                                <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div class="ZDZONQ ZkIJC- i8_8W0" style="max-height: 0;">
-                                        <div class="Z1Xqqm sb1S7G sKmkSN pMa0tB">
-                                            <div class="" style="white-space: pre-line;">
-                                                <dl>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Halslijn:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Ronde hals</dd>
-                                                    </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Transparant:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Licht</dd>
-                                                    </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Patroon:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Print</dd>
-                                                    </div>
-                                                    <div class="">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Artikelnummer:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">PE121D0TO-A11</dd>
-                                                    </div>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="QsQR-j NN8L-8 JT3_zV _8sTSoF MxUWj-" data-testid="pdp-accordion-size_fit">
-                                    <h2 class="heWLCX">
-                                        <button
-                                                class="_ZDS_REF_SCOPE_ SX0LGY DJxzzA u9KIT8 uEg2FS U_OhzR ZkIJC- Vn-7c- FCIprz heWLCX Wu1CzW Md_Vex NN8L-8 _d3F40 P3OKTW mo6ZnF K82if3 VWL_Ot HlZ_Tf _13ipK_ LyRfpJ Z1Xqqm _8xiD-i sKmkSN pMa0tB"
-                                                type="button"
-                                                tabindex="0"
-                                                aria-expanded="false"
-                                        >
-                                            <span class="JCuRr_">
-                                                <span class="_0xLoFW _78xIQ- P3OKTW">
-                                                    <span class="sDq_FX _2kjxJ6 dgII7d">
-                                                        <div class="_0xLoFW FCIprz"><h5 class="sDq_FX EKH5rj FxZV-M HlZ_Tf">Fitting</h5></div>
+                        <div class="description-wrapper">
+                            <div>
+                                <div class="desc-container">
+                                    <h2 class="desc-container-h2">
+                                        <button class="desc-container-btn" type="button" tabindex="0"
+                                                aria-expanded="false">
+                                            <span class="desc-span">
+                                                <span class="desc-span2">
+                                                    <span class="desc-span3">
+                                                        <h5 class="desc-span-h5">Materiaal &amp; wasvoorschrift</h5>
                                                     </span>
                                                 </span>
                                             </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="zds-icon RC794g X9n9TI DlJ4rT _5Yd-hZ _4GmiZN nXkCf3 I_qHp3" focusable="false" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
+                                                 class="desc-svg" focusable="false" aria-hidden="true">
                                                 <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
                                             </svg>
                                         </button>
                                     </h2>
-                                    <div class="ZDZONQ ZkIJC- i8_8W0" style="max-height: 0;">
-                                        <div class="Z1Xqqm sb1S7G sKmkSN pMa0tB">
-                                            <div class="" style="white-space: pre-line;">
+                                    <div class="desc-detail-wrapper">
+                                        <div class="desc-detail-container">
+                                            <div>
                                                 <dl>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Lichaamslengte model:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Ons model is 177 cm lang en draagt maat S</dd>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Outer layer material:
+                                                        </dt>
+                                                        <dd class="desc-value" role="definition">100% katoen</dd>
                                                     </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Pasvorm:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Regular Fit</dd>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Materiaalverwerking:</dt>
+                                                        <dd class="desc-value" role="definition">Jersey</dd>
                                                     </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Vorm:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Tapered</dd>
-                                                    </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Lengte:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Normaal</dd>
-                                                    </div>
-                                                    <div class="qMOFyE">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Mouwlengte:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">Extra korte mouw</dd>
-                                                    </div>
-                                                    <div class="">
-                                                        <dt class="sDq_FX lystZ1 dgII7d HlZ_Tf zN9KaA" role="term">Totale lengte:</dt>
-                                                        &nbsp;
-                                                        <dd class="sDq_FX lystZ1 FxZV-M HlZ_Tf zN9KaA" role="definition">54 cm bij maat S</dd>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Wasvoorschrift:</dt>
+                                                        <dd class="desc-value" role="definition">Machinewas tot 30 °C,
+                                                            niet geschikt voor de droger, niet bleken
+                                                        </dd>
                                                     </div>
                                                 </dl>
-                                            </div>
-                                            <div class="DJxzzA Ymx2h-">
-                                                <button
-                                                        class="_ZDS_REF_SCOPE_ _4HcdR8 DJxzzA u9KIT8 uEg2FS U_OhzR ZkIJC- Vn-7c- FCIprz heWLCX LyRfpJ NN8L-8 K82if3 Md_Vex HlZ_Tf VWL_Ot _13ipK_ OGTPbw EKabf7 aX2-iv r9BRio _2wi8M3 Md_Vex Wy3rmK"
-                                                        type="button"
-                                                        aria-haspopup="true"
-                                                        aria-expanded="false"
-                                                        tabindex="0"
-                                                >
-                                                    <span class="JGtyGq heWLCX ZkIJC- r9BRio qXofat sDq_FX _2kjxJ6 dgII7d">Maattabel</span>
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="_0xLoFW EJ4MLB O4Aj42 svLiZt ykb2t2 q84f1m snL7ze sKmkSN pMa0tB">
-                                    <h5 class="sDq_FX EKH5rj FxZV-M HlZ_Tf q84f1m snL7ze">Pepe Jeans</h5>
-                                    <div class="_0xLoFW FCIprz">
-                                        <button
-                                                class="_ZDS_REF_SCOPE_ mROyo1 Pn5Px2 zcfRTH _2iCVgy DJxzzA u9KIT8 uEg2FS U_OhzR ZkIJC- Vn-7c- FCIprz heWLCX LyRfpJ Md_Vex NN8L-8 VWL_Ot _13ipK_ MaAr8t K82if3 HlZ_Tf gcK-9K EKabf7 aX2-iv r9BRio oIVdPD XfNx0j"
-                                                type="button"
-                                                aria-pressed="false"
-                                                aria-label="Volg Pepe Jeans"
-                                        >
-                                            <svg
-                                                    viewBox="0 0 24 24"
-                                                    width="1em"
-                                                    height="1em"
-                                                    fill="currentColor"
-                                                    class="zds-icon RC794g X9n9TI DlJ4rT _5Yd-hZ fo5HXp qbFh83 QVz7Pz _9l1hln iXbgaG nXkCf3 DlJ4rT _9l1hln _65i7kZ QfLC_c Ik4W2Q"
-                                                    focusable="false"
-                                                    aria-hidden="true"
-                                            >
-                                                <path d="M20.25 11.2h-7.5V3.7a.75.75 0 0 0-1.5 0v7.5h-7.5a.75.75 0 0 0 0 1.5h7.5v7.5a.75.75 0 0 0 1.5 0v-7.5h7.5a.75.75 0 0 0 0-1.5z"></path>
+
+                                <div class="desc-container">
+                                    <h2 class="desc-container-h2">
+                                        <button class="desc-container-btn" type="button" tabindex="0"
+                                                aria-expanded="false">
+                                            <span class="desc-span">
+                                                <span class="desc-span2">
+                                                    <span class="desc-span3">
+                                                        <h5 class="desc-span-h5">Materiaal &amp; wasvoorschrift</h5>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
+                                                 class="desc-svg" focusable="false" aria-hidden="true">
+                                                <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
                                             </svg>
-                                            <span class="_9l1hln heWLCX ZkIJC- r9BRio qXofat sDq_FX lystZ1 FxZV-M">Volg</span>
                                         </button>
+                                    </h2>
+                                    <div class="desc-detail-wrapper">
+                                        <div class="desc-detail-container">
+                                            <div>
+                                                <dl>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Outer layer material:
+                                                        </dt>
+                                                        <dd class="desc-value" role="definition">100% katoen</dd>
+                                                    </div>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Materiaalverwerking:</dt>
+                                                        <dd class="desc-value" role="definition">Jersey</dd>
+                                                    </div>
+                                                    <div class="desc-content">
+                                                        <dt class="desc-label" role="term">Wasvoorschrift:</dt>
+                                                        <dd class="desc-value" role="definition">Machinewas tot 30 °C,
+                                                            niet geschikt voor de droger, niet bleken
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="XKeLfu">
-                            <button type="button" color="interactive" class="Rt7sMf _6-WsK3 Md_Vex Nk_Omi _MmCDa NN8L-8 K82if3 _0xLoFW vSgP6A" data-trckng-component="gN2F28XmLDQV-gRR9BmEz">
-                                <i aria-hidden="true" role="presentation" translate="no" class="OXFOVc font-1srjmmp _7_FqPM _65i7kZ HG8yY9">flag</i>
-                                <h5 class="sDq_FX _2kjxJ6 FxZV-M _7_FqPM">Meld een juridisch probleem</h5>
-                            </button>
                         </div>
                     </div>
 
@@ -995,3 +910,29 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function slideDown(id) {
+            if ($("#" + id))
+                $("#" + id).slideDown(300);
+        }
+
+        function slideUp(id) {
+            if ($("#" + id))
+                $("#" + id).slideUp(300);
+        }
+
+        function slideToggle(id) {
+            if ($("#" + id)) {
+                $("#" + id).slideToggle(300, function () {
+                    if ($("#" + id).is(':visible')) {
+                        $("#" + id + '-chevron-down').hide();
+                        $("#" + id + '-chevron-up').show();
+                    } else {
+                        $("#" + id + '-chevron-down').show();
+                        $("#" + id + '-chevron-up').hide();
+                    }
+                });
+            }
+        }
+    </script>
