@@ -549,7 +549,7 @@
                                                     d="M14.25 4.33H1.939l3.056-3.055A.75.75 0 0 0 3.934.215L.658 3.49a2.252 2.252 0 0 0 0 3.182l3.276 3.275a.75.75 0 0 0 1.06-1.06L1.94 5.83h12.31c4.557 0 8.251 3.694 8.251 8.25s-3.695 8.42-8.251 8.42h-12a.75.75 0 0 0 0 1.5h12c5.385 0 9.75-4.534 9.75-9.919s-4.365-9.75-9.75-9.75z"
                                             ></path>
                                         </svg>
-                                        <p class="seven-day-return-p">100 days right of return</p>
+                                        <p class="seven-day-return-p">7 days right of return</p>
                                     </div>
                                 </div>
                             </div>
@@ -558,8 +558,7 @@
                             <div>
                                 <div class="desc-container">
                                     <h2 class="desc-container-h2">
-                                        <button class="desc-container-btn" type="button" tabindex="0"
-                                                aria-expanded="false">
+                                        <button class="desc-container-btn" type="button" tabindex="0" aria-expanded="false" onclick="slideToggle('desc-detail-list')">
                                             <span class="desc-span">
                                                 <span class="desc-span2">
                                                     <span class="desc-span3">
@@ -567,13 +566,22 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
-                                                 class="desc-svg" focusable="false" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                                 fill="currentColor" class="color-dropdown-svg"
+                                                 id="desc-detail-list-chevron-down" focusable="false"
+                                                 aria-hidden="true">
+                                                <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
+                                            </svg>
+
+                                            <svg class="color-dropdown-svg" id="desc-detail-list-chevron-up"
+                                                 style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                 height="1em" fill="currentColor" focusable="false"
+                                                 aria-hidden="true">
                                                 <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
                                             </svg>
                                         </button>
                                     </h2>
-                                    <div class="desc-detail-wrapper">
+                                    <div id="desc-detail-list" class="desc-detail-wrapper">
                                         <div class="desc-detail-container">
                                             <div>
                                                 <dl>
@@ -600,8 +608,7 @@
 
                                 <div class="desc-container">
                                     <h2 class="desc-container-h2">
-                                        <button class="desc-container-btn" type="button" tabindex="0"
-                                                aria-expanded="false">
+                                        <button class="desc-container-btn" type="button" tabindex="0" aria-expanded="false" onclick="slideToggle('desc-detail-list2')">
                                             <span class="desc-span">
                                                 <span class="desc-span2">
                                                     <span class="desc-span3">
@@ -609,13 +616,22 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
-                                                 class="desc-svg" focusable="false" aria-hidden="true">
+                                            <svg viewBox="0 0 24 24" width="1em" height="1em"
+                                                 fill="currentColor" class="color-dropdown-svg"
+                                                 id="desc-detail-list2-chevron-down" focusable="false"
+                                                 aria-hidden="true">
+                                                <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
+                                            </svg>
+
+                                            <svg class="color-dropdown-svg" id="desc-detail-list2-chevron-up"
+                                                 style="display: none;" viewBox="0 0 24 24" width="1em"
+                                                 height="1em" fill="currentColor" focusable="false"
+                                                 aria-hidden="true">
                                                 <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
                                             </svg>
                                         </button>
                                     </h2>
-                                    <div class="desc-detail-wrapper">
+                                    <div id="desc-detail-list2" class="desc-detail-wrapper">
                                         <div class="desc-detail-container">
                                             <div>
                                                 <dl>
