@@ -34,18 +34,19 @@ class Addskutobag extends Component
     public $offer_price;
     public $mrp;
     public $offer_coupons = [];
-
+    public $view;
     // disabled 900 to 910 lines on main.js
 
     protected $listeners = ['addtobag' => 'addtobag'];
 
 
-    public function mount($product)
+    public function mount($product, $view = null)
     {
 
         Session::remove('qtynotavailable');
 
         $this->product = $product;
+        $this->view = $view;
 
         $this->offer_price = $product->offer_price;
         $this->mrp = $product->mrp;

@@ -17,7 +17,7 @@ return [
      */
 
     'backup' => [
-        'mailto' => 'akash.sethi@icrmsoftware.com',
+        'mailto' => 'lakshyasvt419@gmail.com',
     ],
 
     /**

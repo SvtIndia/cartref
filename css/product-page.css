@@ -78,6 +78,9 @@
 .brand-div {
     margin-top: 0;
 }
+.brand-span:hover{
+    border-bottom: 2px solid #1a1a1a;
+}
 
 .brand-a {
     position: relative;
@@ -149,7 +152,7 @@
 
 .color-container {
     margin-bottom: 48px;
-    margin-top: 36px;
+    /*margin-top: 36px;*/
 }
 
 .selected-color-div {
@@ -252,6 +255,9 @@
     top: 0;
     left: 0;
 }
+.active[class*="color-img-div"]{
+    border: 2px solid #1a1a1a;
+}
 
 .color-img-div:hover {
     border: 2px solid #1a1a1a;
@@ -261,6 +267,7 @@
     position: relative;
     font-weight: 400;
     width: 100%;
+    height: 100%;
     text-align: center;
     display: block;
     font-size: 14px;
@@ -488,6 +495,11 @@
     margin-left: 8px;
 }
 
+.new-wishlist-wrapper >*{
+    width: 100%;
+    height: 100%;
+}
+
 .new-wishlist-btn {
     width: 100%;
     height: 100%;
@@ -676,13 +688,18 @@ fseven-day-return-container {
     border-right: 1px solid #1a1a1a;
     border-left: 1px solid #1a1a1a;
 }
-
 .desc-container-h2 {
     margin: 0;
     font-size: inherit;
     font-weight: inherit;
 }
 
+.desc-container-h2-brand {
+    display: flex;
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+}
 .desc-container-btn {
     width: 100%;
     height: auto;
@@ -720,6 +737,9 @@ fseven-day-return-container {
     letter-spacing: -0.16px;
     line-height: 24px;
     font-family: HelveticaNow, Helvetica, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .desc-span-h5 {
@@ -770,6 +790,8 @@ fseven-day-return-container {
     display: inline;
     color: #1a1a1a;
     font-family: HelveticaNow, Helvetica, sans-serif;
+    min-width: 15%;
+    max-width: 20%;
 }
 
 .desc-value {
@@ -780,4 +802,21 @@ fseven-day-return-container {
     display: inline;
     color: #1a1a1a;
     font-family: HelveticaNow, Helvetica, sans-serif;
+}
+
+.view-more{
+    width: 20%;
+    color: #fff;
+    background-color: #1a1a1a;
+    padding: 12px;
+    border: 2px solid #1a1a1a;
+    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 0px;
+    line-height: 20px;
+    display: inline;
+    font-family: HelveticaNow, Helvetica, sans-serif;
+}
+.view-more-a:hover{
+    text-decoration: none;
 }

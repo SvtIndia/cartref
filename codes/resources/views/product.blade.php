@@ -203,7 +203,7 @@
         <div class="container">
             <div class="product product-single row mb-7">
 
-                <div class="col-md-7 hidden-sm hidden-md hidden-lg">
+                <div class="col-md-6 hidden-sm hidden-md hidden-lg">
                     <div class="product-details">
                         <div class="product-navigation">
                             <ul class="breadcrumb breadcrumb-lg">
@@ -287,7 +287,7 @@
                 ])
 
 
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <div class="product-details">
                         <div class="product-navigation hidden-xs">
                             <ul class="breadcrumb breadcrumb-lg">
@@ -648,7 +648,7 @@
             @if (count($relatedproducts) > 0)
             @if(!isMobile())
             <section class="pt-3 mt-10">
-                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar Products</h1>
+                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar ProducDDts</h1>
                 <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
                     @foreach ($relatedproducts as $key => $product)
                     @php

@@ -577,6 +577,178 @@ class WelcomeController extends Controller
 
 
 
+        return view('product_new')->with([
+            'product' => $product,
+            'brandLink' => $brandLink,
+            'brandMoreText' => $brandMoreText,
+            'brandCount' => $brandCount,
+
+            'styleLink' => $styleLink,
+            'styleCount' => $styleCount,
+            'moreStyleText' => $moreStyleText,
+
+            'colourLink' => $colourLink,
+            'colourCount' => $colourCount,
+            'moreColourText' => $moreColourText,
+            // 'morecolors' => $morecolors,
+            'relatedproducts' => $relatedproducts,
+            'shareComponent' => $shareComponent,
+            'previous' => $previous,
+            'next' => $next,
+        ]);
+    }
+    public function productOld($slug)
+    {
+        Session::remove('quickviewid');
+
+        if (Auth::check()) {
+            if (auth()->user()->hasRole(['Vendor', 'admin', 'Client'])) {
+                $product = Product::where('slug', $slug)->first();
+            } else {
+                // if customer
+                $product = Product::where('slug', $slug)
+                    ->where('admin_status', 'Accepted')
+                    ->whereHas('vendor', function ($q) {
+                        $q->where('status', 1);
+                    })
+                    ->first();
+            }
+        } else {
+            $product = Product::where('slug', $slug)
+                ->where('admin_status', 'Accepted')
+                ->whereHas('vendor', function ($q) {
+                    $q->where('status', 1);
+                })
+                ->first();
+        }
+
+        if (empty($product)) {
+            return abort(404);
+        }
+
+        //
+        $gender = $product->gender_id;
+
+        $relatedproducts = Product::where('admin_status', 'Accepted')
+            ->where('subcategory_id', $product->subcategory_id)
+            ->whereHas('vendor', function ($q) {
+                $q->where('status', 1);
+            })
+            ->when($gender, function ($query) use ($gender) {
+                $query->whereIn('gender_id', array_values([$gender]));
+            })
+            ->take(20)
+            ->get();
+
+
+        $subCat = ProductSubcategory::find($product->subcategory_id);
+
+        /*
+         * More "Sub Category name" from “Brand Name”
+            as "More Formal Shoes from Maeve & Shelby"
+        */
+        $brandMoreText = 'More ' . $subCat->name . ' From ' . $product->brand_id;
+        $brandLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'brands[' . $product->brand_id . ']' => $product->brand_id,
+            'gender[' . $gender . ']' => $gender
+        ]);
+        $brandCount = $this->getNumberMoreButton($subCat->slug, [$gender], [$product->brand_id]);
+
+        /*
+         * More "Style id"  “Sub Category Name”
+            as "More Floral-Print Formal-Shoes"
+        */
+        $moreStyleText = 'More ' . $product->style_id . ' ' . $subCat->name;
+        $styleLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'style[' . $product->style_id . ']' => $product->style_id,
+            'gender[' . $gender . ']' => $gender
+        ]);
+
+        $styleCount = $this->getNumberMoreButton($subCat->slug, [$gender], [], [], [$product->style_id]);
+        /*
+         * Colour
+        */
+        if (request('color') != null) {
+            $selectedColor = request('color');
+            $selectedColor = Productcolor::where('status', 1)->where('color', $selectedColor)->first();
+        } else {
+            $firstcolor = Productcolor::where('status', 1)->where('product_id', $product->id)->first();
+
+            if (isset($firstcolor)) {
+                if (!empty($firstcolor->color)) {
+                    $selectedColor = $firstcolor;
+                }
+            }
+        }
+
+        $selectedColor = Color::where('name', 'Like', '%' . $selectedColor->color . '%')->first();
+        $moreColourText = 'More ' . $selectedColor->name . ' ' . $subCat->name;
+        $colourCount = $this->getNumberMoreButton($subCat->slug, [$gender], null, [$selectedColor->id]);
+
+        $colourLink = route('products.subcategory', [
+            'subcategory' => $subCat->slug,
+            'color[' . $selectedColor->id . ']' => $selectedColor->id,
+            'gender[' . $gender . ']' => $gender
+        ]);
+
+        if (Config::get('icrm.frontend.recentlyviewed.feature') == 1) {
+            // add product in recently viewed list
+            $this->recentlyviewed($product);
+        }
+
+        $shareComponent = \Share::page(
+            route('product.slug', ['slug' => $product->slug]),
+            $product->description,
+        )
+            ->facebook()
+            ->linkedin()
+            ->whatsapp();
+
+        $previous = Product::where('admin_status', 'Accepted')->where('id', '<', $product->id)->orderBy('id')->first();
+        $next = Product::where('admin_status', 'Accepted')->where('id', '>', $product->id)->orderBy('id')->first();
+
+        /**
+         * If the product color is sku
+         * Check if the url does has color
+         * Redirect to product.slug.color first color
+         */
+        // if(Config::get('icrm.product_sku.color') == 1)
+        // {
+        //     if(empty(request('color')))
+        //     {
+        //         if(count($product->productcolors) > 0)
+        //         {
+        //             // return redirect()->route('product.slug', ['slug' => $product->slug, 'color' => $product->productcolors[0]->name]);
+        //         }
+        //     }else{
+        //         return redirect()->route('product.slug', ['slug' => $product->slug, 'color' => $product->productcolors[0]->name]);
+        //     }
+        // }
+
+        // if(Config::get('icrm.multi_color_products.feature') == 1)
+        // {
+        //     if(Config::get('icrm.multi_color_products.select_first_color_by_default') == 1)
+        //     {
+        //         if(empty(request('color')))
+        //         {
+        //             if(count($product->productcolors) > 0)
+        //             {
+        //                 if(!empty($product->productcolors[0]->color))
+        //                 {
+        //                     return redirect()->route('product.slug', ['slug' => $product->slug, 'color' => $product->productcolors[0]->color]);
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        // }
+
+        //        dd($brandCount, $styleCount, $colourCount);
+
+
+
         return view('product')->with([
             'product' => $product,
             'brandLink' => $brandLink,

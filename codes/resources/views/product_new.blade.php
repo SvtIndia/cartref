@@ -217,6 +217,11 @@
             margin-top: 10px;
         }
 
+        .title{
+            font-size: 3rem !important;
+            font-family: HelveticaNow, Helvetica, sans-serif;
+        }
+
     </style>
 @endsection
 
@@ -228,7 +233,6 @@
     <div class="container">
         <div class="page-content mb-10 pb-6">
             <div class="container">
-
                 <div class="product product-single row mb-7">
 
                     {{-- Product Images Livewire --}}
@@ -236,428 +240,11 @@
                     'product' => $product
                     ])
 
-                    <div class="col-md-6 right-container">
-                        <div style="display: block;">
-                            <div class="brand-div">
-                                <a tabindex="0" class="brand-a" href="https://www.zalando.be/pepe-jeans/" rel="">
-                                    <span>
-                                        <h3 class="brand-h3">Pepe Jeans</h3>
-                                    </span>
-                                </a>
-                            </div>
-                            <h1 class="title-h1">
-                                <span>PEPE JEANS X RITA ORA LUCY - T-shirt print</span>
-                            </h1>
-                            <div class="price-div">
-                                <div class="price-div2">
-                                    <div class="price-div3">
-                                        <p class="price-p">
-                                            <span class="price-span">{{ Config::get('icrm.currency.icon') }} 44,95</span>
-                                            <span class="price-inc">inclusief btw</span>
-                                        </p>
-                                    </div>
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="color-container">
-                                <div class="selected-color-div">
-                                    <p class="color-p">
-                                        <span class="color-span">
-                                            <span class="color-span2" aria-hidden="true">Color :</span>
-                                        </span>
-                                        &nbsp;<span class="color-selected">white</span>
-                                    </p>
-                                </div>
-                                <div>
-                                    <div class="all-color-container">
-                                        <ul class="colors-ul">
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/ef27f54df2764a14a25eb2072fb4995d/b69897ea68304f8abfce040103bb5eca.jpg?imwidth=156&amp;filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/49d51fb086c54fe6b8864c37b9d6d395/25a77f9376b64ff190f78b3de8aa88e8.jpg?imwidth=156&filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/50a90e78d18841e0974ee6d78f91dd46/e91a1fae696941388c2b338715a6fe45.jpg?imwidth=156&filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/ef27f54df2764a14a25eb2072fb4995d/b69897ea68304f8abfce040103bb5eca.jpg?imwidth=156&amp;filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/8a0252e527bc4631a101fd4983225845/30b53d2971d64fdca92fb09d7afee8e5.jpg?imwidth=156&filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/b89ac0f9ad194719abb198350c197538/7c7a093fa5bd4aed9aca9e98f3bb5150.jpg?imwidth=156&filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="colors-li">
-                                                <div class="colors-li-div">
-                                                    <div class="color-img-container">
-                                                        <div class="color-img-div">
-                                                            <img class="color-image" alt="Geselecteerd, black"
-                                                                 src="https://img01.ztat.net/article/spp-media-p1/a49e44909c364e2bb3add566e3204feb/8a823c49f47f481a8a04644c87b9a573.jpg?imwidth=156&filter=packshot"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    @livewire('addskutobag', [
+                    'product' => $product,
+                    'view' => 'new-product-page'
+                    ])
 
-                        <div class="mt-5">
-                            <div class="d-block">
-                                <div class="color-dropdown-wrapper">
-                                    <div class="color-dropdown-container">
-                                        <div class="color-dropdown-container2">
-                                            <div class="color-dropdown-border"></div>
-                                            <button class="color-dropdown-button" type="button" tabindex="0"
-                                                    onclick="slideToggle('sizes-list')">
-                                                <span class="color-dropdown-span">Maat kiezen</span>
-                                                <div class="color-dropdown-div">
-                                                    <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
-                                                         fill="currentColor" class="color-dropdown-svg"
-                                                         id="sizes-list-chevron-down" focusable="false"
-                                                         aria-hidden="true">
-                                                        <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
-                                                    </svg>
-
-                                                    <svg class="color-dropdown-svg" id="sizes-list-chevron-up"
-                                                          viewBox="0 0 24 24" width="1em"
-                                                         height="1em" fill="currentColor" focusable="false"
-                                                         aria-hidden="true">
-                                                        <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
-                                                    </svg>
-                                                </div>
-                                            </button>
-
-                                            <div id="sizes-list" style="display: none;" class="size-list-wrapper">
-                                                <div class="size-list-container">
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">XS</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">S</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">M</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">XL</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">XS</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">S</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">M</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="size-div">
-                                                        <input type="checkbox" class="size-input" name="size-picker"
-                                                               value=""/>
-                                                        <div class="size-div2">
-                                                            <label class="size-label">
-                                                                <span class="size-span">
-                                                                    <div class="size-span-div">
-                                                                        <span class="size-name">XL</span>
-                                                                    </div>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="buy-wrapper" data-testid="pdp-add-to-cart">
-                                    <button class="add-to-cart-btn" type="button">
-                                        <span class="add-to-cart-span">Add To Cart!</span>
-                                    </button>
-                                    <div class="new-wishlist-wrapper">
-                                        <button class="new-wishlist-btn" type="button">
-                                            <span class="new-wishlist-span">
-                                                <svg viewBox="0 0 24 24" style="font-size: 24px;" width="1em"
-                                                     height="1em" fill="currentColor" aria-labelledby="wishlist-:R4k:"
-                                                     focusable="false" aria-hidden="false" role="img">
-                                                    <title>Wishlist</title>
-                                                    <path d="M17.488 1.11h-.146a6.552 6.552 0 0 0-5.35 2.81A6.57 6.57 0 0 0 6.62 1.116 6.406 6.406 0 0 0 .09 7.428c0 7.672 11.028 15.028 11.497 15.338a.745.745 0 0 0 .826 0c.47-.31 11.496-7.666 11.496-15.351a6.432 6.432 0 0 0-6.42-6.306zM12 21.228C10.018 19.83 1.59 13.525 1.59 7.442c.05-2.68 2.246-4.826 4.934-4.826h.088c2.058-.005 3.93 1.251 4.684 3.155.226.572 1.168.572 1.394 0 .755-1.907 2.677-3.17 4.69-3.16h.02c2.7-.069 4.96 2.118 5.01 4.817 0 6.089-8.429 12.401-10.41 13.8z"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sell-wrapper">
-                            <div class="sell-wrapper2">
-                                <div class="sell-and-shipped">
-                                    <span class="sell-and-shipped-span">
-                                        <p class="sell-and-shipped-p">Sell and shipped by </p>
-                                    </span>
-                                </div>
-                                <div class="delivery-wrapper">
-                                    <div class="delivery-conatiner">
-                                        <div class="delivery-conatiner2">
-                                            <p class="working-days">2-4 working days</p>
-                                            <p class="standard-delivery">Standard delivery</p>
-                                        </div>
-                                        {{-- <div class="">--}}
-                                        {{--   <p class="sDq_FX lystZ1 dgII7d HlZ_Tf">Free of charge</p>--}}
-                                        {{-- </div>--}}
-                                    </div>
-                                </div>
-                                <div class="free-shipping-return">
-                                    <div class="free-shipping-return-wrapper">
-                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
-                                             class="free-shipping-return-svg" focusable="false" aria-hidden="true">
-                                            <path d="m16.5 14.5-4.2-1.9c-.2-.1-.4-.1-.6 0l-4.2 1.9V6.9l2-5.6h5l2 5.9v7.3zM9 7.3v4.9l2.1-.9c.6-.3 1.2-.3 1.8 0l2.1.9V7.3l-1.6-4.5h-2.9L9 7.3z"></path>
-                                            <path
-                                                    d="M20.5 22.8h-17c-1.2 0-2.2-1-2.2-2.2V19c0-.4.3-.8.8-.8s.8.3.8.8v1.5c0 .4.3.8.8.8h17c.4 0 .8-.3.8-.8V7.3c0-.1 0-.2-.1-.3l-1.5-3.8c-.1-.3-.4-.5-.7-.5H5c-.3 0-.6.2-.7.5L2.8 7c0 .1-.1.2-.1.3V10c0 .4-.3.8-.8.8s-.7-.4-.7-.8V7.3c0-.3.1-.6.2-.8l1.5-3.8c.4-.9 1.2-1.5 2.1-1.5h14c.9 0 1.7.6 2.1 1.4l1.5 3.8c.1.3.2.5.2.8v13.2c0 1.3-1.1 2.4-2.3 2.4z"
-                                            ></path>
-                                            <path d="M2 7h20v1.5H2zm2.8 6.8h-4c-.5 0-.8-.4-.8-.8s.3-.8.8-.8h4c.4 0 .8.3.8.8s-.4.8-.8.8zm0 3h-4c-.5 0-.8-.4-.8-.8s.3-.8.8-.8h4c.4 0 .8.3.8.8-.1.4-.4.8-.8.8z"></path>
-                                        </svg>
-                                        <p class="free-shipping-return-p">Free shipping and returns</p>
-                                    </div>
-                                </div>
-                                <div class="seven-day-return">
-                                    <div class="seven-day-return-wrapper">
-                                        <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor"
-                                             class="seven-day-return-svg" focusable="false" aria-hidden="true">
-                                            <path
-                                                    d="M14.25 4.33H1.939l3.056-3.055A.75.75 0 0 0 3.934.215L.658 3.49a2.252 2.252 0 0 0 0 3.182l3.276 3.275a.75.75 0 0 0 1.06-1.06L1.94 5.83h12.31c4.557 0 8.251 3.694 8.251 8.25s-3.695 8.42-8.251 8.42h-12a.75.75 0 0 0 0 1.5h12c5.385 0 9.75-4.534 9.75-9.919s-4.365-9.75-9.75-9.75z"
-                                            ></path>
-                                        </svg>
-                                        <p class="seven-day-return-p">7 days right of return</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description-wrapper">
-                            <div>
-                                <div class="desc-container">
-                                    <h2 class="desc-container-h2">
-                                        <button class="desc-container-btn" type="button" tabindex="0" aria-expanded="false" onclick="slideToggle('desc-detail-list')">
-                                            <span class="desc-span">
-                                                <span class="desc-span2">
-                                                    <span class="desc-span3">
-                                                        <h5 class="desc-span-h5">Materiaal &amp; wasvoorschrift</h5>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
-                                                 fill="currentColor" class="color-dropdown-svg"
-                                                 id="desc-detail-list-chevron-down" focusable="false"
-                                                 aria-hidden="true">
-                                                <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
-                                            </svg>
-
-                                            <svg class="color-dropdown-svg" id="desc-detail-list-chevron-up"
-                                                 viewBox="0 0 24 24" width="1em"
-                                                 height="1em" fill="currentColor" focusable="false"
-                                                 aria-hidden="true">
-                                                <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div id="desc-detail-list" class="desc-detail-wrapper">
-                                        <div class="desc-detail-container">
-                                            <div>
-                                                <dl>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Outer layer material:
-                                                        </dt>
-                                                        <dd class="desc-value" role="definition">100% katoen</dd>
-                                                    </div>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Materiaalverwerking:</dt>
-                                                        <dd class="desc-value" role="definition">Jersey</dd>
-                                                    </div>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Wasvoorschrift:</dt>
-                                                        <dd class="desc-value" role="definition">Machinewas tot 30 °C,
-                                                            niet geschikt voor de droger, niet bleken
-                                                        </dd>
-                                                    </div>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="desc-container">
-                                    <h2 class="desc-container-h2">
-                                        <button class="desc-container-btn" type="button" tabindex="0" aria-expanded="false" onclick="slideToggle('desc-detail-list2')">
-                                            <span class="desc-span">
-                                                <span class="desc-span2">
-                                                    <span class="desc-span3">
-                                                        <h5 class="desc-span-h5">Materiaal &amp; wasvoorschrift</h5>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                            <svg viewBox="0 0 24 24" width="1em" height="1em" style="display: none;"
-                                                 fill="currentColor" class="color-dropdown-svg"
-                                                 id="desc-detail-list2-chevron-down" focusable="false"
-                                                 aria-hidden="true">
-                                                <path d="M2.64 15.994c0-.192.073-.384.219-.53l7.55-7.55a2.252 2.252 0 0 1 3.181 0l7.551 7.55a.75.75 0 1 1-1.06 1.06l-7.551-7.55a.751.751 0 0 0-1.06 0l-7.55 7.55a.75.75 0 0 1-1.28-.53z"></path>
-                                            </svg>
-
-                                            <svg class="color-dropdown-svg" id="desc-detail-list2-chevron-up"
-                                                  viewBox="0 0 24 24" width="1em"
-                                                 height="1em" fill="currentColor" focusable="false"
-                                                 aria-hidden="true">
-                                                <path d="M2.859 7.475a.75.75 0 0 1 1.06 0l7.55 7.55a.751.751 0 0 0 1.06 0l7.551-7.55a.75.75 0 1 1 1.061 1.06l-7.55 7.55a2.252 2.252 0 0 1-3.182 0l-7.55-7.55a.748.748 0 0 1 0-1.06z"></path>
-                                            </svg>
-                                        </button>
-                                    </h2>
-                                    <div id="desc-detail-list2" class="desc-detail-wrapper">
-                                        <div class="desc-detail-container">
-                                            <div>
-                                                <dl>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Outer layer material:
-                                                        </dt>
-                                                        <dd class="desc-value" role="definition">100% katoen</dd>
-                                                    </div>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Materiaalverwerking:</dt>
-                                                        <dd class="desc-value" role="definition">Jersey</dd>
-                                                    </div>
-                                                    <div class="desc-content">
-                                                        <dt class="desc-label" role="term">Wasvoorschrift:</dt>
-                                                        <dd class="desc-value" role="definition">Machinewas tot 30 °C,
-                                                            niet geschikt voor de droger, niet bleken
-                                                        </dd>
-                                                    </div>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 
@@ -672,8 +259,8 @@
                     @if (count($relatedproducts) > 0)
                         @if(!isMobile())
                             <section class="pt-3 mt-10">
-                                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Similar
-                                    Products</h1>
+                                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Make the look complete<br>
+                                    Outfit inspiration and inspiration</h1>
                                 <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
                                     @foreach ($relatedproducts as $key => $product)
                                         @php
@@ -783,7 +370,8 @@
                         @else
 
                             <section class="pt-3 mt-10">
-                                <h2 class="title justify-content-center">Similar Products</h2>
+                                <h2 class="title justify-content-center">Make the look complete<br>
+                                    Outfit inspiration and inspiration</h2>
 
                                 <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
                                      data-owl-options="{
@@ -952,3 +540,4 @@
             }
         }
     </script>
+@endpush
