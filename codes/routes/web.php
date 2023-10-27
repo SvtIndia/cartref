@@ -508,6 +508,6 @@ Route::get('/get', function () {
     return $product;
 });
 
-Route::post('/shiprocket-test', function (){
+Route::post('/order-status-update', function (){
    return;
 });
