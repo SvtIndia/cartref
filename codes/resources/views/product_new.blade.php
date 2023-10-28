@@ -260,7 +260,7 @@
                         @if(!isMobile())
                             <section class="pt-3 mt-10">
                                 <h1 class="title justify-content-center" style="font-size: 4.8rem;">Make the look complete<br>
-                                    Outfit inspiration and inspiration</h1>
+                                    Outfit inspiration by Cartref</h1>
                                 <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
                                     @foreach ($relatedproducts as $key => $product)
                                         @php
@@ -371,7 +371,7 @@
 
                             <section class="pt-3 mt-10">
                                 <h2 class="title justify-content-center">Make the look complete<br>
-                                    Outfit inspiration and inspiration</h2>
+                                    Outfit inspiration by Cartref</h2>
 
                                 <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
                                      data-owl-options="{

@@ -51,9 +51,9 @@
         >
                 <span class="new-wishlist-span">
                     @if ($this->wishlistchecked == true)
-                        <i class="d-icon-heart-full" style="font-size: 28px;color:red"></i>
+                        <i class="d-icon-heart-full" style="font-size: 2rem;color:red"></i>
                     @elseif($this->wishlistchecked == false)
-                        <i class="d-icon-heart" style="font-size: 28px;"></i>
+                        <i class="d-icon-heart" style="font-size: 2rem;"></i>
                     @endif
 
 {{--                    <svg viewBox="0 0 24 24" style="font-size: 24px;" width="1em"--}}

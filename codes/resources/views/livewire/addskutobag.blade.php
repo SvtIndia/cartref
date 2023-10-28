@@ -5,9 +5,9 @@
             <a class="brand-a"
                href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
                target="_blank">
-                                    <span class="brand-span">
-                                        <h3 class="brand-h3">{{ ucwords($product->brand_id) }}</h3>
-                                    </span>
+                <span class="brand-span">
+                    <h3 class="brand-h3">{{ ucwords($product->brand_id) }}</h3>
+                </span>
             </a>
         </div>
         <h1 class="title-h1">
@@ -18,19 +18,66 @@
                 <div class="price-div3">
                     <p class="price-p">
                         <span class="price-span">{{ Config::get('icrm.currency.icon') }} {{ number_format($offer_price, 0) }}/-</span>
+                        <del class="old-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($mrp, 0) }}</del>
                         <span class="price-inc">Inclusive of all taxes </span>
                     </p>
                 </div>
                 <p></p>
             </div>
         </div>
+        <div class="ratings-container">
+            <div class="ratings-full">
+            <span class="ratings" style="width:
+            @if($product->productreviews)
+            {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
+            @else
+            0%
+            @endif"></span>
+                <span class="tooltiptext tooltip-top"></span>
+            </div>
+            <a href="#product-tab-reviews" class="link-to-tab rating-reviews">
+                ( @if($product->productreviews()) {{ $product->productreviews()->count() }} @else 0 @endif reviews )
+            </a>
+        </div>
+        <p class="product-short-desc">
+            {{ $product->getTranslatedAttribute('description', App::getLocale(), 'en') }}
+        </p>
+        @foreach ( $this->offer_coupons as $coupon )
+            <div class="pdp-promotion">
+                <div class="pdp-promo-block">
+                    {{-- <div class="ic-offer-tag"></div> --}}
+                    <div class="promo-blck">
+                        <div class="promo-title-blck">
+                            <div class="promo-title">Use Code <br>{{ $coupon->code }}</div>
+                            <div class="promo-tnc-blck">
+                        <span class="promo-tnc">
+                            <a href="undefined"  target="_blank"></a>
+                        </span>
+                            </div>
+                        </div>
+                        <div class="promo-desc-block">
+                            <div class="promo-discounted-price">Get it for <span>{{ Config::get('icrm.currency.icon') }}{{ number_format($coupon->discounted_value, 0) }}/-</span>
+                            </div>
+                            <div class="promo-desc">{{ $coupon->description }}
+                                <br>
+                                <a href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+                                   target="_blank">
+                                    View All Products
+                                </a>
+                                {{-- <a target="_blank" href="">View All Products</a> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
         <div class="color-container">
             <div class="selected-color-div">
                 <p class="color-p">
-                                        <span class="color-span">
-                                            <span class="color-span2" aria-hidden="true">Color :</span>
-                                        </span>
-                    &nbsp;<span class="color-selected">white</span>
+                    <span class="color-span">
+                        <span class="color-span2" aria-hidden="true">Color :</span>
+                    </span>
+                    &nbsp;<span class="color-selected">{{ $this->color ?? 'Not Selected'  }}</span>
                 </p>
             </div>
             @isset($product->productcolors)
@@ -40,7 +87,12 @@
                             <ul class="colors-ul">
                                 @foreach ($product->productcolors->where('color', '!=', 'NA') as $key => $color)
                                     <li class="colors-li">
-                                        <div class="colors-li-div">
+                                        <div class="colors-li-div"
+                                             wire:key="selectcolor.{{ $color->color.$key }}"
+                                             wire:click="selectcolor('{{ $color->color }}')"
+                                             value="{{ $color->color }}"
+                                             title="{{ $color->color }}"
+                                        >
                                             <div class="color-img-container">
                                                 <div class="color-img-div @if($this->color == $color->color) active @endif">
                                                     <img class="color-image"
@@ -197,6 +249,11 @@
         @endif
         @endif
         <div class="buy-wrapper" data-testid="pdp-add-to-cart">
+            <div class="input-group mr-2">
+                <button class="quantity-minus d-icon-minus" wire:click="minusqty"></button>
+                <input class="quantity form-control" type="number" min="1" max="1000000" wire:model="qty" readonly>
+                <button class="quantity-plus d-icon-plus" wire:click="plusqty" @if($this->availablestock == 0) disabled="disabled" @endif></button>
+            </div>
             <button class="add-to-cart-btn" type="button"
                     @if ($this->disablebtn == true)
                         disabled="disabled" title="First select required fields!"
@@ -205,27 +262,63 @@
             >
                 <span class="add-to-cart-span">Add to {{ ucwords(Config::get('icrm.cart.name')) }}</span>
             </button>
-            <div class="new-wishlist-wrapper">
-                @livewire('wishlist', [
-                    'wishlistproductid' => $product->id,
-                    'view' => 'new-product-page',
-                ])
-{{--                <button class="new-wishlist-btn" type="button">--}}
-{{--                    <span class="new-wishlist-span">--}}
-{{--                        <svg viewBox="0 0 24 24" style="font-size: 24px;" width="1em"--}}
-{{--                             height="1em" fill="currentColor"--}}
-{{--                             aria-labelledby="wishlist-:R4k:"--}}
-{{--                             focusable="false" aria-hidden="false" role="img">--}}
-{{--                            <title>Wishlist</title>--}}
-{{--                            <path d="M17.488 1.11h-.146a6.552 6.552 0 0 0-5.35 2.81A6.57 6.57 0 0 0 6.62 1.116 6.406 6.406 0 0 0 .09 7.428c0 7.672 11.028 15.028 11.497 15.338a.745.745 0 0 0 .826 0c.47-.31 11.496-7.666 11.496-15.351a6.432 6.432 0 0 0-6.42-6.306zM12 21.228C10.018 19.83 1.59 13.525 1.59 7.442c.05-2.68 2.246-4.826 4.934-4.826h.088c2.058-.005 3.93 1.251 4.684 3.155.226.572 1.168.572 1.394 0 .755-1.907 2.677-3.17 4.69-3.16h.02c2.7-.069 4.96 2.118 5.01 4.817 0 6.089-8.429 12.401-10.41 13.8z"></path>--}}
-{{--                        </svg>--}}
-{{--                    </span>--}}
-{{--                </button>--}}
-            </div>
-            @if (Session::has('qtynotavailable'))
-                <span class="outofstock">{{ Session::get('qtynotavailable') }}</span>
-            @endif
         </div>
+        @if (Config::get('icrm.showcase_at_home.feature') == 1)
+            @if (empty(Session::get('showcasecity')))
+                {{-- activate showcase --}}
+                @if ($this->product->vendor->showcase_at_home == 1)
+                    <div class="buy-wrapper" data-testid="pdp-add-to-cart">
+                        <button class="add-to-cart-btn" type="button"
+                                @if ($this->disablebtn == true)
+                                    disabled="disabled" title="First select required fields!"
+                                @endif
+                                wire:click="addtoshowcaseathome"
+                        >
+                            <span class="add-to-cart-span">Showroom At Home</span>
+                        </button>
+{{--                        <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>--}}
+                        <div class="new-wishlist-wrapper">
+                            @livewire('wishlist', [
+                            'wishlistproductid' => $product->id,
+                            'view' => 'new-product-page',
+                            ])
+                        </div>
+                    </div>
+                @endif
+            @else
+                @if ($this->product->vendor->showcase_at_home == 1)
+                    <div class="buy-wrapper" data-testid="pdp-add-to-cart">
+                        @if ($this->product->vendor->city == Session::get('showcasecity'))
+                                <button class="add-to-cart-btn" type="button"
+                                    @if ($this->disablebtn == true)
+                                        disabled="disabled" title="First select required fields!"
+                                    @endif
+                                    wire:click="addtoshowcaseathome"
+                                >
+                                    <span class="add-to-cart-span">Showroom At Homes</span>
+                                </button>
+                        @else
+                            <button class="add-to-cart-btn" type="button"
+                                    disabled="disabled" title="Showroom at home not available for this product at {{ Session::get('showcasecity') }} area."
+                            >
+                                <span class="add-to-cart-span">Showroom At Home</span>
+                            </button>
+                        @endif
+{{--                        <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a>--}}
+                        <div class="new-wishlist-wrapper">
+                            @livewire('wishlist', [
+                            'wishlistproductid' => $product->id,
+                            'view' => 'new-product-page',
+                            ])
+                        </div>
+                    </div>
+                @endif
+            @endif
+        @endif
+
+        @if (Session::has('qtynotavailable'))
+            <span class="outofstock">{{ Session::get('qtynotavailable') }}</span>
+        @endif
     </div>
 </div>
 
@@ -233,7 +326,7 @@
     <div class="sell-wrapper2">
         <div class="sell-and-shipped">
             <span class="sell-and-shipped-span">
-                <p class="sell-and-shipped-p">Sell and shipped by </p>
+                <p class="sell-and-shipped-p">Sold and shipped by </p>
                 <img src="{{ Voyager::image(setting('site.site_icon')) }}" width="24px" height="24px" style="margin-left: 10px;" alt="">
             </span>
         </div>
