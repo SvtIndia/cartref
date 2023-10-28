@@ -83,7 +83,7 @@ class OtpController extends Controller
                 $user = User::find($verificationCode->user_id);
                 Auth::login($user);
 
-                return redirect('/');
+                return redirect()->intended(RouteServiceProvider::HOME);
             }
         }
     }
