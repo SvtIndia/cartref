@@ -12,9 +12,12 @@
     .page-content {
         background-image: url('/images/auth.png');
         background-size: cover;
+        width: 100vw;
+        height: 100vh;
         /* background-position: center; */
         background-repeat: no-repeat;
         /* opacity: 0.5; */
+        padding-top: 11rem;
     }
 
     .text-danger {
@@ -64,7 +67,7 @@
                         </div>
                         <div class="form-footer">
                             <a href="{{ route('otp.login') }}" class="lost-link"
-                                style="color: black;font-size: 12px;">Login with OTP</a>
+                            style="color: black;font-size: 13px;font-weight: 500;">Login with OTP</a>
                         </div>
                         <button class="btn btn-dark btn-block btn-rounded" type="submit">Login</button>
                     </form>

@@ -12,11 +12,13 @@
     .page-content {
         background-image: url('/images/auth.png');
         background-size: cover;
+        width: 100vw;
+        height: 100vh;
         /* background-position: center; */
         background-repeat: no-repeat;
         /* opacity: 0.5; */
+        padding-top: 13rem;
     }
-
     .text-danger {
         color: red;
     }
@@ -47,7 +49,7 @@
                         <p class="text-danger">{{ $error }}</p>
                         @endif
                         <div class="form-footer">
-                            <a href="{{ route('login') }}" class="lost-link" style="color: black;font-size: 12px;">Login
+                            <a href="{{ route('login') }}" class="lost-link" style="color: black;font-size: 13px;font-weight: 500;">Login
                                 with Email</a>
                         </div>
                         <button class="btn btn-dark btn-block btn-rounded" type="submit">Request For OTP</button>

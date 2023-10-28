@@ -9,12 +9,15 @@
 @section('headerlinks')
 
 <style>
-    .page-content {
+     .page-content {
         background-image: url('/images/auth.png');
         background-size: cover;
+        width: 100vw;
+        height: 100vh;
         /* background-position: center; */
         background-repeat: no-repeat;
         /* opacity: 0.5; */
+        padding-top: 16rem;
     }
 
     .text-danger {
