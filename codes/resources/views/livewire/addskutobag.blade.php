@@ -39,8 +39,24 @@
                 ( @if($product->productreviews()) {{ $product->productreviews()->count() }} @else 0 @endif reviews )
             </a>
         </div>
+        @php
+            $text = $product->getTranslatedAttribute('description', App::getLocale(), 'en');
+            // Split the text into words
+            $words = str_word_count($text, 1);
+
+            // Initialize a variable to store the limited text
+            $limitedText = '';
+
+            // Limit the output to the first 100 words
+            for ($i = 0; $i < min(100, count($words)); $i++) {
+                $limitedText .= $words[$i] . ' ';
+            }
+            if(count($words) > 100){
+                $limitedText .= '...';
+            }
+        @endphp
         <p class="product-short-desc">
-            {{ $product->getTranslatedAttribute('description', App::getLocale(), 'en') }}
+            {{ $limitedText }}
         </p>
         @foreach ( $this->offer_coupons as $coupon )
             <div class="pdp-promotion">
@@ -333,7 +349,7 @@
         <div class="delivery-wrapper">
             <div class="delivery-conatiner">
                 <div class="delivery-conatiner2">
-                    <p class="working-days">3-7 working days</p>
+                    <p class="working-days">4-7 working days</p>
                     <p class="standard-delivery">Standard delivery</p>
                 </div>
             </div>
@@ -606,22 +622,22 @@
                             <div class="desc-content">
                                 <dt class="desc-label" role="term">Length:</dt>
                                 <dd class="desc-value"
-                                    role="definition">{{ $product->length }}</dd>
+                                    role="definition">{{ $product->length }}cm</dd>
                             </div>
                             <div class="desc-content">
                                 <dt class="desc-label" role="term">Breadth:</dt>
                                 <dd class="desc-value"
-                                    role="definition">{{ $product->breadth }}</dd>
+                                    role="definition">{{ $product->breadth }}cm</dd>
                             </div>
                             <div class="desc-content">
                                 <dt class="desc-label" role="term">Height:</dt>
                                 <dd class="desc-value"
-                                    role="definition">{{ $product->height }}</dd>
+                                    role="definition">{{ $product->height }}cm</dd>
                             </div>
                             <div class="desc-content">
                                 <dt class="desc-label" role="term">Weight:</dt>
                                 <dd class="desc-value"
-                                    role="definition">{{ $product->weight }}</dd>
+                                    role="definition">{{ $product->weight }}kg</dd>
                             </div>
                         </dl>
                     </div>

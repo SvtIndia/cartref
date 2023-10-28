@@ -16,6 +16,18 @@
             font-size: 16px !important;
             letter-spacing: 2px !important;
             box-shadow: 5px 5px 10px rgb(128, 128, 128);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 1.14em 0;
+            background-color: black;
+            color: #fff;
+            font-family: Poppins,sans-serif;
+            text-decoration: none;
+        }
+        .more-button-custom:hover {
+            color: #fff;
         }
 
         .badge-count {
@@ -495,17 +507,17 @@
                 @endisset
                 <section class="product-btn">
                     <a href="{{ $brandLink  }}"
-                       class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
                         {{ $brandMoreText }}
                         <div class="badge-count">{{ $brandCount }}</div>
                     </a>
                     <a href="{{ $styleLink  }}"
-                       class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
                         {{ $moreStyleText }}
                         <div class="badge-count">{{ $styleCount }}</div>
                     </a>
                     <a href="{{ $colourLink  }}"
-                       class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
                         {{ $moreColourText }}
                         <div class="badge-count">{{ $colourCount }}</div>
                     </a>

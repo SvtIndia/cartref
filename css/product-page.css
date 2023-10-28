@@ -136,9 +136,11 @@
 .price-span {
     color: black;
     font-weight: 400;
-    font-size: 22px;
+    font-size: 28px;
     letter-spacing: -0.22px;
     line-height: 28px;
+    margin-right: 2rem;
+    font-family: HelveticaNow, Helvetica, sans-serif;
 }
 
 .price-inc {
@@ -328,6 +330,7 @@
 .color-dropdown-div {
     display: flex;
     align-items: center;
+    margin-block: auto;
 }
 
 .color-dropdown-svg {
@@ -449,13 +452,14 @@
 
 .buy-wrapper {
     display: flex;
+    margin-bottom: 1rem;
 }
 
 .add-to-cart-btn {
     width: 90%;
     color: #fff;
     background-color: #1a1a1a;
-    padding: 12px;
+    padding: 10px;
     border: 2px solid #1a1a1a;
     cursor: pointer;
 }
@@ -558,8 +562,8 @@
 .sell-and-shipped-p {
     color: #1a1a1a;
     display: inline;
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 16px;
     letter-spacing: 0px;
     line-height: 20px;
     font-family: HelveticaNow, Helvetica, sans-serif;
@@ -819,4 +823,18 @@ fseven-day-return-container {
 }
 .view-more-a:hover{
     text-decoration: none;
+    color: #fff;
+}
+
+
+.product-gallery .product-thumbs-wrap .product-thumb img{
+    width: 109px !important;
+    height: 109px !important;
+    object-fit: contain;
+}
+
+.product-single-carousel figure.product-image img{
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: contain !important;
 }
