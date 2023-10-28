@@ -12,7 +12,7 @@
                     @endif
 
                     @if (Config::get('icrm.order_lifecycle.return.exchange') == 1 AND Config::get('icrm.order_lifecycle.return.refund') == 1)
-                     or 
+                     or
                     @endif
 
                     @if (Config::get('icrm.order_lifecycle.return.refund') == 1)
@@ -46,13 +46,13 @@
                                         <div class="varient">
                                             <p>G+</p>
                                             <p>{{ $this->item->g_plus }}</p>
-                                        </div>                                        
+                                        </div>
                                     @endif
                                     @if (!empty($this->item->requirement_document))
                                         <div class="varient">
                                             <p>Requirement Document</p>
                                             <p>{{ $this->item->requirement_document }}</p>
-                                        </div>                                        
+                                        </div>
                                     @endif
 
                                     <div class="varient">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-    
+
                     <div class="question">
                         <label for="">What do you want?</label>
                         @if (Config::get('icrm.order_lifecycle.return.exchange') == 1)
@@ -73,7 +73,7 @@
                             <input type="radio" wire:model="return_type" value="Refund"> Refund
                         @endif
                     </div>
-    
+
                     <div class="question">
                         <label for="">Reason of return</label>
                         <select wire:model="return_reason" required>
@@ -82,11 +82,11 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                 
+
                     <div class="question">
                         <textarea wire:model="return_comment" cols="30" rows="2" class="form-control mb-4" placeholder="Tell us more" required></textarea>
                     </div>
-                    
+
                     <div class="question">
                         <input type="checkbox" required> I agree to return the items back in original condition.
                     </div>

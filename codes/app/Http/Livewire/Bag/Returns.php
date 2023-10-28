@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Bag;
 
+use App\Notifications\ProductReturn;
 use App\Order;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 
 class Returns extends Component
@@ -42,12 +44,17 @@ class Returns extends Component
 
     public function updatedReturnType()
     {
-        
+
     }
-    
+
     public function requestreturn()
     {
         $this->validate();
+
+        $order = Order::where('id', $this->item->id)->firstOrFail();
+        $customer = $order->customer_name;
+        $product = $this->item->product->name;
+
 
         Order::where('id', $this->item->id)
         ->update([
@@ -59,8 +66,17 @@ class Returns extends Component
             'is_return_window_closed' => true,
         ]);
 
-        return redirect()->route('ordercomplete', ['id' => $this->item->order_id])->with([
-            'success' => 'Your return request is under review',
-        ]);
+        // SEND ORDER RETURN EMAIL TO CUSTOMER
+        $this->returnemail($order,$customer,$product);
+
+        // return redirect()->route('ordercomplete', ['id' => $this->item->order_id])->with([
+        //     'success' => 'Your return request is under review',
+        // ]);
+    }
+
+    private function returnemail($order, $customer,$product)
+    {
+        // send order placed email
+        Notification::route('mail', auth()->user()->email)->notify(new ProductReturn($order, $customer,$product));
     }
 }
