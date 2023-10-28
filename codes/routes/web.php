@@ -238,7 +238,7 @@ Route::get('/products/subcategory/{subcategory}', [WelcomeController::class, 'pr
 Route::get('/products/vendor/{slug}', [WelcomeController::class, 'productsfromvendor'])->name('products.vendor');
 
 Route::get('/product/{slug}', [WelcomeController::class, 'product'])->name('product.slug');
-Route::get('/product/{slug}/old', [WelcomeController::class, 'productOld'])->name('product.slug');
+Route::get('/product/{slug}/old', [WelcomeController::class, 'productOld'])->name('product-old.slug');
 
 
 if (Config::get('icrm.showcase_at_home.feature') == 1) {

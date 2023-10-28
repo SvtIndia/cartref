@@ -271,8 +271,8 @@
                     @if (count($relatedproducts) > 0)
                         @if(!isMobile())
                             <section class="pt-3 mt-10">
-                                <h1 class="title justify-content-center" style="font-size: 4.8rem;">Make the look complete<br>
-                                    Outfit inspiration by Cartref</h1>
+                                <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the look complete</h1>
+                                <h1 class="title justify-content-center">Outfit inspiration by Cartref</h1>
                                 <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
                                     @foreach ($relatedproducts as $key => $product)
                                         @php
@@ -382,8 +382,8 @@
                         @else
 
                             <section class="pt-3 mt-10">
-                                <h2 class="title justify-content-center">Make the look complete<br>
-                                    Outfit inspiration by Cartref</h2>
+                                <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the look complete</h1>
+                                <h2 class="title justify-content-center">Outfit inspiration by Cartref</h2>
 
                                 <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
                                      data-owl-options="{

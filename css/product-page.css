@@ -838,3 +838,23 @@ fseven-day-return-container {
     aspect-ratio: 1 / 1 !important;
     object-fit: contain !important;
 }
+.similar-title{
+    font-size: 4rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    text-align: center;
+    margin-bottom: 2.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #000000;
+    margin-bottom: 0px;
+    font-family: HelveticaNow, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+    .similar-title{
+        font-size: 3rem !important;
+    }
+}
