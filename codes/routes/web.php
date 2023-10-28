@@ -510,5 +510,8 @@ Route::get('/get', function () {
 });
 
 Route::post('/order-status-update', function (){
+   $order = \App\Order::first();
+   $order->tracking_url = json_encode(request()-all());
+   $order->save();
    return;
 });
