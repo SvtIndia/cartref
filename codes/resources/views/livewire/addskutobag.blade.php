@@ -40,23 +40,29 @@
             </a>
         </div>
         @php
-            $text = $product->getTranslatedAttribute('description', App::getLocale(), 'en');
-            // Split the text into words
-            $words = str_word_count($text, 1);
+                $text = $product->getTranslatedAttribute('description', App::getLocale(), 'en');
 
-            // Initialize a variable to store the limited text
-            $limitedText = '';
+                function splitText($text, $maxWords = 100) {
+                    $words = preg_split('/\s+/', $text);
+                    $firstPart = implode(' ', array_slice($words, 0, $maxWords));
+                    $remainingPart = implode(' ', array_slice($words, $maxWords));
 
-            // Limit the output to the first 100 words
-            for ($i = 0; $i < min(100, count($words)); $i++) {
-                $limitedText .= $words[$i] . ' ';
-            }
-            if(count($words) > 100){
-                $limitedText .= '...';
-            }
+                    return array($firstPart, $remainingPart);
+                }
+
+                list($firstPart, $remainingPart) = splitText($text);
+
+                $readMoreBtn= null;
+                if(strlen($remainingPart) > 1){
+                    $readMoreBtn = '...<button id="">Read More</button>';
+                }
         @endphp
         <p class="product-short-desc">
-            {{ $limitedText }}
+            {{ $firstPart }}
+            @if(strlen($remainingPart) > 1)
+                <span style="cursor: pointer;font-weight: 500;color: black;" onclick="$('#read-more-text').show(); $(this).hide();">... Read More</span>
+                <font style="display: none" id="read-more-text">{{ $remainingPart }}</font>
+            @endif
         </p>
         @foreach ( $this->offer_coupons as $coupon )
             <div class="pdp-promotion">
