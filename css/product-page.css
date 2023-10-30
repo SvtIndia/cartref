@@ -835,9 +835,7 @@ fseven-day-return-container {
 
 .product-single-carousel figure.product-image img{
     width: 100% !important;
-
     aspect-ratio: 1 / 1 !important;
-    object-fit: contain !important;
 }
 .similar-title{
     font-size: 4rem !important;
