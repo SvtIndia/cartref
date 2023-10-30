@@ -835,6 +835,7 @@ fseven-day-return-container {
 
 .product-single-carousel figure.product-image img{
     width: 100% !important;
+
     aspect-ratio: 1 / 1 !important;
     object-fit: contain !important;
 }
@@ -856,5 +857,23 @@ fseven-day-return-container {
 @media screen and (max-width: 768px) {
     .similar-title{
         font-size: 3rem !important;
+    }
+}
+.old-price{
+    color:#ea2636;
+}
+
+@media screen and (min-width: 900px) {
+    .pin-wrapper{
+        position: sticky;
+        height: 100vh;
+        top: 10px;
+    }
+    .product-single {
+        color: inherit;
+        overflow: unset !important;
+    }
+    .product-single-carousel figure.product-image img{
+        height: 95vh;
     }
 }

@@ -3,7 +3,7 @@
     <div style="display: block;">
         <div class="brand-div">
             <a class="brand-a"
-               href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}"
+               href="{{ route('products', ['brands[' . $product->brand_id . ']' => $product->brand_id]) }}"
                target="_blank">
                 <span class="brand-span">
                     <h3 class="brand-h3">{{ ucwords($product->brand_id) }}</h3>
@@ -17,7 +17,7 @@
             <div class="price-div2">
                 <div class="price-div3">
                     <p class="price-p">
-                        <span class="price-span">{{ Config::get('icrm.currency.icon') }} {{ number_format($offer_price, 0) }}/-</span>
+                        <span class="price-span">{{ Config::get('icrm.currency.icon') }} <strong>{{ number_format($offer_price, 0) }}</strong>/-</span>
                         <del class="old-price">{{ Config::get('icrm.currency.icon') }} {{ number_format($mrp, 0) }}</del>
                         <span class="price-inc">Inclusive of all taxes </span>
                     </p>
@@ -342,7 +342,7 @@
     <div class="sell-wrapper2">
         <div class="sell-and-shipped">
             <span class="sell-and-shipped-span">
-                <p class="sell-and-shipped-p">Sold and shipped by </p>
+                <p class="sell-and-shipped-p">Sold and Shipped by </p>
                 <img src="{{ Voyager::image(setting('site.site_icon')) }}" width="24px" height="24px" style="margin-left: 10px;" alt="">
             </span>
         </div>
@@ -364,7 +364,7 @@
                     ></path>
                     <path d="M2 7h20v1.5H2zm2.8 6.8h-4c-.5 0-.8-.4-.8-.8s.3-.8.8-.8h4c.4 0 .8.3.8.8s-.4.8-.8.8zm0 3h-4c-.5 0-.8-.4-.8-.8s.3-.8.8-.8h4c.4 0 .8.3.8.8-.1.4-.4.8-.8.8z"></path>
                 </svg>
-                <p class="free-shipping-return-p">Free shipping and returns</p>
+                <p class="free-shipping-return-p">Free Shipping and Returns</p>
             </div>
         </div>
         <div class="seven-day-return">
@@ -375,7 +375,7 @@
                             d="M14.25 4.33H1.939l3.056-3.055A.75.75 0 0 0 3.934.215L.658 3.49a2.252 2.252 0 0 0 0 3.182l3.276 3.275a.75.75 0 0 0 1.06-1.06L1.94 5.83h12.31c4.557 0 8.251 3.694 8.251 8.25s-3.695 8.42-8.251 8.42h-12a.75.75 0 0 0 0 1.5h12c5.385 0 9.75-4.534 9.75-9.919s-4.365-9.75-9.75-9.75z"
                     ></path>
                 </svg>
-                <p class="seven-day-return-p">7 days right of return</p>
+                <p class="seven-day-return-p">7 Days Right of Return</p>
             </div>
         </div>
     </div>
@@ -570,7 +570,7 @@
                                             <span class="desc-span">
                                                 <span class="desc-span2">
                                                     <span class="desc-span3">
-                                                        <h5 class="desc-span-h5">Fitting and fittings</h5>
+                                                        <h5 class="desc-span-h5">Fitting and Fittings</h5>
                                                     </span>
                                                 </span>
                                             </span>
@@ -653,7 +653,7 @@
                                 <h5 class="desc-span-h5">{{ ucwords($product->brand_id) }}</h5>
                             </span>
                             <button class="view-more" type="button">
-                               <a class="view-more-a" href="{{ route('products.vendor', ['slug' => $product->seller_id]) }}">View More</a>
+                               <a class="view-more-a" href="{{ route('products', ['brands[' . $product->brand_id . ']' => $product->brand_id]) }}">View More</a>
                             </button>
                         </span>
                     </span>

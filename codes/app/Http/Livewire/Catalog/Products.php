@@ -309,7 +309,7 @@ class Products extends Component
     ];
     public function loadMore()
     {
-        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate + 12){
+        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate){
             $this->paginate = $this->paginate + 12;
         }
         else{
@@ -519,7 +519,7 @@ class Products extends Component
 
         $categories = ProductCategory::where('status', 1)->orderBy('id', 'ASC')->get();
 
-        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate + 12){
+        if($this->paginate > 0 && $this->totalProductsCount > 0 && $this->totalProductsCount > $this->paginate){
             $this->dispatchBrowserEvent('makeInactive');
         }
         else{

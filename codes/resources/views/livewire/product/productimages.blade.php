@@ -1,4 +1,5 @@
-<div class="col-md-6 sticky-sidebar-wrapper">
+
+<div class="col-md-6" >
     <div class="pin-wrapper">
         <div class="product-gallery pg-vertical sticky-sidebar" data-sticky-options="{'minWidth': 767}" style="border-bottom: 0px none rgb(102, 102, 102); width: 100%;">
         @include('product.badges')
