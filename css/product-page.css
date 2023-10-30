@@ -851,10 +851,24 @@ fseven-day-return-container {
     margin-bottom: 0px;
     font-family: Tiempos, Times New Roman, serif;
 }
+.similar-title2{
+    font-size: 4rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    text-align: center;
+    margin-bottom: 2.8rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #000000;
+    margin-bottom: 0px;
+    font-family: HelveticaNow, Helvetica, sans-serif;
+}
 
 @media screen and (max-width: 768px) {
     .similar-title{
-        font-size: 3rem !important;
+        font-size: 22px !important;
     }
 }
 .old-price{
@@ -873,5 +887,10 @@ fseven-day-return-container {
     }
     .product-single-carousel figure.product-image img{
         height: 95vh;
+    }
+}
+@media (max-width: 991px) {
+    .similar-title2{
+        font-size: 20px !important;
     }
 }
