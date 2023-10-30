@@ -515,6 +515,8 @@ Route::post('/order-status-update', function (){
    $order->save();
    return;
 
+   
+
    $awb = request()->awb;
    $orders = Order::where('order_awb', $awb)->get();
     foreach($orders as $order)
