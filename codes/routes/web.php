@@ -514,4 +514,115 @@ Route::post('/order-status-update', function (){
    $order->tracking_url = json_encode(request()-all());
    $order->save();
    return;
+
+   $awb = request()->awb;
+   $orders = Order::where('order_awb', $awb)->get();
+    foreach($orders as $order)
+    {
+        // dd($order);
+        $token =  Shiprocket::getToken();
+        $response = Shiprocket::track($token)->throwShipmentId($order->shipping_id);
+
+        if(isset(json_decode($response)->tracking_data->track_url))
+        {
+            $order->update([
+                'tracking_url' => json_decode($response)->tracking_data->track_url,
+            ]);
+        }
+        if(isset(json_decode($response)->tracking_data->shipment_track))
+        {
+            $currentstatus = strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
+
+            if(
+                $currentstatus == 'OUT FOR PICKUP'
+                OR $currentstatus == 'AWB ASSIGNED'
+                OR $currentstatus == 'LABEL GENERATED'
+                OR $currentstatus == 'PICKUP SCHEDULED'
+                OR $currentstatus == 'PICKUP GENERATED'
+                OR $currentstatus == 'PICKUP QUEUED'
+                OR $currentstatus == 'MANIFEST GENERATED'
+            )
+            {
+                $order->update([
+                    'order_status' => 'Ready To Dispatch',
+                    'order_substatus' => '',
+                ]);
+            }
+
+            if(
+                $currentstatus == 'SHIPPED'
+                OR $currentstatus == 'IN TRANSIT'
+                OR $currentstatus == 'OUT FOR DELIVERY'
+                OR $currentstatus == 'PICKED UP'
+            )
+            {
+                $order->update([
+                    'order_status' => 'Shipped',
+                    'order_substatus' => '',
+                ]);
+            }
+
+            if($currentstatus == 'CANCELLED')
+            {
+                $order->update([
+                    'order_status' => 'Cancelled',
+                    // 'order_substatus' => '',
+                ]);
+            }
+
+            if($currentstatus == 'DELIVERED')
+            {
+                $order->update([
+                    'order_status' => 'Delivered',
+                    'order_substatus' => '',
+                ]);
+            }
+
+
+            if($currentstatus == 'RTO INITIATED')
+            {
+                $order->update([
+                    'order_status' => 'Request For Return',
+                    'order_substatus' => '',
+                ]);
+            }
+
+
+            if($currentstatus == 'RTO DELIVERED')
+            {
+                $order->update([
+                    'order_status' => 'Returned',
+                    'order_substatus' => '',
+                ]);
+            }
+
+
+
+            if(
+                $currentstatus != 'OUT FOR PICKUP'
+                AND $currentstatus != 'AWB ASSIGNED'
+                AND $currentstatus != 'LABEL GENERATED'
+                AND $currentstatus != 'PICKUP SCHEDULED'
+                AND $currentstatus != 'PICKUP GENERATED'
+                AND $currentstatus != 'PICKUP QUEUED'
+                AND $currentstatus != 'MANIFEST GENERATED'
+                AND $currentstatus != 'SHIPPED'
+                AND $currentstatus != 'IN TRANSIT'
+                AND $currentstatus != 'OUT FOR DELIVERY'
+                AND $currentstatus != 'PICKED UP'
+                AND $currentstatus != 'CANCELLED'
+                AND $currentstatus != 'DELIVERED'
+                AND $currentstatus != 'RTO INITIATED'
+                AND $currentstatus != 'RTO DELIVERED'
+            ){
+                $order->update([
+                    'order_status' => 'Other',
+                    'order_substatus' => $currentstatus,
+                ]);
+            }
+
+
+        }
+
+    }
 });
