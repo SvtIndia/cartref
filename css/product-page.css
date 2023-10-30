@@ -867,7 +867,7 @@ fseven-day-return-container {
     .pin-wrapper{
         position: sticky;
         height: 100vh;
-        top: 10px;
+        top: 10vh;
     }
     .product-single {
         color: inherit;
