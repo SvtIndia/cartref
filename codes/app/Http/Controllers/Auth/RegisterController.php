@@ -50,25 +50,24 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if(Config::get('icrm.auth.fields.companyinfo') == true)
-        {
+        if (Config::get('icrm.auth.fields.companyinfo') == true) {
             // if company info is required on the registration page
             return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'mobile' => ['required', 'integer', 'digits:10'],
+                'mobile' => ['required', 'integer', 'digits:10', 'unique:users'],
                 'company_name' => ['required'],
                 'gst_number' => ['required'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
 
-        }else{
-            
+        } else {
+
             // if company info is not required on the registration page
             return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'mobile' => ['required', 'integer', 'digits:10'],
+                'mobile' => ['required', 'integer', 'digits:10', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
 

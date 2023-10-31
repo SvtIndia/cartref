@@ -11,7 +11,7 @@
 <style>
      .page-content {
         background-image: url('/images/auth.png');
-        background-size: cover;
+        background-size: 100% 100%;
         width: 100vw;
         height: 100vh;
         /* background-position: center; */

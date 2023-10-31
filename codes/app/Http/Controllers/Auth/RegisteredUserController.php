@@ -38,21 +38,20 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
-    {        
+    {
         Session::put('register', true);
         Session::put('login', false);
-        if(Config::get('icrm.auth.fields.companyinfo') == true)
-        {
+        if (Config::get('icrm.auth.fields.companyinfo') == true) {
             // if company info is required
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-                'mobile' => ['required', 'numeric', 'digits:10'],
+                'mobile' => ['required', 'numeric', 'digits:10', 'unique:users'],
                 'company_name' => ['required'],
                 'gst_number' => ['required', 'regex:"^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$"'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
-            
+
             Session::put('register', false);
 
             $user = User::create([
@@ -65,16 +64,16 @@ class RegisteredUserController extends Controller
                 'status' => '1',
             ]);
 
-            
-        }else{
+
+        } else {
             // if company info is not required
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-                'mobile' => ['required', 'numeric', 'digits:10'],
+                'mobile' => ['required', 'numeric', 'digits:10', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
-            
+
             Session::put('register', false);
 
             $user = User::create([
@@ -103,7 +102,7 @@ class RegisteredUserController extends Controller
     public function googlecallback()
     {
         $client = Socialite::driver('google')->user();
-        
+
         $user = User::where('email', $client->email)->first();
 
         if (!empty($user)) {
@@ -126,23 +125,20 @@ class RegisteredUserController extends Controller
             // send welcome sms & email
             try {
 
-                if(Config::get('icrm.sms.msg91.feature') == 1)
-                {
-                    
-                    if(!empty(auth()->user()->mobile))
-                    {
-                        if(!empty(Config::get('icrm.sms.msg91.welcome_flow_id')))
-                        {
-                            $mobile = '91'.auth()->user()->mobile;
+                if (Config::get('icrm.sms.msg91.feature') == 1) {
+
+                    if (!empty(auth()->user()->mobile)) {
+                        if (!empty(Config::get('icrm.sms.msg91.welcome_flow_id'))) {
+                            $mobile = '91' . auth()->user()->mobile;
                             $response = Msg91::sms()->to($mobile)->flow(Config::get('icrm.sms.msg91.welcome_flow_id'))->send();
                         }
-                        
+
                     }
                 }
-                
+
 
                 $user->markEmailAsVerified();
-        
+
                 Auth::login($user);
 
                 Notification::route('mail', $user->email)->notify(new WelcomeEmail(auth()->user()));
@@ -166,7 +162,7 @@ class RegisteredUserController extends Controller
 
 
         $user->markEmailAsVerified();
-        
+
         Auth::login($user);
 
 
@@ -179,7 +175,7 @@ class RegisteredUserController extends Controller
         $client = Socialite::driver('facebook')->user();
 
         $user = User::where('email', $client->email)->first();
-     
+
         if (!empty($user)) {
             $user->update([
                 'client_token' => $client->token,
@@ -200,22 +196,19 @@ class RegisteredUserController extends Controller
             // send welcome sms & email
             try {
 
-                if(Config::get('icrm.sms.msg91.feature') == 1)
-                {
-                    
-                    if(!empty(auth()->user()->mobile))
-                    {
-                        if(!empty(Config::get('icrm.sms.msg91.welcome_flow_id')))
-                        {
-                            $mobile = '91'.auth()->user()->mobile;
+                if (Config::get('icrm.sms.msg91.feature') == 1) {
+
+                    if (!empty(auth()->user()->mobile)) {
+                        if (!empty(Config::get('icrm.sms.msg91.welcome_flow_id'))) {
+                            $mobile = '91' . auth()->user()->mobile;
                             $response = Msg91::sms()->to($mobile)->flow(Config::get('icrm.sms.msg91.welcome_flow_id'))->send();
                         }
-                        
+
                     }
                 }
-                
+
                 $user->markEmailAsVerified();
-        
+
                 Auth::login($user);
 
                 Notification::route('mail', $user->email)->notify(new WelcomeEmail(auth()->user()));
@@ -233,18 +226,18 @@ class RegisteredUserController extends Controller
                 // echo 'something else went wrong';
             }
 
-            
+
         }
 
 
-        
+
         $user->markEmailAsVerified();
-        
+
 
 
         Auth::login($user);
 
-        
+
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
