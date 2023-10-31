@@ -23,9 +23,10 @@
             padding: 1.14em 0;
             background-color: black;
             color: #fff;
-            font-family: Poppins,sans-serif;
+            font-family: Poppins, sans-serif;
             text-decoration: none;
         }
+
         .more-button-custom:hover {
             color: #fff;
         }
@@ -205,7 +206,6 @@
         }
     </style>
     <style>
-
         .product-gallery {
             position: sticky;
             top: 0px !important;
@@ -223,170 +223,170 @@
 
         .container {
             padding-left: 5px;
-        !important;
+            !important;
             padding-right: 5px;
-        !important;
+            !important;
             margin-top: 10px;
         }
 
-        .title{
+        .title {
             font-size: 3rem !important;
             font-family: HelveticaNow, Helvetica, sans-serif;
         }
-
     </style>
 @endsection
 
 
 @section('content')
-    @section('mainclass')
+@section('mainclass')
+@endsection
+<div class="container">
+    <div class="page-content mb-10 pb-6">
+        <div class="container">
+            <div class="product product-single row mb-7">
 
-    @endsection
-    <div class="container">
-        <div class="page-content mb-10 pb-6">
-            <div class="container">
-                <div class="product product-single row mb-7">
-
-                    {{-- Product Images Livewire --}}
-                    @livewire('product.productimages', [
-                    'product' => $product
-                    ])
-
-                    @livewire('addskutobag', [
+                {{-- Product Images Livewire --}}
+                @livewire('product.productimages', [
                     'product' => $product,
-                    'view' => 'new-product-page'
-                    ])
+                ])
+
+                @livewire('addskutobag', [
+                    'product' => $product,
+                    'view' => 'new-product-page',
+                ])
 
 
-                </div>
+            </div>
 
-                @php
-                    function isMobile()
-                    {
+            @php
+                function isMobile()
+                {
                     return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
-                    }
-                @endphp
+                }
+            @endphp
 
-                @isset($relatedproducts)
-                    @if (count($relatedproducts) > 0)
-                        @if(!isMobile())
-                            <section class="pt-3 mt-10">
-                                <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the look complete</h1>
-                                <h1 class="similar-title2 justify-content-center">Outfit inspiration by Cartref</h1>
-                                <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
-                                    @foreach ($relatedproducts as $key => $product)
-                                        @php
-                                            $firstcolorimage = App\Productcolor::where('status', 1)
+            @isset($relatedproducts)
+                @if (count($relatedproducts) > 0)
+                    @if (!isMobile())
+                        <section class="pt-3 mt-10">
+                            <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the
+                                look complete</h1>
+                            <h1 class="similar-title2 justify-content-center">Outfit inspiration by Cartrefs</h1>
+                            <div class="row cols-2 cols-sm-5 justify-content-center product-wrapper box-mode">
+                                @foreach ($relatedproducts as $key => $product)
+                                    @php
+                                        $firstcolorimage = App\Productcolor::where('status', 1)
                                             ->where('product_id', $product->id)
                                             ->first();
 
-                                            if (isset($firstcolorimage)) {
+                                        if (isset($firstcolorimage)) {
                                             if (!empty($firstcolorimage->main_image)) {
-                                            $firstcolorimage = $firstcolorimage->main_image;
-                                            // $firstcolorimage = $product->image;
+                                                $firstcolorimage = $firstcolorimage->main_image;
+                                                // $firstcolorimage = $product->image;
                                             } else {
-                                            $firstcolorimage = $product->image;
+                                                $firstcolorimage = $product->image;
                                             }
-                                            } else {
+                                        } else {
                                             $firstcolorimage = $product->image;
-                                            }
-                                        @endphp
-                                        <div class="new-product-wrap owl-item @if($key == 0) active @endif">
-                                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
-                                                <div class="new-product">
-                                                    <div class="image">
-                                                        <img class="product-image"
-                                                             src="{{ Voyager::image($firstcolorimage) }}"
-                                                             alt="{{ $product->name }}"/>
+                                        }
+                                    @endphp
+                                    <div class="new-product-wrap owl-item @if ($key == 0) active @endif">
+                                        <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
+                                            <div class="new-product">
+                                                <div class="image">
+                                                    <img class="product-image" src="{{ Voyager::image($firstcolorimage) }}"
+                                                        alt="{{ $product->name }}" />
 
-                                                        @if($product->productreviews && $product->productreviews()->count())
-                                                            <div class="product-rating-horizontal">
-                                                                <div class="star">
-                                                                    @if ($product->productreviews)
-                                                                        {{ ($product->productreviews()->where('status', 1)->sum('rate')
-                                                                        /($product->productreviews()->where('status', 1)->count() *5)) * 5
-                                                                        }}
-                                                                    @else
-                                                                        0
-                                                                    @endif &nbsp;
-                                                                    <img src="{{ asset('/images/icons/star.svg') }}"
-                                                                         alt="star">
-                                                                </div>
-                                                                <span class="dash">|</span>
-                                                                <div class="book">
-                                                                    {{ $product->productreviews()->count() }} &nbsp;
-                                                                    <img src="{{ asset('/images/icons/book.svg') }}"
-                                                                         alt="book">
-                                                                </div>
+                                                    @if ($product->productreviews && $product->productreviews()->count())
+                                                        <div class="product-rating-horizontal">
+                                                            <div class="star">
+                                                                @if ($product->productreviews)
+                                                                    {{ ($product->productreviews()->where('status', 1)->sum('rate') /
+                                                                        ($product->productreviews()->where('status', 1)->count() *
+                                                                            5)) *
+                                                                        5 }}
+                                                                @else
+                                                                    0
+                                                                @endif &nbsp;
+                                                                <img src="{{ asset('/images/icons/star.svg') }}"
+                                                                    alt="star">
                                                             </div>
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="content">
-                                                        <div class="brand-name">{{ $product->brand_id }}</div>
-                                                        <div class="product-name">{{
-                                        Str::limit($product->getTranslatedAttribute('name', App::getLocale(),
-                                        'en'), 45) }}</div>
-                                                        <div class="product-price">
-                                        <span class="mrp">{{ Config::get('icrm.currency.icon') }}{{
-                                            $product->offer_price }}/- </span>
-                                                            <span class="sp">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp
-                                            }} <br/></span>
+                                                            <span class="dash">|</span>
+                                                            <div class="book">
+                                                                {{ $product->productreviews()->count() }} &nbsp;
+                                                                <img src="{{ asset('/images/icons/book.svg') }}"
+                                                                    alt="book">
+                                                            </div>
                                                         </div>
-                                                        @if($product->mrp > $product->offer_price)
-                                                            @php
-                                                                $discount = $product->mrp - $product->offer_price;
-                                                                $discountPercent = ($discount / $product->mrp) * 100;
-                                                            @endphp
-                                                            <div class="off">({{ round($discountPercent) }}% off)</div>
-                                                        @endif
-                                                    </div>
+                                                    @endif
+                                                </div>
 
-                                                    <div class="product-action-vertical-new">
-                                                        {{-- <a href="#" class="wishlist">--}}
-                                                        {{-- <img src="{{ asset('/images/icons/wishlist.svg') }}" alt="wishlist">--}}
-                                                        {{-- </a>--}}
-                                                        {{-- <a class="cart">--}}
-                                                        {{-- <img src="{{ asset('/images/icons/cart.svg') }}" alt="cart">--}}
-                                                        {{-- </a>--}}
-                                                        <div>
-                                                            @livewire(
+                                                <div class="content">
+                                                    <div class="brand-name">{{ $product->brand_id }}</div>
+                                                    <div class="product-name">
+                                                        {{ Str::limit($product->getTranslatedAttribute('name', App::getLocale(), 'en'), 45) }}
+                                                    </div>
+                                                    <div class="product-price">
+                                                        <span
+                                                            class="mrp">{{ Config::get('icrm.currency.icon') }}{{ $product->offer_price }}/-
+                                                        </span>
+                                                        <span
+                                                            class="sp">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}
+                                                            <br /></span>
+                                                    </div>
+                                                    @if ($product->mrp > $product->offer_price)
+                                                        @php
+                                                            $discount = $product->mrp - $product->offer_price;
+                                                            $discountPercent = ($discount / $product->mrp) * 100;
+                                                        @endphp
+                                                        <div class="off">({{ round($discountPercent) }}% off)</div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="product-action-vertical-new">
+                                                    {{-- <a href="#" class="wishlist"> --}}
+                                                    {{-- <img src="{{ asset('/images/icons/wishlist.svg') }}" alt="wishlist"> --}}
+                                                    {{-- </a> --}}
+                                                    {{-- <a class="cart"> --}}
+                                                    {{-- <img src="{{ asset('/images/icons/cart.svg') }}" alt="cart"> --}}
+                                                    {{-- </a> --}}
+                                                    <div>
+                                                        @livewire(
                                                             'quickview',
                                                             [
-                                                            'product' => $product,
-                                                            'view' => 'product-card',
+                                                                'product' => $product,
+                                                                'view' => 'product-card',
                                                             ],
                                                             key($product->id . time())
-                                                            )
-                                                        </div>
+                                                        )
+                                                    </div>
 
-                                                        <div>
-                                                            @livewire(
+                                                    <div>
+                                                        @livewire(
                                                             'wishlist',
                                                             [
-                                                            'wishlistproductid' => $product->id,
-                                                            'view' => 'new-product-card',
+                                                                'wishlistproductid' => $product->id,
+                                                                'view' => 'new-product-card',
                                                             ],
                                                             key($product->id . time())
-                                                            )
-                                                        </div>
-
+                                                        )
                                                     </div>
+
                                                 </div>
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </section>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </section>
+                    @else
+                        <section class="pt-3 mt-10">
+                            <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the
+                                look complete</h1>
+                            <h2 class="similar-title2 justify-content-center">Outfit inspiration by Cartrefs</h2>
 
-                        @else
-
-                            <section class="pt-3 mt-10">
-                                <h1 class="similar-title justify-content-center" style="font-size: 4rem; !important;">Make the look complete</h1>
-                                <h2 class="similar-title2 justify-content-center">Outfit inspiration by Cartref</h2>
-
-                                <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
-                                     data-owl-options="{
+                            <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
+                                data-owl-options="{
                     'items': 5,
                     'nav': false,
                     'loop': true,
@@ -411,145 +411,149 @@
                 }">
 
 
-                                    <div class="owl-stage-outer">
-                                        <div class="owl-stage"
-                                             style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
-                                            @foreach ($relatedproducts as $key => $product)
-                                                <div class="owl-item @if($key == 0) active @endif"
-                                                     style="width: 280px; margin-right: 20px;">
-                                                    <div class="product">
-                                                        <figure class="product-media">
-                                                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
-                                                                <img src="{{ Voyager::image($product->image) }}"
-                                                                     alt="{{ $product->name }}"
-                                                                     width="280" height="315">
-                                                            </a>
-                                                            @include('product.badges')
-                                                            <div class="product-action-vertical"
-                                                                 style="width: 29px height:29px">
-                                                                {{-- <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                <div class="owl-stage-outer">
+                                    <div class="owl-stage"
+                                        style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
+                                        @foreach ($relatedproducts as $key => $product)
+                                            <div class="owl-item @if ($key == 0) active @endif"
+                                                style="width: 280px; margin-right: 20px;">
+                                                <div class="product">
+                                                    <figure class="product-media">
+                                                        <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
+                                                            <img src="{{ Voyager::image($product->image) }}"
+                                                                alt="{{ $product->name }}" width="280" height="315">
+                                                        </a>
+                                                        @include('product.badges')
+                                                        <div class="product-action-vertical"
+                                                            style="width: 29px height:29px">
+                                                            {{-- <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
                                                                     data-target="#addCartModal" title="Add to cart"><i
                                                                         class="d-icon-bag"></i></a>
                                                                 --}}
-                                                                {{-- <a href="#" class="btn-product-icon btn-wishlist"
+                                                            {{-- <a href="#" class="btn-product-icon btn-wishlist"
                                                                     title="Add to wishlist"><i class="d-icon-heart"></i></a> --}}
-                                                                @livewire('wishlist', [
-                                                                'wishlistproductid' => $product->id,
-                                                                'view' => 'product-card',
-                                                                ], key($product->id.time()))
-                                                                @livewire('quickview', [
-                                                                'product' => $product,
-                                                                'view' => 'old-product-card',
-                                                                ], key($product->id.time()))
-                                                            </div>
-                                                            {{-- <div class="product-action"> --}}
-                                                            {{-- <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
+                                                            @livewire(
+                                                                'wishlist',
+                                                                [
+                                                                    'wishlistproductid' => $product->id,
+                                                                    'view' => 'product-card',
+                                                                ],
+                                                                key($product->id . time())
+                                                            )
+                                                            @livewire(
+                                                                'quickview',
+                                                                [
+                                                                    'product' => $product,
+                                                                    'view' => 'old-product-card',
+                                                                ],
+                                                                key($product->id . time())
+                                                            )
+                                                        </div>
+                                                        {{-- <div class="product-action"> --}}
+                                                        {{-- <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
                                                                 View</a> --}}
-                                                            {{-- @livewire('quickview', [
+                                                        {{-- @livewire('quickview', [
                                                             'product' => $product
                                                             ], key($product->id.time()))
                                                         </div> --}}
-                                                        </figure>
-                                                        <div class="product-details">
-                                                            <div class="product-cat">
-                                                                <a
-                                                                        href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{
-                                                $product->productsubcategory->name }}</a>
-                                                            </div>
-                                                            <h3 class="product-name">
-                                                                <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">{{
-                                                $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</a>
-                                                            </h3>
-                                                            <div class="product-price">
-                                                                <ins class="new-price">{{ config::get('icrm.currency.icon') }}{{
-                                                $product->offer_price }}</ins>
-                                                                <del class="old-price">{{ Config::get('icrm.currency.icon') }}{{
-                                                $product->mrp }}</del>
+                                                    </figure>
+                                                    <div class="product-details">
+                                                        <div class="product-cat">
+                                                            <a
+                                                                href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>
+                                                        </div>
+                                                        <h3 class="product-name">
+                                                            <a
+                                                                href="{{ route('product.slug', ['slug' => $product->slug]) }}">{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</a>
+                                                        </h3>
+                                                        <div class="product-price">
+                                                            <ins
+                                                                class="new-price">{{ config::get('icrm.currency.icon') }}{{ $product->offer_price }}</ins>
+                                                            <del
+                                                                class="old-price">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}</del>
 
-                                                            </div>
-                                                            <div class="ratings-container">
-                                                                <div class="ratings-full">
-                                                <span class="ratings" style="width:
-                                                @if($product->productreviews)
-                                                {{ $product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5) * 100 }}%
+                                                        </div>
+                                                        <div class="ratings-container">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings"
+                                                                    style="width:
+                                                @if ($product->productreviews) {{ ($product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5)) * 100 }}%
                                                 @else
-                                                0%
-                                                @endif"></span>
-                                                                    <span class="tooltiptext tooltip-top"></span>
-                                                                </div>
-                                                                <a href="{{ route('product.slug', ['slug' => $product->slug]) }}"
-                                                                   class="link-to-tab rating-reviews">( @if($product->productreviews)
-                                                                        {{
-                                                                                                                       $product->productreviews()->count() }}
-                                                                    @else
-                                                                        0
-                                                                    @endif reviews )</a>
+                                                0% @endif"></span>
+                                                                <span class="tooltiptext tooltip-top"></span>
                                                             </div>
+                                                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}"
+                                                                class="link-to-tab rating-reviews">( @if ($product->productreviews)
+                                                                    {{ $product->productreviews()->count() }}
+                                                                @else
+                                                                    0
+                                                                @endif reviews )</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        </div>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="owl-nav disabled">
-                                        <button type="button" title="presentation" class="owl-prev disabled">
-                                            <i class="d-icon-angle-left"></i>
-                                        </button>
-                                        <button type="button" title="presentation" class="owl-next disabled">
-                                            <i class="d-icon-angle-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="owl-dots disabled"></div>
                                 </div>
-                            </section>
-                        @endif
+                                <div class="owl-nav disabled">
+                                    <button type="button" title="presentation" class="owl-prev disabled">
+                                        <i class="d-icon-angle-left"></i>
+                                    </button>
+                                    <button type="button" title="presentation" class="owl-next disabled">
+                                        <i class="d-icon-angle-right"></i>
+                                    </button>
+                                </div>
+                                <div class="owl-dots disabled"></div>
+                            </div>
+                        </section>
                     @endif
-                @endisset
-                <section class="product-btn">
-                    <a href="{{ $brandLink  }}"
-                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
-                        {{ $brandMoreText }}
-                        <div class="badge-count">{{ $brandCount }}</div>
-                    </a>
-                    <a href="{{ $styleLink  }}"
-                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
-                        {{ $moreStyleText }}
-                        <div class="badge-count">{{ $styleCount }}</div>
-                    </a>
-                    <a href="{{ $colourLink  }}"
-                       class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
-                        {{ $moreColourText }}
-                        <div class="badge-count">{{ $colourCount }}</div>
-                    </a>
-                </section>
-            </div>
+                @endif
+            @endisset
+            <section class="product-btn">
+                <a href="{{ $brandLink }}"
+                    class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $brandMoreText }}
+                    <div class="badge-count">{{ $brandCount }}</div>
+                </a>
+                <a href="{{ $styleLink }}"
+                    class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreStyleText }}
+                    <div class="badge-count">{{ $styleCount }}</div>
+                </a>
+                <a href="{{ $colourLink }}"
+                    class="btn-cart text-normal ls-normal font-weight-semi-bold more-button-custom">
+                    {{ $moreColourText }}
+                    <div class="badge-count">{{ $colourCount }}</div>
+                </a>
+            </section>
         </div>
     </div>
+</div>
 @endsection
 @push('scripts')
-    <script>
-        function slideDown(id) {
-            if ($("#" + id))
-                $("#" + id).slideDown(300);
-        }
+<script>
+    function slideDown(id) {
+        if ($("#" + id))
+            $("#" + id).slideDown(300);
+    }
 
-        function slideUp(id) {
-            if ($("#" + id))
-                $("#" + id).slideUp(300);
-        }
+    function slideUp(id) {
+        if ($("#" + id))
+            $("#" + id).slideUp(300);
+    }
 
-        function slideToggle(id) {
-            if ($("#" + id)) {
-                $("#" + id).slideToggle(300, function () {
-                    if ($("#" + id).is(':visible')) {
-                        $("#" + id + '-chevron-down').show();
-                        $("#" + id + '-chevron-up').hide();
-                    } else {
-                        $("#" + id + '-chevron-down').hide();
-                        $("#" + id + '-chevron-up').show();
-                    }
-                });
-            }
+    function slideToggle(id) {
+        if ($("#" + id)) {
+            $("#" + id).slideToggle(300, function() {
+                if ($("#" + id).is(':visible')) {
+                    $("#" + id + '-chevron-down').show();
+                    $("#" + id + '-chevron-up').hide();
+                } else {
+                    $("#" + id + '-chevron-down').hide();
+                    $("#" + id + '-chevron-up').show();
+                }
+            });
         }
-    </script>
+    }
+</script>
 @endpush
