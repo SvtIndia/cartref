@@ -18,11 +18,11 @@ class ProductDispatch extends Notification
      *
      * @return void
      */
-    public function __construct($order,$courier_co,$trackings)
+    public function __construct($order_no, $courier_co, $tracking_no = null)
     {
-        $this->order = $order; //order number
+        $this->order_no = $order_no; //order number
         $this->courier_co = $courier_co;
-        $this->trackings = $trackings;
+        $this->tracking_no = $tracking_no;
     }
 
     /**
@@ -45,9 +45,9 @@ class ProductDispatch extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Your order '.$this->order.' has shipped!')
-            ->line('It’s being shipped with '.$this->courier_co)
-            ->line('Here’s a tracking number that you can use to check the location of your package:'.  $this->trackings .' (please note that tracking may take up to one business day to activate).')
+            ->subject('Your order ' . $this->order_no . ' has shipped!')
+            ->line('It’s being shipped with ' . $this->courier_co)
+            ->line('Here’s a tracking number that you can use to check the location of your package:' . $this->tracking_no . ' (please note that tracking may take up to one business day to activate).')
             ->line('Thank you for placing your order!')
 
 

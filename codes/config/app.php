@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'ICRM Software'),
+    'name' => env('APP_NAME', 'Cartrefs'),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,6 +27,8 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+
+    'helpdesk_mail' => env('HELPDESK_MAIL', 'helpdesk@cartrefs.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,9 +140,9 @@ return [
 
     'providers' => [
 
-        /*
-         * Laravel Framework Service Providers...
-         */
+            /*
+             * Laravel Framework Service Providers...
+             */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -164,9 +166,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        /*
-         * Package Service Providers...
-         */
+            /*
+             * Package Service Providers...
+             */
         EloquentFilter\ServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
         App\Providers\WishlistServiceProvider::class,
@@ -176,12 +178,12 @@ return [
         App\Providers\CustomizeProvider::class,
         App\Providers\AddressProvider::class,
         Craftsys\Msg91\Msg91LaravelServiceProvider::class,
-        /*
-         * Application Service Providers...
-         */
+            /*
+             * Application Service Providers...
+             */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+            // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
