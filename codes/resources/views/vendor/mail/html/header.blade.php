@@ -5,8 +5,8 @@
                 <img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
             @else
                 <img
-                    src="{{ Voyager::image('images/showroom_at_home.png') }}"
-                    style="width: 200px;background: black;padding: 15px;border-radius: 2px;"
+                    src="{{ env('APP_URL') }}/images/showroom_at_home.png"
+                    style="width:auto;height: 100px;max-height: 100px;background: black;padding: 15px;border-radius: 2px;"
                     class="logo"
                     alt="Cartref Logo"
                 >
