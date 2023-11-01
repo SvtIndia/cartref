@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use LaravelDaily\Invoices\Classes\Party;
 use App\Notifications\CodOrderEmailToVendor;
+use App\Notifications\NewOrderMailToAdmin;
 use Illuminate\Support\Facades\Notification;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
@@ -1623,16 +1624,16 @@ class Checkout extends Component
         Notification::route('mail', auth()->user()->email)->notify(new CodOrderEmail($order));
 
         if (Config::get('icrm.site_package.multi_vendor_store') == 1) {
-            // dd($carts->pluck('attributes.product_id')->getValues());
-
-            // $products = Product::whereIn('id', $carts->pluck('attributes.product_id'))->select('vendor_id')->groupBy('vendor_id')->get();
-
-            // dd($products);
-
 
             $vendorinfo = User::where('id', $order->vendor_id)->first();
 
             if (!empty($vendorinfo->email)) {
+
+                // Send order notification to admin
+                Notification::route('mail', config('ADMIN_MAIL'))->notify(
+                    new NewOrderMailToAdmin($order->order_id, auth()->user()->name, auth()->user()->email, $vendorinfo->name, $vendorinfo->email)
+                );
+
                 // Send order notification to vendor
                 Notification::route('mail', $vendorinfo->email)->notify(new CodOrderEmailToVendor($order, $vendorinfo));
             }

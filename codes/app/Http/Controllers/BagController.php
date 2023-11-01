@@ -438,6 +438,12 @@ class BagController extends Controller
             {
                 // Send order notification to vendor
                 Notification::route('mail', $vendorinfo->email)->notify(new PrepaidOrderEmailToVendor($order, $vendorinfo));
+                
+                // Send order notification to admin
+                Notification::route('mail', config('ADMIN_MAIL'))->notify(
+                    new NewOrderMailToAdmin($order->order_id, auth()->user()->name, auth()->user()->email, $vendorinfo->name, $vendorinfo->email)
+                );
+                
             }
 
         }

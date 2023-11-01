@@ -30,6 +30,8 @@ return [
 
     'helpdesk_mail' => env('HELPDESK_MAIL', 'helpdesk@cartrefs.com'),
 
+    'admin_mail' => env('ADMIN_MAIL', 'admin@cartrefs.com'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
