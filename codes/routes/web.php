@@ -65,6 +65,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/panel-web.php';
 
 // Route::get('/msg91', function(){
 //     // https://github.com/craftsys/msg91-laravel#installation

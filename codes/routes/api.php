@@ -48,10 +48,14 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.', 'namespace' => 'Api\\V1\\'], 
         // Will dump a beauty json :3
         var_dump(json_decode($result, true));
 
-        // { 
-        // "orgPincode":"560040", 
+        // {
+        // "orgPincode":"560040",
         // "desPincode":"586103"
-        // } 
-            
+        // }
+
     });
  });
+
+
+
+ require __DIR__ . '/admin-api.php';
