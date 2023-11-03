@@ -16,10 +16,9 @@ class ShiprocketController extends Controller
     public function updateOrderStatus(Request $request)
     {
         try {
-
             //Test
             $order = \App\Order::first();
-            $order->tracking_url = json_encode(request()->all());
+            $order->tracking_url = json_encode(request()->all()) . ' Header ==> '. json_encode(request()->header());
             $order->save();
 
             //Test end
