@@ -1,9 +1,10 @@
 <template>
-    <div class="max-h-screen bg-gray-100 z-10">
-        <div class="sidebar max-h-screen w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg">
-            <div class="flex h-screen overflow-y-scroll flex-col justify-between pt-[56px] pb-6">
+    <div class="hidden md:block max-h-[90vh] bg-gray-100 z-10 fixed">
+        <div class="sidebar group max-h-[90vh] w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg">
+            <!-- <div class="sidebar fixed max-h-screen w-[3.35rem] z-10 bg-gray-100 overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"> -->
+            <div class="flex h-[90vh] overflow-y-scroll flex-col justify-between pb-6">
                 <div>
-                    <ul class="mt-6 space-y-2 tracking-wide">
+                    <ul class="space-y-2 tracking-wide">
                         <li class="min-w-max">
                             <a href="#" aria-label="dashboard"
                                 class="relative flex items-center space-x-4 bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
@@ -71,7 +72,8 @@
                             </a>
                         </li>
                         <li class="min-w-max">
-                            <a href="javascript:void(0)" @click="show = !show;" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
+                            <a href="javascript:void(0)" @click="show = !show;"
+                                class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
                                     <path class="fill-current text-gray-300 group-hover:text-cyan-300"
@@ -84,7 +86,7 @@
                                 <i class="fi fi-ss-angle-small-up w-6 h-6 m-auto text-xl" v-if="show"></i>
                                 <i class="fi fi-ss-angle-small-down w-6 h-6 m-auto text-xl" v-if="!show"></i>
                             </a>
-                            <ul v-if="show" class="py-2 space-y-2">
+                            <ul v-if="show" class="hidden group-hover:block py-2 space-y-2">
                                 <li>
                                     <a href="#"
                                         class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Products</a>
@@ -98,7 +100,7 @@
                                         class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Invoice</a>
                                 </li>
                             </ul>
-				        </li>
+                        </li>
                     </ul>
                 </div>
                 <div class="w-max -mb-3">
@@ -118,8 +120,8 @@
 </template>
 
 <script>
-export default{
-    name:"SideBar",
+export default {
+    name: "SideBar",
     data() {
         return {
             show: false,

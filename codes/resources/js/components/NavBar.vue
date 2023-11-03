@@ -1,8 +1,11 @@
 <template>
-    <header class="header fixed w-screen z-20 top-0 bg-dark-1 shadow-md flex items-center justify-between px-6 py-4">
+    <header class="header fixed w-screen z-20 top-0 bg-dark-1 shadow-md flex items-center justify-between px-4 py-4">
         <!-- logo -->
-        <h1 class="w-3/12">
-            <a href="">
+        <h1 class="w-4/12 flex gap-1">
+            <a class="block md:hidden" href="">
+                <i class="fi fi-br-bars-sort text-white text-2xl h-8 p-1 hover:text-cyan-500 duration-200"></i>
+            </a>
+            <a class="" href="">
                 <img src="https://cartrefs.com/storage/settings/April2023/DRWK4IgZ3N2GnkZSiN2V.png" class="w-52 h-8 md:w-52 md:h-8 xl:w-48 xl:h-12" alt="Cartrefs logo" width="194" height="43">
             </a>
         </h1>
