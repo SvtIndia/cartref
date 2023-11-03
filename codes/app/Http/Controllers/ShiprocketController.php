@@ -39,7 +39,7 @@ class ShiprocketController extends Controller
                         ]);
                     }
                     if (isset(json_decode($response)->tracking_data->shipment_track)) {
-                        $currentstatus = strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
+                        $currentstatus = request()->current_status ?? strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
 
                         if (
                             $currentstatus == 'OUT FOR PICKUP'
