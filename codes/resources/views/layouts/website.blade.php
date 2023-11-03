@@ -476,6 +476,13 @@
                 pointer-events: none;
             }
         }
+        .product-media{
+            display: flex !important;
+            align-items: center;
+        }
+        .product-media  a{
+            display: flex !important;
+        }
     </style>
     {{-- <style>
         .recent-wishlist {

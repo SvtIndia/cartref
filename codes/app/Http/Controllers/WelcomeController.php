@@ -296,6 +296,9 @@ class WelcomeController extends Controller
         //                ->get();
         //        }
         $trendings = Product::withCount('users')
+            ->whereHas('vendor', function ($q) {
+                $q->where('status', 1);
+            })
             ->where('admin_status', 'Accepted')
             ->take(Config::get('icrm.frontend.trendingproducts.count'))
             ->orderBy('users_count', 'desc')
