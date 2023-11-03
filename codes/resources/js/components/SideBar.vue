@@ -1,6 +1,6 @@
 <template>
-    <div class="hidden md:block max-h-[90vh] bg-gray-100 z-10 fixed">
-        <div class="sidebar group max-h-[90vh] w-[3.35rem] overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg">
+    <div class="max-h-[90vh] bg-gray-100 z-10 fixed" >
+        <div class="sidebar group hidden md:block max-h-[90vh] w-[3.35rem] hover:w-56 overflow-hidden border-r hover:bg-white hover:shadow-lg" id="sidenav">
             <!-- <div class="sidebar fixed max-h-screen w-[3.35rem] z-10 bg-gray-100 overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"> -->
             <div class="flex h-[90vh] overflow-y-scroll flex-col justify-between pb-6">
                 <div>

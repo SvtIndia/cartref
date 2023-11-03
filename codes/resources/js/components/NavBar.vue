@@ -2,7 +2,7 @@
     <header class="header fixed w-screen z-20 top-0 bg-dark-1 shadow-md flex items-center justify-between px-4 py-4">
         <!-- logo -->
         <h1 class="w-4/12 flex gap-1">
-            <a class="block md:hidden" href="">
+            <a class="block md:hidden" @click="toggleSideBar()" href="javascript:void(0)">
                 <i class="fi fi-br-bars-sort text-white text-2xl h-8 p-1 hover:text-cyan-500 duration-200"></i>
             </a>
             <a class="" href="">
@@ -18,3 +18,19 @@
         </div>
     </header>
 </template>
+<script>
+export default{
+    name:"NavBar",
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+        toggleSideBar() {
+            document.getElementById('sidenav').classList.toggle('hidden');
+            document.getElementById('sidenav').classList.toggle('max-md:w-56')
+        }
+    },
+}
+</script>

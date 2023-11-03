@@ -17,7 +17,7 @@
     <div id="app">
         <navbar></navbar>
         <side-bar></side-bar>
-        <div id="main" class="mt-16 md:pl-[3.35rem] mb-6">
+        <div id="main" class="mt-16 xl:mt-20 md:pl-[3.35rem] mb-6">
             <router-view></router-view>
         </div>
     </div>
