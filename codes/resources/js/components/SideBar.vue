@@ -1,103 +1,168 @@
 <template>
     <div class="max-h-[90vh] bg-gray-100 z-10 fixed" >
-        <div class="sidebar group hidden md:block max-h-[90vh] w-[3.35rem] hover:w-56 overflow-hidden border-r hover:bg-white hover:shadow-lg" id="sidenav">
+        <div class="sidebar group hidden md:block max-h-[90vh] w-[3.35rem] hover:w-64 overflow-hidden border-r hover:bg-white hover:shadow-lg" id="sidenav">
             <!-- <div class="sidebar fixed max-h-screen w-[3.35rem] z-10 bg-gray-100 overflow-hidden border-r hover:w-56 hover:bg-white hover:shadow-lg"> -->
             <div class="flex h-[90vh] overflow-y-scroll flex-col justify-between pb-6">
                 <div>
-                    <ul class="space-y-2 tracking-wide">
+                    <ul class="space-y-1 tracking-wide">
                         <li class="min-w-max">
-                            <a href="#" aria-label="dashboard"
-                                class="relative flex items-center space-x-4 bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
-                                <svg class="-ml-1 h-6 w-6" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M6 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8ZM6 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1Z"
-                                        class="fill-current text-cyan-400 dark:fill-slate-600"></path>
-                                    <path d="M13 8a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2V8Z"
-                                        class="fill-current text-cyan-200 group-hover:text-cyan-300"></path>
-                                    <path d="M13 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-1Z"
-                                        class="fill-current group-hover:text-sky-300"></path>
-                                </svg>
+                            <a href="#" class="relative flex items-center space-x-4 bg-green-600  pl-4 py-3 text-white">
+                                <i class="fi fi-rr-dashboard text-xl h-5 w-5"></i>
                                 <span class="-mr-1 font-medium">Dashboard</span>
                             </a>
                         </li>
                         <li class="min-w-max">
-                            <a href="#" class="bg group flex items-center space-x-4 rounded-full px-4 py-3 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path class="fill-current text-gray-300 group-hover:text-cyan-300" fill-rule="evenodd"
-                                        d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
-                                        clip-rule="evenodd" />
-                                    <path class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                        d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
-                                </svg>
-                                <span class="group-hover:text-gray-700">Categories</span>
+                            <a href="#" class="flex items-center space-x-4 pl-4 py-3 text-gray-600 hover:bg-green-200">
+                                <i class="fi fi-rr-boxes text-xl h-5 w-5"></i>
+                                <span class="">Orders</span>
                             </a>
                         </li>
                         <li class="min-w-max">
-                            <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path class="fill-current text-gray-600 group-hover:text-cyan-600" fill-rule="evenodd"
-                                        d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z"
-                                        clip-rule="evenodd" />
-                                    <path class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                        d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z" />
-                                </svg>
-                                <span class="group-hover:text-gray-700">Reports</span>
+                            <a href="javascript:void(0)" @click="showcase = !showcase;"
+                                class="group flex items-center space-x-4 rounded-md pl-4 py-3 text-gray-600">
+                                <i class="fi fi-rr-house-chimney text-xl h-5 w-5"></i>
+
+                                <span class="group-hover:text-gray-700 flex justify-between w-full">
+                                    <span>Showcase At Home</span>
+                                    <i class="fi fi-ss-angle-small-up w-6 h-6 mr-2 text-xl" v-if="showcase"></i>
+                                    <i class="fi fi-ss-angle-small-down w-6 h-6 mr-2 text-xl" v-if="!showcase"></i>
+                                </span>
                             </a>
-                        </li>
-                        <li class="min-w-max">
-                            <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path class="fill-current text-gray-600 group-hover:text-cyan-600"
-                                        d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
-                                    <path class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                        d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
-                                </svg>
-                                <span class="group-hover:text-gray-700">Other data</span>
-                            </a>
-                        </li>
-                        <li class="min-w-max">
-                            <a href="#" class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                        d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                    <path class="fill-current text-gray-600 group-hover:text-cyan-600" fill-rule="evenodd"
-                                        d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                <span class="group-hover:text-gray-700">Finance</span>
-                            </a>
-                        </li>
-                        <li class="min-w-max">
-                            <a href="javascript:void(0)" @click="show = !show;"
-                                class="group flex items-center space-x-4 rounded-md px-4 py-3 text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path class="fill-current text-gray-300 group-hover:text-cyan-300"
-                                        d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                                    <path class="fill-current text-gray-600 group-hover:text-cyan-600" fill-rule="evenodd"
-                                        d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                <span class="group-hover:text-gray-700">E-Commerce</span>
-                                <i class="fi fi-ss-angle-small-up w-6 h-6 m-auto text-xl" v-if="show"></i>
-                                <i class="fi fi-ss-angle-small-down w-6 h-6 m-auto text-xl" v-if="!show"></i>
-                            </a>
-                            <ul v-if="show" class="hidden group-hover:block py-2 space-y-2">
+                            <ul v-if="showcase" class="hidden max-md:block group-hover:block py-2 space-y-2">
                                 <li>
                                     <a href="#"
-                                        class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Products</a>
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Showcases
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#"
-                                        class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Billing</a>
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Delivert Servicable Areas
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="min-w-max">
+                            <a href="javascript:void(0)" @click="product = !product;"
+                                class="group flex items-center space-x-4 rounded-md pl-4 py-3 text-gray-600">
+                                <i class="fi fi-rr-folder-open text-xl h-5 w-5" v-if="product"></i>
+                                <i class="fi fi-rr-folder text-xl h-5 w-5" v-if="!product"></i>
+
+                                <span class="group-hover:text-gray-700 flex justify-between w-full">
+                                    <span>Product Management</span>
+                                    <i class="fi fi-ss-angle-small-up w-6 h-6 mr-2 text-xl" v-if="product"></i>
+                                    <i class="fi fi-ss-angle-small-down w-6 h-6 mr-2 text-xl" v-if="!product"></i>
+                                </span>
+                            </a>
+                            <ul v-if="product" class="hidden max-md:block group-hover:block py-2 space-y-2">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Products
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="#"
-                                        class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 pl-11">Invoice</a>
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Categories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        SubCategories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        SKU Report
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="min-w-max">
+                            <a href="#" class="flex items-center space-x-4 pl-4 py-3 text-gray-600 hover:bg-green-200">
+                                <i class="fi fi-rr-lightbulb-on text-xl h-5 w-5"></i>
+                                <span class="">Services</span>
+                            </a>
+                        </li>
+                        <li class="min-w-max">
+                            <a href="javascript:void(0)" @click="vendor = !vendor;"
+                                class="group flex items-center space-x-4 rounded-md pl-4 py-3 text-gray-600">
+                                <i class="fi fi-rr-users-alt text-xl h-5 w-5"></i>
+
+                                <span class="group-hover:text-gray-700 flex justify-between w-full">
+                                    <span>Vendor Management</span>
+                                    <i class="fi fi-ss-angle-small-up w-6 h-6 mr-2 text-xl" v-if="vendor"></i>
+                                    <i class="fi fi-ss-angle-small-down w-6 h-6 mr-2 text-xl" v-if="!vendor"></i>
+                                </span>
+                            </a>
+                            <ul v-if="vendor" class="hidden max-md:block group-hover:block py-2 space-y-2">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Vendors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Vendor Payments
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="min-w-max">
+                            <a href="javascript:void(0)" @click="lead = !lead;"
+                                class="group flex items-center space-x-4 rounded-md pl-4 py-3 text-gray-600">
+                                <i class="fi fi-tr-phone-call text-xl h-5 w-5"></i>
+
+                                <span class="group-hover:text-gray-700 flex justify-between w-full">
+                                    <span>Leads</span>
+                                    <i class="fi fi-ss-angle-small-up w-6 h-6 mr-2 text-xl" v-if="lead"></i>
+                                    <i class="fi fi-ss-angle-small-down w-6 h-6 mr-2 text-xl" v-if="!lead"></i>
+                                </span>
+                            </a>
+                            <ul v-if="lead" class="hidden max-md:block group-hover:block py-2 space-y-2">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Contacts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Newsletters
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="min-w-max">
+                            <a href="javascript:void(0)" @click="collection = !collection;"
+                                class="group flex items-center space-x-4 rounded-md pl-4 py-3 text-gray-600">
+                                <i class="fi fi-rr-gallery text-xl h-5 w-5"></i>
+
+                                <span class="group-hover:text-gray-700 flex justify-between w-full">
+                                    <span>Collections</span>
+                                    <i class="fi fi-ss-angle-small-up w-6 h-6 mr-2 text-xl" v-if="collection"></i>
+                                    <i class="fi fi-ss-angle-small-down w-6 h-6 mr-2 text-xl" v-if="!collection"></i>
+                                </span>
+                            </a>
+                            <ul v-if="collection" class="hidden max-md:block group-hover:block py-2 space-y-2">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Groups
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200  pl-11">
+                                        Collection Images
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -125,6 +190,12 @@ export default {
     data() {
         return {
             show: false,
+            showcase:false,
+            product:false,
+            vendor:false,
+            lead:false,
+            collection:false,
+            config:false,
         }
     },
 }
