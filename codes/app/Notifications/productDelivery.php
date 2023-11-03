@@ -4,10 +4,10 @@ namespace App\Notifications;
 
 use App\EmailNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Config;
 
 class ProductDelivery extends Notification
 {
@@ -49,14 +49,14 @@ class ProductDelivery extends Notification
     {
         return (new MailMessage)
             ->subject('Your Order Has Been Delivered!')
-            ->line('Hello ' . $this->customer)
+            ->greeting('Hello ' . $this->customer)
             ->line('We’re thrilled to inform you that your order with ' . env('APP_URL') . ' has been successfully delivered to the following address:')
             ->line('Delivery Address:' . $this->address)
             ->line('Order Number: ' . $this->order)
             ->line('Tracking Link: ' . $this->tracking)
             ->line('Carrier: ' . $this->carrier)
             ->line('Delivered Date: ' . $this->delivery_date)
-            ->line('We hope your shopping experience with us was exceptional, and your product arrived in perfect condition. If you have any feedback or questions about your order, please donWe’t hesitate to reach out to our customer support team at ' . conifg('app.helpdesk_mail'))
+            ->line('We hope your shopping experience with us was exceptional, and your product arrived in perfect condition. If you have any feedback or questions about your order, please donWe’t hesitate to reach out to our customer support team at ' . Config::get('app.helpdesk_mail'))
             ->line('Thank you for choosing ' . env('APP_URL') . ' for your shopping needs. We look forward to serving you again in the future.')
             ->line('Best regards, ')
             ->line(env('APP_URL'))

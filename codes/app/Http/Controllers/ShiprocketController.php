@@ -27,11 +27,13 @@ class ShiprocketController extends Controller
 
             $awb = request()->awb;
             $orders = Order::where('order_awb', $awb)->get();
-            if(is_array($orders) && count($orders) > 0){
+
+            if(isset($orders) && count($orders) > 0){
                 foreach ($orders as $order) {
                     $token = Shiprocket::getToken();
                     $response = Shiprocket::track($token)->throwShipmentId($order->shipping_id);
 
+                   
                     if (isset(json_decode($response)->tracking_data->track_url)) {
                         $order->update([
                             'tracking_url' => json_decode($response)->tracking_data->track_url,
