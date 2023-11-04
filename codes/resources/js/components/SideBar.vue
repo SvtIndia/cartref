@@ -4,33 +4,33 @@
             <div class="flex h-screen overflow-auto custom-scrollbar flex-col justify-between pb-6">
                 <ul class="space-y-1 tracking-wide">
                     <li class="min-w-max">
-                        <a href="#" class="relative flex items-center space-x-4 bg-green-600  pl-5 py-3 text-white">
+                        <router-link :to="{ name: 'dashboard' }" class="single-item">
                             <i class="fi fi-rr-dashboard"></i>
                             <span class="-mr-1 font-medium">Dashboard</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="min-w-max">
-                        <a href="#" class="single-item">
+                        <router-link :to="{ name: 'orders' }" class="single-item">
                             <i class="fi fi-rr-boxes"></i>
                             <span class="">Orders</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': showcase }" @click="showcase = !showcase;"
+                        <a href="javascript:void(0)" :class="{ 'bg-green-100': showcases }" @click="showcases = !showcases;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-house-chimney"></i>
 
                             <span class="group-hover:text-gray-700 flex justify-between w-full">
-                                <span>Showcase At Home</span>
-                                <i class="fi fi-ss-angle-small-up mr-2" v-if="showcase"></i>
-                                <i class="fi fi-ss-angle-small-down mr-2" v-if="!showcase"></i>
+                                <span>Showcases At Home</span>
+                                <i class="fi fi-ss-angle-small-up mr-2" v-if="showcases"></i>
+                                <i class="fi fi-ss-angle-small-down mr-2" v-if="!showcases"></i>
                             </span>
                         </a>
-                        <ul v-if="showcase" class="dropdown-menu">
+                        <ul v-if="showcases" class="dropdown-menu">
                             <li>
-                                <a href="#" class="dropdown-item">
-                                    Showcases
-                                </a>
+                                <router-link :to="{ name: 'showcases' }" class="dropdown-item">
+                                    Showcasess
+                                </router-link>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item">
@@ -307,8 +307,7 @@ export default {
     name: "SideBar",
     data() {
         return {
-            show: false,
-            showcase: false,
+            showcases: false,
             product: false,
             vendor: false,
             lead: false,
@@ -319,5 +318,33 @@ export default {
             user: false,
         }
     },
+    watch: {
+        $route: function () {
+            updateNav();
+        }
+    },
+    methods: {
+        updateNav() {
+            this.showcases = this.$route.name == 'showcases' ? true : false;
+            this.product = this.$route.name == 'product' ? true : false;
+            this.vendor = this.$route.name == 'vendor' ? true : false;
+            this.lead = this.$route.name == 'lead' ? true : false;
+            this.collection = this.$route.name == 'collection' ? true : false;
+            this.config = this.$route.name == 'config' ? true : false;
+            this.control = this.$route.name == 'control' ? true : false;
+            this.blog = this.$route.name == 'blog' ? true : false;
+            this.user = this.$route.name == 'user' ? true : false;
+        }
+    },
+    created() {
+        this.updateNav();
+    }
 }
 </script>
+<style>
+.router-link-exact-active,
+.router-link-exact-active:hover {
+    background-color: rgb(34 197 94 / 1) !important;
+    color: white !important;
+}
+</style>

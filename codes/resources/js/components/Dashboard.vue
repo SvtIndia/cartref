@@ -1,7 +1,7 @@
 <template>
-    <div class="container flex flex-col mx-auto bg-white">
+    <div class="container flex flex-col mx-auto">
         <div class="w-full">
-            <div class="container flex flex-col items-center gap-16 mx-auto my-12">
+            <div class="container flex flex-col items-center gap-16 mx-auto my-10">
                 <div class="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                     <div
                         class="flex flex-col items-center gap-3 px-8 py-10 bg-gray-50 rounded-xl shadow-md hover:bg-gray-100 cursor-pointer">

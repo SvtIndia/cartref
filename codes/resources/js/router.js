@@ -1,6 +1,8 @@
 
 import VueRouter from 'vue-router'
-import ExampleComponent from './components/Dashboard.vue'
+import Dashboard from './components/Dashboard.vue'
+import Orders from './components/Orders.vue'
+import Showcases from './components/Showcases.vue'
 
 const router = new VueRouter({
     mode: 'history',
@@ -8,7 +10,17 @@ const router = new VueRouter({
         {
             name: 'dashboard',
             path: '/admin/dashboard',
-            component: ExampleComponent,
+            component: Dashboard,
+        },
+        {
+            name: 'orders',
+            path: '/admin/orders',
+            component: Orders,
+        },
+        {
+            name: 'showcases',
+            path: '/admin/showcases',
+            component: Showcases,
         }
     ]
 });
