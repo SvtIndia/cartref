@@ -23,11 +23,11 @@
     <title>Document</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-green-50">
     <div id="app">
         <navbar></navbar>
         <side-bar></side-bar>
-        <div id="main" class="mt-16 xl:mt-24 md:pl-[3.35rem] mb-6">
+        <div id="main" class="mt-12 xl:mt-20 md:pl-[3.35rem] mb-6">
             <router-view></router-view>
         </div>
     </div>

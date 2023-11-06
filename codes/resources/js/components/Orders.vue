@@ -1,314 +1,1111 @@
 <template>
-    <div class="mt-4">
-        <div class="container mx-auto my-8 px-4">
-            <div class="flex gap-2 items-center text-3xl">
+    <div class="">
+        <div class="container mx-auto my-2 px-4">
+            <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
                 <i class="fi fi-rr-boxes"></i>
                 <h3 class="text-start my-8">Orders</h3>
             </div>
             <div class="bg-white p-4 overflow-x-auto shadow-md sm:rounded-lg">
-                <div class="flex items-center justify-between py-4  dark:bg-gray-800">
-                    <div>
-                        <button @click="dropdownAction = !dropdownAction"
-                            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                            type="button">
-                            <span class="sr-only">Action button</span>
-                            Action
-                            <i class="fi fi-ss-angle-small-down text-xl w-5 h-5 ml-1"></i>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div v-if="dropdownAction"
-                            class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
-                                        account</a>
-                                </li>
-                            </ul>
-                            <div class="py-1">
-                                <a href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
-                                    User</a>
+                <div class="block">
+                    <div class="flex items-center justify-between py-4 ">
+                        <div class="relative">
+                            <select title="Status"
+                                class="block appearance-none w-auto leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-1 focus:ring-green-500 font-medium rounded-lg text-sm px-3 py-1.5">
+                                <option class="bg-gray-100" value="">All</option>
+                                <option class="bg-gray-100" value="1">Yet to Process!</option>
+                                <option class="bg-gray-100" value="2">Yet to Ship!</option>
+                                <option class="bg-gray-100" value="3">Yet to Deliver!</option>
+                                <option class="bg-gray-100" value="4">Delivered!</option>
+                                <option class="bg-gray-100" value="close">Close</option>
+                            </select>
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fi fi-ss-angle-small-down text-xl w-5 h-5 ml-1"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="table-search" class="sr-only">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fi fi-rr-search mr-1"></i>
+                                </div>
+                                <input type="text"
+                                    class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-80 bg-white"
+                                    placeholder="Search for users">
+                            </div>
+                            <div class="flex border border-gray-600 rounded-lg bg-white ml-4">
+                                <button class="px-2 py-1 m-[2px] hover:bg-gray-100 border-r border-solid cursor-pointer">
+                                    <i class="ffi fi-rr-refresh mr-1"></i>
+                                </button>
+                                <select
+                                    class="w-12 block px-1 m-[2px] text-sm text-gray-900 bg-white hover:bg-gray-100 cursor-pointer"
+                                    placeholder="Search for users">
+                                    <option value="">25</option>
+                                    <option value="">50</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <label for="table-search" class="sr-only">Search</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
+                    <div class="clear-right overflow-x-auto">
+                        <div class="table border-solid border border-gray-500 w-full">
+                            <div class="table-row table-head">
+                                <div class="table-cell border-gray-500 text-center uppercase font-semibold p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded  ">
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="table-cell border-l border-gray-500 text-center font-semibold uppercase w-10 p-1">
+                                    S.No.</div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Order No
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Date
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Products
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Qty
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Amount
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Customer
+                                    Details
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Seller
+                                    Information
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Logistic
+                                    Details
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Pickup
+                                    and Delivery
+                                </div>
+                                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
+                                    Actions
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-row table-body hover:bg-green-100 cursor-pointer bg-white">
+                                <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                            class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 relative">
+                                    169822152267</div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">
+                                    <div class="whitespace-nowrap mx-2">25 Oct 2023 </div>
+                                    <div>1:42:02 PM (Wed)</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
+                                    <div class="flex gap-2">
+                                        <div
+                                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                                            <img class="w-14 h-14 border rounded-[50%]"
+                                                src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
+                                                alt="Shoes image">
+                                            <div class="pl-2">
+                                                <div
+                                                    class="text-base font-medium overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
+                                                    MAEVE &
+                                                    SHELBY Leather Formal Shoes
+                                                </div>
+                                                <div class="font-normal text-gray-500">UK-8</div>
+                                                <div class="font-normal text-gray-500">Black</div>
+                                                <div class="font-normal text-gray-500">Maeve & Shelby</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Item Id: </div>
+                                                <div class="font-normal text-gray-500">90</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">HSN: </div>
+                                                <div class="font-normal text-gray-500">6405</div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <div class="font-medium">Type: </div>
+                                                <div class="font-normal text-gray-500">Regular</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-gray-600">1</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
+                                    <div class="font-semibold text-black">₹999</div>
+                                    <div class="text-base text-gray-500">COD</div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 p-1 text-sm text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">Bhupendra Jogi</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-left">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            302 3 floor,
+                                            Prateek Center, Sanjay Place,
+                                            Agra, Uttar Pradesh - 282010
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Name: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Brand: </div>
+                                        <div class="font-normal text-gray-500">S & T Shoes</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-semibold">Email: </div>
+                                        <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
+                                    </div>
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>
+                                            <span class="font-normal text-black">Address: </span>
+                                            42/140 E-1 KRISHNA KUNJ
+                                            MATHURA ROAD, OPP METRO & METRO Agra
+                                            UTTAR PRADESH - 282002
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="table-cell border-t border-l border-gray-500 text-sm p-1 pb-4 text-left">
+                                    <div class="text-gray-500 font-normal text-start">
+                                        <p>Other</p>
+                                        <p>CANCELED</p>
+                                        <p>Shiprocket</p>
+                                        <p>AWB: 14326522092111</p>
+                                        <p>Shipping ID: 426083992</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                    <div class="flex flex-col gap-2 items-center justify-center">
+                                        <a href="#" type="button" class="font-medium text-blue-600 dark:text-blue-500">
+                                            <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-yellow-600 dark:text-yellow-500">
+                                            <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                                        </a>
+                                        <a href="#" type="button" class="font-medium text-red-600 dark:text-red-500">
+                                            <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <input type="text" id="table-search-users"
-                            class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search for users">
                     </div>
                 </div>
-                <table class="w-auto text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="p-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-all-search" type="checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                                </div>
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[2%]">
-                                S.no.
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[10%]">
-                                Order No
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[10%]">
-                                Date
-                            </th>
-                            <th scope="col" colspan="2" class="text-sm px-2 min-w-[20%]">
-                                Products
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[5%]">
-                                Qty
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[2%]">
-                                Amount
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[12%]">
-                                Customer Details
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[15%]">
-                                Seller Information
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[15%]">
-                                Logistic Details
-                            </th>
-                            <th scope="col" class="text-sm px-2 min-w-[15%]">
-                                Pickup and Delivery
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="w-4 p-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-table-search-1" type="checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                            </td>
-                            <td class="">
-                                1
-                            </td>
-                            <td class="">
-                                <div class="text-base font-semibold">
-                                    1666602356
-                                    <!-- <div class="absolute top-0 right-[-10px] h-2.5 w-2.5 rounded-full bg-green-500 mr-2" title="New"></div> -->
-                                </div>
-                            </td>
-                            <td class="px-2 text-center">
-                                <div class="text-base">06 Nov 2023</div>
-                                <div class="font-normal text-gray-500">14:42:15 (Monday)</div>
-                            </td>
-                            <td class="px-2">
-                                <div
-                                    class="flex gap-2 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
-                                    <img class="w-10 h-10 border rounded-full"
-                                        src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
-                                        alt="Shoes image">
-                                    <div class="pl-3">
-                                        <div
-                                            class="text-base font-semibold overflow-hidden w-[80%] whitespace-nowrap text-ellipsis">
-                                            MAEVE &
-                                            SHELBY Leather Formal Shoes
-                                        </div>
-                                        <div class="font-normal text-gray-500">UK-8</div>
-                                        <div class="font-normal text-gray-500">Black</div>
-                                        <div class="font-normal text-gray-500">Maeve & Shelby</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="font-bold">Item Id: </div>
-                                    <div class="font-normal text-gray-500">90</div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="font-bold">HSN: </div>
-                                    <div class="font-normal text-gray-500">6405</div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="font-bold">Type: </div>
-                                    <div class="font-normal text-gray-500">Regular</div>
-                                </div>
-                            </td>
-                            <td class="">
-                                <div class="font-bold text-gray-600">1</div>
-                            </td>
-                            <td class="px-2">
-                                <div class="font-bold text-gray-600">₹999</div>
-                                <div class="text-base text-gray-500">COD</div>
-                            </td>
-                            <td class="px-2 text-start">
-                                <div class="flex items-center gap-2">
-                                    <div class="font-semibold">Name: </div>
-                                    <div class="font-normal text-gray-500">Bhupendra Jogi</div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="font-semibold">Email: </div>
-                                    <div class="font-normal text-gray-500">bhupenda.us.jogi@gmail.com</div>
-                                </div>
-                                <div class="text-gray-500 font-normal">
-                                    <p>302 3 floor, </p>
-                                    <p>Prateek Center, Sanjay Place,</p>
-                                    <p>Agra, Uttar Pradesh - 282010</p>
-                                </div>
-                            </td>
-                            <td class="px-2">
-                                <div class="flex items-center gap-2">
-                                    <div class="font-semibold">Name: </div>
-                                    <div class="font-normal text-gray-500">S & T Shoes</div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="font-semibold">Brand: </div>
-                                    <div class="font-normal text-gray-500">S & T Shoes</div>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="font-semibold">Email: </div>
-                                    <div class="font-normal text-gray-500">infomaeveandshelby@gmail</div>
-                                </div>
-                                <div class="text-gray-500 font-normal text-start">
-                                    <p>42/140 E-1 KRISHNA KUNJ</p>
-                                    <p>MATHURA ROAD, OPP METRO & METRO Agra</p>
-                                    <p>UTTAR PRADESH - 282002 </p>
-                                </div>
-                            </td>
-                            <td class="px-2">
-                                <div class="text-gray-500 font-normal text-start">
-                                    <p>Other</p>
-                                    <p>CANCELED</p>
-                                    <p>Shiprocket</p>
-                                    <p>AWB: 14326522092111</p>
-                                    <p>Shipping ID: 426083992</p>
-                                </div>
-                            </td>
-                            <td class="">
-                                <!-- Modal toggle -->
-                                <a href="#" type="button" data-modal-target="editUserModal" @click="showModal = true;"
-                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Edit user modal -->
-                <Transition>
-                    <div v-if="showModal"
-                        class="fixed right-0 left-0 top-0 bottom-0 z-50 items-center justify-center bg-gray-900 bg-opacity-60 px-4 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-full">
-                        <div class="relative max-w-2xl max-h-full mx-auto my-auto">
-                            <!-- Modal content -->
-                            <form action="#" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <!-- Modal header -->
-                                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                        Edit user
-                                    </h3>
-                                    <button type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                        @click="showModal = false;">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="p-6 space-y-6">
-                                    <div class="grid grid-cols-6 gap-6">
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="first-name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
-                                                Name</label>
-                                            <input type="text" name="first-name" id="first-name"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Bonnie" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="last-name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
-                                                Name</label>
-                                            <input type="text" name="last-name" id="last-name"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Green" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="email"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                            <input type="email" name="email" id="email"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="example@company.com" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="phone-number"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
-                                                Number</label>
-                                            <input type="number" name="phone-number" id="phone-number"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="e.g. +(12)3456 789" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="department"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
-                                            <input type="text" name="department" id="department"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Development" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="company"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
-                                            <input type="number" name="company" id="company"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="123456" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="current-password"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current
-                                                Password</label>
-                                            <input type="password" name="current-password" id="current-password"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="••••••••" required="">
-                                        </div>
-                                        <div class="col-span-6 sm:col-span-3">
-                                            <label for="new-password"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New
-                                                Password</label>
-                                            <input type="password" name="new-password" id="new-password"
-                                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="••••••••" required="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal footer -->
-                                <div
-                                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                    <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
-                                        all</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </Transition>
             </div>
         </div>
     </div>
@@ -327,23 +1124,11 @@ export default {
 </script>
 
 <style>
-th,
-td {
-    text-align: center;
-    white-space: normal;
-    text-transform: none;
+.table-body .table-cell {
+    vertical-align: top;
 }
 
-th {
-    font-weight: 700;
-    font-size: 2rem;
-}
-
-table,
-th,
-td {
-    border: 1px solid rgba(128, 128, 128, 0.448);
-    border-collapse: collapse;
-
-}
-</style>
+.table-head .table-cell {
+    vertical-align: middle;
+    color: rgb(22 163 74 / var(--tw-bg-opacity));
+}</style>

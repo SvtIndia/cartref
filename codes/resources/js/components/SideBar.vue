@@ -1,5 +1,5 @@
 <template>
-    <div class="max-h-screen bg-gray-100 z-10 fixed left-0 bottom-0 top-16 xl:top-20">
+    <div class="max-h-screen bg-gray-100 z-10 fixed left-0 bottom-0 top-12 xl:top-16">
         <div class="sidebar group hidden md:block" id="sidenav">
             <div class="flex h-screen overflow-auto custom-scrollbar flex-col justify-between pb-6">
                 <ul class="space-y-1 tracking-wide">
