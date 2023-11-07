@@ -28,15 +28,15 @@
         @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200 pl-11;
     }
 
-    ::-moz-selection { /* Code for Firefox */
+    ::-moz-selection {
+        /* Code for Firefox */
         @apply bg-green-500 text-white;
-      }
+    }
 
-      ::selection {
+    ::selection {
         @apply bg-green-500 text-white;
-      }
+    }
 }
-
 
 @layer utilities {
     .custom-scrollbar::-webkit-scrollbar {

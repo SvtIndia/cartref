@@ -5,148 +5,148 @@
                 <i class="fi fi-rr-boxes"></i>
                 <h3 class="text-start my-8">Orders</h3>
             </div>
-            <div class="bg-green-200 p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
+            <div class="bg-green-200 p-2 md:p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
                 <div
-                    class="flex justify-between px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-8 lg:py-4">
+                    class="flex justify-between px-2 md:px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-8 lg:py-4">
                     <div class="w-[45%]">
-                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2">
+                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2 whitespace-nowrap">
                             Order Manifestation
                             <i class="fi fi-rr-shipping-fast"></i>
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">New Orders</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">New Orders</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Ready To Dispatch</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Ready To Dispatch</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Pending Pickup</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Pending Pickup</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="w-[45%]">
-                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2">
+                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2 whitespace-nowrap">
                             Order Haulage
                             <i class="fi fi-rr-person-carry-box"></i>
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">In Transist</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">In Transist</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Delivered</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Delivered</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Cancelled</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Cancelled</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="flex justify-between px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-8 lg:py-4">
+                    class="flex justify-between px-2 md:px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-8 lg:py-4">
                     <div class="w-[45%]">
-                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2">
+                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2 whitespace-nowrap">
                             Returns
                             <i class="fi fi-rr-undo"></i>
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">New Orders</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">New Orders</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Ready To Dispatch</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Ready To Dispatch</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Pending Pickup</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Pending Pickup</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="w-[45%]">
-                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2">
+                        <h3 class="text-sm md:text-2xl text-left text-semibold mb-2 whitespace-nowrap">
                             Journey at Cartrefs
                             <i class="fi fi-rr-route"></i>
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">In Transist</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">In Transist</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Delivered</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Delivered</p>
                                 </div>
                             </div>
                             <div
                                 class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-green-500">
-                                <div class="px-4 py-2">
+                                <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
                                     </div>
-                                    <p class="mb-2 text-sm leading-5 text-gray-900">Cancelled</p>
+                                    <p class="mb-2 whitespace-nowrap text-sm leading-5 text-gray-900">Cancelled</p>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                                     <div class="flex gap-2">
                                         <div
                                             class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img class="w-14 h-14 border rounded-[50%]"
+                                            <img @click="imageModal('https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg')" class="w-14 h-14 border rounded-[50%]"
                                                 src="https://cartrefs.com/storage/productcolors/July2022/5ZJU6TDgcYO3UUlDy6c8.jpg"
                                                 alt="Shoes image">
                                             <div class="pl-2">
@@ -1288,6 +1288,7 @@
                 </div>
             </div>
         </div>
+        <image-modal :show="showModal" :hide="closeImageModal" :img="imgModal"></image-modal>
     </div>
 </template>
 <script>
@@ -1298,6 +1299,16 @@ export default {
             orders: [],
             dropdownAction: false,
             showModal: false,
+            imgModal: '',
+        }
+    },
+    methods: {
+        imageModal(img) {
+            this.showModal = true;
+            this.imgModal = img;
+        },
+        closeImageModal(){
+            this.showModal = false;
         }
     },
 }

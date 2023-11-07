@@ -13,6 +13,7 @@ Vue.use(VueRouter);
 Vue.component('side-bar', require('./components/SideBar.vue').default);
 Vue.component('navbar', require('./components/NavBar.vue').default);
 Vue.component('pagination', require('./components/Pagination.vue').default);
+Vue.component('image-modal', require('./components/ImageModal.vue').default);
 
 const app = new Vue({
     el: '#app',
