@@ -894,3 +894,9 @@ fseven-day-return-container {
         font-size: 20px !important;
     }
 }
+
+@media (max-width: 480px) {
+    .new-product-wrap {
+        max-width: 150px !important;
+    }
+}

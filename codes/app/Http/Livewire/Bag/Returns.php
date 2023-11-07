@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Bag;
 
 use App\Notifications\ProductReturn;
 use App\Order;
+use Exception;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Component;
 
@@ -67,6 +68,7 @@ class Returns extends Component
         ]);
 
         // SEND ORDER RETURN EMAIL TO CUSTOMER
+
         $this->returnemail($order,$customer,$product);
 
         // return redirect()->route('ordercomplete', ['id' => $this->item->order_id])->with([
@@ -77,6 +79,12 @@ class Returns extends Component
     private function returnemail($order, $customer,$product)
     {
         // send order placed email
-        Notification::route('mail', auth()->user()->email)->notify(new ProductReturn($order, $customer,$product));
+        try{
+
+            Notification::route('mail', auth()->user()->email)->notify(new ProductReturn($order, $customer,$product));
+        }
+        catch(Exception $e){
+
+        }
     }
 }

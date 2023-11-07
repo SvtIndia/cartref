@@ -172,7 +172,7 @@ class Ordercomplete extends Component
     {
         if(Config::get('icrm.shipping_provider.shiprocket') == 1)
         {
-            $this->shiprockettrackorder();
+            // $this->shiprockettrackorder();
         }
 
         if(Config::get('icrm.shipping_provider.dtdc') == 1)

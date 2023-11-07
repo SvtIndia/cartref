@@ -10,8 +10,8 @@ return [
         'prefix' => 'seller',
         'icrmbranding' => 'false',
     ],
-    
-    
+
+
     /**
      * Backup
      */
@@ -35,11 +35,11 @@ return [
     'product_sku' => [
         'size' => '1',
         'color' => '1',
-        
+
         // does this platform offers separate dimensions for each sku?
         'dimensions' => true,
     ],
-    
+
     /**
      * SEO Plugin
      */
@@ -68,8 +68,8 @@ return [
         'multi_brand_store' => '0',
         'multi_vendor_store' => '1',
     ],
-    
-    
+
+
     /**
      * Site rights
      */
@@ -96,22 +96,22 @@ return [
 
     'tax' => [
         'name' => 'GST',
-        
+
         /**
          * There are two types 1. fixed and 2. subcategory
          * If the platform offers subcategory wise tax then if it will take dynamic values
          */
         'type' => 'fixed',
-        
+
 
         // if the platform offers fixed tax
         'fixedtax' => [
             'perc' =>  '0'
         ],
-        
+
     ],
 
-    
+
 
     /**
      * What all filters allowed in your platform
@@ -148,8 +148,8 @@ return [
         // do you want to select by default first color product?
         'select_first_color_by_default' => '1',
     ],
-       
-        
+
+
     /**
      * Product Approval Feature
      * Product will only show if the admin approves
@@ -174,7 +174,7 @@ return [
     ],
 
 
-    
+
     /**
      * Delivery Charges
     */
@@ -195,7 +195,7 @@ return [
     ],
 
 
-        
+
     /**
      * Delivery Options
      */
@@ -205,7 +205,7 @@ return [
         'feature' => '1',
         'pincodelen' => '6',
     ],
-    
+
 
 
     /**
@@ -243,7 +243,7 @@ return [
     */
 
     'frontend' => [
-        
+
         // Dynamic menu
         'menu' => [
             'dynamic_category' => '1',
@@ -258,7 +258,7 @@ return [
             'feature' => '1',
         ],
 
-        
+
         // 2 column components
         'twocolumncomponent' => [
             'feature' => '1',
@@ -336,7 +336,7 @@ return [
 
         // product badges
         'badge' => [
-            // 
+            //
             'new_product' => [
                 'feature' => '1',
                 // for how many days you want to showcase product under new label
@@ -364,13 +364,13 @@ return [
 
         // Product Review & Rating
         'product_rating' => [
-            
+
             // do you offer this feature?
             'feature' => '1',
-            
+
             // how many reviews to show
             'count' => '20',
-            
+
             // per page pagination
             'pagination' => '4',
         ],
@@ -403,20 +403,20 @@ return [
         'cod' => '1',
     ],
 
-        
 
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Authentication for users
      */
@@ -437,8 +437,8 @@ return [
             'companyinfo' => false,
         ],
     ],
-    
-    
+
+
 
 
     /**
@@ -458,7 +458,7 @@ return [
     'vendor' => [
         // can multiple vendors be registered on the platform?
         'multiple_vendors' => '1',
-        
+
         // Can vendors signup on your platform
         'signup' => '1',
 
@@ -484,7 +484,6 @@ return [
         'your_media' => '0',
     ],
 
-    
 
 
 
@@ -492,7 +491,8 @@ return [
 
 
 
-    
+
+
     /*
         Showcase at home settings
     */
@@ -545,14 +545,14 @@ return [
         'return' => [
             'feature' => '1',
             'refund' => '1',
-            'exchange' => '0',
+            'exchange' => '1',
             'tat_days' => '7'
         ],
 
     ],
-    
-    
-    
+
+
+
     'sticky_footer' => [
         'cataloge' => 'Browse',
     ],
@@ -644,7 +644,7 @@ return [
                 'discount' => [
                     'feature' => true,
                 ],
-                
+
                 'new' => [
                     'feature' => true,
                     'days' => 30,
@@ -653,5 +653,5 @@ return [
         ]
     ]
 
-    
+
 ];
