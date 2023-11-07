@@ -386,15 +386,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -533,15 +533,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -680,15 +680,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -827,15 +827,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -974,15 +974,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -1121,15 +1121,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
@@ -1268,15 +1268,15 @@
                                     class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-blue-600 dark:text-blue-500">
+                                            class="font-medium cursor-pointer text-blue-500">
                                             <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-yellow-600 dark:text-yellow-500">
+                                            class="font-medium cursor-pointer text-yellow-500">
                                             <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
                                         </a>
                                         <a href="#" type="button"
-                                            class="font-medium cursor-pointer text-red-600 dark:text-red-500">
+                                            class="font-medium cursor-pointer text-red-500">
                                             <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
                                         </a>
                                     </div>
