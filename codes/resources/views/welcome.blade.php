@@ -10,7 +10,7 @@
     @include('components.frontend.introsliders.01')
 
     <section id="statistics">
-        <div class="container">
+        <div class="container" style="padding:0.5em 1em !important;">
             <div class="stats owl-carousel">
 
                 <div class="stat">

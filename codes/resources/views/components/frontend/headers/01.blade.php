@@ -25,6 +25,11 @@
                 </nav>
                 <!-- End of Divider -->
             </div>
+            <div class="ml-4">
+                @if(Config::get('icrm.showcase_at_home.feature') == 1)
+                    @livewire('showcasecount')
+                @endif
+            </div>
             <div class="header-right">
                 <div class="header-center" style="margin-right: 12px;min-width: 119px;text-align: center;">
                     <nav class="main-nav ml-0 mr-4" style="margin: auto !important;display: flex;">
@@ -88,9 +93,6 @@
                 @endauth
 
 
-                @if(Config::get('icrm.showcase_at_home.feature') == 1)
-                    @livewire('showcasecount')
-                @endif
 
                 @if (Config::get('icrm.customize.feature') == 1)
                 <a href="{{ route('customize.introduction') }}" class="dropdown cart-dropdown type2 mr-4 mr-lg-4" title="Customize">
@@ -112,6 +114,16 @@
         </div>
     </div></div>
 </header>
+
+ <div class="notifications" style="background:#000000eb">
+        <div class="alert alert-news alert-light alert-round alert-inline" style="padding: 0.2em 0;color:white;">
+            @if(Session::get('showcasecity'))
+                Products Visible from City {{ Session::get('showcasecity') }}
+            @else
+                Products Visible from India
+            @endif
+        </div>
+</div>
 
 @include('components.frontend.headers.couponnotifications')
 @include('components.frontend.headers.alerts')

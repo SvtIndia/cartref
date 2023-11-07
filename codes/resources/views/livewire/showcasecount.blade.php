@@ -1,7 +1,11 @@
 <div class="dropdown cart-dropdown type2 mr-0 mr-lg-4 mr-4">
     <a href="{{ route('showcase.introduction') }}" class="cart-toggle link">
         <i>
-            <img src="https://cartrefs.com/storage/images/logo%20for%20aaphomepage.png" alt="iCommerce" style="height: 1em;">
+            @if(Session::get('showcasecity'))
+                <img src="{{ config('app.url') }}/images/icons/showroom-2.png" alt="iCommerce" style="height: 1.5em;">
+            @else
+                <img src="{{ config('app.url') }}/images/icons/showroom-1.png" alt="iCommerce" style="height: 1.5em;">
+            @endif
             <span class="cart-count" style="top: -0.1em; background: darkorange;">{{ count($ssproducts) }}</span>
         </i>
         {{-- <i class="d-icon-home">
