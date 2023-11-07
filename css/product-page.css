@@ -78,8 +78,7 @@
 .brand-div {
     margin-top: 0;
 }
-
-.brand-span:hover {
+.brand-span:hover{
     border-bottom: 2px solid #1a1a1a;
 }
 
@@ -258,8 +257,7 @@
     top: 0;
     left: 0;
 }
-
-.active[class*="color-img-div"] {
+.active[class*="color-img-div"]{
     border: 2px solid #1a1a1a;
 }
 
@@ -501,7 +499,7 @@
     margin-left: 8px;
 }
 
-.new-wishlist-wrapper>* {
+.new-wishlist-wrapper >*{
     width: 100%;
     height: 100%;
 }
@@ -694,7 +692,6 @@ fseven-day-return-container {
     border-right: 1px solid #1a1a1a;
     border-left: 1px solid #1a1a1a;
 }
-
 .desc-container-h2 {
     margin: 0;
     font-size: inherit;
@@ -707,7 +704,6 @@ fseven-day-return-container {
     font-size: inherit;
     font-weight: inherit;
 }
-
 .desc-container-btn {
     width: 100%;
     height: auto;
@@ -812,7 +808,7 @@ fseven-day-return-container {
     font-family: HelveticaNow, Helvetica, sans-serif;
 }
 
-.view-more {
+.view-more{
     width: 20%;
     color: #fff;
     background-color: #1a1a1a;
@@ -825,25 +821,23 @@ fseven-day-return-container {
     display: inline;
     font-family: HelveticaNow, Helvetica, sans-serif;
 }
-
-.view-more-a:hover {
+.view-more-a:hover{
     text-decoration: none;
     color: #fff;
 }
 
 
-.product-gallery .product-thumbs-wrap .product-thumb img {
+.product-gallery .product-thumbs-wrap .product-thumb img{
     width: 109px !important;
     height: 109px !important;
     object-fit: contain;
 }
 
-.product-single-carousel figure.product-image img {
+.product-single-carousel figure.product-image img{
     width: 100% !important;
     aspect-ratio: 1 / 1 !important;
 }
-
-.similar-title {
+.similar-title{
     font-size: 4rem !important;
     display: flex;
     flex-wrap: wrap;
@@ -857,8 +851,7 @@ fseven-day-return-container {
     margin-bottom: 0px;
     font-family: Tiempos, Times New Roman, serif;
 }
-
-.similar-title2 {
+.similar-title2{
     font-size: 4rem !important;
     display: flex;
     flex-wrap: wrap;
@@ -874,34 +867,30 @@ fseven-day-return-container {
 }
 
 @media screen and (max-width: 768px) {
-    .similar-title {
+    .similar-title{
         font-size: 22px !important;
     }
 }
-
-.old-price {
-    color: #ea2636;
+.old-price{
+    color:#ea2636;
 }
 
 @media screen and (min-width: 900px) {
-    .pin-wrapper {
+    .pin-wrapper{
         position: sticky;
         height: 100vh;
         top: 10vh;
     }
-
     .product-single {
         color: inherit;
         overflow: unset !important;
     }
-
-    .product-single-carousel figure.product-image img {
-        height: 85vh;
+    .product-single-carousel figure.product-image img{
+        height: 95vh;
     }
 }
-
 @media (max-width: 991px) {
-    .similar-title2 {
+    .similar-title2{
         font-size: 20px !important;
     }
 }

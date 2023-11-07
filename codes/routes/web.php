@@ -499,6 +499,7 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
+    return Session::get('showcasecity');
     return Voyager::image('images/showroom_at_home.png');
     $order = Order::latest()->first();
     return Notification::route('mail', auth()->user()->email)->notify(new CodOrderEmail($order));

@@ -757,7 +757,7 @@
             <section class="pt-3">
                 <h2 class="title justify-content-center">Similar Products</h2>
 
-                <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product" data-owl-options="{
+                <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product" style="margin-top: 2rem;" data-owl-options="{
                     'items': 5,
                     'nav': false,
                     'loop': true,

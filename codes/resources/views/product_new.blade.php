@@ -385,7 +385,7 @@
                                 look complete</h1>
                             <h2 class="similar-title2 justify-content-center">Outfit inspiration by Cartrefs</h2>
 
-                            <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
+                            <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product mt-3"
                                 data-owl-options="{
                     'items': 5,
                     'nav': false,
@@ -458,7 +458,7 @@
                                                         </div> --}}
                                                     </figure>
                                                     <div class="product-details">
-                                                        <div class="product-cat">
+                                                        <div class="product-cat text-center">
                                                             <a
                                                                 href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>
                                                         </div>
@@ -466,20 +466,20 @@
                                                             <a
                                                                 href="{{ route('product.slug', ['slug' => $product->slug]) }}">{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</a>
                                                         </h3>
-                                                        <div class="product-price">
+                                                        <div class="product-price text-center" style="color: orange !important">
                                                             <ins
-                                                                class="new-price">{{ config::get('icrm.currency.icon') }}{{ $product->offer_price }}</ins>
+                                                                class="new-price" style="font-size: 16px">{{ config::get('icrm.currency.icon') }}{{ $product->offer_price }}</ins>
                                                             <del
-                                                                class="old-price">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}</del>
+                                                                class="old-price" style="font-size: 16px">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}</del>
 
                                                         </div>
-                                                        <div class="ratings-container">
+                                                        {{-- <div class="ratings-container">
                                                             <div class="ratings-full">
                                                                 <span class="ratings"
                                                                     style="width:
-                                                @if ($product->productreviews) {{ ($product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5)) * 100 }}%
-                                                @else
-                                                0% @endif"></span>
+                                                                @if ($product->productreviews) {{ ($product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5)) * 100 }}%
+                                                                @else
+                                                                0% @endif"></span>
                                                                 <span class="tooltiptext tooltip-top"></span>
                                                             </div>
                                                             <a href="{{ route('product.slug', ['slug' => $product->slug]) }}"
@@ -488,7 +488,7 @@
                                                                 @else
                                                                     0
                                                                 @endif reviews )</a>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                 </div>
                                             </div>
