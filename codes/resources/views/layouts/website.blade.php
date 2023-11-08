@@ -414,6 +414,11 @@
                 margin-right: 1rem;
             }
         }
+        @media screen and (max-width: 481px) {
+            .showroom-at-home{
+                display: none;
+            }
+        }
     </style>
 
     <style>

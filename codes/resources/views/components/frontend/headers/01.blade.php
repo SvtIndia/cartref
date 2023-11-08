@@ -16,6 +16,11 @@
                 </a>
                 <!-- End of Logo -->
             </div>
+            <div class="ml-4 showroom-at-home">
+                @if(Config::get('icrm.showcase_at_home.feature') == 1)
+                    @livewire('showcasecount')
+                @endif
+            </div>
             <div class="header-center">
                 <nav class="main-nav ml-0 mr-0">
                     {{-- @include('components.frontend.headers.01-navs') --}}
@@ -25,11 +30,7 @@
                 </nav>
                 <!-- End of Divider -->
             </div>
-            <div class="ml-4">
-                @if(Config::get('icrm.showcase_at_home.feature') == 1)
-                    @livewire('showcasecount')
-                @endif
-            </div>
+
             <div class="header-right">
                 <div class="header-center" style="margin-right: 12px;min-width: 119px;text-align: center;">
                     <nav class="main-nav ml-0 mr-4" style="margin: auto !important;display: flex;">

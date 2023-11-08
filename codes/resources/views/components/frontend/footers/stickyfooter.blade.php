@@ -8,10 +8,15 @@
         <i class="d-icon-volume"></i>
         <span>Browse</span>
     </a>
-    <a href="{{ route('wishlist') }}" class="sticky-link">
+    {{-- <a href="{{ route('wishlist') }}" class="sticky-link">
         <i class="d-icon-heart"></i>
         <span>Wishlist</span>
-    </a>
+    </a> --}}
+    @if(Config::get('icrm.showcase_at_home.feature') == 1)
+        @livewire('showcasecount',[
+            'view' => 'mobile-bottom'
+        ])
+    @endif
     <a href="{{ route('myaccount') }}" class="sticky-link">
         <i class="d-icon-user"></i>
         <span>Account</span>

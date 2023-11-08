@@ -1,5 +1,5 @@
 {{-- <div class="dropdown wishlist wishlist-dropdown off-canvas mr-4 d-lg-show"> --}}
-<div class="dropdown cart-dropdown type2 mr-0 mr-lg-4  wishlist wishlist-dropdown off-canvas mr-4 d-lg-show">
+<div class="dropdown cart-dropdown type2 mr-0 mr-lg-4  wishlist wishlist-dropdown off-canvas mr-4" style="display: block!important;">
     <a href="{{ route('wishlist') }}" class="wishlist-toggle link" title="wishlist">
         <i class="d-icon-heart">
             <span class="cart-count" style="background: red;">{{ count($wwproducts) }}</span>
@@ -43,8 +43,8 @@
                 </div>
             @endif
 
-            
-            
+
+
 
             <!-- End of wishlist Product -->
         </div>
