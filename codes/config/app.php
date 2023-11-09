@@ -185,7 +185,7 @@ return [
              */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-            // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -250,6 +250,7 @@ return [
         'Msg91' => Craftsys\Msg91\Facade\Msg91::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Pusher' => Pusher\Pusher::class,
     ],
 
 ];

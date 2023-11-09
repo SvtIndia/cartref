@@ -12,8 +12,10 @@
 */
 
 use App\EmailNotification;
+use App\Events\MyEvent;
 use App\Http\Controllers\ShiprocketController;
 use App\Notifications\CodOrderEmail;
+use App\Notifications\TestNotification;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Session;
@@ -48,7 +50,6 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductBulkUploadController;
 use App\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -499,22 +500,16 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    return Session::get('showcasecity');
-    return Voyager::image('images/showroom_at_home.png');
-    $order = Order::latest()->first();
-    return Notification::route('mail', auth()->user()->email)->notify(new CodOrderEmail($order));
-    //    return Notification::route('mail', 'lakshyasvt419@gmail.com')->notify(new CodOrderEmail(\App\Order::take(1)->first()));
-////    $product = \App\Models\Product::find(2970);
-////    $product->attachUser(1);
-////
-////    $product->detachUser(1);
-//
-//    $product = \App\Models\Product::withCount('users')->whereIn('id',[85,90, 2970])->orderBy('users_count', 'desc')->get();
-//    $product = $product->orderBy('users_count', 'desc')->get();
-
-    // return $product;
+    
+  return view('notify');
 });
 
 //Calling this route by shiprocket
 Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderStatus']);
 
+Route::get('/notify',function(){
+    $user = App\Models\User::first();
+    
+    $notify = new App\Notifications\PushNotification();
+    $notify->send($user->id, "Hello! " .$user->name. " New Order recieved");
+});
