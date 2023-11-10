@@ -15,7 +15,9 @@ use App\EmailNotification;
 use App\Events\MyEvent;
 use App\Http\Controllers\ShiprocketController;
 use App\Notifications\CodOrderEmail;
+use App\Notifications\PushNotification;
 use App\Notifications\TestNotification;
+use App\Showcase;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Session;
@@ -329,6 +331,7 @@ Route::prefix('showcase-at-home')->middleware(['auth', 'verified'])->group(funct
         Route::get('/order/{id}/buynow', [ShowcaseAtHomeController::class, 'buynow'])->name('showcase.buynow');
         Route::get('/order/{id}/add-time', [ShowcaseAtHomeController::class, 'addTime'])->name('showcase.add-time');
         Route::post('/order/{id}/cancel', [ShowcaseAtHomeController::class, 'cancelOrder'])->name('showcase.cancel');
+        Route::get('/order/{id}/accept-order', [ShowcaseAtHomeController::class, 'acceptOrder'])->name('showcase.accept-order');
     });
 });
 
@@ -508,8 +511,13 @@ Route::get('/get', function () {
 Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderStatus']);
 
 Route::get('/notify',function(){
-    $user = App\Models\User::first();
-    
-    $notify = new App\Notifications\PushNotification();
-    $notify->send($user->id, "Hello! " .$user->name. " New Order recieved");
+    $orderid = 879814;
+    $notify = new PushNotification();
+    $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
+    $notify->send($showcases[0]->vendor_id, $showcases);
+
+//    $user = App\Models\User::first();
+//
+//    $notify = new App\Notifications\PushNotification();
+//    $notify->send($user->id, "Hello! " .$user->name. " New Order recieved");
 });

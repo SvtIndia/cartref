@@ -63,15 +63,22 @@
                                         ->user()
                                         ->hasRole(['Delivery Boy'])
                                 ) {
-                                    $showcases = App\Showcase::where('deliveryboy_id', auth()->user()->id)->get();
+                                    $showcases = App\Showcase::where('deliveryboy_id', auth()->user()->id)->where('is_order_accepted', true)->get();
                                 } elseif (
                                     auth()
                                         ->user()
                                         ->hasRole(['Delivery Head'])
                                 ) {
-                                    $showcases = App\Showcase::where('pickup_city', auth()->user()->city)->get();
-                                } else {
+                                    $showcases = App\Showcase::where('pickup_city', auth()->user()->city)->where('is_order_accepted', true)->get();
+                                }
+                                elseif (
+                                    auth()
+                                        ->user()
+                                        ->hasRole(['admin','Client'])
+                                ){
                                     $showcases = App\Showcase::get();
+                                } else {
+                                    $showcases = App\Showcase::where('is_order_accepted', true)->get();
                                 }
                             @endphp
 
@@ -106,6 +113,29 @@
                             </a>
 
 
+                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))
+                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Delay Acceptance">
+                                    <div class="item @if (request('label') == 'Delay Acceptance') cancelled active @endif">
+
+                                        @if(auth()->user()->hasRole(['Vendor']))
+                                            <div class="stat">
+                                                <span
+                                                        class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
+                                            </div>
+                                        @elseif(auth()->user()->hasRole(['Client','admin']))
+                                            <div class="stat">
+                                                <span
+                                                        class="count">{{ $showcases->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
+                                            </div>
+                                        @endif
+
+                                        <div class="info">
+                                            <span class="title">Delay Acceptance</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            @endif
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Showcased">
                                 <div class="item @if (request('label') == 'Showcased') showcased active @endif">
 
@@ -544,6 +574,16 @@
                                                 @endif
                                             </ul>
 
+                                            @if(auth()->user()->hasRole(['Vendor']) && !$data->is_order_accepted)
+                                                <div class="mx-auto">
+                                                    <p style="color:black; font-size: 15px;">Accept Showroom at home
+                                                        order</p>
+                                                    <a href="{{ route('showcase.accept-order', $data->order_id)  }}"
+                                                       class="btn btn-lg btn-success">
+                                                        <i class="voyager-check"></i>Accept
+                                                    </a>
+                                                </div>
+                                            @endif
                                             @if (auth()->user()->hasRole(['Delivery Boy']) && $orderStatus)
                                                 @php
                                                     $timer = Carbon\Carbon::parse($data->showcase_timer);
@@ -571,7 +611,8 @@
                                                     @if (!$data->is_timer_extended)
                                                         <ul style="display: inline-flex;">
 
-                                                            <form action="/showcase-at-home/my-orders/order/{{ $data->order_id }}/cancel" method="POST">
+                                                            <form action="/showcase-at-home/my-orders/order/{{ $data->order_id }}/cancel"
+                                                                  method="POST">
                                                                 @csrf
                                                                 <button class="btn btn-lg btn-danger">
                                                                     <i class="voyager-watch"></i>No
