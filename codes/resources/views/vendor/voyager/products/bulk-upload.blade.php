@@ -17,7 +17,28 @@
                 <div class="panel panel-bordered">
                     <form role="form" class="form-edit-add" action="{{ route('products.bulk-upload') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
                         <div class="panel-body">
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="name">Category</label>
+                                <span class="required"></span>
+                                <select class="form-control" name="category_id" required>
+                                    <option selected disabled>Select Category</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="name">Sub Category</label>
+                                <span class="required"></span>
+                                <select class="form-control" name="subcategory_id" required>
+                                    <option selected disabled>Select Category</option>
+                                    @foreach($sub_categories as $sub_category)
+                                        <option value="{{ $sub_category->id }}">{{ $sub_category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="name">Upload File</label>
                                 <span class="required"></span>

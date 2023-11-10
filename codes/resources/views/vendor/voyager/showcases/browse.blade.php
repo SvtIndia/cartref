@@ -116,16 +116,13 @@
                             @if(auth()->user()->hasRole(['Vendor','Client','admin']))
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Delay Acceptance">
                                     <div class="item @if (request('label') == 'Delay Acceptance') cancelled active @endif">
-
                                         @if(auth()->user()->hasRole(['Vendor']))
                                             <div class="stat">
-                                                <span
-                                                        class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
+                                                <span class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
                                             </div>
                                         @elseif(auth()->user()->hasRole(['Client','admin']))
                                             <div class="stat">
-                                                <span
-                                                        class="count">{{ $showcases->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
+                                                <span class="count">{{ $showcases->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
                                             </div>
                                         @endif
 
