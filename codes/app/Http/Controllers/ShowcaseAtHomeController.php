@@ -418,7 +418,7 @@ class ShowcaseAtHomeController extends Controller
         //Pusher notification to seller [Real-Time]
         $notify = new PushNotification();
         $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
-        $notify->send($showcases[0]->vendor_id, $showcases);
+        $notify->send($showcases[0]->vendor_id, $orderid);
 
         // send order email
         $this->orderemail($orderid);
@@ -497,20 +497,22 @@ class ShowcaseAtHomeController extends Controller
     public function acceptOrder($id)
     {
         if (auth()->user()->hasRole(['Vendor'])) {
-            $orders = Showcase::where(['order_id' => $id, 'vendor_id' => auth()->user()->id])->where('is_order_accepted', false)
+            $orders = Showcase::where(['order_id' => $id, 'vendor_id' => auth()->user()->id])
+                ->where('is_order_accepted', false)
+                ->where('order_status', '!=', 'Non Acceptance')
                 ->update([
                     'is_order_accepted' => true,
                     'order_status' => 'Accepted'
                 ]);
 
-            return redirect()->route('voyager.showcases.index',['order_id' => $id])->with([
+            return redirect()->route('voyager.showcases.index', ['order_id' => $id])->with([
                 'message' => "Showcase order accepted successfully",
                 'alert-type' => 'success',
             ]);
-//            return redirect()->back()->with([
-//                'message' => "Showcase order accepted successfully",
-//                'alert-type' => 'success',
-//            ]);
+            //            return redirect()->back()->with([
+            //                'message' => "Showcase order accepted successfully",
+            //                'alert-type' => 'success',
+            //            ]);
         } else {
             abort(404);
         }
@@ -822,5 +824,11 @@ class ShowcaseAtHomeController extends Controller
             Notification::route('mail', auth()->user()->email)->notify(new ShowcasePurchasedEmail($orderid));
         }
 
+    }
+
+    public function getOrder($order_id)
+    {
+        $showcases = Showcase::with('product')->where('order_id', $order_id)->get();
+        return response()->json(['showcases' => $showcases]);
     }
 }

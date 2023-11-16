@@ -55,3 +55,4 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.', 'namespace' => 'Api\\V1\\'], 
             
     });
  });
+ Route::get('/fetch/showroom-orders/{order_id}',[\App\Http\Controllers\ShowcaseAtHomeController::class, 'getOrder']);

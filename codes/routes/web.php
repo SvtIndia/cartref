@@ -513,10 +513,10 @@ Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderSt
 
 Route::get('/notify',function(){
 //    return \App\Models\User::whereIn('id',[1,2])->update(['name' => 'Adminn']);
-    $orderid = 880956;
+    $orderid = 714773;
     $notify = new PushNotification();
     $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
-    $notify->send($showcases[0]->vendor_id, $showcases);
+    $notify->send($showcases[0]->vendor_id, $orderid);
 
 //    $user = App\Models\User::first();
 //
