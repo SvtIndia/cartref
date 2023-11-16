@@ -857,8 +857,13 @@
 
                                         <td>
                                             <div>
-                                                @if ($data->order_status == 'Under manufacturing')
-                                                    <span style="color: orange">{{ $data->order_status }}</span>
+                                                @if (!$data->is_order_accepted && $data->order_status == 'Non Acceptance')
+                                                    <span style="color: black; font-width: 400;">{{ $data->order_status }}</span>
+                                                    <span style="color: red;font-weight:600; font-size:15px" title="Not Acceptance charges">
+                                                         <br>NAC: {{ round($data->product_offerprice * 0.1035, 0) }} /-
+                                                    </span>
+                                                @elseif ($data->order_status == 'Under manufacturing')
+                                                        <span style="color: orange">{{ $data->order_status }}</span>
                                                 @elseif($data->order_status == 'Delivered' or $data->order_status == 'Scheduled for pickup')
                                                     <span style="color: green">{{ $data->order_status }}</span>
                                                 @elseif($data->order_status == 'Out For Showcase')
