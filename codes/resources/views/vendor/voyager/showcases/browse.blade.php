@@ -99,7 +99,7 @@
                                 </a>
                             @elseif(auth()->user()->hasRole(['Delivery Head', 'Delivery Boy']))
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Accepted">
-                                    <div class="item @if (request('label') == 'New Order') new_order active @endif">
+                                    <div class="item @if (request('label') == 'Accepted') new_order active @endif">
 
                                         <div class="stat">
                                         <span
