@@ -15,7 +15,7 @@ class Showcase extends Model
 
     public function scopeRolewise($query)
     {
-        $this->updateDelayAcceptance();
+//        $this->updateDelayAcceptance();
         if(!empty(request('label'))){
             if(request('label') == 'Showcased')
             {
@@ -23,6 +23,12 @@ class Showcase extends Model
             }
             elseif(request('label') == 'Delay Acceptance'){
                 $query->where(['is_order_accepted' => 0, 'order_status' => 'Delay Acceptance']);
+            }
+            elseif(request('label') == 'Non Acceptance'){
+                $query->where(['is_order_accepted' => 0, 'order_status' => 'Non Acceptance']);
+            }
+            elseif(request('label') == 'Accepted'){
+                $query->where(['is_order_accepted' => 1]);
             }
             else{
                 $query->where('order_status', request('label'));    

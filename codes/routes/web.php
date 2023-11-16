@@ -68,6 +68,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/cron.php';
 
 // Route::get('/msg91', function(){
 //     // https://github.com/craftsys/msg91-laravel#installation
@@ -511,7 +512,8 @@ Route::get('/get', function () {
 Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderStatus']);
 
 Route::get('/notify',function(){
-    $orderid = 879814;
+//    return \App\Models\User::whereIn('id',[1,2])->update(['name' => 'Adminn']);
+    $orderid = 880956;
     $notify = new PushNotification();
     $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
     $notify->send($showcases[0]->vendor_id, $showcases);

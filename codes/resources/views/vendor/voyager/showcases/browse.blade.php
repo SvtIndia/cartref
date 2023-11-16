@@ -82,36 +82,37 @@
                                 }
                             @endphp
 
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=New Order">
-                                <div class="item @if (request('label') == 'New Order') new_order active @endif">
+                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))
+                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=New Order">
+                                    <div class="item @if (request('label') == 'New Order') new_order active @endif">
 
-                                    <div class="stat">
+                                        <div class="stat">
+                                            <span
+                                                    class="count">{{ $showcases->where('order_status', 'New Order')->count() }}</span>
+                                        </div>
+
+                                        <div class="info">
+                                            <span class="title">New Order</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            @elseif(auth()->user()->hasRole(['Delivery Head', 'Delivery Boy']))
+                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Accepted">
+                                    <div class="item @if (request('label') == 'New Order') new_order active @endif">
+
+                                        <div class="stat">
                                         <span
-                                                class="count">{{ $showcases->where('order_status', 'New Order')->count() }}</span>
+                                                class="count">{{ $showcases->where('order_status', 'Accepted')->count() }}</span>
+                                        </div>
+
+                                        <div class="info">
+                                            <span class="title">New Order</span>
+                                        </div>
+
                                     </div>
-
-                                    <div class="info">
-                                        <span class="title">New Order</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
-                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Out For Showcase">
-                                <div class="item @if (request('label') == 'Out For Showcase') out_for_showcase active @endif">
-
-                                    <div class="stat">
-                                        <span
-                                                class="count">{{ $showcases->where('order_status', 'Out For Showcase')->count() }}</span>
-                                    </div>
-
-                                    <div class="info">
-                                        <span class="title">Pickup</span>
-                                    </div>
-
-                                </div>
-                            </a>
-
+                                </a>
+                            @endif
 
                             @if(auth()->user()->hasRole(['Vendor','Client','admin']))
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Delay Acceptance">
@@ -133,6 +134,62 @@
                                     </div>
                                 </a>
                             @endif
+                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))
+                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Accepted">
+                                    <div class="item @if (request('label') == 'Accepted') active @endif">
+                                        @if(auth()->user()->hasRole(['Vendor']))
+                                            <div class="stat">
+                                                <span class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Accepted'])->count() }}</span>
+                                            </div>
+                                        @elseif(auth()->user()->hasRole(['Client','admin']))
+                                            <div class="stat">
+                                                <span class="count">{{ $showcases->whereIn('order_status', ['Accepted'])->count() }}</span>
+                                            </div>
+                                        @endif
+
+                                        <div class="info">
+                                            <span class="title">Accepted</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            @endif
+                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))
+                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Non Acceptance">
+                                    <div class="item @if (request('label') == 'Non Acceptance') cancelled active @endif">
+                                        @if(auth()->user()->hasRole(['Vendor']))
+                                            <div class="stat">
+                                                <span class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->where('is_order_accepted', false)->whereIn('order_status', ['Non Acceptance'])->count() }}</span>
+                                            </div>
+                                        @elseif(auth()->user()->hasRole(['Client','admin']))
+                                            <div class="stat">
+                                                <span class="count">{{ $showcases->where('is_order_accepted', false)->whereIn('order_status', ['Non Acceptance'])->count() }}</span>
+                                            </div>
+                                        @endif
+
+                                        <div class="info">
+                                            <span class="title">Non Acceptance</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            @endif
+
+                            <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Out For Showcase">
+                                <div class="item @if (request('label') == 'Out For Showcase') out_for_showcase active @endif">
+
+                                    <div class="stat">
+                                        <span
+                                                class="count">{{ $showcases->where('order_status', 'Out For Showcase')->count() }}</span>
+                                    </div>
+
+                                    <div class="info">
+                                        <span class="title">Pickup</span>
+                                    </div>
+
+                                </div>
+                            </a>
+
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Showcased">
                                 <div class="item @if (request('label') == 'Showcased') showcased active @endif">
 
@@ -178,7 +235,6 @@
                                 </div>
                             </a>
 
-
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Cancelled">
                                 <div class="item @if (request('label') == 'Cancelled') cancelled active @endif">
 
@@ -193,7 +249,6 @@
 
                                 </div>
                             </a>
-
 
                             <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?all=true">
                                 <div class="item @if (request('all') == true) active @endif">
@@ -571,11 +626,11 @@
                                                 @endif
                                             </ul>
 
-                                            @if(auth()->user()->hasRole(['Vendor']) && !$data->is_order_accepted)
+                                            @if(auth()->user()->hasRole(['Vendor']) && !$data->is_order_accepted && $data->order_status !== "Non Acceptance" && $data->order_status !== "Cancelled")
                                                 <div class="mx-auto">
                                                     <p style="color:black; font-size: 15px;">Accept Showroom at home
                                                         order</p>
-                                                    <a href="{{ route('showcase.accept-order', $data->order_id)  }}"
+                                                    <a href="{{ route('showcase.accept-order', $data->order_id) }}"
                                                        class="btn btn-lg btn-success">
                                                         <i class="voyager-check"></i>Accept
                                                     </a>

@@ -500,7 +500,7 @@ class ShowcaseAtHomeController extends Controller
             $orders = Showcase::where(['order_id' => $id, 'vendor_id' => auth()->user()->id])->where('is_order_accepted', false)
                 ->update([
                     'is_order_accepted' => true,
-                    'order_status' => 'New Order'
+                    'order_status' => 'Accepted'
                 ]);
 
             return redirect()->route('voyager.showcases.index',['order_id' => $id])->with([
