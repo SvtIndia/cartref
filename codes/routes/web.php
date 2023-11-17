@@ -511,9 +511,9 @@ Route::get('/get', function () {
 //Calling this route by shiprocket
 Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderStatus']);
 
-Route::get('/notify',function(){
+Route::get('/notify/{order_id}',function($order_id){
 //    return \App\Models\User::whereIn('id',[1,2])->update(['name' => 'Adminn']);
-    $orderid = 714773;
+    $orderid = $order_id;
     $notify = new PushNotification();
     $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
     $notify->send($showcases[0]->vendor_id, $orderid);
