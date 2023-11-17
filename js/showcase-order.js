@@ -86,10 +86,17 @@ channel.bind('my-event', function (data) {
         }
     })
 });
-
+function playBeep()
+{
+    var audio=document.createElement('audio');
+    audio.style.display="none";
+    audio.src = window.location.origin+'/mp3/new_order_beep.wav';
+    audio.autoplay=true;
+    audio.loop = true;
+    document.body.appendChild(audio);
+}
 const setData = () => {
-    var audio = new Audio(window.location.origin+'/mp3/new_order_beep.mp3');
-    audio.play();
+    playBeep();
 
     $('body').append(`
         <div class="modal fade modal-3d-slit modal-success in" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
