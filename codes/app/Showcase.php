@@ -21,9 +21,9 @@ class Showcase extends Model
             {
                 $query->whereIn('order_status', ['Showcased', 'Moved to bag']);
             }
-            elseif(request('label') == 'Delay Acceptance'){
-                $query->where(['is_order_accepted' => 0, 'order_status' => 'Delay Acceptance']);
-            }
+//            elseif(request('label') == 'Delay Acceptance'){
+//                $query->where(['is_order_accepted' => 0, 'order_status' => 'Delay Acceptance']);
+//            }
             elseif(request('label') == 'Non Acceptance'){
                 $query->where(['is_order_accepted' => 0, 'order_status' => 'Non Acceptance']);
             }
@@ -60,12 +60,12 @@ class Showcase extends Model
         return $query->orderBy('updated_at', 'desc');
     }
 
-    public function  updateDelayAcceptance(){
-        Showcase::where(['is_order_accepted' => 0, 'order_status' => 'New Order'])->where('created_at', '<',now()->subMinute(30))->update([
-            'order_status' => 'Delay Acceptance'
-        ]);
-
-    }
+//    public function  updateDelayAcceptance(){
+//        Showcase::where(['is_order_accepted' => 0, 'order_status' => 'New Order'])->where('created_at', '<',now()->subMinute(30))->update([
+//            'order_status' => 'Delay Acceptance'
+//        ]);
+//
+//    }
 
 
 

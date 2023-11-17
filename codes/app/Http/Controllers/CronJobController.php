@@ -12,27 +12,28 @@ use Mockery\Exception;
 class CronJobController extends Controller
 {
     public function oncePerMinute(){
-        $this->showcaseOrderFiveMin();
-        $this->showcaseOrderFifteenMin();
-        $this->showcaseOrderThirtyMin();
+        $res1 = $this->showcaseOrderFifteenMin();
+        $res2 = $this->showcaseOrderThirtyMin();
+
+        return response()->json(['fifteen' => $res1, 'thirty' => $res2]);
     }
     /*
      *  5 minutes
         Order Status => Delay Acceptance
     */
-    public function showcaseOrderFiveMin()
-    {
-        $count = Showcase::where([
-            'is_order_accepted' => 0,
-            'order_status' => 'New Order'
-        ])
-            ->where('created_at', '<=', now()->subMinute(5))
-            ->update([
-                'order_status' => 'Delay Acceptance'
-            ]);
-
-        return response()->json(['success' => true, 'affectedRows' => $count]);
-    }
+//    public function showcaseOrderFiveMin()
+//    {
+//        $count = Showcase::where([
+//            'is_order_accepted' => 0,
+//            'order_status' => 'New Order'
+//        ])
+//            ->where('created_at', '<=', now()->subMinute(5))
+//            ->update([
+//                'order_status' => 'Delay Acceptance'
+//            ]);
+//
+//        return response()->json(['success' => true, 'affectedRows' => $count]);
+//    }
 
     /*
      *  15 minutes
@@ -42,7 +43,7 @@ class CronJobController extends Controller
     {
         $showcases = Showcase::where([
             'is_order_accepted' => 0,
-            'order_status' => 'Delay Acceptance'
+            'order_status' => 'New Order'
         ])
             ->where('created_at', '<=', now()->subMinute(15))
             ->where('created_at', '>', now()->subMinute(30))
@@ -71,7 +72,7 @@ class CronJobController extends Controller
     {
         $count = Showcase::where([
             'is_order_accepted' => 0,
-            'order_status' => 'Delay Acceptance'
+            'order_status' => 'New Order'
         ])
             ->where('created_at', '<=', now()->subMinute(30))
             ->update([

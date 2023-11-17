@@ -48,7 +48,7 @@
                 <div class="panel panel-bordered">
                     <div class="panel-body">
 
-
+                        <h3>Order Haulage <i class="voyager-truck"></i></h3>
                         <div class="dashboard">
 
                             @php
@@ -84,17 +84,16 @@
 
                             @if(auth()->user()->hasRole(['Vendor','Client','admin']))
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=New Order">
-                                    <div class="item @if (request('label') == 'New Order') new_order active @endif">
-
+                                    <div class="item @if (request('label') == 'New Order') new_order active @endif
+                                        @if($showcases->where('order_status', 'New Order')->count()) bg-success-blink @endif"
+                                    >
                                         <div class="stat">
                                             <span
                                                     class="count">{{ $showcases->where('order_status', 'New Order')->count() }}</span>
                                         </div>
-
                                         <div class="info">
                                             <span class="title">New Order</span>
                                         </div>
-
                                     </div>
                                 </a>
                             @elseif(auth()->user()->hasRole(['Delivery Head', 'Delivery Boy']))
@@ -114,26 +113,26 @@
                                 </a>
                             @endif
 
-                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))
-                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Delay Acceptance">
-                                    <div class="item @if (request('label') == 'Delay Acceptance') cancelled active @endif">
-                                        @if(auth()->user()->hasRole(['Vendor']))
-                                            <div class="stat">
-                                                <span class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
-                                            </div>
-                                        @elseif(auth()->user()->hasRole(['Client','admin']))
-                                            <div class="stat">
-                                                <span class="count">{{ $showcases->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>
-                                            </div>
-                                        @endif
+{{--                            @if(auth()->user()->hasRole(['Vendor','Client','admin']))--}}
+{{--                                <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Delay Acceptance">--}}
+{{--                                    <div class="item @if (request('label') == 'Delay Acceptance') cancelled active @endif">--}}
+{{--                                        @if(auth()->user()->hasRole(['Vendor']))--}}
+{{--                                            <div class="stat">--}}
+{{--                                                <span class="count">{{ $showcases->where('vendor_id', auth()->user()->id)->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>--}}
+{{--                                            </div>--}}
+{{--                                        @elseif(auth()->user()->hasRole(['Client','admin']))--}}
+{{--                                            <div class="stat">--}}
+{{--                                                <span class="count">{{ $showcases->whereIn('order_status', ['Delay Acceptance'])->count() }}</span>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
 
-                                        <div class="info">
-                                            <span class="title">Delay Acceptance</span>
-                                        </div>
+{{--                                        <div class="info">--}}
+{{--                                            <span class="title">Delay Acceptance</span>--}}
+{{--                                        </div>--}}
 
-                                    </div>
-                                </a>
-                            @endif
+{{--                                    </div>--}}
+{{--                                </a>--}}
+{{--                            @endif--}}
                             @if(auth()->user()->hasRole(['Vendor','Client','admin']))
                                 <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/showcases?label=Accepted">
                                     <div class="item @if (request('label') == 'Accepted') active @endif">
@@ -588,9 +587,15 @@
                                 @endphp
                                 @foreach ($dataTypeContent as $data)
                                     <tr
-                                            @if ($data->order_status == 'Showcased') style="background: #fce5c1;"
+                                        @if($data->order_status == 'New Order') style="background: #fdf6d2;"
+                                            @elseif($data->order_status == 'Accepted') style="background: #d3fdd3;"
+                                            @elseif($data->order_status == 'Non Acceptance') style="background: #f3b7b7;"
+                                            @elseif($data->order_status == 'Cancelled') style="background: #f4d5d8;"
+                                            @elseif($data->order_status == 'Showcased') style="background: #fce5c1;"
                                             @elseif($data->order_status == 'Out For Showcase') style="background: #c2e6fa;"
-                                            @elseif($data->order_status == 'Purchased' or $data->order_status == 'Moved to Bag') style="background: #d4fae4;" @endif>
+                                            @elseif($data->order_status == 'Purchased' or $data->order_status == 'Moved to Bag') style="background: #d4fae4;"
+                                        @endif
+                                    >
                                         <td class="no-sort no-click bread-actions">
                                             <ul style="display: inline-flex;">
                                                 @if (auth()->user()->hasRole(['Delivery Head']))
@@ -626,12 +631,11 @@
                                                 @endif
                                             </ul>
 
-                                            @if(auth()->user()->hasRole(['Vendor']) && !$data->is_order_accepted && $data->order_status !== "Non Acceptance" && $data->order_status !== "Cancelled")
+                                            @if(auth()->user()->hasRole(['Vendor']) && !$data->is_order_accepted && $data->order_status === 'New Order')
                                                 <div class="mx-auto">
-                                                    <p style="color:black; font-size: 15px;">Accept Showroom at home
-                                                        order</p>
+                                                    <p style="color:black; font-size: 14px; font-weight:500;">New Showroom Order</p>
                                                     <a href="{{ route('showcase.accept-order', $data->order_id) }}"
-                                                       class="btn btn-lg btn-success">
+                                                       class="btn btn-sm btn-success">
                                                         <i class="voyager-check"></i>Accept
                                                     </a>
                                                 </div>

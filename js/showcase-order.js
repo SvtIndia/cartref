@@ -41,7 +41,9 @@ channel.bind('my-event', function (data) {
                                 />
                             </a>
                             <div class="info">
-                                <a href="${window.location.origin +'/product/'+ item.product.slug}" class="name" target="_blank" style="color:unset;">
+                                <a href="${window.location.origin +'/product/'+ item.product.slug}" class="name" target="_blank" 
+                                    style="color:unset;text-overflow: ellipsis;overflow: hidden; white-space: nowrap;"
+                                >
                                     ${item.product.name}
                                 </a>
                                 <div>
@@ -58,7 +60,7 @@ channel.bind('my-event', function (data) {
                             </div>
                         </div>
                     </td>
-                    <td>
+                    <td style="text-align: center;">
                         Qty: ${item.qty}
                     </td>
         
