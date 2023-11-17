@@ -11,6 +11,9 @@ use App\Http\Controllers\CronJobController;
 
 Route::group(['prefix' => 'cron'], function () {
     Route::group(['prefix' => 'showroom-at-home'], function () {
+        /* Once per minute */
+        Route::get('/every-min',[CronJobController::class, 'oncePerMinute']);
+
         Route::get('/order-five-min',[CronJobController::class, 'showcaseOrderFiveMin']);
         Route::get('/order-fifteen-min',[CronJobController::class, 'showcaseOrderFifteenMin']);
         Route::get('/order-thirty-min',[CronJobController::class, 'showcaseOrderThirtyMin']);

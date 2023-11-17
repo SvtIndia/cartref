@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}" dir="{{ __('voyager::generic.is_rtl') == 'true' ? 'rtl' : 'ltr' }}">
 <head>
     <title>@yield('page_title', setting('admin.title') . " - " . setting('admin.description'))</title>
@@ -171,6 +171,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
         <script>
             const pusher_key = "{{env('PUSHER_APP_KEY') }}";
             const user_id = "{{auth()->user()->id }}";
+            const favicon = "{{ Voyager::image($admin_favicon) }}"
         </script>
         <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
         <script src="{{asset('js/showcase-order.js')}}"></script>

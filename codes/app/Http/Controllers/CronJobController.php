@@ -11,6 +11,11 @@ use Mockery\Exception;
 
 class CronJobController extends Controller
 {
+    public function oncePerMinute(){
+        $this->showcaseOrderFiveMin();
+        $this->showcaseOrderFifteenMin();
+        $this->showcaseOrderThirtyMin();
+    }
     /*
      *  5 minutes
         Order Status => Delay Acceptance

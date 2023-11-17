@@ -51,6 +51,9 @@ channel.bind('my-event', function (data) {
                                     <div>
                                         Color: ${item.color}
                                     </div>
+                                    <div>
+                                        SKU: ${item.product_sku}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,11 +84,23 @@ channel.bind('my-event', function (data) {
 
                 if(showcases.length == index + 1){
                     setData();
+                    playBeep();
+                    notifyMe(`#${item.order_id} Order`);
                 }
             });
         }
     })
 });
+function notifyMe(title) {
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+    else {
+        var notification = new Notification(title, {
+            icon: favicon,
+            body: 'New Showroom At Home Order Recieved',
+        });
+    }
+}
 function playBeep()
 {
     var audio=document.createElement('audio');
@@ -96,7 +111,6 @@ function playBeep()
     document.body.appendChild(audio);
 }
 const setData = () => {
-    playBeep();
 
     $('body').append(`
         <div class="modal fade modal-3d-slit modal-success in" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -177,3 +191,14 @@ const timeAgo = (date) => {
 
     return Math.floor(seconds) + ' seconds ago';
 };
+
+
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
+    }
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+});
