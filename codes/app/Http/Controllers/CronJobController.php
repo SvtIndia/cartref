@@ -15,7 +15,7 @@ class CronJobController extends Controller
         $res1 = $this->showcaseOrderFifteenMin();
         $res2 = $this->showcaseOrderThirtyMin();
 
-        return response()->json(['fifteen' => $res1, 'thirty' => $res2]);
+//        return response()->json(['fifteen' => $res1, 'thirty' => $res2]);
     }
     /*
      *  5 minutes
