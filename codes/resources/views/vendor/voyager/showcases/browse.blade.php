@@ -597,7 +597,7 @@
                                         @endif
                                     >
                                         <td class="no-sort no-click bread-actions">
-                                            <ul style="display: inline-flex;">
+                                            <ul style="display: inline-flex; padding: 0px;">
                                                 @if (auth()->user()->hasRole(['Delivery Head']))
                                                     <a href="{{ route('voyager.showcases.edit', $data->id) }}"
                                                        target="_blank" class="btn btn-sm btn-info"><i

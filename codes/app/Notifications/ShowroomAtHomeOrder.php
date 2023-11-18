@@ -9,9 +9,13 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ShowroomAtHomeOrder  extends Notification
+class ShowroomAtHomeOrder extends Notification
 {
     use Queueable;
+    public $order_no;
+    public $seller;
+    public $customer_name;
+    public $customer_email;
 
     /**
      * Create a new notification instance.

@@ -2,34 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Component;
+use App\DeliveryServicableArea;
+use App\Models\Product;
 use App\Models\RewardPointLog;
 use App\Models\UserCreditLog;
-use App\Order;
-use Carbon\Carbon;
-use Exception;
-use App\Payment;
-use App\Showcase;
-use App\Component;
-use App\Productsku;
-use Razorpay\Api\Api;
-use App\Models\Product;
-use App\EmailNotification;
-use Darryldecode\Cart\Cart;
-use Illuminate\Http\Request;
-use TCG\Voyager\Models\Page;
-use TCG\Voyager\Models\User;
-use App\DeliveryServicableArea;
 use App\Notifications\OrderEmail;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
-use LaravelDaily\Invoices\Classes\Party;
-use LaravelDaily\Invoices\Facades\Invoice;
-use Illuminate\Support\Facades\Notification;
+use App\Notifications\PushNotification;
 use App\Notifications\ShowcaseInitiatedEmail;
 use App\Notifications\ShowcasePurchasedEmail;
+use App\Notifications\ShowroomAtHomeOrder;
+use App\Order;
+use App\Payment;
+use App\Productsku;
+use App\Showcase;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use LaravelDaily\Invoices\Classes\InvoiceItem;
-use App\Notifications\PushNotification;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Session;
+use Razorpay\Api\Api;
+use App\Models\User;
 
 class ShowcaseAtHomeController extends Controller
 {
@@ -451,8 +446,19 @@ class ShowcaseAtHomeController extends Controller
          */
         try {
 
+            //to customer
             if (Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1) {
                 Notification::route('mail', auth()->user()->email)->notify(new ShowcaseInitiatedEmail($orderid));
+            }
+
+            //to vendor
+            $order = Showcase::where('order_id', $orderid)->first();
+            $vendorinfo = User::where('id', $order->vendor_id)->first();
+
+            if(isset($order) && isset($vendorinfo)){
+                Notification::route('mail', $vendorinfo->email)->notify(
+                    new ShowroomAtHomeOrder($orderid, $vendorinfo->name, $order->customer_name, $order->customer_email)
+                );
             }
         } catch (Exception $e) {
 
@@ -822,8 +828,8 @@ class ShowcaseAtHomeController extends Controller
 
         if (Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1) {
             Notification::route('mail', auth()->user()->email)->notify(new ShowcasePurchasedEmail($orderid));
-        }
 
+        }
     }
 
     public function getOrder($order_id)
