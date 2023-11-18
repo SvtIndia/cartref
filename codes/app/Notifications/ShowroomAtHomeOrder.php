@@ -59,8 +59,9 @@ class ShowroomAtHomeOrder extends Notification
             ->line('Please check your seller dashboard for complete order details and proceed with fulfilling the order promptly. Your are request to kindly pack and handover the ordered products to a cartrefs certified delivery boy only. Kindly check his name and mobile number on your seller dashboard.')
             ->line('If you have any questions or need assistance, feel free to reach out to our support team at info@cartrefs.com')
             ->line('Thank you for being a valued seller on our platform.')
-            ->line('Best regards')
-            ->line(env('APP_URL'));
+//            ->line('Best regards')
+//            ->line(env('APP_URL'))
+            ;
     }
 
     /**
