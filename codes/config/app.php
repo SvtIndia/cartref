@@ -190,8 +190,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Jorenvh\Share\Providers\ShareServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+//        Jimmyjs\ReportGenerator\ServiceProvider::class,
     ],
 
     /*

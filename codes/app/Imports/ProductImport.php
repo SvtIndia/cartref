@@ -2,15 +2,17 @@
 
 namespace App\Imports;
 
+use App\Brand;
 use App\Color;
+use App\Gender;
+use App\Models\Product;
+use App\Size;
+use App\Style;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use App\Models\Product;
-use App\ProductCategory;
-use App\ProductSubcategory;
-use App\Size;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ProductImport implements ToCollection, WithHeadingRow
 {
@@ -18,20 +20,32 @@ class ProductImport implements ToCollection, WithHeadingRow
     public $sub_category_id;
 
     /**
-    * @param Collection $collection
-    */
+     * @param Collection $collection
+     */
 
-    public function  __construct($category_id, $sub_category_id)
+    public $brands;
+    public $sizes;
+    public $colors;
+    public $genders;
+    public $styles;
+
+    public function __construct($category_id, $sub_category_id)
     {
         $this->category_id = $category_id;
         $this->sub_category_id = $sub_category_id;
+
+        $this->brands = Brand::where('status', 1)->pluck('name')->get();
+        $this->sizes = Size::where('status', 1)->pluck('name')->get();
+        $this->colors = Color::where('status', 1)->pluck('name')->get();
+        $this->genders = Gender::where('status', 1)->pluck('name')->get();
+        $this->styles = Style::where('status', 1)->pluck('name')->get();
     }
 
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
             $product = Product::whereName($row['name'])->first();
-            if(!isset($product)){
+            if (!isset($product)) {
                 $product = new Product;
             }
             $product->name = $row['name'];
@@ -59,19 +73,20 @@ class ProductImport implements ToCollection, WithHeadingRow
             $product->save();
 
 //            dd($product->colors);
-            if(isset($row['available_colours'])){
-                $colours = explode(",", $row['available_colours']);
+            if (isset($row['available_colours'])) {
+                $colours = explode(",", preg_replace('/\s+/', '', $row['available_colours']));
                 foreach ($colours as $colour) {
-                    $product->colors()->attach(Color::where('name','LIKE','%'.$colour.'%')->first()->id);
+                    $product->colors()->attach(Color::where('name', 'LIKE', '%' . $colour . '%')->first()->id);
                 }
             }
 
-            if(isset($row['available_sizes'])){
-                $sizes = explode(",", $row['available_sizes']);
+            if (isset($row['available_sizes'])) {
+                $sizes = explode(",", preg_replace('/\s+/', '', $row['available_sizes']));
                 foreach ($sizes as $size) {
-                    $product->sizes()->attach(Size::where('name','LIKE','%'.$size.'%')->first()->id);
+                    $product->sizes()->attach(Size::where('name', 'LIKE', '%' . $size . '%')->first()->id);
                 }
             }
         }
     }
+
 }

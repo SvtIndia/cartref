@@ -14,6 +14,7 @@
 use App\EmailNotification;
 use App\Events\MyEvent;
 use App\Http\Controllers\ShiprocketController;
+use App\Models\User;
 use App\Notifications\CodOrderEmail;
 use App\Notifications\PushNotification;
 use App\Notifications\TestNotification;
@@ -504,7 +505,8 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    
+    $str = preg_replace('/\s+/', '', ' $str ');
+    dd($str);
   return view('notify');
 });
 
@@ -518,3 +520,5 @@ Route::get('/notify/{order_id}',function($order_id){
     $notify->send($showcases[0]->vendor_id, $order_id);
 
 });
+
+Route::get('/export-users-from-view',[ProductBulkUploadController::class, 'export_users_from_view']);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ActionItemExport;
+use App\Exports\ViewExporter;
 use App\Imports\ProductImport;
 use App\ProductCategory;
 use App\ProductSubcategory;
@@ -38,5 +40,13 @@ class ProductBulkUploadController extends Controller
         }
 
         return redirect()->back()->with($response);
+    }
+
+    public function export_users_from_view() {
+//        return view('exports.users');
+        return Excel::download(
+            new ActionItemExport(),
+            'export.xlsx'
+        );
     }
 }
