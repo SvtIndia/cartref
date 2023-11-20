@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ProductImport implements ToCollection, WithHeadingRow
+class ProductImport implements ToCollection
 {
     public $category_id;
     public $sub_category_id;
@@ -33,57 +33,62 @@ class ProductImport implements ToCollection, WithHeadingRow
     {
         $this->category_id = $category_id;
         $this->sub_category_id = $sub_category_id;
-
-        $this->brands = Brand::where('status', 1)->pluck('name')->get();
-        $this->sizes = Size::where('status', 1)->pluck('name')->get();
-        $this->colors = Color::where('status', 1)->pluck('name')->get();
-        $this->genders = Gender::where('status', 1)->pluck('name')->get();
-        $this->styles = Style::where('status', 1)->pluck('name')->get();
     }
 
     public function collection(Collection $rows)
     {
+        unset($rows[0]);
         foreach ($rows as $row) {
-            $product = Product::whereName($row['name'])->first();
+//            dd($row['5']);
+            $product = Product::whereName($row[0])->first();
             if (!isset($product)) {
                 $product = new Product;
             }
-            $product->name = $row['name'];
-            $product->slug = Str::slug($row['name']);
-            $product->description = $row['description'];
-            $product->mrp = $row['mrp'];
-            $product->offer_price = $row['offer_price'];
+            $product->name = $row[0];
+            $product->slug = Str::slug($row[0]);
+            $product->description = $row[1];
+            $product->mrp = (float)($row[2]);
+            $product->offer_price = (float)($row[3]);
 
             $product->category_id = $this->category_id;
             $product->subcategory_id = $this->sub_category_id;
 
-            $product->brand_id = $row['brand_id'];
-            $product->style_id = $row['style_id'];
-            $product->gender_id = $row['gender_id'];
+            $product->brand_id = $row[4];
+            $product->sku = $row[5];
 
-            $product->length = $row['length'];
-            $product->breadth = $row['breadth'];
-            $product->height = $row['height'];
-            $product->weight = $row['weight'];
+            //6 => colors
+            //7 => sizes
+
+            $product->style_id = $row[8];
+            $product->gender_id = $row[9];
+
+            $product->length = $row[10];
+            $product->breadth = $row[11];
+            $product->height = $row[12];
+            $product->weight = $row[13];
 
             $product->created_by = auth()->user()->id;
             $product->seller_id = auth()->user()->id;
-            $product->features = $row['features'];
-            $product->sku = $row['sku'];
             $product->save();
 
-//            dd($product->colors);
-            if (isset($row['available_colours'])) {
-                $colours = explode(",", preg_replace('/\s+/', '', $row['available_colours']));
+            //colors
+            if (isset($row[6])) {
+                $colours = explode(",", preg_replace('/\s+/', '', $row[6]));
                 foreach ($colours as $colour) {
-                    $product->colors()->attach(Color::where('name', 'LIKE', '%' . $colour . '%')->first()->id);
+                    $item = Color::where('name', 'LIKE', '%' . $colour . '%')->first();
+                    if(isset($item)){
+                        $product->colors()->attach($item->id);
+                    }
                 }
             }
-
-            if (isset($row['available_sizes'])) {
-                $sizes = explode(",", preg_replace('/\s+/', '', $row['available_sizes']));
+            //sizes
+            if (isset($row[7])) {
+                $sizes = explode(",", preg_replace('/\s+/', '', $row[7]));
                 foreach ($sizes as $size) {
-                    $product->sizes()->attach(Size::where('name', 'LIKE', '%' . $size . '%')->first()->id);
+                    $item = Size::where('name', 'LIKE', '%' . $size . '%')->first();
+                    if(isset($item)){
+                        $product->sizes()->attach($item->id);
+                    }
                 }
             }
         }

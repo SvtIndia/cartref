@@ -22,6 +22,7 @@ use App\Showcase;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use TCG\Voyager\Facades\Voyager;
 use App\Notifications\OrderEmail;
 use Seshac\Shiprocket\Shiprocket;
@@ -505,6 +506,7 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
+    return (float)(" 10 4000.55a ");
     $str = preg_replace('/\s+/', '', ' $str ');
     dd($str);
   return view('notify');
