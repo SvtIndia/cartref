@@ -2,19 +2,15 @@
 
 namespace App\Imports;
 
-use App\Brand;
 use App\Color;
-use App\Gender;
 use App\Models\Product;
 use App\Size;
-use App\Style;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ProductImport implements ToCollection
+class ProductImport implements ToCollection, WithMultipleSheets
 {
     public $category_id;
     public $sub_category_id;
@@ -35,11 +31,19 @@ class ProductImport implements ToCollection
         $this->sub_category_id = $sub_category_id;
     }
 
-    public function collection(Collection $rows)
+    public function sheets(): array
     {
-        unset($rows[0]);
-        foreach ($rows as $row) {
-//            dd($row['5']);
+        return [
+            0 => $this,
+        ];
+    }
+    public function collection(Collection $collection)
+    {
+        $rows = $collection->toArray();
+        array_shift($rows);
+        $rows = json_decode(json_encode($rows));
+
+        foreach ($rows as $index => $row) {
             $product = Product::whereName($row[0])->first();
             if (!isset($product)) {
                 $product = new Product;
@@ -52,6 +56,7 @@ class ProductImport implements ToCollection
 
             $product->category_id = $this->category_id;
             $product->subcategory_id = $this->sub_category_id;
+
 
             $product->brand_id = $row[4];
             $product->sku = $row[5];
@@ -73,20 +78,22 @@ class ProductImport implements ToCollection
 
             //colors
             if (isset($row[6])) {
-                $colours = explode(",", preg_replace('/\s+/', '', $row[6]));
+                $colours = explode(",", trim($row[6]));
                 foreach ($colours as $colour) {
-                    $item = Color::where('name', 'LIKE', '%' . $colour . '%')->first();
-                    if(isset($item)){
+                    $colour = trim($colour);
+                    $item = Color::where('status', 1)->where('name', 'LIKE', '%' . $colour . '%')->first();
+                    if (isset($item)) {
                         $product->colors()->attach($item->id);
                     }
                 }
             }
             //sizes
             if (isset($row[7])) {
-                $sizes = explode(",", preg_replace('/\s+/', '', $row[7]));
+                $sizes = explode(",", trim($row[7]));
                 foreach ($sizes as $size) {
-                    $item = Size::where('name', 'LIKE', '%' . $size . '%')->first();
-                    if(isset($item)){
+                    $size = trim($size);
+                    $item = Size::where('status', 1)->where('name', 'LIKE', '%' . $size . '%')->first();
+                    if (isset($item)) {
                         $product->sizes()->attach($item->id);
                     }
                 }

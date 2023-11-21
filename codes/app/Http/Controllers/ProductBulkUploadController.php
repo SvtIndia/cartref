@@ -26,7 +26,7 @@ class ProductBulkUploadController extends Controller
         $sub_category = ProductSubcategory::findOrFail(request()->subcategory_id);
 
         try {
-            Excel::import(new ProductImport($category->id, $sub_category->id), $request->file);
+            $imp = Excel::import(new ProductImport($category->id, $sub_category->id), $request->file);
 
             $response = [
                 'message' => 'Products uploaded successfully',
@@ -43,7 +43,6 @@ class ProductBulkUploadController extends Controller
     }
 
     public function export_users_from_view() {
-//        return view('exports.users');
         return Excel::download(
             new ActionItemExport(),
             'export.xlsx'
