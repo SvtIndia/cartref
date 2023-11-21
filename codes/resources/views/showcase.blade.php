@@ -53,8 +53,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 mb-10 mb-lg-4">
                         {{-- <h5 class="section-subtitle lh-2 ls-md font-weight-normal">01. What We Do</h5> --}}
-                        <h3 class="section-title lh-1 font-weight-bold">{{ setting('showcase-widget.title') }}
-                        </h3>
+                        <h3 class="section-title lh-1 font-weight-bold">{{ setting('showcase-widget.title') }}</h3>
                         <p class="section-desc">{{setting('showcase-widget.description')}}</p>
                     </div>
                     <div class="col-lg-8 ">

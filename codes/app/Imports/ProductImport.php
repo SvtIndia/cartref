@@ -9,8 +9,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ProductImport implements ToCollection, WithMultipleSheets
+class ProductImport implements ToCollection, WithMultipleSheets, WithValidation
 {
     public $category_id;
     public $sub_category_id;
@@ -35,6 +36,20 @@ class ProductImport implements ToCollection, WithMultipleSheets
     {
         return [
             0 => $this,
+        ];
+    }
+
+    public function rules(): array
+    {
+        return [
+            '0' => 'required',
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            '0.required' => 'Product title is required.',
         ];
     }
     public function collection(Collection $collection)

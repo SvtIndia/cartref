@@ -57,6 +57,14 @@
                     <i class="voyager-cloud-download"></i> <span>Download Dummy File</span>
                 </a>
             </div>
+            @php
+                $error_desc = \Illuminate\Support\Facades\Session::get('upload-error') ?? '';
+            @endphp
+            @isset($error_desc)
+                <div class="container">
+                    <p class="text-danger">{!! $error_desc !!}</p>
+                </div>
+            @endisset
         </div>
     </div>
 @stop

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ActionItemExport;
-use App\Exports\ViewExporter;
 use App\Imports\ProductImport;
 use App\ProductCategory;
 use App\ProductSubcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductBulkUploadController extends Controller
@@ -15,7 +16,7 @@ class ProductBulkUploadController extends Controller
     public function uploadPage()
     {
         $categories = ProductCategory::with('subcategory')->where('status', true)->get();
-        return view('vendor.voyager.products.bulk-upload',compact('categories'));
+        return view('vendor.voyager.products.bulk-upload', compact('categories'));
     }
 
     public function upload(Request $request)
@@ -35,16 +36,36 @@ class ProductBulkUploadController extends Controller
                 'alert-type' => 'success',
             ];
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $response = array(
-                'message' => 'Oops! Error occurred. Please Try again Later.',
-                'alert-type' => 'error'
-            );
+            $failures = $e->failures();
+            $all_errors = $e->errors();
+            Log::error($failures);
+            Log::error($all_errors);
+            Log::error($e);
+            $errormessage = "";
+
+            foreach ($failures as $failure) {
+                $errormess = "";
+                foreach ($failure->errors() as $error) {
+                    $errormess = $errormess . $error;
+                }
+                if (isset($errormessage)){
+                    $errormessage .= " ,\n";
+                }
+                $errormessage = $errormessage . " At Row " . $failure->row() . ", " . $errormess . "<br>";
+            }
+
+            $response = [
+                'message' => 'Some Error Occurred',
+                'alert-type' => 'error',
+            ];
+            Session::flash('upload-error', $errormessage);
         }
 
         return redirect()->back()->with($response);
     }
 
-    public function export_product_dummy() {
+    public function export_product_dummy()
+    {
         return Excel::download(
             new ActionItemExport(),
             'CARTREFS PRODUCT-UPLOAD.xlsx'
