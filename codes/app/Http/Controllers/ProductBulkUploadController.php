@@ -14,14 +14,16 @@ class ProductBulkUploadController extends Controller
 {
     public function uploadPage()
     {
-        $categories = ProductCategory::where('status', true)->get();
-        $sub_categories = ProductSubcategory::where('status', true)->get();
-
-        return view('vendor.voyager.products.bulk-upload',compact('categories', 'sub_categories'));
+        $categories = ProductCategory::with('subcategory')->where('status', true)->get();
+        return view('vendor.voyager.products.bulk-upload',compact('categories'));
     }
 
     public function upload(Request $request)
     {
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+        ]);
         $category = ProductCategory::findOrFail(request()->category_id);
         $sub_category = ProductSubcategory::findOrFail(request()->subcategory_id);
 

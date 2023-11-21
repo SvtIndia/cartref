@@ -14,12 +14,12 @@
                 <a href="{{ route('welcome') }}" class="logo">
                     <img src="{{ Voyager::image(setting('site.logo')) }}" alt="{{ env('APP_NAME') }} logo" width="194" height="43">
                 </a>
+                <div class="showroom-at-home">
+                    @if(Config::get('icrm.showcase_at_home.feature') == 1)
+                        @livewire('showcasecount')
+                    @endif
+                </div>
                 <!-- End of Logo -->
-            </div>
-            <div class="ml-4 showroom-at-home">
-                @if(Config::get('icrm.showcase_at_home.feature') == 1)
-                    @livewire('showcasecount')
-                @endif
             </div>
             <div class="header-center">
                 <nav class="main-nav ml-0 mr-0">

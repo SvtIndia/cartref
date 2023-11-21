@@ -489,6 +489,11 @@
             display: flex !important;
         }
     </style>
+    <style>
+        .header-middle .logo {
+            margin-right: 2rem !important;
+        }
+    </style>
     {{-- <style>
         .recent-wishlist {
             cursor: pointer;
