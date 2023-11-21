@@ -42,10 +42,10 @@ class ProductBulkUploadController extends Controller
         return redirect()->back()->with($response);
     }
 
-    public function export_users_from_view() {
+    public function export_product_dummy() {
         return Excel::download(
             new ActionItemExport(),
-            'export.xlsx'
+            'CARTREFS PRODUCT-UPLOAD.xlsx'
         );
     }
 }

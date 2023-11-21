@@ -110,6 +110,7 @@ require __DIR__ . '/cron.php';
  */
 
 Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
+    Route::get('/products/download-dummy', [ProductBulkUploadController::class, 'export_product_dummy'])->name('products.download-dummy');
     Route::get('/products/bulk-upload', [ProductBulkUploadController::class, 'uploadPage'])->name('products.bulk-upload');
     Route::post('/products/bulk-upload', [ProductBulkUploadController::class, 'upload'])->name('products.bulk-upload');
 
@@ -523,4 +524,4 @@ Route::get('/notify/{order_id}',function($order_id){
 
 });
 
-Route::get('/export-users-from-view',[ProductBulkUploadController::class, 'export_users_from_view']);
+Route::get('/export-users-from-view',[ProductBulkUploadController::class, 'export_product_dummy']);
