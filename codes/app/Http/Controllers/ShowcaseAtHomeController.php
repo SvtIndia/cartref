@@ -413,7 +413,7 @@ class ShowcaseAtHomeController extends Controller
         //Pusher notification to seller [Real-Time]
         $notify = new PushNotification();
         $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
-        $notify->send($showcases[0]->vendor_id, $orderid);
+        $notify->send($showcases[0]->vendor_id, $orderid, true);
 
         // send order email
         $this->orderemail($orderid);

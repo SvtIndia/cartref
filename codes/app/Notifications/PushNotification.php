@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Notifications;
+
+use App\Models\User;
 use Pusher\Pusher;
 
 class PushNotification
@@ -24,16 +26,26 @@ class PushNotification
             env("PUSHER_APP_ID"),
             array('cluster' => env("PUSHER_APP_CLUSTER"))
         );
-  
+
     }
 
-    public function send($user_id = null, $data){
-        
-        if(isset($user_id)){
-            $this->channel .= '@'.$user_id;
+    public function send($user_id = null, $data, $isAdmin = false)
+    {
+
+        $channel = $this->channel;
+        if (isset($user_id)) {
+            $channel .= '@' . $user_id;
         }
 
-        $this->pusher->trigger($this->channel, $this->event, array('data' => $data));
+        $this->pusher->trigger($channel, $this->event, array('data' => $data));
+
+        if ($isAdmin) {
+            $users = User::whereIn('role_id', [1, 3])->get();
+            foreach ($users as $user) {
+                $channel = $this->channel . '@' . $user->id;
+                $this->pusher->trigger($channel, $this->event, array('data' => $data));
+            }
+        }
     }
 
 }

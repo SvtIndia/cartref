@@ -520,7 +520,7 @@ Route::get('/notify/{order_id}',function($order_id){
 
     $notify = new PushNotification();
     $showcases = Showcase::with('product')->where('order_id', $order_id)->get();
-    $notify->send($showcases[0]->vendor_id, $order_id);
+    $notify->send($showcases[0]->vendor_id, $order_id, true);
 
 });
 

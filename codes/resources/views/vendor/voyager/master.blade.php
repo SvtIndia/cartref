@@ -167,7 +167,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
     <!-- Additional Javascript -->
 
     {{--  Pusher Notification   --}}
-    @if(auth()->user()->hasRole(['Vendor']))
+    @if(auth()->user()->hasRole(['Vendor','admin','Client']))
         <script>
             const pusher_key = "{{env('PUSHER_APP_KEY') }}";
             const user_id = "{{auth()->user()->id }}";
