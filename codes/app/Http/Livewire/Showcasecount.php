@@ -10,8 +10,14 @@ use Illuminate\Support\Facades\Session;
 class Showcasecount extends Component
 {
     public $showcaseproductid = '';
+    public $view;
 
     protected $listeners = ['showcasecount' => 'render'];
+
+    public function mount($view = null)
+    {
+        $this->view = $view;
+    }
 
     public function render()
     {

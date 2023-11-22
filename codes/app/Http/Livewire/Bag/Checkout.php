@@ -1630,7 +1630,7 @@ class Checkout extends Component
             if (!empty($vendorinfo->email)) {
 
                 // Send order notification to admin
-                Notification::route('mail', config('ADMIN_MAIL'))->notify(
+                Notification::route('mail', Config::get('app.admin_mail'))->notify(
                     new NewOrderMailToAdmin($order->order_id, auth()->user()->name, auth()->user()->email, $vendorinfo->name, $vendorinfo->email)
                 );
 

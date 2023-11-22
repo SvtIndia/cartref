@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Component;
+use App\DeliveryServicableArea;
+use App\Models\Product;
 use App\Models\RewardPointLog;
 use App\Models\UserCreditLog;
-use App\Order;
-use Carbon\Carbon;
-use Exception;
-use App\Payment;
-use App\Showcase;
-use App\Component;
-use App\Productsku;
-use Razorpay\Api\Api;
-use App\Models\Product;
-use App\EmailNotification;
-use Darryldecode\Cart\Cart;
-use Illuminate\Http\Request;
-use TCG\Voyager\Models\Page;
-use TCG\Voyager\Models\User;
-use App\DeliveryServicableArea;
 use App\Notifications\OrderEmail;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
-use LaravelDaily\Invoices\Classes\Party;
-use LaravelDaily\Invoices\Facades\Invoice;
-use Illuminate\Support\Facades\Notification;
+use App\Notifications\PushNotification;
 use App\Notifications\ShowcaseInitiatedEmail;
 use App\Notifications\ShowcasePurchasedEmail;
+use App\Notifications\ShowroomAtHomeOrder;
+use App\Order;
+use App\Payment;
+use App\Productsku;
+use App\Showcase;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use LaravelDaily\Invoices\Classes\InvoiceItem;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Session;
+use Razorpay\Api\Api;
+use App\Models\User;
 
 class ShowcaseAtHomeController extends Controller
 {
@@ -115,7 +111,6 @@ class ShowcaseAtHomeController extends Controller
                         ]);
                     }
                 }
-
 
 
                 Session::put('showcasepincode', $request->showcasepincode);
@@ -248,7 +243,6 @@ class ShowcaseAtHomeController extends Controller
 
         ]);
     }
-
 
 
     public function paynow(Request $request)
@@ -416,6 +410,11 @@ class ShowcaseAtHomeController extends Controller
 
         }
 
+        //Pusher notification to seller [Real-Time]
+        $notify = new PushNotification();
+        $showcases = Showcase::with('product')->where('order_id', $orderid)->get();
+        $notify->send($showcases[0]->vendor_id, $orderid, true);
+
         // send order email
         $this->orderemail($orderid);
 
@@ -447,17 +446,26 @@ class ShowcaseAtHomeController extends Controller
          */
         try {
 
+            //to customer
             if (Config::get('icrm.showcase_at_home.showcase_initiated_email') == 1) {
                 Notification::route('mail', auth()->user()->email)->notify(new ShowcaseInitiatedEmail($orderid));
+            }
+
+            //to vendor
+            $order = Showcase::where('order_id', $orderid)->first();
+            $vendorinfo = User::where('id', $order->vendor_id)->first();
+
+            if(isset($order) && isset($vendorinfo)){
+                Notification::route('mail', $vendorinfo->email)->notify(
+                    new ShowroomAtHomeOrder($orderid, $vendorinfo->name, $order->customer_name, $order->customer_email)
+                );
             }
         } catch (Exception $e) {
 
         }
 
 
-
     }
-
 
 
     public function myorders()
@@ -492,18 +500,42 @@ class ShowcaseAtHomeController extends Controller
         ]);
     }
 
+    public function acceptOrder($id)
+    {
+        if (auth()->user()->hasRole(['Vendor'])) {
+            $orders = Showcase::where(['order_id' => $id, 'vendor_id' => auth()->user()->id])
+                ->where('is_order_accepted', false)
+                ->where('order_status', '!=', 'Non Acceptance')
+                ->update([
+                    'is_order_accepted' => true,
+                    'order_status' => 'Accepted'
+                ]);
+
+            return redirect()->route('voyager.showcases.index', ['order_id' => $id])->with([
+                'message' => "Showcase order accepted successfully",
+                'alert-type' => 'success',
+            ]);
+            //            return redirect()->back()->with([
+            //                'message' => "Showcase order accepted successfully",
+            //                'alert-type' => 'success',
+            //            ]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function cancelOrder($id)
     {
         $orders = Showcase::where('order_id', $id)->get();
 
         $orderStatus = true;
-        foreach($orders as $item){
-            if($item->order_status != 'Showcased'){
+        foreach ($orders as $item) {
+            if ($item->order_status != 'Showcased') {
                 $orderStatus = false;
                 break;
             }
         }
-        if($orderStatus){
+        if ($orderStatus) {
             $orders = Showcase::where('order_id', $id)->where('order_status', 'Showcased')->get();
             foreach ($orders as $order) {
 
@@ -525,12 +557,11 @@ class ShowcaseAtHomeController extends Controller
                 }
             }
 
-            return redirect()->route('voyager.showcases.index',['label'=>'Returned'])->with([
+            return redirect()->route('voyager.showcases.index', ['label' => 'Returned'])->with([
                 'message' => "Showcase order has been cancelled",
                 'alert-type' => 'warning',
             ]);
-        }
-        else{
+        } else {
             return redirect()->route('voyager.showcases.index')->with([
                 'message' => "Failed to cancel the order",
                 'alert-type' => 'error',
@@ -579,7 +610,6 @@ class ShowcaseAtHomeController extends Controller
          * Clear cart
          */
         $this->purchasecarttoorder($request->showcaseorderid);
-
 
 
         Session::flash('success', 'Showcase At Home order successfully placed! You can now collect product from our delivery boy.');
@@ -657,7 +687,6 @@ class ShowcaseAtHomeController extends Controller
                     'name' => $product->vendor->brand_name,
                 ];
             }
-
 
 
             $order = new Order;
@@ -741,7 +770,6 @@ class ShowcaseAtHomeController extends Controller
             ]);
 
 
-
         }
         Session::remove('sordervalue');
         Session::remove('sshowcaserefund');
@@ -755,7 +783,7 @@ class ShowcaseAtHomeController extends Controller
         if (request()->showcase_redeemedCredits > 0) {
             auth()->user()->decrement('credits', request()->showcase_redeemedCredits);
         }
-        if(request()->showcaserefund > 0) {
+        if (request()->showcaserefund > 0) {
             auth()->user()->increment('used_showcase_refund', 1);
         }
 
@@ -800,7 +828,13 @@ class ShowcaseAtHomeController extends Controller
 
         if (Config::get('icrm.showcase_at_home.showcase_purchased_email') == 1) {
             Notification::route('mail', auth()->user()->email)->notify(new ShowcasePurchasedEmail($orderid));
-        }
 
+        }
+    }
+
+    public function getOrder($order_id)
+    {
+        $showcases = Showcase::with('product')->where('order_id', $order_id)->get();
+        return response()->json(['showcases' => $showcases]);
     }
 }

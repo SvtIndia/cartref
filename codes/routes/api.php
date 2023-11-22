@@ -57,5 +57,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.', 'namespace' => 'Api\\V1\\'], 
  });
 
 
+require __DIR__ . '/admin-api.php';
 
- require __DIR__ . '/admin-api.php';
+Route::get('/fetch/showroom-orders/{order_id}',[\App\Http\Controllers\ShowcaseAtHomeController::class, 'getOrder']);
+

@@ -12,11 +12,17 @@
 */
 
 use App\EmailNotification;
+use App\Events\MyEvent;
 use App\Http\Controllers\ShiprocketController;
+use App\Models\User;
 use App\Notifications\CodOrderEmail;
+use App\Notifications\PushNotification;
+use App\Notifications\TestNotification;
+use App\Showcase;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use TCG\Voyager\Facades\Voyager;
 use App\Notifications\OrderEmail;
 use Seshac\Shiprocket\Shiprocket;
@@ -48,7 +54,6 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductBulkUploadController;
 use App\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +71,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/panel-web.php';
+require __DIR__ . '/cron.php';
 
 // Route::get('/msg91', function(){
 //     // https://github.com/craftsys/msg91-laravel#installation
@@ -105,6 +111,7 @@ require __DIR__ . '/panel-web.php';
  */
 
 Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
+    Route::get('/products/download-dummy', [ProductBulkUploadController::class, 'export_product_dummy'])->name('products.download-dummy');
     Route::get('/products/bulk-upload', [ProductBulkUploadController::class, 'uploadPage'])->name('products.bulk-upload');
     Route::post('/products/bulk-upload', [ProductBulkUploadController::class, 'upload'])->name('products.bulk-upload');
 
@@ -329,6 +336,7 @@ Route::prefix('showcase-at-home')->middleware(['auth', 'verified'])->group(funct
         Route::get('/order/{id}/buynow', [ShowcaseAtHomeController::class, 'buynow'])->name('showcase.buynow');
         Route::get('/order/{id}/add-time', [ShowcaseAtHomeController::class, 'addTime'])->name('showcase.add-time');
         Route::post('/order/{id}/cancel', [ShowcaseAtHomeController::class, 'cancelOrder'])->name('showcase.cancel');
+        Route::get('/order/{id}/accept-order', [ShowcaseAtHomeController::class, 'acceptOrder'])->name('showcase.accept-order');
     });
 });
 
@@ -500,21 +508,21 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    return Voyager::image('images/showroom_at_home.png');
-    $order = Order::latest()->first();
-    return Notification::route('mail', auth()->user()->email)->notify(new CodOrderEmail($order));
-    //    return Notification::route('mail', 'lakshyasvt419@gmail.com')->notify(new CodOrderEmail(\App\Order::take(1)->first()));
-////    $product = \App\Models\Product::find(2970);
-////    $product->attachUser(1);
-////
-////    $product->detachUser(1);
-//
-//    $product = \App\Models\Product::withCount('users')->whereIn('id',[85,90, 2970])->orderBy('users_count', 'desc')->get();
-//    $product = $product->orderBy('users_count', 'desc')->get();
-
-    // return $product;
+    return (float)(" 10 4000.55a ");
+    $str = preg_replace('/\s+/', '', ' $str ');
+    dd($str);
+  return view('notify');
 });
 
 //Calling this route by shiprocket
 Route::post('/order-status-update', [ShiprocketController::class, 'updateOrderStatus']);
 
+Route::get('/notify/{order_id}',function($order_id){
+
+    $notify = new PushNotification();
+    $showcases = Showcase::with('product')->where('order_id', $order_id)->get();
+    $notify->send($showcases[0]->vendor_id, $order_id, true);
+
+});
+
+Route::get('/export-users-from-view',[ProductBulkUploadController::class, 'export_product_dummy']);

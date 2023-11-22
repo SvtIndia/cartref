@@ -62,7 +62,7 @@
 
                         <div style="display:inline-flex; width:100%; justify-content: space-between">
                             <div style="width: 48%">
-                                <h3>Order Manifestation <i class="voyager-basket"></i></h1>
+                                <h3>Order Manifestation <i class="voyager-basket"></i></h3>
                                     <div class="dashboard">
                                         <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=New Order">
                                             <div class="item @if (request('label') == 'New Order') new_order active @endif">
@@ -104,7 +104,7 @@
                                     </div>
                             </div>
                             <div style="width: 48%">
-                                <h3>Order Haulage <i class="voyager-truck"></i></h1>
+                                <h3>Order Haulage <i class="voyager-truck"></i></h3>
                                     <div class="dashboard">
                                         <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=Shipped">
                                             <div class="item @if (request('label') == 'Shipped') shipped active @endif">
@@ -146,7 +146,7 @@
                         <div style="display:inline-flex; width:100%; justify-content: space-between">
                             <div style="width: 48%">
                                 <h3>Returns <i class="voyager-refresh"></i>
-                                    </h1>
+                                    </h3>
                                     <div class="dashboard">
 
                                         <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?label=RTO">
@@ -190,7 +190,7 @@
                             <div style="width: 48%">
                                 <h3>Journey at Cartrefs
                                     <i class="voyager-location"></i>
-                                    </h1>
+                                    </h3>
                                     <div class="dashboard">
                                         <a href="/{{ Config::get('icrm.admin_panel.prefix') }}/orders?all=true">
                                             <div class="item @if (request('all') == true) active @endif">

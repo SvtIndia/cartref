@@ -414,6 +414,11 @@
                 margin-right: 1rem;
             }
         }
+        @media screen and (max-width: 481px) {
+            .showroom-at-home{
+                display: none;
+            }
+        }
     </style>
 
     <style>
@@ -475,6 +480,18 @@
             .cart-toggle {
                 pointer-events: none;
             }
+        }
+        .product-media{
+            display: flex !important;
+            align-items: center;
+        }
+        .product-media  a{
+            display: flex !important;
+        }
+    </style>
+    <style>
+        .header-middle .logo {
+            margin-right: 2rem !important;
         }
     </style>
     {{-- <style>

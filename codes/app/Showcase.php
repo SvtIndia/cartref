@@ -15,15 +15,24 @@ class Showcase extends Model
 
     public function scopeRolewise($query)
     {
-        if(!empty(request('label')))
-        {
+//        $this->updateDelayAcceptance();
+        if(!empty(request('label'))){
             if(request('label') == 'Showcased')
             {
                 $query->whereIn('order_status', ['Showcased', 'Moved to bag']);
-            }else{
+            }
+//            elseif(request('label') == 'Delay Acceptance'){
+//                $query->where(['is_order_accepted' => 0, 'order_status' => 'Delay Acceptance']);
+//            }
+            elseif(request('label') == 'Non Acceptance'){
+                $query->where(['is_order_accepted' => 0, 'order_status' => 'Non Acceptance']);
+            }
+            elseif(request('label') == 'Accepted'){
+                $query->where(['is_order_accepted' => 1]);
+            }
+            else{
                 $query->where('order_status', request('label'));    
             }
-            
         }
 
         if(request('order_id'))
@@ -39,15 +48,24 @@ class Showcase extends Model
         if(Auth::user()->hasRole(['Delivery Head']))
         {
             $query->where('pickup_city', auth()->user()->city);
+            $query->where('is_order_accepted', true);
         }
 
         if(Auth::user()->hasRole(['Delivery Boy']))
         {
             $query->where('deliveryboy_id', auth()->user()->id);
+            $query->where('is_order_accepted', true);
         }
 
         return $query->orderBy('updated_at', 'desc');
     }
+
+//    public function  updateDelayAcceptance(){
+//        Showcase::where(['is_order_accepted' => 0, 'order_status' => 'New Order'])->where('created_at', '<',now()->subMinute(30))->update([
+//            'order_status' => 'Delay Acceptance'
+//        ]);
+//
+//    }
 
 
 

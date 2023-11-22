@@ -16,10 +16,9 @@ class ShiprocketController extends Controller
     public function updateOrderStatus(Request $request)
     {
         try {
-
             //Test
             $order = \App\Order::first();
-            $order->tracking_url = json_encode(request()->all());
+            $order->tracking_url = json_encode(request()->all()) . ' Header ==> '. json_encode(request()->header());
             $order->save();
 
             //Test end
@@ -27,18 +26,20 @@ class ShiprocketController extends Controller
 
             $awb = request()->awb;
             $orders = Order::where('order_awb', $awb)->get();
-            if(is_array($orders) && count($orders) > 0){
+
+            if(isset($orders) && count($orders) > 0){
                 foreach ($orders as $order) {
                     $token = Shiprocket::getToken();
                     $response = Shiprocket::track($token)->throwShipmentId($order->shipping_id);
 
+                   
                     if (isset(json_decode($response)->tracking_data->track_url)) {
                         $order->update([
                             'tracking_url' => json_decode($response)->tracking_data->track_url,
                         ]);
                     }
                     if (isset(json_decode($response)->tracking_data->shipment_track)) {
-                        $currentstatus = strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
+                        $currentstatus = request()->current_status ?? strtoupper(json_decode($response)->tracking_data->shipment_track[0]->current_status);
 
                         if (
                             $currentstatus == 'OUT FOR PICKUP'

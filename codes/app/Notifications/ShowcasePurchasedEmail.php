@@ -12,6 +12,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class ShowcasePurchasedEmail extends Notification
 {
     use Queueable;
+    public $orderid;
 
     /**
      * Create a new notification instance.

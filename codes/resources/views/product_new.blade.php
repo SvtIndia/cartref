@@ -385,7 +385,7 @@
                                 look complete</h1>
                             <h2 class="similar-title2 justify-content-center">Outfit inspiration by Cartrefs</h2>
 
-                            <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product"
+                            <div class="owl-carousel owl-theme owl-nav-full owl-loaded owl-drag home-product mt-3"
                                 data-owl-options="{
                     'items': 5,
                     'nav': false,
@@ -412,87 +412,112 @@
 
 
                                 <div class="owl-stage-outer">
-                                    <div class="owl-stage"
+                                    <div class="owl-stage custom-owl-staeg"
                                         style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1200px;">
                                         @foreach ($relatedproducts as $key => $product)
-                                            <div class="owl-item @if ($key == 0) active @endif"
-                                                style="width: 280px; margin-right: 20px;">
-                                                <div class="product">
-                                                    <figure class="product-media">
-                                                        <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
-                                                            <img src="{{ Voyager::image($product->image) }}"
-                                                                alt="{{ $product->name }}" width="280" height="315">
-                                                        </a>
-                                                        @include('product.badges')
-                                                        <div class="product-action-vertical"
-                                                            style="width: 29px height:29px">
-                                                            {{-- <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
-                                                                    data-target="#addCartModal" title="Add to cart"><i
-                                                                        class="d-icon-bag"></i></a>
-                                                                --}}
-                                                            {{-- <a href="#" class="btn-product-icon btn-wishlist"
-                                                                    title="Add to wishlist"><i class="d-icon-heart"></i></a> --}}
-                                                            @livewire(
-                                                                'wishlist',
-                                                                [
-                                                                    'wishlistproductid' => $product->id,
-                                                                    'view' => 'product-card',
-                                                                ],
-                                                                key($product->id . time())
-                                                            )
+                                        @php
+                                            $firstcolorimage = App\Productcolor::where('status', 1)
+                                                ->where('product_id', $product->id)
+                                                ->first();
+
+                                            if (isset($firstcolorimage)) {
+                                                if (!empty($firstcolorimage->main_image)) {
+                                                    $firstcolorimage = $firstcolorimage->main_image;
+                                                    // $firstcolorimage = $product->image;
+                                                } else {
+                                                    $firstcolorimage = $product->image;
+                                                }
+                                            } else {
+                                                $firstcolorimage = $product->image;
+                                            }
+                                        @endphp
+                                        <div class="new-product-wrap owl-item @if ($key == 0) active @endif">
+                                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}">
+                                                <div class="new-product">
+                                                    <div class="image">
+                                                        <img class="product-image" src="{{ Voyager::image($firstcolorimage) }}"
+                                                            alt="{{ $product->name }}" />
+
+                                                        @if ($product->productreviews && $product->productreviews()->count())
+                                                            <div class="product-rating-horizontal">
+                                                                <div class="star">
+                                                                    @if ($product->productreviews)
+                                                                        {{ ($product->productreviews()->where('status', 1)->sum('rate') /
+                                                                            ($product->productreviews()->where('status', 1)->count() *
+                                                                                5)) *
+                                                                            5 }}
+                                                                    @else
+                                                                        0
+                                                                    @endif &nbsp;
+                                                                    <img src="{{ asset('/images/icons/star.svg') }}"
+                                                                        alt="star">
+                                                                </div>
+                                                                <span class="dash">|</span>
+                                                                <div class="book">
+                                                                    {{ $product->productreviews()->count() }} &nbsp;
+                                                                    <img src="{{ asset('/images/icons/book.svg') }}"
+                                                                        alt="book">
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="content">
+                                                        <div class="brand-name">{{ $product->brand_id }}</div>
+                                                        <div class="product-name">
+                                                            {{ Str::limit($product->getTranslatedAttribute('name', App::getLocale(), 'en'), 45) }}
+                                                        </div>
+                                                        <div class="product-price">
+                                                            <span
+                                                                class="mrp">{{ Config::get('icrm.currency.icon') }}{{ $product->offer_price }}/-
+                                                            </span>
+                                                            <span
+                                                                class="sp">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}
+                                                                <br /></span>
+                                                        </div>
+                                                        @if ($product->mrp > $product->offer_price)
+                                                            @php
+                                                                $discount = $product->mrp - $product->offer_price;
+                                                                $discountPercent = ($discount / $product->mrp) * 100;
+                                                            @endphp
+                                                            <div class="off">({{ round($discountPercent) }}% off)</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="product-action-vertical-new">
+                                                        {{-- <a href="#" class="wishlist"> --}}
+                                                        {{-- <img src="{{ asset('/images/icons/wishlist.svg') }}" alt="wishlist"> --}}
+                                                        {{-- </a> --}}
+                                                        {{-- <a class="cart"> --}}
+                                                        {{-- <img src="{{ asset('/images/icons/cart.svg') }}" alt="cart"> --}}
+                                                        {{-- </a> --}}
+                                                        <div>
                                                             @livewire(
                                                                 'quickview',
                                                                 [
                                                                     'product' => $product,
-                                                                    'view' => 'old-product-card',
+                                                                    'view' => 'product-card',
                                                                 ],
                                                                 key($product->id . time())
                                                             )
                                                         </div>
-                                                        {{-- <div class="product-action"> --}}
-                                                        {{-- <a href="#" class="btn-product btn-quickview" title="Quick View">Quick
-                                                                View</a> --}}
-                                                        {{-- @livewire('quickview', [
-                                                            'product' => $product
-                                                            ], key($product->id.time()))
-                                                        </div> --}}
-                                                    </figure>
-                                                    <div class="product-details">
-                                                        <div class="product-cat">
-                                                            <a
-                                                                href="{{ route('products.subcategory', ['subcategory' => $product->productsubcategory->slug]) }}">{{ $product->productsubcategory->name }}</a>
-                                                        </div>
-                                                        <h3 class="product-name">
-                                                            <a
-                                                                href="{{ route('product.slug', ['slug' => $product->slug]) }}">{{ $product->getTranslatedAttribute('name', App::getLocale(), 'en') }}</a>
-                                                        </h3>
-                                                        <div class="product-price">
-                                                            <ins
-                                                                class="new-price">{{ config::get('icrm.currency.icon') }}{{ $product->offer_price }}</ins>
-                                                            <del
-                                                                class="old-price">{{ Config::get('icrm.currency.icon') }}{{ $product->mrp }}</del>
 
+                                                        <div>
+                                                            @livewire(
+                                                                'wishlist',
+                                                                [
+                                                                    'wishlistproductid' => $product->id,
+                                                                    'view' => 'new-product-card',
+                                                                ],
+                                                                key($product->id . time())
+                                                            )
                                                         </div>
-                                                        <div class="ratings-container">
-                                                            <div class="ratings-full">
-                                                                <span class="ratings"
-                                                                    style="width:
-                                                @if ($product->productreviews) {{ ($product->productreviews()->sum('rate') / ($product->productreviews()->count() * 5)) * 100 }}%
-                                                @else
-                                                0% @endif"></span>
-                                                                <span class="tooltiptext tooltip-top"></span>
-                                                            </div>
-                                                            <a href="{{ route('product.slug', ['slug' => $product->slug]) }}"
-                                                                class="link-to-tab rating-reviews">( @if ($product->productreviews)
-                                                                    {{ $product->productreviews()->count() }}
-                                                                @else
-                                                                    0
-                                                                @endif reviews )</a>
-                                                        </div>
+
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            </a>
+                                        </div>
+                                    @endforeach
                                     </div>
                                 </div>
                                 <div class="owl-nav disabled">
