@@ -51,6 +51,8 @@ class Sheet1Export implements FromCollection, WithHeadings, WithStyles, WithEven
             "Breadth \n (cms)",
             "Height \n (cms)",
             "Weight \n (Kgs)",
+            "Features",
+            "Product Keywords \n Comma (,) Seperated",
         ];
     }
 

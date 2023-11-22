@@ -46,7 +46,7 @@ class ProductImport implements ToCollection, WithMultipleSheets, WithValidation
         ];
     }
 
-    public function customValidationMessages()
+    public function customValidationMessages(): array
     {
         return [
             '0.required' => 'Product title is required.',
@@ -86,6 +86,9 @@ class ProductImport implements ToCollection, WithMultipleSheets, WithValidation
             $product->breadth = $row[11];
             $product->height = $row[12];
             $product->weight = $row[13];
+
+            $product->features = $row[14];
+            $product->product_tags = $row[15];
 
             $product->created_by = auth()->user()->id;
             $product->seller_id = auth()->user()->id;
