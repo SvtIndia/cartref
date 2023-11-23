@@ -285,10 +285,10 @@
                         </a>
                     </li>
                     <li class="min-w-max">
-                        <a href="#" class="single-item">
+                        <router-link :to="{ name: 'wishlists' }" class="single-item">
                             <i class="fi fi-rr-heart"></i>
-                            <span class="text-gray-700">Wishlists</span>
-                        </a>
+                            <span class="">Wishlists</span>
+                        </router-link>
                     </li>
                 </ul>
                 <div class="min-w-max mb-14">

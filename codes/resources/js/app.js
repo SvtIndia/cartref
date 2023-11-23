@@ -1,15 +1,13 @@
 window.Vue = require('vue');
-
 import Vue from 'vue'
-import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-import router from './router.js'
-// import store from './store.js'
+import router from './Router/index'
+import store from './Store/index'
+import mixin from './plugins/mixin';
 
-
-// Vue.use(Vuex);
 Vue.use(VueRouter);
 
+//components
 Vue.component('side-bar', require('./components/SideBar.vue').default);
 Vue.component('navbar', require('./components/NavBar.vue').default);
 Vue.component('pagination', require('./components/Pagination.vue').default);
@@ -18,5 +16,5 @@ Vue.component('image-modal', require('./components/ImageModal.vue').default);
 const app = new Vue({
     el: '#app',
     router,
-    // store
+    store
 });

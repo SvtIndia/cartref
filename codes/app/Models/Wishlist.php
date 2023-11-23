@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wishlist extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'id',
@@ -27,7 +28,23 @@ class Wishlist extends Model
     */
     public function getWishlistDataAttribute($value)
     {
-        return unserialize($value);
+        $value = unserialize($value);
+        $objs = json_decode($value, true) ?? [];
+        foreach ($objs as $key => $obj) {
+            if(isset($obj) && isset($obj['id'])){
+                $objs[$key]['product'] = Product::find($obj['id']) ?? [];
+            }
+            else{
+                unset($objs[$key]);
+            }
+        }
+        return ($objs);
+
+//        $wishlist_data = unserialize($value);
+//        if(isset($wishlist_data->id)){
+//            $wishlist_data->product = Product::find($wishlist_data->id);
+//        }
+//        return $wishlist_data;
     }
 
 

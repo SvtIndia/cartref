@@ -28,6 +28,9 @@
         @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200 pl-11;
     }
 
+    input{
+        accent-color: green;
+    }
     ::-moz-selection {
         /* Code for Firefox */
         @apply bg-green-500 text-white;
