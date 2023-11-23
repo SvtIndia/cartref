@@ -91,17 +91,17 @@
                     </template>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-left py-1">
-                    <template v-if="wishlist.wishlist_data">
-                      <div class="flex gap-2" v-for="(wishlist, index) in wishlist.wishlist_data" v-bind:key="index">
+                    <template v-if="wishlist.wishlist_data.data">
+                      <div class="flex gap-2 my-2" v-for="(wishlist, index) in wishlist.wishlist_data.data" v-bind:key="index">
                         <div
-                            class="flex gap-1 items-center text-start text-gray-900 whitespace-nowrap dark:text-white">
+                            class="flex gap-1 items-center text-start text-gray-900">
                           <img
                               @click="imageModal($store.state.storageUrl + wishlist.product.image)"
                               class="w-14 h-14 border rounded-[50%]"
                               :src="$store.state.storageUrl + wishlist.product.image"
                               alt="Shoes image">
                           <div class="pl-2">
-                            <div class="text-base font-medium overflow-hidden w-[80%] hover:underline">
+                            <div class="text-base font-medium overflow-hidden w-100 hover:underline">
                               <a :href="'/product/'+wishlist.product.slug" target="_blank">
                                 {{ wishlist.product ? wishlist.product.name : '-' }}
                               </a>

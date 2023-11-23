@@ -1,9 +1,12 @@
 <template>
   <div class="my-4 px-2 flex justify-end">
     <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+      <!-- Previous btn  -->
       <button class="prev-btn" type="button" :disabled="isPrevDisabled" @click="fetchNewData(pagination.prev_page_url)">
         <i class="fi fi-ss-angle-small-left text-xl text-center h-6 w-6"></i>
       </button>
+
+      <!-- Links 1,2,3  -->
       <template v-if="pagination.links">
         <template v-for="(link,index) in pagination.links">
           <button class="active-link" aria-current="page" v-if="link.active">
@@ -14,10 +17,9 @@
           </button>
         </template>
       </template>
-      <!--      <span-->
-      <!--          class="relative inline-flex items-center px-4 py-2 hover:bg-green-100 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>-->
-      <button type="button" :disabled="isNextDisabled" @click="fetchNewData(pagination.next_page_url)"
-              class="next-btn">
+
+      <!-- Next btn  -->
+      <button type="button" :disabled="isNextDisabled" @click="fetchNewData(pagination.next_page_url)" class="next-btn">
         <i class="fi fi-ss-angle-small-right text-xl text-center h-6 w-6"></i>
       </button>
     </nav>

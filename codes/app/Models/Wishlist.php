@@ -28,8 +28,8 @@ class Wishlist extends Model
     */
     public function getWishlistDataAttribute($value)
     {
-        $value = unserialize($value);
-        $objs = json_decode($value, true) ?? [];
+        $data = unserialize($value);
+        $objs = json_decode($data, true) ?? [];
         foreach ($objs as $key => $obj) {
             if(isset($obj) && isset($obj['id'])){
                 $objs[$key]['product'] = Product::find($obj['id']) ?? [];
@@ -38,14 +38,10 @@ class Wishlist extends Model
                 unset($objs[$key]);
             }
         }
-        return ($objs);
+        return (object)['serialize' => $value, 'unserialize' => $data, 'data' => $objs];
 
-//        $wishlist_data = unserialize($value);
-//        if(isset($wishlist_data->id)){
-//            $wishlist_data->product = Product::find($wishlist_data->id);
-//        }
-//        return $wishlist_data;
     }
+
 
 
     public function user(){

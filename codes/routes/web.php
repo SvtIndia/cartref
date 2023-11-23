@@ -15,6 +15,7 @@ use App\EmailNotification;
 use App\Events\MyEvent;
 use App\Http\Controllers\ShiprocketController;
 use App\Models\User;
+use App\Models\Wishlist;
 use App\Notifications\CodOrderEmail;
 use App\Notifications\PushNotification;
 use App\Notifications\TestNotification;
@@ -508,6 +509,7 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
+    return Wishlist::first()->wishlist_data->data;
     return (float)(" 10 4000.55a ");
     $str = preg_replace('/\s+/', '', ' $str ');
     dd($str);

@@ -17,7 +17,7 @@
 </style>
 @php
 
-    $objs = $content ?? [];
+    $objs = $content->data ?? [];
     //    $objs = json_decode($content, true) ?? [];
     //    foreach ($objs as $key => $obj) {
     //        if(isset($obj) && isset($obj['id'])){
