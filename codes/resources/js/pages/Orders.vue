@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
         <div class="container mx-auto my-2 px-4">
             <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
                 <i class="fi fi-rr-boxes"></i>

@@ -12,11 +12,11 @@
             <div>
               <p class="text-base text-gray-700">
                 Showing
-                <span class="font-medium">1</span>
+                <span class="font-medium">{{ pagination.from || '0' }}</span>
                 to
-                <span class="font-medium">10</span>
+                <span class="font-medium">{{ pagination.to || '0' }}</span>
                 of
-                <span class="font-medium">97</span>
+                <span class="font-medium">{{ pagination.total || '0'}}</span>
                 results
               </p>
             </div>
@@ -26,17 +26,16 @@
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <i class="fi fi-rr-search mr-1"></i>
                 </div>
-                <input type="text"
+                <input type="text" v-model="keyword"
                        class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
-                       placeholder="Search">
+                       placeholder="Search" @keydown.enter="fetchWishlist()">
               </div>
               <div class="flex border border-gray-600 rounded-lg bg-white">
-                <button class="px-2 py-1 m-[2px] hover:bg-gray-100 border-r border-solid cursor-pointer">
+                <button class="px-2 py-1 m-[2px] hover:bg-gray-100 border-r border-solid cursor-pointer" @click="fetchWishlist()">
                   <i class="ffi fi-rr-refresh mr-1"></i>
                 </button>
-                <select class="w-12 block px-1 m-[2px] text-sm text-gray-900 bg-white hover:bg-gray-100 cursor-pointer">
-                  <option value="">25</option>
-                  <option value="">50</option>
+                <select class="w-14 block px-1 m-[2px] text-base text-center text-gray-900 bg-white hover:bg-gray-100 cursor-pointer" @change="fetchWishlist()" v-model="row_count">
+                  <option :value="count.toLowerCase()" v-for="(count, index) in $store.state.row_counts" :key="index">{{ count }}</option>
                 </select>
               </div>
             </div>
@@ -109,12 +108,12 @@
                 </div>
               </template>
             </div>
-            <pagination/>
+            <Pagination :pagination="pagination" :fetchNewData="fetchWishlist"/>
           </div>
         </div>
       </div>
     </div>
-    <image-modal :show="showModal" :hide="closeImageModal" :img="imgModal"></image-modal>
+    <ImageModal :show="showModal" :hide="closeImageModal" :img="imgModal"></ImageModal>
   </div>
 </template>
 
@@ -124,8 +123,11 @@ export default {
   data() {
     return {
       wishlists: [],
+      keyword: '',
+      row_count: this.$store.state.defaultRowCount,
       showModal: false,
       imgModal: '',
+      pagination:{},
     }
   },
   methods: {
@@ -133,13 +135,21 @@ export default {
       this.showModal = true;
       this.imgModal = img;
     },
-    closeImageModal(){
+    closeImageModal() {
       this.showModal = false;
     },
-    fetchWishlist() {
-      axios.get('/admin/wishlist')
+    fetchWishlist(url) {
+      url = url || '/admin/wishlist'
+      axios.get(url, {
+        params: {
+          rows: this.row_count,
+          keyword: this.keyword,
+        }
+      })
           .then(res => {
             this.wishlists = res.data.data;
+            let {data, ...pagination} = res.data;
+            this.pagination = pagination;
           })
     }
   },

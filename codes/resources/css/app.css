@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 @layer components {
+    input{
+        accent-color: green;
+    }
+    ::-moz-selection {
+        /* Code for Firefox */
+        @apply bg-green-500 text-white;
+    }
+
+    ::selection {
+        @apply bg-green-500 text-white;
+    }
+
+    /* SideBar */
     .sidebar {
         transition: all 0.2s ease-in-out;
         @apply max-h-screen w-[3.35rem] hover:w-64 overflow-hidden border-r hover:bg-white hover:shadow-lg;
@@ -28,17 +41,20 @@
         @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200 pl-11;
     }
 
-    input{
-        accent-color: green;
+    /* Pagination */
+    .prev-btn{
+        @apply relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50;
     }
-    ::-moz-selection {
-        /* Code for Firefox */
-        @apply bg-green-500 text-white;
+    .next-btn{
+        @apply relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-green-100 focus:z-20 focus:outline-offset-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    .active-link{
+        @apply relative z-10 inline-flex items-center bg-green-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600;
+    }
+    .default-link{
+        @apply relative inline-flex items-center px-4 py-2 hover:bg-green-100 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-20 focus:outline-offset-0;
     }
 
-    ::selection {
-        @apply bg-green-500 text-white;
-    }
 }
 
 @layer utilities {
@@ -49,7 +65,7 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-        background: #5c5c7b;
+        @apply bg-green-700;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
