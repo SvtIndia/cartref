@@ -18,6 +18,9 @@ module.exports = {
                 "light-4": "#5C5C7B",
                 "gray-1": "#697C89",
             },
+            animation: {
+                'pulse-fast': 'pulse 1s linear infinite',
+            }
         },
     },
     plugins: [],

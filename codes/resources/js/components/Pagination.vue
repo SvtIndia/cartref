@@ -30,12 +30,6 @@ export default {
     pagination: Object,
     fetchNewData: Function,
   },
-  watch: {
-    pagination: function () {
-      this.pagination.links.pop();
-      this.pagination.links.shift();
-    }
-  },
   computed: {
     isPrevDisabled: function () {
       return !this.pagination.prev_page_url;

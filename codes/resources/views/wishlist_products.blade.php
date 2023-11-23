@@ -17,15 +17,16 @@
 </style>
 @php
 
-    $objs = json_decode($content, true) ?? [];
-    foreach ($objs as $key => $obj) {
-        if(isset($obj) && isset($obj['id'])){
-            $objs[$key]['product'] = App\Models\Product::find($obj['id']) ?? [];
-        }
-        else{
-            unset($objs[$key]);
-        }
-    }
+    $objs = $content ?? [];
+    //    $objs = json_decode($content, true) ?? [];
+    //    foreach ($objs as $key => $obj) {
+    //        if(isset($obj) && isset($obj['id'])){
+    //            $objs[$key]['product'] = App\Models\Product::find($obj['id']) ?? [];
+    //        }
+    //        else{
+    //            unset($objs[$key]);
+    //        }
+    //    }
 @endphp
 
 @if (count($objs) > 0)

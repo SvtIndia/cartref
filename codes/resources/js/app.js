@@ -10,6 +10,7 @@ Vue.use(VueRouter);
 //components
 Vue.component('side-bar', require('./components/SideBar.vue').default);
 Vue.component('navbar', require('./components/NavBar.vue').default);
+Vue.component('Skeleton', require('./components/Skeleton.vue').default);
 Vue.component('Pagination', require('./components/Pagination.vue').default);
 Vue.component('ImageModal', require('./components/ImageModal.vue').default);
 

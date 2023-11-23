@@ -17,7 +17,6 @@ const store = new Vuex.Store({
         defaultRowCount: '25',
         row_counts: [
             '25',
-            '25',
             '50',
             '100',
             '250',
