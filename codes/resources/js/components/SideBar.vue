@@ -279,10 +279,10 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="#" class="single-item">
+                      <router-link :to="{ name: 'carts' }" class="single-item">
                             <i class="fi fi-rr-shopping-cart"></i>
                             <span class="text-gray-700">Carts</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="min-w-max">
                         <router-link :to="{ name: 'wishlists' }" class="single-item">

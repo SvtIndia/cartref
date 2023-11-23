@@ -16,22 +16,22 @@
     }
 </style>
 @php
-    $objs = [];
-    if(isset($content)){
-        if(is_array($content)){
-            $objs = $content;
-        }else{
-            $objs = json_decode($content, true) ?? [];
-        }
-    }
-    foreach ($objs as $key => $obj) {
-        if(isset($obj) && isset($obj['attributes'])&& isset($obj['attributes']['product_id'])){
-            $objs[$key]['product'] = App\Models\Product::find($obj['attributes']['product_id']) ?? [];
-        }
-        else{
-            unset($objs[$key]);
-        }
-    }
+    $objs = $content->data ?? [];
+//    if(isset($content->unserialize)){
+//        if(is_array($content->unserialize)){
+//            $objs = $content->unserialize;
+//        }else{
+//            $objs = json_decode($content->unserialize, true) ?? [];
+//        }
+//    }
+//    foreach ($objs as $key => $obj) {
+//        if(isset($obj) && isset($obj['attributes'])&& isset($obj['attributes']['product_id'])){
+//            $objs[$key]['product'] = App\Models\Product::find($obj['attributes']['product_id']) ?? [];
+//        }
+//        else{
+//            unset($objs[$key]);
+//        }
+//    }
 @endphp
 
 @if (count($objs) > 0)

@@ -16,7 +16,7 @@ class CartStorage {
     {
         if($this->has($key))
         {
-            return new CartCollection(Cart::find($key)->wishlist_data);
+            return new CartCollection(Cart::find($key)->wishlist_data->unserialize);
         }
         else
         {

@@ -2,6 +2,7 @@ import Dashboard from '../pages/Dashboard.vue'
 import Orders from '../pages/Orders.vue'
 import Showcases from '../pages/Showcases.vue'
 import Wishlist from "../pages/Wishlist.vue";
+import Cart from "../pages/Cart.vue";
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         name: 'showcases',
         path: '/admin/showcases',
         component: Showcases,
+    },
+    {
+        name: 'carts',
+        path: '/admin/carts',
+        component: Cart,
     },
     {
         name: 'wishlists',

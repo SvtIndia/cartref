@@ -38,11 +38,28 @@ class Cart extends Model
      * @param $value
      * @return mixed
      */
+
     public function getWishlistDataAttribute($value)
     {
-        return unserialize($value);
-    }
+        $data = unserialize($value);
+        if(isset($data)){
+            if(is_array($data)){
+                $objs = $data;
+            }else{
+                $objs = json_decode($data, true) ?? [];
+            }
+        }
+        foreach ($objs as $key => $obj) {
+            if(isset($obj) && isset($obj['attributes'])&& isset($obj['attributes']['product_id'])){
+                $objs[$key]['product'] = Product::find($obj['attributes']['product_id']) ?? [];
+            }
+            else{
+                unset($objs[$key]);
+            }
+        }
+        return (object)['serialize' => $value, 'unserialize' => $data, 'data' => $objs];
 
+    }
 
     public function user(){
         return $this->belongsTo(User::class);
