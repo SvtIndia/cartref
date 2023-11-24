@@ -54,22 +54,22 @@
                         <ul v-if="product" class="dropdown-menu">
                             <li>
                                 <a href="#" class="dropdown-item">
-                                    Products
+                                    <i class="fi fi-rr-box-open mr-2"></i> Products
+                                </a>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'category' }" class="dropdown-item">
+                                  <i class="fi fi-rr-chart-tree-map mr-2"></i> Category
+                                </router-link>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                  <i class="fi fi-rr-folder-tree mr-2"></i> Sub Category
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item">
-                                    Categories
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    SubCategories
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    SKU Report
+                                  <i class="fi fi-rr-note-medical mr-2"></i> SKU Report
                                 </a>
                             </li>
                         </ul>
@@ -77,7 +77,7 @@
                     <li class="min-w-max">
                         <a href="#" class="single-item">
                             <i class="fi fi-rr-lightbulb-on"></i>
-                            <span class="text-gray-700">Services</span>
+                            <span>Services</span>
                         </a>
                     </li>
                     <li class="min-w-max">
@@ -281,20 +281,20 @@
                     <li class="min-w-max">
                       <router-link :to="{ name: 'carts' }" class="single-item">
                             <i class="fi fi-rr-shopping-cart"></i>
-                            <span class="text-gray-700">Carts</span>
+                            <span>Carts</span>
                         </router-link>
                     </li>
                     <li class="min-w-max">
                         <router-link :to="{ name: 'wishlists' }" class="single-item">
                             <i class="fi fi-rr-heart"></i>
-                            <span class="">Wishlists</span>
+                            <span>Wishlists</span>
                         </router-link>
                     </li>
                 </ul>
                 <div class="min-w-max mb-14">
                     <a href="#" class="group single-item">
                         <i class="fi fi-rr-gears text-xl w-5 h-5 "></i>
-                        <span class="text-gray-700">Settings</span>
+                        <span>Settings</span>
                     </a>
                 </div>
             </div>
@@ -320,20 +320,20 @@ export default {
     },
     watch: {
         $route: function () {
-            updateNav();
+            this.updateNav();
         }
     },
     methods: {
         updateNav() {
-            this.showcases = this.$route.name == 'showcases' ? true : false;
-            this.product = this.$route.name == 'product' ? true : false;
-            this.vendor = this.$route.name == 'vendor' ? true : false;
-            this.lead = this.$route.name == 'lead' ? true : false;
-            this.collection = this.$route.name == 'collection' ? true : false;
-            this.config = this.$route.name == 'config' ? true : false;
-            this.control = this.$route.name == 'control' ? true : false;
-            this.blog = this.$route.name == 'blog' ? true : false;
-            this.user = this.$route.name == 'user' ? true : false;
+            this.showcases = this.$route.path.startsWith('/admin/showcases');
+            this.product = this.$route.path.startsWith('/admin/product');
+            this.vendor = this.$route.path.startsWith('/admin/vendor');
+            this.lead = this.$route.path.startsWith('/admin/lead');
+            this.collection = this.$route.path.startsWith('/admin/collection');
+            this.config = this.$route.path.startsWith('/admin/config');
+            this.control = this.$route.path.startsWith('/admin/control');
+            this.blog = this.$route.path.startsWith('/admin/blog');
+            this.user = this.$route.path.startsWith('/admin/user');
         }
     },
     created() {

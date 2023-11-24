@@ -3,6 +3,7 @@ import Orders from '../pages/Orders.vue'
 import Showcases from '../pages/Showcases.vue'
 import Wishlist from "../pages/Wishlist.vue";
 import Cart from "../pages/Cart.vue";
+import Category from "../pages/Category.vue";
 
 const routes = [
     {
@@ -19,6 +20,11 @@ const routes = [
         name: 'showcases',
         path: '/admin/showcases',
         component: Showcases,
+    },
+    {
+        name: 'category',
+        path: '/admin/product/category',
+        component: Category,
     },
     {
         name: 'carts',

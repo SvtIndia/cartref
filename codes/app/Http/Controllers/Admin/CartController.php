@@ -24,8 +24,10 @@ class CartController extends Controller
                             ->orWhere('mobile', 'LIKE', '%' . $keyword . '%');
                     });
                 });
-            })->paginate($rows);
-
+            })
+            ->where('id','LIKE','%cart_items')
+            ->orderBy('updated_at', 'desc')
+            ->paginate($rows);
         return response()->json($cart);
     }
 }

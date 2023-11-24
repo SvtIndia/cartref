@@ -1,7 +1,7 @@
 <template>
     <header class="header fixed w-screen z-20 top-0 bg-dark-1 shadow-md flex items-center justify-between p-2">
         <!-- logo -->
-        <h1 class="w-4/12 flex gap-1">
+        <h1 class="w-4/12 flex gap-1 mx-4">
             <a class="block md:hidden" @click="toggleSideBar()" href="javascript:void(0)">
                 <i class="fi fi-br-bars-sort text-white text-2xl h-8 p-1 hover:text-green-500 duration-200"></i>
             </a>
@@ -12,7 +12,7 @@
         </h1>
 
         <!-- buttons --->
-        <div class="w-3/12 flex justify-end">
+        <div class="w-3/12 flex justify-end mx-4">
             <a href="">
                 <i class="fi fi-rr-circle-user text-white text-2xl h-3 p-1 hover:text-green-500 duration-200"></i>
             </a>

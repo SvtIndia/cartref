@@ -42,6 +42,7 @@
         @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-green-200 pl-11;
     }
 
+
     /* Pagination */
     .prev-btn {
         @apply relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50;
@@ -69,7 +70,7 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-        @apply bg-green-700;
+        @apply bg-green-400;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
