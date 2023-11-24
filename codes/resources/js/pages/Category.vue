@@ -88,7 +88,9 @@
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center">{{ c.name }}</div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1">{{ c.slug }}</div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1">
-                    <label :id="'wait_'+c.id" class="hidden">Loading...</label>
+                    <label :id="'wait_'+c.id" class="hidden inline-block  justify-center w-4 h-4">
+                      <Spinner/>
+                    </label>
                     <label class="relative inline-flex items-center cursor-pointer" :id="'status_'+c.id">
                       <input type="checkbox" :id="'checkbox_'+c.id" value="" :checked="parseInt(c.status) == 1" @change="updateStatus(c.id, $event)" class="sr-only peer">
                       <div
@@ -153,15 +155,19 @@ export default {
       this.showModal = false;
     },
     updateStatus(id, e) {
-      console.log(e);
-      document.getElementById('wait_'+id).classList.remove('hidden')
-      document.getElementById('status_'+id).classList.add('hidden')
+      document.getElementById('wait_' + id).classList.remove('hidden')
+      document.getElementById('status_' + id).classList.add('hidden')
       axios.put('/admin/category/' + id, {
         status: e.target.checked
       })
           .then(res => {
-            document.getElementById('wait_'+id).classList.add('hidden')
-            document.getElementById('status_'+id).classList.remove('hidden')
+            if (e.target.checked) {
+              this.show_toast('success', res.data.msg);
+            } else {
+              this.show_toast('warning', res.data.msg);
+            }
+            document.getElementById('wait_' + id).classList.add('hidden')
+            document.getElementById('status_' + id).classList.remove('hidden')
             document.getElementById('checkbox_' + id).checked = e.target.checked;
           })
 

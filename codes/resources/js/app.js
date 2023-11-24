@@ -1,4 +1,5 @@
 window.Vue = require('vue');
+global.jQuery = require('jquery');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import router from './Router/index'
@@ -7,10 +8,14 @@ import mixin from './plugins/mixin';
 
 Vue.use(VueRouter);
 
+var $ = global.jQuery;
+window.$ = $;
+
 //components
 Vue.component('side-bar', require('./components/SideBar.vue').default);
 Vue.component('navbar', require('./components/NavBar.vue').default);
 Vue.component('Skeleton', require('./components/Skeleton.vue').default);
+Vue.component('Spinner', require('./components/Spinner.vue').default);
 Vue.component('Pagination', require('./components/Pagination.vue').default);
 Vue.component('ImageModal', require('./components/ImageModal.vue').default);
 
