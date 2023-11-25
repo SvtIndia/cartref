@@ -35,6 +35,7 @@ class CategoryController extends Controller
                         ->orWhere('slug', 'LIKE', '%' . $keyword . '%');
                 });
             })
+            ->latest()
             ->paginate($rows);
 
         //Response
@@ -49,7 +50,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'slug' => ['required', 'unique:product_categories']
+        ]);
+
+        $category = ProductCategory::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ]);
+
+        return response()->json(['success' => true, 'msg' => $category->name . ' created successfully']);
     }
 
     /**

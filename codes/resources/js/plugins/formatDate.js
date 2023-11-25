@@ -11,5 +11,13 @@ const formatDate = {
 
         return day + ' ' + monthNames[month] + ', ' + year;
     },
+    formatTime(str) {
+        if (!str) return;
+        let date = new Date(str);
+        let hour = date.getHours();
+        let min = date.getMinutes();
+
+        return hour + ' : ' + min;
+    },
 };
 export default formatDate;

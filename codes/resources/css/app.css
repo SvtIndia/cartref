@@ -4,7 +4,7 @@
 
 @layer components {
     input {
-        accent-color: green;
+        accent-color: rgb(22 101 52 / var(--tw-bg-opacity));
     }
 
     ::-moz-selection {

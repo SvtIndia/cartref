@@ -8,8 +8,8 @@
 
       <div class="bg-white p-4 overflow-x-auto shadow-md sm:rounded-lg">
         <div class="block">
-          <div class="flex items-center justify-between py-4">
-            <div class="flex text-base text-gray-700 gap-2">
+          <div class="flex flex-wrap items-center justify-between py-4">
+            <div class="flex flex-wrap text-base text-gray-700 gap-2">
               <div>
                 {{ pagination.from || '0' }} - {{ pagination.to || '0' }} of {{ pagination.total || '0' }}
               </div>
@@ -22,7 +22,7 @@
                 </button>
               </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
               <label for="table-search" class="sr-only">Search</label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

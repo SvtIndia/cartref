@@ -6,10 +6,40 @@
         <h3 class="text-start my-8">Category</h3>
       </div>
 
+      <div class="bg-white p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
+        <div class="block">
+          <form @submit.prevent="createCategory()">
+            <div class="md:flex mb-3">
+              <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
+                <label for="category" class="block mb-2 text-sm font-bold text-gray-900" title="The name is how it appears on your site.">Category <span
+                    class="text-red-600">*</span></label>
+                <input type="text" v-model="name" id="category"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       placeholder="Western Wear" required>
+              </div>
+              <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
+                <label for="slug" class="block mb-2 text-sm font-bold text-gray-900"
+                       title="The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.">Slug <span
+                    class="text-red-600">*</span></label>
+                <input type="text" v-model="slug" id="slug"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       placeholder="western-wear" required>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit"
+                      class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold  rounded-lg text-base px-5 py-2.5">
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <div class="bg-white p-4 overflow-x-auto shadow-md sm:rounded-lg">
         <div class="block">
-          <div class="flex items-center justify-between py-4">
-            <div class="flex text-base text-gray-700 gap-2">
+          <div class="flex flex-wrap items-center justify-between py-4">
+            <div class="flex flex-wrap text-base text-gray-700 gap-2">
               <div>
                 {{ pagination.from || '0' }} - {{ pagination.to || '0' }} of {{ pagination.total || '0' }}
               </div>
@@ -24,7 +54,7 @@
                 </button>
               </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
               <div class="relative">
                 <select title="Status" v-model="status" @change="fetchCategory()"
                         class="block appearance-none w-32 leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-green-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
@@ -98,7 +128,7 @@
                     </label>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 !align-middle">
-                    <div class="font-normal text-gray-900">{{ formatSimpleDate(c.updated_at) }}</div>
+                    <div class="font-normal text-gray-900">{{ formatSimpleDate(c.updated_at) + ' at ' + formatTime(c.updated_at) }}</div>
                   </div>
                 </div>
               </div>
@@ -138,12 +168,19 @@ export default {
       loading: true,
       toggleLoadingId: '',
       category: [],
+      name: '',
+      slug: '',
       keyword: '',
       status: '',
       row_count: this.$store.state.defaultRowCount,
       showModal: false,
       imgModal: '',
       pagination: {},
+    }
+  },
+  watch: {
+    name: function () {
+      this.slug = this.slugify(this.name);
     }
   },
   methods: {
@@ -170,7 +207,25 @@ export default {
             document.getElementById('status_' + id).classList.remove('hidden')
             document.getElementById('checkbox_' + id).checked = e.target.checked;
           })
+          .catch(err => {
+            err.handleGlobally && err.handleGlobally();
+          })
 
+    },
+    createCategory() {
+      axios.post('/admin/category', {
+        name: this.name.trim(),
+        slug: this.slug,
+      })
+          .then(res => {
+            this.show_toast('success', res.data.msg);
+            this.name = '';
+            this.slug = '';
+            this.fetchCategory();
+          })
+          .catch(err => {
+            err.handleGlobally && err.handleGlobally();
+          })
     },
     fetchCategory(url) {
       this.loading = true;
@@ -178,7 +233,7 @@ export default {
       axios.get(url, {
         params: {
           rows: this.row_count,
-          keyword: this.keyword,
+          keyword: this.keyword.trim(),
           status: this.status,
         }
       })
@@ -192,6 +247,7 @@ export default {
           })
           .catch(err => {
             this.loading = false;
+            err.handleGlobally && err.handleGlobally();
           })
     }
   },
