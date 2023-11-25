@@ -529,8 +529,7 @@
                                         <p>Shipping ID: 426083992</p>
                                     </div>
                                 </div>
-                                <div
-                                    class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                                <div class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                     <div class="flex flex-col gap-2 items-center justify-center">
                                         <a href="#" type="button"
                                             class="font-medium cursor-pointer text-blue-500">

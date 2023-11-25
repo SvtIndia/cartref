@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ApiResource;
 use App\ProductCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
@@ -60,7 +61,7 @@ class CategoryController extends Controller
             'slug' => $request->slug,
         ]);
 
-        return response()->json(['success' => true, 'msg' => $category->name . ' created successfully']);
+        return response()->json(['status' => 'success', 'msg' => $category->name . ' Created Successfully']);
     }
 
     /**
@@ -71,7 +72,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = ProductCategory::findOrFail($id);
+        return new ApiResource($category);
     }
 
     /**
@@ -83,8 +85,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = ProductCategory::findOrFail($id)->update($request->all());
-        return response()->json(['success' => true, 'msg' => 'Category updated successfully', 'data' => $category]);
+        $request->validate([
+            'slug' => "nullable|unique:product_categories,slug,{$id}"
+        ]);
+        $category = ProductCategory::findOrFail($id);
+        $category->update($request->all());
+
+        $status = 'success';
+        $msg = $category->name . ' updated successfully';
+
+        if ($request->filled('status')) {
+            if ($request->status) {
+                $status = 'success';
+                $msg = $category->name . ' Published Successfully';
+            } else {
+                $status = 'warning';
+                $msg = $category->name . ' Unpublished Successfully';
+            }
+        }
+        return response()->json(['status' => $status, 'msg' => $msg, 'data' => $category]);
     }
 
     /**
@@ -95,6 +114,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = ProductCategory::findOrFail($id);
+        $category->deleted_at = Carbon::now();
+        $category->save();
+        return response()->json(['status' => 'success', 'msg' => $category->name . ' Deleted Successfully']);
     }
 }

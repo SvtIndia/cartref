@@ -8,7 +8,7 @@
 
       <div class="bg-white p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
         <div class="block">
-          <form @submit.prevent="createCategory()">
+          <form @submit.prevent="editOrCreateCategory()">
             <div class="md:flex mb-3">
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
                 <label for="category" class="block mb-2 text-sm font-bold text-gray-900" title="The name is how it appears on your site.">Category <span
@@ -28,8 +28,12 @@
             </div>
             <div class="text-center">
               <button type="submit"
-                      class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold  rounded-lg text-base px-5 py-2.5">
-                Create
+                      class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold  rounded-lg text-base mx-1 px-5 py-2.5">
+                {{ this.editId ? 'Update' : 'Create' }}
+              </button>
+              <button type="button" @click="clear()"
+                      class="text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold  rounded-lg text-base mx-1 px-5 py-2.5">
+                Clear
               </button>
             </div>
           </form>
@@ -107,8 +111,9 @@
                   <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">Slug</div>
                   <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">Status</div>
                   <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">Last Update</div>
+                  <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">Actions</div>
                 </div>
-                <div v-for="(c, index) in category" v-bind:key="index" class="table-row table-body hover:bg-green-100 bg-white">
+                <div v-for="(c, index) in category" v-bind:key="index" class="table-row table-body hover:bg-green-100" :class="{'bg-green-200': c.id === editId}">
                   <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                     <div class="flex items-center">
                       <input type="checkbox" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
@@ -129,6 +134,18 @@
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 !align-middle">
                     <div class="font-normal text-gray-900">{{ formatSimpleDate(c.updated_at) + ' at ' + formatTime(c.updated_at) }}</div>
+                  </div>
+                  <div class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
+                    <div class="flex gap-4 items-center justify-center">
+                      <a href="javascript:void(0)" @click="editCategory(c.id)" type="button"
+                         class="font-medium cursor-pointer text-yellow-500">
+                        <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
+                      </a>
+                      <a href="javascript:void(0)" @click="deleteCategory(c.id)" type="button"
+                         class="font-medium cursor-pointer text-red-500">
+                        <i class="fi fi-rr-trash w-5 h-5 text-xl"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -176,6 +193,7 @@ export default {
       showModal: false,
       imgModal: '',
       pagination: {},
+      editId: '',
     }
   },
   watch: {
@@ -198,11 +216,7 @@ export default {
         status: e.target.checked
       })
           .then(res => {
-            if (e.target.checked) {
-              this.show_toast('success', res.data.msg);
-            } else {
-              this.show_toast('warning', res.data.msg);
-            }
+            this.show_toast(res.data.status, res.data.msg);
             document.getElementById('wait_' + id).classList.add('hidden')
             document.getElementById('status_' + id).classList.remove('hidden')
             document.getElementById('checkbox_' + id).checked = e.target.checked;
@@ -212,15 +226,53 @@ export default {
           })
 
     },
-    createCategory() {
-      axios.post('/admin/category', {
-        name: this.name.trim(),
-        slug: this.slug,
-      })
+    clear() {
+      this.name = '';
+      this.slug = '';
+      this.editId = '';
+    },
+    editCategory(id) {
+      axios.get('/admin/category/' + id)
           .then(res => {
-            this.show_toast('success', res.data.msg);
-            this.name = '';
-            this.slug = '';
+            this.editId = res.data.data.id,
+                this.name = res.data.data.name,
+                this.slug = res.data.data.slug
+          })
+          .catch(err => {
+            err.handleGlobally && err.handleGlobally();
+          })
+    },
+    deleteCategory(id) {
+      axios.delete('/admin/category/' + id)
+          .then(res => {
+            this.show_toast(res.data.status, res.data.msg);
+            this.fetchCategory();
+          })
+          .catch(err => {
+            err.handleGlobally && err.handleGlobally();
+          })
+    },
+    editOrCreateCategory() {
+      let url, data;
+      if (this.editId) {
+        url = '/admin/category/' + this.editId;
+        data = {
+          _method: 'PUT',
+          id: this.editId,
+          name: this.name.trim(),
+          slug: this.slug,
+        }
+      } else {
+        url = '/admin/category'
+        data = {
+          name: this.name.trim(),
+          slug: this.slug,
+        }
+      }
+      axios.post(url, data)
+          .then(res => {
+            this.show_toast(res.data.status, res.data.msg);
+            this.clear();
             this.fetchCategory();
           })
           .catch(err => {
