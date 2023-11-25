@@ -13,6 +13,16 @@ class ProductSubcategory extends Model
 {
     protected $table = "product_subcategories";
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'category_id',
+        'status',
+        'image',
+        'hsn',
+        'gst'
+    ];
+
     public function scopeActive($query)
     {
         return $query->where('status', 1);
