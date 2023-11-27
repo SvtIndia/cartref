@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
     @if (Config::get('icrm.seo.feature') == true)
-    @include('components.frontend.seo.seo')
+        @include('components.frontend.seo.seo')
     @endif
 
     {{-- @yield('meta-seo') --}}
@@ -35,7 +35,7 @@
                 families: ['Poppins:400,500,600,700,800,900']
             }
         };
-        (function (d) {
+        (function(d) {
             var wf = d.createElement('script'),
                 s = d.scripts[0];
             wf.src = '{{ asset('js/webfont.js') }}';
@@ -46,15 +46,15 @@
 
 
     @if (Config::get('icrm.auth.otp_verification') == true)
-    @auth
-    @if (Session::get('otpverified') == false)
-    @if (\Request::route()->getName() != 'otp.login' and \Request::route()->getName() != 'otp.verification')
-    <script>
-        window.location = "/otp/login";
-    </script>
-    @endif
-    @endif
-    @endauth
+        @auth
+            @if (Session::get('otpverified') == false)
+                @if (\Request::route()->getName() != 'otp.login' and \Request::route()->getName() != 'otp.verification')
+                    <script>
+                        window.location = "/otp/login";
+                    </script>
+                @endif
+            @endif
+        @endauth
     @endif
 
 
@@ -80,13 +80,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/product-card.css') }}">
 
     @if (env('#APP_URL') == 'https://hawkwings.in')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/hawkwings.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/hawkwings.css') }}">
     @endif
 
 
     @yield('headerlinks')
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900" media="all">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900"
+        media="all">
 
     {!! setting('online-chat.customer_support') !!}
     {{-- <script src="https://kit.fontawesome.com/e0e6094db3.js" crossorigin="anonymous"></script> --}}
@@ -94,11 +95,11 @@
     {!! setting('scripts.header_scripts') !!}
 
     @php
-    $gorderid = request('id');
+        $gorderid = request('id');
     @endphp
 
     @if (\Request::route()->getName() == 'ordercomplete')
-    {!! setting('site.conversion_complete_script') !!}
+        {!! setting('site.conversion_complete_script') !!}
     @endif
 
     <style>
@@ -414,8 +415,9 @@
                 margin-right: 1rem;
             }
         }
+
         @media screen and (max-width: 481px) {
-            .showroom-at-home{
+            .showroom-at-home {
                 display: none;
             }
         }
@@ -481,11 +483,13 @@
                 pointer-events: none;
             }
         }
-        .product-media{
+
+        .product-media {
             display: flex !important;
             align-items: center;
         }
-        .product-media  a{
+
+        .product-media a {
             display: flex !important;
         }
     </style>
@@ -494,23 +498,14 @@
             margin-right: 2rem !important;
         }
     </style>
-    {{-- <style>
-        .recent-wishlist {
-            cursor: pointer;
-            width: 24px;
-            height: 24px;
-            margin: auto;
+    <style>
+        .dropdown-box-mobile .showroom-dropdown-btn:hover {
+            visibility: visible;
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            top: 99%;
         }
-
-        @media only screen and (max-width: 465px) {
-            .recent-wishlist {
-                cursor: pointer;
-                width: 20px;
-                height: 20px;
-                margin: auto;
-            }
-        }
-    </style> --}}
+    </style>
 
 
     @livewireStyles
@@ -523,12 +518,12 @@
     @livewire('quickviewmodal')
 
     @php
-    function checkMobile()
-    {
-    return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
-    }
+        function checkMobile()
+        {
+            return is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile'));
+        }
     @endphp
-    {{--overlay-loader--}}
+    {{-- overlay-loader --}}
     <div class="custom-overlay" id="custom-overlay">
         <div class='inner'>
             <i class="fas fa-circle-notch"></i>
@@ -538,7 +533,7 @@
         <h1 class="d-none">{{ env('APP_NAME') }}</h1>
 
         @if (\Request::route()->getName() != 'showcase.getstarted')
-        @include('components.frontend.headers.01')
+            @include('components.frontend.headers.01')
         @endif
 
 
@@ -551,34 +546,35 @@
         <!-- End of Main -->
 
         @if (Config::get('icrm.frontend.newslettersignup.feature') == 1)
-        {{-- show only when user is not signedup for news letter --}}
-        @if (empty(Session::get('signedupfornewsletter')))
-        {{-- @if (\Request::route()->getName() != 'showcase.introduction') --}}
-        @if (\Request::route()->getPrefix() != '/showcase-at-home')
-        @include('components.frontend.ctas.signup01')
-        @endif
-        @endif
+            {{-- show only when user is not signedup for news letter --}}
+            @if (empty(Session::get('signedupfornewsletter')))
+                {{-- @if (\Request::route()->getName() != 'showcase.introduction') --}}
+                @if (\Request::route()->getPrefix() != '/showcase-at-home')
+                    @include('components.frontend.ctas.signup01')
+                @endif
+            @endif
         @endif
 
         @if (\Request::route()->getName() != 'showcase.getstarted')
-        @include('components.frontend.footers.01')
+            @include('components.frontend.footers.01')
         @endif
 
         <!-- End of Footer -->
         {{-- <div class="minipopup-area"></div>
     </div> --}}
 
-    @include('components.frontend.footers.stickyfooter')
+        @include('components.frontend.footers.stickyfooter')
 
-    <!-- Scroll Top -->
-    <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="d-icon-arrow-up"></i></a>
+        <!-- Scroll Top -->
+        <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i
+                class="d-icon-arrow-up"></i></a>
 
-    @include('components.frontend.headers.01-mobile')
+        @include('components.frontend.headers.01-mobile')
 
-    {{-- @include('components.frontend.ctas.popupnewsletter') --}}
+        {{-- @include('components.frontend.ctas.popupnewsletter') --}}
 
-    <!-- sticky icons-->
-    {{-- <div class="sticky-icons-wrapper">
+        <!-- sticky icons-->
+        {{-- <div class="sticky-icons-wrapper">
         <div class="sticky-icon-links">
             <ul>
                 <li><a href="#" class="demo-toggle"><i class="fas fa-home"></i><span>Demos</span></a></li>
@@ -600,56 +596,56 @@
             </div>
         </div>
     </div> --}}
-    <div style="display: none" id="no_internet">
-        <div class="mfp-bg mfp-product mfp-fade mfp-ready quickview" wire:click="displayfalse"></div>
-        <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-product mfp-fade mfp-ready" tabindex="-1"
-            style="overflow: hidden auto;">
-            <div class="mfp-container mfp-ajax-holder">
-                <div class="mfp-content">
-                    <div class="product product-single row product-popup">
-                        <figure class="product-image">
-                            <img src="{{ config('app.url') . '/images/error/no-internet.jpeg' }}"
-                                style="display: flex; margin: auto;" alt="No Internet">
-                        </figure>
-                        <button title="Close (Esc)"
-                            onclick="document.getElementById('no_internet').style.display = 'none';" type="button"
-                            class="mfp-close"><span>×</span></button>
+        <div style="display: none" id="no_internet">
+            <div class="mfp-bg mfp-product mfp-fade mfp-ready quickview" wire:click="displayfalse"></div>
+            <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-product mfp-fade mfp-ready" tabindex="-1"
+                style="overflow: hidden auto;">
+                <div class="mfp-container mfp-ajax-holder">
+                    <div class="mfp-content">
+                        <div class="product product-single row product-popup">
+                            <figure class="product-image">
+                                <img src="{{ config('app.url') . '/images/error/no-internet.jpeg' }}"
+                                    style="display: flex; margin: auto;" alt="No Internet">
+                            </figure>
+                            <button title="Close (Esc)"
+                                onclick="document.getElementById('no_internet').style.display = 'none';" type="button"
+                                class="mfp-close"><span>×</span></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
         Launch demo modal
     </button> --}}
 
-    <!-- Plugins JS File -->
-    @if (\Request::route()->getName() != 'customize')
-    {{-- if current route is not customize.customizeid --}}
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    @endif
+        <!-- Plugins JS File -->
+        @if (\Request::route()->getName() != 'customize')
+            {{-- if current route is not customize.customizeid --}}
+            <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        @endif
 
-    <script src="{{ asset('vendor/sticky/sticky.min.js') }}"></script>
-    <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
-    <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.min.js') }}"></script>
-    <script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+        <script src="{{ asset('vendor/sticky/sticky.min.js') }}"></script>
+        <script src="{{ asset('vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+        <script src="{{ asset('vendor/elevatezoom/jquery.elevatezoom.min.js') }}"></script>
+        <script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 
-    <script src="{{ asset('vendor/owl-carousel/owl.carousel.min.js') }}"></script>
-    {{-- <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script> --}}
+        <script src="{{ asset('vendor/owl-carousel/owl.carousel.min.js') }}"></script>
+        {{-- <script src="{{ asset('vendor/nouislider/nouislider.min.js') }}"></script> --}}
 
-    <script src="{{ asset('vendor/jquery.plugin/jquery.plugin.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery.countdown/jquery.countdown.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery.plugin/jquery.plugin.min.js') }}"></script>
+        <script src="{{ asset('vendor/jquery.countdown/jquery.countdown.min.js') }}"></script>
 
-    <script src="{{ asset('vendor/photoswipe/photoswipe.min.js') }}"></script>
-    <script src="{{ asset('vendor/photoswipe/photoswipe.min.js') }}"></script>
-    <script src="{{ asset('vendor/photoswipe/photoswipe-ui-default.min.js') }}"></script>
-    <!-- Main JS File -->
-    <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('vendor/photoswipe/photoswipe.min.js') }}"></script>
+        <script src="{{ asset('vendor/photoswipe/photoswipe.min.js') }}"></script>
+        <script src="{{ asset('vendor/photoswipe/photoswipe-ui-default.min.js') }}"></script>
+        <!-- Main JS File -->
+        <script src="{{ asset('js/main.js') }}"></script>
 
 
-    {{-- <div class="zoomContainer"
+        {{-- <div class="zoomContainer"
         style="-webkit-transform: translateZ(0);position:absolute;left:3556.833251953125px;top:2974.36669921875px;height:582.917px;width:582.917px;">
         <div class="zoomLens"
             style="background-position: 0px 0px;width: 291.4585px;height: 291.4585px;float: right;display: none;overflow: hidden;z-index: 999;-webkit-transform: translateZ(0);opacity:0.4;filter: alpha(opacity = 40); zoom:1;width:291.4585px;height:291.4585px;background-color:white;cursor:default;border: 1px solid #000;background-repeat: no-repeat;position: absolute;">
@@ -660,78 +656,78 @@
         </div>
     </div> --}}
 
-    {{-- If below mentioned jquery is enabled the product images jquery will not work --}}
-    {{-- <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js') }}"></script> --}}
+        {{-- If below mentioned jquery is enabled the product images jquery will not work --}}
+        {{-- <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js') }}"></script> --}}
 
-    {{-- different jquery for different pages --}}
-    @if (\Request::route()->getPrefix() != '/customize-product')
-    {{-- <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script> --}}
-    @endif
+        {{-- different jquery for different pages --}}
+        @if (\Request::route()->getPrefix() != '/customize-product')
+            {{-- <script src="{{ asset('js/jquery-2.1.3.min.js') }}"></script> --}}
+        @endif
 
-    {{-- <script src="{{ asset('owlcarousel/owl.carousel.min.js') }}"></script> --}}
-    {{-- @yield('js') --}}
+        {{-- <script src="{{ asset('owlcarousel/owl.carousel.min.js') }}"></script> --}}
+        {{-- @yield('js') --}}
 
-    {{-- @include('components.frontend.footers.footerscriptscode') --}}
+        {{-- @include('components.frontend.footers.footerscriptscode') --}}
 
-    @if (\Request::route()->getPrefix() == '/customization')
-    <script src="{{ asset('js/imageMaker.min.js') }}"></script>
-    @endif
+        @if (\Request::route()->getPrefix() == '/customization')
+            <script src="{{ asset('js/imageMaker.min.js') }}"></script>
+        @endif
 
-    @yield('bottomscripts')
+        @yield('bottomscripts')
 
-    {!! setting('scripts.bottom_scripts') !!}
+        {!! setting('scripts.bottom_scripts') !!}
 
-    @livewireScripts
-    <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
-    <script src="{{ config('app.url') }}/vendor/toast/tata.js"></script>
+        @livewireScripts
+        <script src="https://cdn.jsdelivr.net/gh/livewire/vue@v0.3.x/dist/livewire-vue.js"></script>
+        <script src="{{ config('app.url') }}/vendor/toast/tata.js"></script>
 
-    <script>
-        window.addEventListener('showToast', (e) => {
-            // console.log(e.detail.status)
-            if (e.detail.status == 'success') {
-                tata.success(e.detail.msg, '')
+        <script>
+            window.addEventListener('showToast', (e) => {
+                // console.log(e.detail.status)
+                if (e.detail.status == 'success') {
+                    tata.success(e.detail.msg, '')
+                }
+                if (e.detail.status == 'log') {
+                    tata.log(e.detail.msg, '')
+                }
+                if (e.detail.status == 'info') {
+                    tata.info(e.detail.msg, '')
+                }
+                if (e.detail.status == 'warning') {
+                    tata.warning(e.detail.msg, '')
+                }
+                if (e.detail.status == 'error') {
+                    tata.error(e.detail.msg, '')
+                }
+
+            });
+            window.addEventListener('contentChanged', (e) => {
+                alert(e.detail.item.name);
+            });
+        </script>
+        <script>
+            window.addEventListener("online", function() {
+                document.getElementById('no_internet').style.display = 'none';
+            });
+
+            window.addEventListener("offline", function() {
+                document.getElementById('no_internet').style.display = 'block'
+            });
+
+            if (navigator.onLine) {
+                document.getElementById('no_internet').style.display = 'none';
+            } else {
+                document.getElementById('no_internet').style.display = 'block'
             }
-            if (e.detail.status == 'log') {
-                tata.log(e.detail.msg, '')
-            }
-            if (e.detail.status == 'info') {
-                tata.info(e.detail.msg, '')
-            }
-            if (e.detail.status == 'warning') {
-                tata.warning(e.detail.msg, '')
-            }
-            if (e.detail.status == 'error') {
-                tata.error(e.detail.msg, '')
-            }
-
-        });
-        window.addEventListener('contentChanged', (e) => {
-            alert(e.detail.item.name);
-        });
-    </script>
-    <script>
-        window.addEventListener("online", function () {
-            document.getElementById('no_internet').style.display = 'none';
-        });
-
-        window.addEventListener("offline", function () {
-            document.getElementById('no_internet').style.display = 'block'
-        });
-
-        if (navigator.onLine) {
-            document.getElementById('no_internet').style.display = 'none';
-        } else {
-            document.getElementById('no_internet').style.display = 'block'
-        }
-    </script>
-    <script>
-        $('[data-fancybox="gallery"]').fancybox({
-            buttons: ["slideShow", "thumbs", "zoom", "fullScreen", "share", "close"],
-            loop: false,
-            protect: true
-        });
-    </script>
-    @stack('scripts')
+        </script>
+        <script>
+            $('[data-fancybox="gallery"]').fancybox({
+                buttons: ["slideShow", "thumbs", "zoom", "fullScreen", "share", "close"],
+                loop: false,
+                protect: true
+            });
+        </script>
+        @stack('scripts')
 </body>
 
 </html>
