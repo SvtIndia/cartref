@@ -4,6 +4,7 @@ import Showcases from '../pages/Showcases.vue'
 import Wishlist from "../pages/Wishlist.vue";
 import Cart from "../pages/Cart.vue";
 import Category from "../pages/Category.vue";
+import SubCategory from "../pages/SubCategory.vue";
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         name: 'category',
         path: '/admin/product/category',
         component: Category,
+    },
+    {
+        name: 'sub-category',
+        path: '/admin/product/sub-category',
+        component: SubCategory,
     },
     {
         name: 'carts',

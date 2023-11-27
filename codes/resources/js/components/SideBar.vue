@@ -63,9 +63,9 @@
                                 </router-link>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">
+                                <router-link :to="{ name: 'sub-category' }" class="dropdown-item">
                                   <i class="fi fi-rr-folder-tree mr-2"></i> Sub Category
-                                </a>
+                                </router-link>
                             </li>
                             <li>
                                 <a href="#" class="dropdown-item">

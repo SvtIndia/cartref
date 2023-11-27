@@ -14,10 +14,10 @@ const formatDate = {
     formatTime(str) {
         if (!str) return;
         let date = new Date(str);
-        let hour = date.getHours();
-        let min = date.getMinutes();
+        let hour = (date.getHours()).toString().padStart(2, '0');
+        let min = (date.getMinutes()).toString().padStart(2, '0');
 
-        return hour + ' : ' + min;
+        return hour + ':' + min;
     },
 };
 export default formatDate;
