@@ -75,7 +75,7 @@
                                                 <ul class="widget-body filter-items search-ul">
                                                     @foreach ($categories as $category)
                                                         <li class="@if (count($category->subcategory) > 0) with-ul @endif">
-                                                            <a href="{{ route('products.category', ['category' => $category->slug]) }}">{{ $category->name }}
+                                                            <a href="{{ route('products.category', ['category' => $category->slug ?? 'sd']) }}">{{ $category->name }}
                                                                 <i class="fas fa-chevron-down"></i>
                                                             </a>
                                                             @if (count($category->subcategory) > 0)
