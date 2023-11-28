@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Flaticon css -->
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
@@ -12,9 +13,9 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-
     <!--tailwind stylesheet -->
     <link href="{{ asset('vue/css/app.css') }}" rel="stylesheet">
+
     <style>
         #toast-div{
             position: fixed;
@@ -27,6 +28,7 @@
 </head>
 
 <body class="bg-green-50">
+    <!--Vue App-->
     <div id="app">
         <navbar></navbar>
         <side-bar></side-bar>
@@ -34,14 +36,12 @@
             <router-view></router-view>
         </div>
     </div>
+
+    <!-- Toast msg -->
     <div id="toast-div"></div>
 
     <!--script -->
-    <script src="{{ asset('vue/js/app.js') }}"></script>
-    <!--jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-            integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous">
-    </script>
+    <script src="{{ asset('vue/js/app.js') }}" defer></script>
 </body>
 
 </html>
