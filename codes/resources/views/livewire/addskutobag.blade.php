@@ -193,8 +193,8 @@
                                                                 <label class="size-label">
                                                                     <span class="size-span">
                                                                         <div class="size-span-div">
-                                                                            <span
-                                                                                class="size-name">{{ $size->size }}</span>
+                                                                            <span class="size-name"
+                                                                                @if ($size->available_stock <= 0) style="color:red;" @endif>{{ $size->size }}</span>
                                                                         </div>
                                                                     </span>
                                                                 </label>
@@ -260,8 +260,8 @@
                                                                 <label class="size-label">
                                                                     <span class="size-span">
                                                                         <div class="size-span-div">
-                                                                            <span
-                                                                                class="size-name">{{ $size->size }}</span>
+                                                                            <span class="size-name"
+                                                                                @if ($size->available_stock <= 0) style="color:red;" @endif>{{ $size->size }}</span>
                                                                         </div>
                                                                     </span>
                                                                 </label>
