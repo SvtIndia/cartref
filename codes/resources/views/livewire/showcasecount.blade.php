@@ -1,6 +1,6 @@
 @if ($this->view == 'mobile-bottom')
     <div class="dropdown cart-dropdown">
-        <a href="{{ route('showcase.introduction') }}" class="sticky-link showroom-dropdown-btn" style="position: relative;line-height: unset;padding: unset;">
+        <a href="#" class="sticky-link showroom-dropdown-btn" style="position: relative;line-height: unset;padding: unset;">
             <i>
                 @if (Session::get('showcasecity'))
                     <img src="{{ config('app.url') }}/images/icons/showroom-2.png" alt="iCommerce" style="height: 24px; object-fit: cover;">
@@ -11,7 +11,7 @@
             <span>Showroom</span>
             <span class="cart-count" style="position: absolute; top: -1.1em; color: darkorange;right: 1rem;font-size: 14px;">{{ count($ssproducts) }}</span>
         </a>
-        <div class="dropdown-box dropdown-box-mobile" style="left: -115px;top: auto; bottom: 80px;">
+        <div class="dropdown-box dropdown-box-mobile" style="left: -115px;top: auto; bottom: 100%; margin-bottom: 2rem;">
             @if (count($ssproducts) == 0)
                 <label>Your showroom at home bag is empty</label>
                 <br><br>

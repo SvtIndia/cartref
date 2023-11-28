@@ -3,7 +3,7 @@
         .step-label {
             width: 100%;
             text-align: left;
-            padding-left: 7rem !important;
+            padding-left: 3rem !important;
         }
 
         .step-by .title.title-step {

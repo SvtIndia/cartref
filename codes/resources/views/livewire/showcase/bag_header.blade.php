@@ -3,11 +3,11 @@
         .step-label {
             width: 100%;
             text-align: left;
-            padding-left: 7rem !important;
+            padding-left: 3rem !important;
         }
 
         .step-by .title.title-step {
-            margin: 0 3.4rem 0 0rem !important;
+            margin: 0 3.4rem 0 0 !important;
         }
     }
     .d-icon-check{
@@ -15,7 +15,7 @@
         margin-left: 1rem;
     }
 </style>
-<div class="step-by pr-4 pl-4">
+<div class="step-by pr-4">
     <h3 class="title title-simple title-step step-label @if(\Request::route()->getName() == 'showcase.bag') active @endif">
         <a href="{{ route('showcase.bag') }}">1. Showroom At Home
             @if (\Request::route()->getName() == 'showcase.checkout')

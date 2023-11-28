@@ -499,11 +499,12 @@
         }
     </style>
     <style>
-        .dropdown-box-mobile .showroom-dropdown-btn:hover {
+        .cart-dropdown .showroom-dropdown-btn:hover,
+        .cart-dropdown .showroom-dropdown-btn:focus
+        {
             visibility: visible;
             opacity: 1;
             transform: translate3d(0, 0, 0);
-            top: 99%;
         }
 
         .showroom-dropdown-btn::after {
