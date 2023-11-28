@@ -19,5 +19,11 @@ const formatDate = {
 
         return hour + ':' + min;
     },
+    formDateTime(str){
+        const date = this.formatSimpleDate(str);
+        const time = this.formatTime(str);
+
+        return date + '<br> at '+ time;
+    }
 };
 export default formatDate;

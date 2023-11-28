@@ -509,6 +509,8 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
+    $subFolder = date('FY');
+    return $destinationPath = \Illuminate\Support\Facades\Storage::path('public/product-subcategories/' . $subFolder, 'public');
     return Str::random();
     return Wishlist::first()->wishlist_data->data;
     return (float)(" 10 4000.55a ");

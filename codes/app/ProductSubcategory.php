@@ -5,12 +5,14 @@ namespace App;
 use App\Size;
 use App\Models\Product;
 use App\ProductCategory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 
 
 class ProductSubcategory extends Model
 {
+    use SoftDeletes;
     protected $table = "product_subcategories";
 
     protected $fillable = [

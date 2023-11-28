@@ -133,7 +133,7 @@
                     </label>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm px-1 text-center py-1 !align-middle">
-                    <div class="font-normal text-gray-900">{{ formatSimpleDate(c.updated_at) + ' at ' + formatTime(c.updated_at) }}</div>
+                    <div class="font-normal text-gray-900" v-html="formDateTime(c.updated_at)"></div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                     <div class="flex gap-4 items-center justify-center">

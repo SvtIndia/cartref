@@ -7,6 +7,8 @@ use App\Http\Resources\ApiResource;
 use App\ProductSubcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -62,7 +64,8 @@ class SubCategoryController extends Controller
         $request->validate([
             'category_id' => 'required|exists:product_categories,id',
             'name' => "required|unique:product_subcategories,name|unique:product_categories,name",
-            'slug' => ['required', 'unique:product_subcategories']
+            'slug' => ['required', 'unique:product_subcategories'],
+            'image' => 'nullable|image|max:2048'
         ], [
             'category_id.exists' => 'Not an existing category',
         ]);
@@ -78,16 +81,16 @@ class SubCategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $name = Str::random() . '.' . $file->getClientOriginalExtension();
+            $filName = Str::random() . '.' . $file->getClientOriginalExtension();
             $subFolder = date('FY');
-            $destinationPath = storage_path('/product-subcategories/' . $subFolder);
+            $destinationPath = Storage::path('public/product-subcategories/' . $subFolder, 'public');
             if (!File::isDirectory($destinationPath)) {
                 File::makeDirectory($destinationPath, 0777, true, true);
             }
 
-            if($file->move($destinationPath, $name)){
+            if ($file->move($destinationPath, $filName)) {
                 //file moved and save to db
-                $dbPath = 'product-subcategories/' . $subFolder. '/'. $name;
+                $dbPath = 'product-subcategories/' . $subFolder . '/' . $filName;
                 $category->image = $dbPath;
                 $category->save();
             }
@@ -118,15 +121,35 @@ class SubCategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'nullable|exists:product_categories,id',
-            'slug' => "nullable|unique:product_subcategories,slug,{$id}"
+            'slug' => "nullable|unique:product_subcategories,slug,{$id}",
+            'image' => 'nullable|image|max:2mib'
+        ], [
+            'category_id.exists' => 'Not an existing category',
+            'image.max' => "The image must not be greater than 2 MB"
         ]);
 
         $category = ProductSubcategory::findOrFail($id);
         $category->update($request->all());
 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filName = Str::random() . '.' . $file->getClientOriginalExtension();
+            $subFolder = date('FY');
+            $destinationPath = Storage::path('public/product-subcategories/' . $subFolder, 'public');
+            if (!File::isDirectory($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+
+            if ($file->move($destinationPath, $filName)) {
+                //file moved and save to db
+                $dbPath = 'product-subcategories/' . $subFolder . '/' . $filName;
+                $category->image = $dbPath;
+                $category->save();
+            }
+        }
+
         $status = 'success';
         $msg = $category->name . ' updated successfully';
-
         if ($request->filled('status')) {
             if ($request->status) {
                 $status = 'success';

@@ -10,7 +10,7 @@
     @endif
 
     {{-- @yield('meta-seo') --}}
-    <meta name="author" content="https://icrmsoftware.com/service/ecommerce-website">
+{{--    <meta name="author" content="https://icrmsoftware.com/service/ecommerce-website">--}}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ Voyager::image(setting('site.site_icon')) }}">

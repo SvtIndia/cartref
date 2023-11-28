@@ -97,7 +97,7 @@
                             class="flex gap-1 items-center text-start text-gray-900">
                           <img
                               @click="imageModal($store.state.storageUrl + wishlist.product.image)"
-                              class="w-14 h-14 border rounded-[50%]"
+                              class="w-14 h-14 border border-gray-400 p-1 rounded-[50%]"
                               :src="$store.state.storageUrl + wishlist.product.image"
                               alt="Shoes image">
                           <div class="pl-2">
