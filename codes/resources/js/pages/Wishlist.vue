@@ -180,12 +180,12 @@ export default {
         }
       })
           .then(res => {
-            this.loading = false;
             this.wishlists = res.data.data;
             let {data, ...pagination} = res.data;
             pagination.links.pop();
             pagination.links.shift();
             this.pagination = pagination;
+            this.loading = false;
           })
           .catch(err => {
             this.loading = false;

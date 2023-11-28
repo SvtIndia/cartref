@@ -40,10 +40,13 @@ class SubCategoryController extends Controller
                         ->orWhere('slug', 'LIKE', '%' . $keyword . '%')
                         ->orWhere('hsn', 'LIKE', '%' . $keyword . '%')
                         ->orWhere('gst', 'LIKE', '%' . $keyword . '%')
-                        ->orwhereHas('category', function ($query2) use ($keyword) {
-                            $query2->orWhere('name', 'LIKE', '%' . $keyword . '%')
-                                ->orWhere('slug', 'LIKE', '%' . $keyword . '%');
-                        });
+//                        ->orWhere(function($query2) use($keyword) {
+//                            $query2->whereHas('category', function ($query3) use ($keyword) {
+//                                $query3->orWhere('name', 'LIKE', '%' . $keyword . '%')
+//                                    ->orWhere('slug', 'LIKE', '%' . $keyword . '%');
+//                            });
+//                        })
+                    ;
                 });
             })
             ->latest()

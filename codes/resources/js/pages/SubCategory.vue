@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Wait :show="loading"/>
     <div class="container mx-auto my-2 px-4">
       <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
         <i class="fi fi-rr-chart-tree-map"></i>
@@ -138,7 +139,7 @@
               </div>
             </div>
           </div>
-          <template v-if="loading">
+          <template v-if="dataLoading">
             <Skeleton/>
           </template>
           <template v-else-if="sub_category && sub_category.length > 0">
@@ -291,6 +292,7 @@ export default {
   data() {
     return {
       loading: true,
+      dataLoading: true,
       toggleLoadingId: '',
       parent_category: [],
       sub_category: [],
@@ -356,6 +358,7 @@ export default {
       $('form').trigger("reset");
     },
     editSubCategory(id) {
+      this.loading = true;
       axios.get('/admin/sub-category/' + id)
           .then(res => {
             this.editId = res.data.data.id;
@@ -364,17 +367,21 @@ export default {
             this.hsn = res.data.data.hsn;
             this.gst = res.data.data.gst;
             this.parent_category_id = res.data.data.category_id;
+            this.loading = false;
           })
           .catch(err => {
+            this.loading = false;
             err.handleGlobally && err.handleGlobally();
           })
     },
     deleteSubCategory(id) {
+      this.loading = true;
       if(!confirm("Are you sure you want to delete ?")){
         return false;
       }
       axios.delete('/admin/sub-category/' + id)
           .then(res => {
+            this.loading = true;
             this.show_toast(res.data.status, res.data.msg);
             this.fetchSubCategory();
           })
@@ -405,18 +412,21 @@ export default {
       }
 
       const headers = {'Content-Type': 'multipart/form-data'};
+      this.loading = true;
       axios.post(url, formData, {headers})
           .then(res => {
+            this.loading = false;
             this.show_toast(res.data.status, res.data.msg);
             this.clear();
             this.fetchSubCategory();
           })
           .catch(err => {
+            this.loading = false;
             err.handleGlobally && err.handleGlobally();
           })
     },
     fetchParentCategory() {
-      this.loading = true;
+      this.dataLoading = true;
       axios.get('/admin/category', {
         params: {
           rows: 'all',
@@ -424,16 +434,16 @@ export default {
         }
       })
           .then(res => {
-            this.loading = false;
+            this.dataLoading = false;
             this.parent_category = res.data.data;
           })
           .catch(err => {
-            this.loading = false;
+            this.dataLoading = false;
             err.handleGlobally && err.handleGlobally();
           })
     },
     fetchSubCategory(url) {
-      this.loading = true;
+      this.dataLoading = true;
       url = url || '/admin/sub-category'
       axios.get(url, {
         params: {
@@ -443,6 +453,7 @@ export default {
         }
       })
           .then(res => {
+            this.dataLoading = false;
             this.loading = false;
             this.sub_category = res.data.data;
             let {data, ...pagination} = res.data;
@@ -451,6 +462,7 @@ export default {
             this.pagination = pagination;
           })
           .catch(err => {
+            this.dataLoading = false;
             this.loading = false;
             err.handleGlobally && err.handleGlobally();
           })
