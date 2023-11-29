@@ -127,7 +127,7 @@
                   <div class="table-cell border-t border-l border-gray-500 text-sm font-semibold px-1 text-center">
                     <div class="flex flex-col items-center text-start text-gray-900 whitespace-nowrap px-2">
                       <div class="w-full text-base font-semibold cursor-pointer hover:underline overflow-hidden whitespace-nowrap text-ellipsis" :title="product.name">
-                        <a href="#">
+                        <a :href="'/product/'+product.slug" target="_blank">
                           {{ product.name ? product.name.substr(0, 60) : '-' }}{{ product.name.length > 60 ? '...' : '' }}
                         </a>
                       </div>
@@ -153,7 +153,7 @@
                           </div>
                           <div class="flex items-center gap-2">
                             <div class="font-medium">HSN:</div>
-                            <div class="font-normal text-gray-500">{{ product.hsn ?? '-' }}</div>
+                            <div class="font-normal text-gray-500">{{ product.productsubcategory ? product.productsubcategory.hsn : '-' }}</div>
                           </div>
                         </div>
                       </div>

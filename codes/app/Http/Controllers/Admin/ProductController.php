@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ApiResource;
 use App\Models\Product;
+use App\Productcolor;
 use App\ProductSubcategory;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class ProductController extends Controller
             $rows = Product::count();
         }
         /* Query Builder */
-        $categories = Product::with('productcategory','productsubcategory')
+        $products = Product::with('productcategory','productsubcategory')
             ->when(isset($status), function ($query) use ($status) {
                 $query->where('admin_status', $status);
             })
@@ -51,6 +52,14 @@ class ProductController extends Controller
             ->paginate($rows);
 
         //Response
-        return new ApiResource($categories);
+        return new ApiResource($products);
+    }
+
+    public function fetchProductColors(Request $request, $id){
+        $product = Product::findOrFail($id);
+        $colors = Productcolor::where('product_id', $product->id)->get();
+
+        //Response
+        return new ApiResource(['colors' => $colors, 'product' => $product]);
     }
 }

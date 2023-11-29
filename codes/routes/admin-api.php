@@ -16,5 +16,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::prefix('product')->group(function() {
         Route::get('/',[ProductController::class, 'fetchProducts']);
+        Route::get('/{id}',[ProductController::class, 'fetchProductColors']);
     });
 });

@@ -509,13 +509,25 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    $subFolder = date('FY');
-    return $destinationPath = \Illuminate\Support\Facades\Storage::path('public/product-subcategories/' . $subFolder, 'public');
-    return Str::random();
-    return Wishlist::first()->wishlist_data->data;
-    return (float)(" 10 4000.55a ");
-    $str = preg_replace('/\s+/', '', ' $str ');
-    dd($str);
+    $genders = App\Gender::where('status', 1)
+        ->where('name', '!=', 'NA')
+        ->with('products')
+        ->get();
+    return $genderwisecategories = App\ProductCategory::with('products')
+        ->where('status', 1)
+//        ->whereHas('products', function ($q) {
+//            $q->where('gender_id', 'LIKE','%Men%');
+//        })
+        ->orderBy('order_id', 'ASC')
+        ->get();
+
+//    $subFolder = date('FY');
+//    return $destinationPath = \Illuminate\Support\Facades\Storage::path('public/product-subcategories/' . $subFolder, 'public');
+//    return Str::random();
+//    return Wishlist::first()->wishlist_data->data;
+//    return (float)(" 10 4000.55a ");
+//    $str = preg_replace('/\s+/', '', ' $str ');
+//    dd($str);
   return view('notify');
 });
 

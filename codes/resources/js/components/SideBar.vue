@@ -347,4 +347,9 @@ export default {
     background-color: rgb(34 197 94 / 1) !important;
     color: white !important;
 }
+.router-link-active,
+.router-link-active:hover {
+  background-color: rgb(34 197 94 / 1) !important;
+  color: white !important;
+}
 </style>
