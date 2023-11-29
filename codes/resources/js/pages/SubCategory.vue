@@ -291,7 +291,7 @@ export default {
   name: "SubCategory",
   data() {
     return {
-      loading: true,
+      loading: false,
       dataLoading: true,
       toggleLoadingId: '',
       parent_category: [],

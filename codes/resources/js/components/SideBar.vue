@@ -53,9 +53,9 @@
                         </a>
                         <ul v-if="product" class="dropdown-menu">
                             <li>
-                                <a href="#" class="dropdown-item">
+                                <router-link :to="{ name: 'products' }" class="dropdown-item">
                                     <i class="fi fi-rr-box-open mr-2"></i> Products
-                                </a>
+                                </router-link>
                             </li>
                             <li>
                                 <router-link :to="{ name: 'category' }" class="dropdown-item">
@@ -326,7 +326,7 @@ export default {
     methods: {
         updateNav() {
             this.showcases = this.$route.path.startsWith('/admin/showcases');
-            this.product = this.$route.path.startsWith('/admin/product');
+            this.product = this.$route.path.startsWith('/admin/products');
             this.vendor = this.$route.path.startsWith('/admin/vendor');
             this.lead = this.$route.path.startsWith('/admin/lead');
             this.collection = this.$route.path.startsWith('/admin/collection');

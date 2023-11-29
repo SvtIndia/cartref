@@ -12,7 +12,7 @@
           <button class="active-link" aria-current="page" v-if="link.active">
             {{ link.label || '0' }}
           </button>
-          <button class="default-link" @click="fetchNewData(link.url)" v-else>
+          <button class="default-link" @click="link.url ? fetchNewData(link.url) : false" v-else>
             {{ link.label || '0' }}
           </button>
         </template>
