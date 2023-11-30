@@ -42,7 +42,7 @@ const store = new Vuex.Store({
         url: window.location.origin,
         baseUrl: window.location.origin + "/api",
         assetUrl: window.location.origin,
-        storageUrl: window.location.origin+'/storage/',
+        storageUrl: 'https://cartrefs.com' + '/storage/',
         defaultRowCount: '25',
         row_counts: [
             '25',

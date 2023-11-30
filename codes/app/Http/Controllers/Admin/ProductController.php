@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function fetchProducts(Request $request){
+    public function fetchProducts(Request $request)
+    {
         /* Query Parameters */
         $keyword = request()->keyword;
         $status = request()->status;
@@ -24,7 +25,7 @@ class ProductController extends Controller
             $rows = Product::count();
         }
         /* Query Builder */
-        $products = Product::with('productcategory','productsubcategory')
+        $products = Product::with('productcategory', 'productsubcategory')
             ->when(isset($status), function ($query) use ($status) {
                 $query->where('admin_status', $status);
             })
@@ -55,11 +56,37 @@ class ProductController extends Controller
         return new ApiResource($products);
     }
 
-    public function fetchProductColors(Request $request, $id){
+    public function fetchProductColors(Request $request, $id)
+    {
         $product = Product::findOrFail($id);
         $colors = Productcolor::where('product_id', $product->id)->get();
 
         //Response
         return new ApiResource(['colors' => $colors, 'product' => $product]);
+    }
+
+    public function updateProductColorStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => ['required'],
+        ]);
+
+        $status = $request->status;
+        $color = Productcolor::findOrFail($id);
+        $product = Product::findOrFail($color->product_id);
+        $product->colors->detach($color);
+        $color->update(['status' => $status]);
+
+        if ($request->filled('status')) {
+            if ($request->status) {
+                $status = 'success';
+                $msg = $color->name . ' Published Successfully';
+            } else {
+                $status = 'warning';
+                $msg = $color->name . ' Unpublished Successfully';
+            }
+        }
+        return response()->json(['status' => $status, 'msg' => $msg]);
+
     }
 }

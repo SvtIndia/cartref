@@ -14,8 +14,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/category', CategoryController::class);
     Route::resource('/sub-category', SubCategoryController::class);
 
-    Route::prefix('product')->group(function() {
-        Route::get('/',[ProductController::class, 'fetchProducts']);
-        Route::get('/{id}',[ProductController::class, 'fetchProductColors']);
+    Route::prefix('product')->group(function () {
+        Route::get('/', [ProductController::class, 'fetchProducts']);
+        Route::get('/{id}', [ProductController::class, 'fetchProductColors']);
+
+        Route::put('color/{id}', [ProductController::class, 'updateProductColorStatus']);
     });
 });

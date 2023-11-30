@@ -19,7 +19,7 @@ module.exports = {
                 "gray-1": "#697C89",
             },
             animation: {
-                'pulse-fast': 'pulse 1s linear infinite',
+                'pulse-fast': 'pulse 0.8s linear infinite',
             }
         },
     },

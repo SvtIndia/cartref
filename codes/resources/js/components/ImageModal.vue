@@ -21,6 +21,14 @@ export default {
         hide: Function,
         img: String,
     },
+    created() {
+        //hide the modal on ESC btn press
+        document.addEventListener('keyup', (evt) => {
+            if (evt.keyCode === 27) {
+                this.hide();
+            }
+        });
+    }
 }
 </script>
 

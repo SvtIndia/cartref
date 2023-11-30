@@ -30,7 +30,7 @@ const routes = [
         component: Products,
     },
     {
-        name: 'product_colors',
+        name: 'product-colors',
         path: '/admin/products/:id',
         component: ProductColors,
     },
