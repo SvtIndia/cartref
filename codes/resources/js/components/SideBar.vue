@@ -326,7 +326,7 @@ export default {
     methods: {
         updateNav() {
             this.showcases = this.$route.path.startsWith('/admin/showcases');
-            this.product = this.$route.path.startsWith('/admin/products');
+            this.product = this.$route.path.startsWith('/admin/product');
             this.vendor = this.$route.path.startsWith('/admin/vendor');
             this.lead = this.$route.path.startsWith('/admin/lead');
             this.collection = this.$route.path.startsWith('/admin/collection');

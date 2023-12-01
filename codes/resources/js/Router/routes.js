@@ -36,12 +36,12 @@ const routes = [
     },
     {
         name: 'category',
-        path: '/admin/products/category',
+        path: '/admin/product/category',
         component: Category,
     },
     {
         name: 'sub-category',
-        path: '/admin/products/sub-category',
+        path: '/admin/product/sub-category',
         component: SubCategory,
     },
     {

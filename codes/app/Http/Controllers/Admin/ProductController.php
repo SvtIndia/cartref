@@ -74,7 +74,7 @@ class ProductController extends Controller
         $status = $request->status;
         $color = Productcolor::findOrFail($id);
         $product = Product::findOrFail($color->product_id);
-        $product->colors->detach($color);
+        $product->colors()->detach($color);
         $color->update(['status' => $status]);
 
         if ($request->filled('status')) {

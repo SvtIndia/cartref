@@ -223,7 +223,7 @@
                                     </div>
                                     <div
                                         class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
-                                        <div class="flex gap-4 items-center justify-center">
+                                        <div class="flex gap-4 mx-2 items-center justify-center">
                                             <a href="javascript:void(0)" type="button"
                                                 class="font-medium cursor-pointer text-yellow-500">
                                                 <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
