@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Color;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ApiResource;
 use App\Models\Product;
@@ -55,6 +56,25 @@ class ProductController extends Controller
         //Response
         return new ApiResource($products);
     }
+    public function updateProductStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => ['required'],
+        ]);
+        $status = $request->status;
+        $product = Product::findOrFail($id);
+        $product->update(['admin_status' => $status]);
+
+        if ($status == 'Accepted') {
+            $status = 'success';
+            $msg = 'Product Published Successfully';
+        } else {
+            $status = 'warning';
+            $msg = 'Product Unpublished Successfully';
+        }
+        //Response
+        return new ApiResource(['status' => $status, 'msg' => $msg]);
+    }
 
     public function fetchProductColors(Request $request, $id)
     {
@@ -70,20 +90,27 @@ class ProductController extends Controller
         $request->validate([
             'status' => ['required'],
         ]);
-
         $status = $request->status;
-        $color = Productcolor::findOrFail($id);
-        $product = Product::findOrFail($color->product_id);
-        $product->colors()->detach($color);
-        $color->update(['status' => $status]);
+
+        $productColor = Productcolor::findOrFail($id);
+        $product = Product::findOrFail($productColor->product_id);
+        $targetColor = Color::where('name',$productColor->color)->first();
+
+        if($status){
+            $product->colors()->attach($targetColor->id);
+        }
+        else{
+            $product->colors()->detach($targetColor);
+        }
+        $productColor->update(['status' => $status]);
 
         if ($request->filled('status')) {
             if ($request->status) {
                 $status = 'success';
-                $msg = $color->name . ' Published Successfully';
+                $msg = $productColor->name . ' Published Successfully';
             } else {
                 $status = 'warning';
-                $msg = $color->name . ' Unpublished Successfully';
+                $msg = $productColor->name . ' Unpublished Successfully';
             }
         }
         return response()->json(['status' => $status, 'msg' => $msg]);

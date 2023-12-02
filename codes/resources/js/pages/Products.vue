@@ -312,7 +312,7 @@ export default {
                 status: status
             })
                 .then(res => {
-                    this.show_toast(res.data.status, res.data.msg);
+                    this.show_toast(res.data.data.status, res.data.data.msg);
                     document.getElementById('wait_' + id).classList.add('hidden')
                     document.getElementById('status_' + id).classList.remove('hidden')
                     document.getElementById('checkbox_' + id).checked = e.target.checked;

@@ -28,6 +28,7 @@ class Product extends Model
     use HasImpression;
 
     protected $translatable = ['name', 'description'];
+    protected $fillable = ['status'];
     protected $perPage = 50;
 
     public function scopeRoleWise($query)
