@@ -20,6 +20,7 @@ use App\Models\Wishlist;
 use App\Notifications\CodOrderEmail;
 use App\Notifications\PushNotification;
 use App\Notifications\TestNotification;
+use App\Productcolor;
 use App\Showcase;
 use Illuminate\Http\Request;
 use Craftsys\Msg91\Facade\Msg91;
@@ -510,13 +511,14 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    $product = \App\Models\Product::findOrFail(2147);
-    $targetColor = Color::where('name','Black')->first();
-
-    $product->colors()->attach($targetColor);
-
-    $product = \App\Models\Product::findOrFail(2147);
-    return $product->colors;
+    $product = \App\Models\Product::findOrFail(846);
+    $colors = Productcolor::where('product_id', $product->id)->get();
+//    $targetColor = Color::where('name','Red')->first();
+//
+//    $product->colors()->attach($targetColor);
+//
+//    $product = \App\Models\Product::findOrFail(2147);
+    return $colors;
 });
 
 //Calling this route by shiprocket

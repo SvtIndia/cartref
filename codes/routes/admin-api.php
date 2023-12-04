@@ -16,9 +16,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::prefix('product')->group(function () {
         Route::get('/', [ProductController::class, 'fetchProducts']);
+        Route::get('/{id}', [ProductController::class, 'fetchProduct']);
         Route::put('/{id}', [ProductController::class, 'updateProductStatus']);
+        Route::get('/{id}/colors', [ProductController::class, 'fetchProductColors']);
 
-        Route::get('/{id}', [ProductController::class, 'fetchProductColors']);
+        Route::get('color/{id}', [ProductController::class, 'fetchProductColor']);
         Route::put('color/{id}', [ProductController::class, 'updateProductColorStatus']);
+        Route::get('{product_id}/color/{color_id}/sizes', [ProductController::class, 'fetchSizesByColorId']);
+
     });
 });

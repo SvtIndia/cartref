@@ -501,11 +501,12 @@ class WelcomeController extends Controller
         /*
          * Colour
         */
+        $selectedColor = '';
         if (request('color') != null) {
             $selectedColor = request('color');
-            $selectedColor = Productcolor::where('status', 1)->where('color', $selectedColor)->first();
+            $selectedColor = Productcolor::where('status', 1)->where('color', $selectedColor)->firstOrFail();
         } else {
-            $firstcolor = Productcolor::where('status', 1)->where('product_id', $product->id)->first();
+            $firstcolor = Productcolor::where('status', 1)->where('product_id', $product->id)->firstOrFail();
 
             if (isset($firstcolor)) {
                 if (!empty($firstcolor->color)) {
@@ -514,7 +515,9 @@ class WelcomeController extends Controller
             }
         }
 
-        $selectedColor = Color::where('name', 'Like', '%' . $selectedColor->color . '%')->first();
+        if($selectedColor){
+            $selectedColor = Color::where('name', 'Like', '%' . $selectedColor->color . '%')->first();
+        }
         $moreColourText = 'More ' . $selectedColor->name . ' ' . $subCat->name;
         $colourCount = $this->getNumberMoreButton($subCat->slug, [$gender], null, [$selectedColor->id]);
 

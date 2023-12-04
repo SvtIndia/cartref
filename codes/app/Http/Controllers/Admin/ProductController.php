@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ApiResource;
 use App\Models\Product;
 use App\Productcolor;
+use App\Productsku;
 use App\ProductSubcategory;
 use Illuminate\Http\Request;
 
@@ -46,8 +47,7 @@ class ProductController extends Controller
                         ->orWhere('sku', 'LIKE', '%' . $keyword . '%')
                         ->orWhere('product_tags', 'LIKE', '%' . $keyword . '%')
                         ->orWhere('brand_id', 'LIKE', '%' . $keyword . '%')
-                        ->orWhere('style_id', 'LIKE', '%' . $keyword . '%')
-                    ;
+                        ->orWhere('style_id', 'LIKE', '%' . $keyword . '%');
                 });
             })
             ->latest()
@@ -56,6 +56,14 @@ class ProductController extends Controller
         //Response
         return new ApiResource($products);
     }
+
+    public function fetchProduct(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        //Response
+        return new ApiResource($product);
+    }
+
     public function updateProductStatus(Request $request, $id)
     {
         $request->validate([
@@ -80,9 +88,15 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $colors = Productcolor::where('product_id', $product->id)->get();
-
         //Response
         return new ApiResource(['colors' => $colors, 'product' => $product]);
+    }
+
+    public function fetchProductColor(Request $request, $id)
+    {
+        $color = Productcolor::findOrFail($id);
+        //Response
+        return new ApiResource($color);
     }
 
     public function updateProductColorStatus(Request $request, $id)
@@ -94,12 +108,12 @@ class ProductController extends Controller
 
         $productColor = Productcolor::findOrFail($id);
         $product = Product::findOrFail($productColor->product_id);
-        $targetColor = Color::where('name',$productColor->color)->first();
+        $targetColor = Color::where('name', $productColor->color)->first();
 
-        if($status){
-            $product->colors()->attach($targetColor->id);
-        }
-        else{
+        if ($status) {
+//            dd($targetColor);
+            $product->colors()->attach($targetColor);
+        } else {
             $product->colors()->detach($targetColor);
         }
         $productColor->update(['status' => $status]);
@@ -107,13 +121,19 @@ class ProductController extends Controller
         if ($request->filled('status')) {
             if ($request->status) {
                 $status = 'success';
-                $msg = $productColor->name . ' Published Successfully';
+                $msg = $targetColor->name . ' Published Successfully';
             } else {
                 $status = 'warning';
-                $msg = $productColor->name . ' Unpublished Successfully';
+                $msg = $targetColor->name . ' Unpublished Successfully';
             }
         }
         return response()->json(['status' => $status, 'msg' => $msg]);
 
     }
+
+    public function fetchSizesByColorId(Request $request, $product_id, $color_id){
+        $sizes = Productsku::where('product_id', $product_id)->orderBy('size', 'ASC')->get();
+        return new ApiResource($sizes);
+    }
+
 }

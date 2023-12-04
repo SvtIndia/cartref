@@ -7,6 +7,7 @@ import Category from "../pages/Category.vue";
 import SubCategory from "../pages/SubCategory.vue";
 import Products from "../pages/Products.vue";
 import ProductColors from "../pages/ProductColors.vue";
+import ProductSizes from "../pages/ProductSizes.vue";
 
 const routes = [
     {
@@ -33,6 +34,11 @@ const routes = [
         name: 'product-colors',
         path: '/admin/products/:id',
         component: ProductColors,
+    },
+    {
+        name: 'product-colors',
+        path: '/admin/products/:product_id/color/:color_id',
+        component: ProductSizes,
     },
     {
         name: 'category',
