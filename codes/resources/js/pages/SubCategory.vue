@@ -2,8 +2,8 @@
   <div>
     <Wait :show="loading"/>
     <div class="container mx-auto my-2 px-4">
-      <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
-        <i class="fi fi-rr-chart-tree-map"></i>
+      <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
+        <i class="fi fi-rr-folder-tree"></i>
         <h3 class="text-start my-8">Sub Category</h3>
       </div>
 
@@ -16,7 +16,7 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="text" v-model="name" id="sub_category"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                        placeholder="Western Wear" required>
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
@@ -24,7 +24,7 @@
                        title="The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.">Slug
                   <span class="text-red-600">*</span></label>
                 <input type="text" v-model="slug" id="slug"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                        placeholder="western-wear" required>
               </div>
             </div>
@@ -33,14 +33,14 @@
                 <label for="image" class="block mb-2 text-sm font-bold text-gray-900"
                        title="An image belonging to a specific type, often distinguished by shared characteristics or features.">Category Image</label>
                 <input type="file" @change="handleImageChange($event)" id="image"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                        placeholder="western-wear" accept="image/*">
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
                 <label for="image" class="block mb-2 text-sm font-bold text-gray-900" title="Those immediately above the category in the hierarchy">Parent Category <span
                     class="text-red-600">*</span></label>
                 <select v-model="parent_category_id"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                         placeholder="western-wear" required>
                   <option value="" selected>Select Parent Category</option>
                   <option v-for="(parent, index) in parent_category" :key="index" :value="parent.id">{{ parent.name }}</option>
@@ -54,7 +54,7 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="text" id="hsn" v-model="hsn"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                        placeholder="8471">
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
@@ -63,13 +63,13 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="number" id="gst" v-model="gst"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                        placeholder="18">
               </div>
             </div>
             <div class="text-center">
               <button type="submit"
-                      class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold  rounded-lg text-base mx-1 px-5 py-2.5">
+                      class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-bold  rounded-lg text-base mx-1 px-5 py-2.5">
                 {{ this.editId ? 'Update' : 'Create' }}
               </button>
               <button type="button" @click="clear()"
@@ -91,12 +91,12 @@
               <div>
                 <button :disabled="!pagination.prev_page_url"
                         @click="fetchSubCategory(pagination.prev_page_url)" title="Previous"
-                        class="border border-transparent rounded-full hover:bg-green-400 disabled:opacity-50">
+                        class="border border-transparent rounded-full hover:bg-orange-400 disabled:opacity-50">
                   <i class="fi fi-rr-angle-small-left text-xl px-1 py-2"></i>
                 </button>
                 <button :disabled="!pagination.next_page_url"
                         @click="fetchSubCategory(pagination.next_page_url)" title="Next"
-                        class="border border-transparent rounded-full hover:bg-green-400 disabled:opacity-50">
+                        class="border border-transparent rounded-full hover:bg-orange-400 disabled:opacity-50">
                   <i class="fi fi-rr-angle-small-right text-xl px-1 py-2"></i>
                 </button>
               </div>
@@ -104,7 +104,7 @@
             <div class="flex flex-wrap items-center gap-2">
               <div class="relative">
                 <select title="Status" v-model="status" @change="fetchSubCategory()"
-                        class="block appearance-none w-32 leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-green-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
+                        class="block appearance-none w-32 leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
                   <option class="bg-gray-100" value="">All</option>
                   <option class="bg-gray-100" value="1">Published</option>
                   <option class="bg-gray-100" value="0">Un Published</option>
@@ -120,11 +120,11 @@
                   <i class="fi fi-rr-search mr-1"></i>
                 </div>
                 <input type="text" v-model="keyword"
-                       class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
+                       class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
                        placeholder="Search" @keydown.enter="fetchSubCategory()">
               </div>
               <div class="flex border border-gray-600 rounded-lg bg-white">
-                <button class="px-2 py-1 m-[2px] hover:bg-green-100 border-r border-solid cursor-pointer"
+                <button class="px-2 py-1 m-[2px] hover:bg-orange-100 border-r border-solid cursor-pointer"
                         @click="fetchSubCategory()">
                   <i class="ffi fi-rr-refresh mr-1"></i>
                 </button>
@@ -149,7 +149,7 @@
                   <div class="table-cell border-gray-500 text-center uppercase font-semibold p-1 px-2">
                     <div class="flex items-center">
                       <input type="checkbox"
-                             class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                             class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
                     </div>
                   </div>
                   <div
@@ -194,12 +194,12 @@
                   </div>
                 </div>
                 <div v-for="(c, index) in sub_category" v-bind:key="index"
-                     class="table-row table-body hover:bg-green-100"
-                     :class="{ 'bg-green-200': c.id === editId }">
+                     class="table-row table-body hover:bg-orange-100"
+                     :class="{ 'bg-orange-200': c.id === editId }">
                   <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                     <div class="flex items-center">
                       <input type="checkbox"
-                             class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded">
+                             class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
                     </div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">
@@ -237,7 +237,7 @@
                              :checked="parseInt(c.status) == 1" @change="updateStatus(c.id, $event)"
                              class="sr-only peer">
                       <div
-                          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600">
+                          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-600">
                       </div>
                     </label>
                   </div>
@@ -295,7 +295,7 @@ export default {
       dataLoading: true,
       toggleLoadingId: '',
       parent_category: [],
-      sub_category: [],
+      sub_category: [{}],
       name: '',
       slug: '',
       hsn: '',

@@ -11,9 +11,9 @@
         </a>
       </div>
       <div class="flex flex-wrap justify-between items-center">
-        <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
+        <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
           <i class="fi fi-rr-palette"></i>
-          <h3 class="text-start my-8">{{ color.color }} Sizes</h3>
+          <h3 class="text-start my-8">{{ color.color }}</h3>
         </div>
       </div>
 
@@ -31,7 +31,7 @@
                       id="sub_category"
                       placeholder="Product ID"
                       required="required"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                   />
                 </div>
               </div>
@@ -44,7 +44,7 @@
                       id="sub_category"
                       placeholder="Color"
                       required="required"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                   />
                 </div>
               </div>
@@ -63,7 +63,7 @@
                       id="image"
                       placeholder="western-wear"
                       accept="image/*"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                   />
                 </div>
               </div>
@@ -77,7 +77,7 @@
                       type="text"
                       id="hsn"
                       placeholder="8471"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                   />
                 </div>
                 <div data-v-32256d36="" class="mb-5 md:w-1/2 w-full mx-2 my-1">
@@ -89,12 +89,12 @@
                       type="number"
                       id="gst"
                       placeholder="18"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-green-500 focus-visible:border-green-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
                   />
                 </div>
               </div>
               <div data-v-32256d36="" class="text-center">
-                <button data-v-32256d36="" type="submit" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">
+                <button data-v-32256d36="" type="submit" class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">
                   Create
                 </button>
                 <button data-v-32256d36="" type="button" class="text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">

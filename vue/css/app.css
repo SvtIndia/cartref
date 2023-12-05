@@ -1402,23 +1402,23 @@ li a.dropdown-item:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
-.bg-green-100 {
+.bg-orange-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
-.bg-green-200 {
+.bg-orange-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
-.bg-green-50 {
+.bg-orange-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
-.bg-green-500 {
+.bg-orange-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
-.bg-green-600 {
+.bg-orange-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
@@ -1451,7 +1451,7 @@ li a.dropdown-item:hover {
 .fill-current {
   fill: currentColor;
 }
-.fill-green-600 {
+.fill-orange-600 {
   fill: #16a34a;
 }
 .p-1 {
@@ -1730,7 +1730,7 @@ li a.dropdown-item:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
-.text-green-600 {
+.text-orange-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
 }
@@ -1913,22 +1913,22 @@ li a.dropdown-item:hover {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-100:hover {
+.hover\:bg-orange-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-400:hover {
+.hover\:bg-orange-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-700:hover {
+.hover\:bg-orange-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-green-800:hover {
+.hover\:bg-orange-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(22 101 52 / var(--tw-bg-opacity));
 }
@@ -1953,7 +1953,7 @@ li a.dropdown-item:hover {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-.hover\:text-green-500:hover {
+.hover\:text-orange-500:hover {
   --tw-text-opacity: 1;
   color: rgb(34 197 94 / var(--tw-text-opacity));
 }
@@ -1974,7 +1974,7 @@ li a.dropdown-item:hover {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.hover\:shadow-green-500:hover {
+.hover\:shadow-orange-500:hover {
   --tw-shadow-color: #22c55e;
   --tw-shadow: var(--tw-shadow-colored);
 }
@@ -2035,12 +2035,12 @@ li a.dropdown-item:hover {
   --tw-ring-color: rgb(37 99 235 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-green-300:focus {
+.focus\:ring-orange-300:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(134 239 172 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-green-500:focus {
+.focus\:ring-orange-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(34 197 94 / var(--tw-ring-opacity));
 }
@@ -2050,7 +2050,7 @@ li a.dropdown-item:hover {
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
 }
 
-.focus-visible\:border-green-500:focus-visible {
+.focus-visible\:border-orange-500:focus-visible {
   --tw-border-opacity: 1;
   border-color: rgb(34 197 94 / var(--tw-border-opacity));
 }
@@ -2063,7 +2063,7 @@ li a.dropdown-item:hover {
   outline-width: 1px;
 }
 
-.focus-visible\:outline-green-500:focus-visible {
+.focus-visible\:outline-orange-500:focus-visible {
   outline-color: #22c55e;
 }
 
@@ -2076,7 +2076,7 @@ li a.dropdown-item:hover {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.peer:checked ~ .peer-checked\:bg-green-600 {
+.peer:checked ~ .peer-checked\:bg-orange-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
@@ -2104,7 +2104,7 @@ li a.dropdown-item:hover {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.peer:focus ~ .peer-focus\:ring-green-300 {
+.peer:focus ~ .peer-focus\:ring-orange-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(134 239 172 / var(--tw-ring-opacity));
 }

@@ -16,7 +16,7 @@
                         </router-link>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': showcases }" @click="showcases = !showcases;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': showcases }" @click="showcases = !showcases;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-house-chimney"></i>
 
@@ -40,7 +40,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': product }" @click="product = !product;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': product }" @click="product = !product;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-folder-open" v-if="product"></i>
                             <i class="fi fi-rr-folder" v-if="!product"></i>
@@ -81,7 +81,7 @@
                         </a>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': vendor }" @click="vendor = !vendor;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': vendor }" @click="vendor = !vendor;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-users-alt"></i>
 
@@ -105,7 +105,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': lead }" @click="lead = !lead;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': lead }" @click="lead = !lead;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-phone-call"></i>
 
@@ -129,7 +129,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': collection }"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': collection }"
                             @click="collection = !collection;" class="group dropdown-btn">
                             <i class="fi fi-rr-gallery"></i>
 
@@ -153,7 +153,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': config }" @click="config = !config;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': config }" @click="config = !config;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-settings"></i>
 
@@ -202,7 +202,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': control }" @click="control = !control;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': control }" @click="control = !control;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-broadcast-tower"></i>
 
@@ -231,7 +231,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': blog }" @click="blog = !blog;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': blog }" @click="blog = !blog;"
                             class="group dropdown-btn">
                             <i class="fi fi-rr-radio-alt"></i>
 
@@ -255,7 +255,7 @@
                         </ul>
                     </li>
                     <li class="min-w-max">
-                        <a href="javascript:void(0)" :class="{ 'bg-green-100': user }" @click="user = !user;"
+                        <a href="javascript:void(0)" :class="{ 'bg-orange-100': user }" @click="user = !user;"
                             class="group dropdown-btn">
                             <i class="fi fi-br-user-gear"></i>
 
@@ -344,12 +344,13 @@ export default {
 <style>
 .router-link-exact-active,
 .router-link-exact-active:hover {
-    background-color: rgb(34 197 94 / 1) !important;
+    background-color: rgb(249 115 22 / 1) !important;
+    /* @apply bg-orange-500 */
     color: white !important;
 }
 .router-link-active,
 .router-link-active:hover {
-  background-color: rgb(34 197 94 / 1) !important;
+  background-color: rgb(249 115 22 / 1) !important;
   color: white !important;
 }
 </style>

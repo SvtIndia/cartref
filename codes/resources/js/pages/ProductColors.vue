@@ -11,12 +11,12 @@
         </a>
       </div>
       <div class="flex flex-wrap justify-between items-center">
-        <div class="flex gap-2 items-center text-3xl text-green-600 font-semibold">
+        <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
           <i class="fi fi-rr-palette"></i>
           <h3 class="text-start my-8">Colors</h3>
         </div>
         <div>
-          <a class="flex items-center gap-2 px-4 py-2 text-base font-bold text-center text-white align-middle transition-all rounded-lg cursor-pointer bg-green-500 hover:bg-green-600">
+          <a class="flex items-center gap-2 px-4 py-2 text-base font-bold text-center text-white align-middle transition-all rounded-lg cursor-pointer bg-orange-500 hover:bg-orange-600">
             Edit Product
             <i class="fi fi-rr-arrow-up-right-from-square text-base w-6 h-6"></i>
           </a>
@@ -37,7 +37,7 @@
               <div class="flex items-center justify-between">
                 <router-link :to="{name:'product-sizes', params: { product_id: product.id, color_id: color.id }}" class="inline-block">
                   <button
-                      class="flex items-center gap-2 px-4 py-2 text-xs font-bold text-center text-white bg-green-500 uppercase align-middle transition-all rounded-lg select-none  hover:bg-green-600"
+                      class="flex items-center gap-2 px-4 py-2 text-xs font-bold text-center text-white bg-orange-500 uppercase align-middle transition-all rounded-lg select-none  hover:bg-orange-600"
                       type="button">
                     Sizes
                     <i class="fi fi-rr-arrow-right text-sm w-4 h-4"></i>
@@ -52,13 +52,13 @@
                          :checked="parseInt(color.status) == 1" @change="updateStatus(color.id, $event)"
                          class="sr-only peer">
                   <div
-                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600">
+                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-600">
                   </div>
                 </label>
               </div>
             </div>
             <div class="absolute top-1 right-0">
-              <router-link :to="{name:'product-color-edit', params: { product_id: product.id, color_id: color.id }}" class="bg-white text-green-500 hover:bg-green-500 hover:text-white cursor-pointer px-2 py-1 rounded-md">
+              <router-link :to="{name:'product-color-edit', params: { product_id: product.id, color_id: color.id }}" class="bg-white text-orange-500 hover:bg-orange-500 hover:text-white cursor-pointer px-2 py-1 rounded-md">
                 <i class="fi fi-rr-pencil text-sm w-4 h-4"></i>
               </router-link>
             </div>
