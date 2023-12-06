@@ -17,6 +17,7 @@
                 <br><br>
                 <div class="cart-action">
                     <a href="{{ route('products.showcase') }}" class="btn btn-dark"><span>Browse Products</span></a>
+                    <a class="btn btn-sm btn-link" href="{{ route('showcase.getstarted') }}" style="color: red;">Activate Showroom At Home</a>
                 </div>
             @else
                 <div class="products scrollable">
