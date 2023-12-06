@@ -113,7 +113,7 @@
             </i> --}}
         </a>
         <!-- End Cart Toggle -->
-        <div class="dropdown-box" style="left: 0;">
+        <div class="dropdown-box" style="right: 0;">
             @if (count($ssproducts) == 0)
 
                 <label>Your showroom at home bag is empty</label>

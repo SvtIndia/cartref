@@ -301,7 +301,7 @@
                                     wire:click="addtoshowcaseathome">
                                     <span class="add-to-cart-span">Showroom At Home</span>
                                 </button>
-                                {{--                        <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a> --}}
+                                {{-- <a href="{{ route('showcase.introduction') }}"><span class="fas fa-info-circle" title="What is showroom at home?"></span></a> --}}
                                 <div class="new-wishlist-wrapper">
                                     @livewire('wishlist', [
                                         'wishlistproductid' => $product->id,
@@ -317,7 +317,7 @@
                                     <button class="add-to-cart-btn" type="button"
                                         @if ($this->disablebtn == true) disabled="disabled" title="First select required fields!" @endif
                                         wire:click="addtoshowcaseathome">
-                                        <span class="add-to-cart-span">Showroom At Homes</span>
+                                        <span class="add-to-cart-span">Showroom At Home</span>
                                     </button>
                                 @else
                                     <button class="add-to-cart-btn" type="button" disabled="disabled"

@@ -5,7 +5,7 @@
                 <img src="https://laravel.com/img/notification-logo.png" class="logo" alt="Laravel Logo">
             @else
                 <img
-                    src="{{ env('APP_URL') }}/images/showroom_at_home.png"
+                    src="https://cartrefs.com/images/showroom_at_home.png"
                     style="width:auto;height: 100px;max-height: 100px;background: black;padding: 15px;border-radius: 2px;"
                     class="logo"
                     alt="Cartref Logo"
