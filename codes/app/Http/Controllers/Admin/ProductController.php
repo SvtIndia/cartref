@@ -94,7 +94,7 @@ class ProductController extends Controller
 
     public function fetchProductColor(Request $request, $id)
     {
-        $color = Productcolor::findOrFail($id);
+        $color = Productcolor::findOrFail($id)->append('json_more_images');
         //Response
         return new ApiResource($color);
     }
@@ -132,7 +132,12 @@ class ProductController extends Controller
     }
 
     public function fetchSizesByColorId(Request $request, $product_id, $color_id){
-        $sizes = Productsku::where('product_id', $product_id)->orderBy('size', 'ASC')->get();
+        $productColor = Productcolor::findOrFail($color_id);
+        $sizes = Productsku::where([
+            'product_id' => $product_id,
+            'color' => $productColor->color,
+        ])
+        ->orderBy('size', 'ASC')->get();
         return new ApiResource($sizes);
     }
 

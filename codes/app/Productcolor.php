@@ -22,4 +22,7 @@ class Productcolor extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
+    public function getJsonMoreImagesAttribute(){
+        return json_decode($this->more_images) ?? [];
+    }
 }

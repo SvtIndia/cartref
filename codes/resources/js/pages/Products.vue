@@ -159,13 +159,11 @@
                                                 <div class="">
                                                     <div class="flex items-center gap-2">
                                                         <div class="font-medium">Category:</div>
-                                                        <div class="font-normal text-gray-500">{{ product.productcategory ?
-                                                            product.productcategory.name : '-' }}</div>
+                                                        <div class="font-normal text-gray-500">{{ product.productcategory ? product.productcategory.name : '-' }}</div>
                                                     </div>
                                                     <div class="flex items-center gap-2">
                                                         <div class="font-medium">Sub Category:</div>
-                                                        <div class="font-normal text-gray-500">{{ product.productsubcategory
-                                                            ? product.productsubcategory.name : '-' }}</div>
+                                                        <div class="font-normal text-gray-500">{{ product.productsubcategory ? product.productsubcategory.name : '-' }}</div>
                                                     </div>
                                                     <div class="flex items-center gap-2">
                                                         <div class="font-medium">Brand:</div>
@@ -181,8 +179,7 @@
                                                     </div>
                                                     <div class="flex items-center gap-2">
                                                         <div class="font-medium">HSN:</div>
-                                                        <div class="font-normal text-gray-500">{{ product.productsubcategory
-                                                            ? product.productsubcategory.hsn : '-' }}</div>
+                                                        <div class="font-normal text-gray-500">{{ product.productsubcategory ? product.productsubcategory.hsn : '-' }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,8 +187,7 @@
                                     </div>
                                     <div
                                         class="table-cell border-t border-l border-gray-500 text-sm px-2 text-center !align-middle">
-                                        <div class="text-base font-semibold text-black">₹{{ product.offer_price ?
-                                            product.offer_price.toLocaleString("en-US") : '0.00' }}/-</div>
+                                        <div class="text-base font-semibold text-black">₹{{ product.offer_price ? product.offer_price.toLocaleString("en-US") : '0.00' }}/-</div>
                                         <div class="text-sm text-gray-700" v-if="product.mrp">
                                             <del>₹{{ product.mrp.toLocaleString("en-US") }}</del>
                                         </div>

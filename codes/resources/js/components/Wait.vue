@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 w-full h-screen flex items-center justify-center bg-white opacity-75 z-2" v-if="show">
+  <div class="fixed inset-0 w-full h-screen flex items-center justify-center bg-white opacity-75 z-[8]" v-if="show">
     <div class="text-3xl block mx-auto w-12 h-12">
       <Spinner/>
     </div>

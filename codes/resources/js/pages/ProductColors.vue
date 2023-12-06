@@ -24,14 +24,12 @@
       </div>
 
       <div class="block">
-        <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-             v-if="product_colors && product_colors.length > 0">
+        <div class="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" v-if="product_colors && product_colors.length > 0">
           <div v-for="(color, index) in product_colors" :key="color.id"
                class="relative flex flex-col mt-6 mx-2 text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl w-100">
             <div class="p-4">
               <img :src="$store.state.storageUrl + color.main_image" class="w-full h-64 mx-auto mb-2 rounded">
-              <h5
-                  class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+              <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 {{ color.color }}
               </h5>
               <div class="flex items-center justify-between">
