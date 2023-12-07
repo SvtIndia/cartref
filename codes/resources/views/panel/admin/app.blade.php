@@ -28,7 +28,7 @@
     <title>Admin | {{ config('app.name') }}</title>
 </head>
 
-<body class="bg-orange-50">
+<body class="bg-primary-50">
     <!--Vue App-->
     <div id="app">
         <navbar></navbar>

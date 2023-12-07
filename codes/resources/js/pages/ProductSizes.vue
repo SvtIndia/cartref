@@ -11,7 +11,7 @@
         </a>
       </div>
       <div class="flex flex-wrap justify-between items-center">
-        <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
+        <div class="flex gap-2 items-center text-3xl text-primary-600 font-semibold">
           <i class="fi fi-rr-palette"></i>
           <h3 class="text-start my-8">{{ color.color }} Sizes</h3>
         </div>
@@ -55,7 +55,7 @@
               </div>
 
               <template v-if="sizes && sizes.length > 0">
-                <div class="table-row table-body hover:bg-orange-100 bg-white" v-for="(size, index) in sizes" :key="size.id">
+                <div class="table-row table-body hover:bg-primary-100 bg-white" v-for="(size, index) in sizes" :key="size.id">
                   <div class="table-cell border-t border-gray-500 text-sm px-1 text-center py-4 relative">
                     {{ size.sku ?? '-' }}
                   </div>
@@ -78,7 +78,7 @@
                     <label id="status_3014" title="Click to Reject" class="relative inline-flex items-center cursor-pointer my-2">
                       <input type="checkbox" id="checkbox_3014" value="" class="sr-only peer">
                       <div
-                          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-600"></div>
+                          class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
                     </label>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">

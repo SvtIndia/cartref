@@ -9,11 +9,11 @@
 
     ::-moz-selection {
         /* Code for Firefox */
-        @apply bg-orange-500 text-white;
+        @apply bg-primary-500 text-white;
     }
 
     ::selection {
-        @apply bg-orange-500 text-white;
+        @apply bg-primary-500 text-white;
     }
 
     /* SideBar */
@@ -27,7 +27,7 @@
     }
 
     .single-item {
-        @apply flex items-center space-x-4 pl-5 py-3 text-gray-600 hover:bg-orange-200;
+        @apply flex items-center space-x-4 pl-5 py-3 text-gray-600 hover:bg-primary-200;
     }
 
     .dropdown-btn {
@@ -39,8 +39,21 @@
     }
 
     li a.dropdown-item {
-        @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-orange-200 pl-11;
+        @apply flex items-center w-full p-2 text-base font-normal text-gray-700 transition duration-75 hover:bg-primary-200 pl-11;
     }
+
+    /*.router-link-exact-active,*/
+    /*.router-link-exact-active:hover {*/
+    /*    !* background-color: rgb(20 184 166 / 1) !important; *!*/
+    /*    @apply !bg-primary-500;*/
+    /*    color: white !important;*/
+    /*}*/
+    /*.router-link-active,*/
+    /*.router-link-active:hover {*/
+    /*    !* background-color: rgb(20 184 166 / 1) !important; *!*/
+    /*    @apply !bg-primary-500;*/
+    /*    color: white !important;*/
+    /*}*/
 
 
     /* Pagination */
@@ -67,7 +80,7 @@
         px-2 py-2
         text-gray-400
         ring-1 ring-inset ring-gray-300
-        hover:bg-orange-100
+        hover:bg-primary-100
         focus:z-20 focus:outline-offset-0
         cursor-pointer
         disabled:cursor-not-allowed
@@ -79,14 +92,14 @@
         z-10
         inline-flex
         items-center
-        bg-orange-600
+        bg-primary-600
         px-4 py-2
         text-sm font-semibold text-white
         focus:z-20
         focus-visible:outline
         focus-visible:outline-2
         focus-visible:outline-offset-2
-        focus-visible:outline-orange-600;
+        focus-visible:outline-primary-600;
     }
 
     .default-link {
@@ -94,7 +107,7 @@
         inline-flex
         items-center
         px-4 py-2
-        hover:bg-orange-100
+        hover:bg-primary-100
         text-sm
         font-semibold
         text-gray-900
@@ -111,7 +124,7 @@
     .table-head .table-cell {
         /*vertical-align: middle;*/
         /*color: rgb(22 163 74 / var(--tw-bg-opacity));*/
-        @apply text-orange-600 align-middle;
+        @apply text-primary-600 align-middle;
     }
 }
 
@@ -123,15 +136,15 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-track {
-        @apply bg-orange-400;
+        @apply bg-primary-400;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        @apply bg-orange-700;
+        @apply bg-primary-700;
         border-radius: 50px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        @apply bg-orange-800;
+        @apply bg-primary-800;
     }
 }

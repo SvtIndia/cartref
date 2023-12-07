@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="container mx-auto my-2 px-4">
-            <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
+            <div class="flex gap-2 items-center text-3xl text-primary-600 font-semibold">
                 <i class="fi fi-rr-boxes"></i>
                 <h3 class="text-start my-8">Orders</h3>
             </div>
-            <div class="bg-orange-200 p-2 md:p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
+            <div class="bg-primary-200 p-2 md:p-4 overflow-x-auto shadow-md sm:rounded-lg my-4">
                 <div
                     class="flex justify-between px-2 md:px-4 py-2 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-8 lg:py-4">
                     <div class="w-[45%]">
@@ -15,7 +15,7 @@
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
@@ -50,7 +50,7 @@
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
@@ -88,7 +88,7 @@
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
@@ -123,7 +123,7 @@
                         </h3>
                         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         100
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         200
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                             <div
-                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-orange-500">
+                                class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white text-black shadow-xl    rounded-xl group hover:shadow-2xl hover:shadow-primary-500">
                                 <div class="px-2 xl:px-4 py-2">
                                     <div class="flex items-center w-10 h-10 rounded-full text-black bg-white text-lg font-semibold">
                                         400
@@ -170,7 +170,7 @@
                         <div class="flex items-center gap-2">
                             <div class="relative">
                                 <select title="Status"
-                                    class="block appearance-none w-32 leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
+                                    class="block appearance-none w-32 leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
                                     <option class="bg-gray-100" value="">Select Status</option>
                                     <option class="bg-gray-100" value="1">Yet to Process!</option>
                                     <option class="bg-gray-100" value="2">Yet to Ship!</option>
@@ -189,7 +189,7 @@
                                     <i class="fi fi-rr-search mr-1"></i>
                                 </div>
                                 <input type="text"
-                                    class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
+                                    class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
                                     placeholder="Search for users">
                             </div>
                             <div class="flex border border-gray-600 rounded-lg bg-white">
@@ -211,7 +211,7 @@
                                 <div class="table-cell border-gray-500 text-center uppercase font-semibold p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded  ">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded  ">
                                     </div>
                                 </div>
 
@@ -253,11 +253,11 @@
                                     Actions
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -400,11 +400,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -546,11 +546,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -693,11 +693,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -840,11 +840,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -987,11 +987,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1
@@ -1134,11 +1134,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-row table-body hover:bg-orange-100 bg-white">
+                            <div class="table-row table-body hover:bg-primary-100 bg-white">
                                 <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                     <div class="flex items-center">
                                         <input type="checkbox"
-                                            class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                                            class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                                     </div>
                                 </div>
                                 <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">1

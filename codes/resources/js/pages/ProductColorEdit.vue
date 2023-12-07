@@ -11,7 +11,7 @@
         </a>
       </div>
       <div class="flex flex-wrap justify-between items-center">
-        <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
+        <div class="flex gap-2 items-center text-3xl text-primary-600 font-semibold">
           <i class="fi fi-rr-palette"></i>
           <h3 class="text-start my-8">{{ color.color }}</h3>
         </div>
@@ -31,7 +31,7 @@
                       v-model="color_name"
                       placeholder="Color"
                       required="required"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
                   />
                 </div>
               </div>
@@ -70,7 +70,7 @@
                   </div>
                   <!-- upload -->
                   <div class="flex items-center justify-center bg-grey-lighter mt-4">
-                    <label class="flex flex-col items-center px-4 py-4 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-orange-500 hover:text-white">
+                    <label class="flex flex-col items-center px-4 py-4 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-primary-500 hover:text-white">
                       <i class="fi fi-rr-file-upload text-3xl"></i>
                       <span class="mt-2 text-base leading-normal">Choose image</span>
                       <input type='file' class="hidden" />
@@ -79,7 +79,7 @@
                 </div>
               </div>
               <div class="text-left">
-                <button type="submit" class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">
+                <button type="submit" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">
                   Update
                 </button>
               </div>

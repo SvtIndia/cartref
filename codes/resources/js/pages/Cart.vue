@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mx-auto my-2 px-4">
-      <div class="flex gap-2 items-center text-3xl text-orange-600 font-semibold">
+      <div class="flex gap-2 items-center text-3xl text-primary-600 font-semibold">
         <i class="fi fi-rr-heart"></i>
         <h3 class="text-start my-8">Carts</h3>
       </div>
@@ -14,10 +14,10 @@
                 {{ pagination.from || '0' }} - {{ pagination.to || '0' }} of {{ pagination.total || '0' }}
               </div>
               <div>
-                <button :disabled="!pagination.prev_page_url" @click="fetchCart(pagination.prev_page_url)" title="Previous" class="border border-transparent rounded-full hover:bg-orange-400 disabled:opacity-50">
+                <button :disabled="!pagination.prev_page_url" @click="fetchCart(pagination.prev_page_url)" title="Previous" class="border border-transparent rounded-full hover:bg-primary-400 disabled:opacity-50">
                   <i class="fi fi-rr-angle-small-left text-xl px-1 py-2"></i>
                 </button>
-                <button :disabled="!pagination.next_page_url" @click="fetchCart(pagination.next_page_url)" title="Next" class="border border-transparent rounded-full hover:bg-orange-400 disabled:opacity-50">
+                <button :disabled="!pagination.next_page_url" @click="fetchCart(pagination.next_page_url)" title="Next" class="border border-transparent rounded-full hover:bg-primary-400 disabled:opacity-50">
                   <i class="fi fi-rr-angle-small-right text-xl px-1 py-2"></i>
                 </button>
               </div>
@@ -29,11 +29,11 @@
                   <i class="fi fi-rr-search mr-1"></i>
                 </div>
                 <input type="text" v-model="keyword"
-                       class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-orange-500 focus-visible:border-orange-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
+                       class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
                        placeholder="Search" @keydown.enter="fetchCart()">
               </div>
               <div class="flex border border-gray-600 rounded-lg bg-white">
-                <button class="px-2 py-1 m-[2px] hover:bg-orange-100 border-r border-solid cursor-pointer"
+                <button class="px-2 py-1 m-[2px] hover:bg-primary-100 border-r border-solid cursor-pointer"
                         @click="fetchCart()">
                   <i class="ffi fi-rr-refresh mr-1"></i>
                 </button>
@@ -56,7 +56,7 @@
                 <div class="table-row table-head">
                   <div class="table-cell border-gray-500 text-center uppercase font-semibold p-1 px-2">
                     <div class="flex items-center">
-                      <input type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                      <input type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                     </div>
                   </div>
                   <div class="table-cell border-l border-gray-500 text-center font-semibold uppercase w-10 p-1">S.No.
@@ -69,10 +69,10 @@
                   <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">Date</div>
                 </div>
                 <div v-for="(wishlist, index) in carts" v-bind:key="index"
-                     class="table-row table-body hover:bg-orange-100 bg-white">
+                     class="table-row table-body hover:bg-primary-100 bg-white">
                   <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                     <div class="flex items-center">
-                      <input type="checkbox" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded">
+                      <input type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded">
                     </div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 text-sm text-center w-10 p-1">{{

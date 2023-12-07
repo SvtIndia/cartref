@@ -1402,23 +1402,23 @@ li a.dropdown-item:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
-.bg-orange-100 {
+.bg-primary-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
-.bg-orange-200 {
+.bg-primary-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
-.bg-orange-50 {
+.bg-primary-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
-.bg-orange-500 {
+.bg-primary-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
-.bg-orange-600 {
+.bg-primary-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
@@ -1451,7 +1451,7 @@ li a.dropdown-item:hover {
 .fill-current {
   fill: currentColor;
 }
-.fill-orange-600 {
+.fill-primary-600 {
   fill: #16a34a;
 }
 .p-1 {
@@ -1730,7 +1730,7 @@ li a.dropdown-item:hover {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
-.text-orange-600 {
+.text-primary-600 {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
 }
@@ -1913,22 +1913,22 @@ li a.dropdown-item:hover {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-orange-100:hover {
+.hover\:bg-primary-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-orange-400:hover {
+.hover\:bg-primary-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-orange-700:hover {
+.hover\:bg-primary-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-orange-800:hover {
+.hover\:bg-primary-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(22 101 52 / var(--tw-bg-opacity));
 }
@@ -1953,7 +1953,7 @@ li a.dropdown-item:hover {
   color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
-.hover\:text-orange-500:hover {
+.hover\:text-primary-500:hover {
   --tw-text-opacity: 1;
   color: rgb(34 197 94 / var(--tw-text-opacity));
 }
@@ -1974,7 +1974,7 @@ li a.dropdown-item:hover {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.hover\:shadow-orange-500:hover {
+.hover\:shadow-primary-500:hover {
   --tw-shadow-color: #22c55e;
   --tw-shadow: var(--tw-shadow-colored);
 }
@@ -2035,12 +2035,12 @@ li a.dropdown-item:hover {
   --tw-ring-color: rgb(37 99 235 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-orange-300:focus {
+.focus\:ring-primary-300:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(134 239 172 / var(--tw-ring-opacity));
 }
 
-.focus\:ring-orange-500:focus {
+.focus\:ring-primary-500:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(34 197 94 / var(--tw-ring-opacity));
 }
@@ -2050,7 +2050,7 @@ li a.dropdown-item:hover {
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
 }
 
-.focus-visible\:border-orange-500:focus-visible {
+.focus-visible\:border-primary-500:focus-visible {
   --tw-border-opacity: 1;
   border-color: rgb(34 197 94 / var(--tw-border-opacity));
 }
@@ -2063,7 +2063,7 @@ li a.dropdown-item:hover {
   outline-width: 1px;
 }
 
-.focus-visible\:outline-orange-500:focus-visible {
+.focus-visible\:outline-primary-500:focus-visible {
   outline-color: #22c55e;
 }
 
@@ -2076,7 +2076,7 @@ li a.dropdown-item:hover {
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.peer:checked ~ .peer-checked\:bg-orange-600 {
+.peer:checked ~ .peer-checked\:bg-primary-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
@@ -2104,7 +2104,7 @@ li a.dropdown-item:hover {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.peer:focus ~ .peer-focus\:ring-orange-300 {
+.peer:focus ~ .peer-focus\:ring-primary-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(134 239 172 / var(--tw-ring-opacity));
 }
