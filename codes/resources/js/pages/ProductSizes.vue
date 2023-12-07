@@ -66,17 +66,22 @@
                     <div class="text-sm py-2.5">{{ size.color ?? '-' }}</div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
-                    <div class="text-sm py-2.5">₹{{ size.offer_price ?? '0.00' }}/-</div>
+                    <div class="text-sm py-2.5" v-if="size.offer_price">₹{{ size.offer_price }}/-</div>
+                    <div class="text-sm py-2.5" v-else>-</div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
-                    <div class="text-sm py-2.5"> {{ size.length ?? '-' }} / {{ size.breath ?? '-' }} / {{ size.height ?? '-' }} / {{ size.weight ?? '-' }}</div>
+                    <div class="text-sm py-2.5">{{ size.length ?? '-' }} / {{ size.breath ?? '-' }} / {{ size.height ?? '-' }} / {{ size.weight ?? '-' }}</div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
                     <div class="font-semibold text-gray-600 py-2.5">{{ size.available_stock ?? '0' }}</div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
-                    <label id="status_3014" title="Click to Reject" class="relative inline-flex items-center cursor-pointer my-2">
-                      <input type="checkbox" id="checkbox_3014" value="" class="sr-only peer">
+                    <label :id="'wait_'+size.id" class="hidden inline-block  justify-center w-4 h-4">
+                      <Spinner/>
+                    </label>
+                    <label class="relative inline-flex items-center cursor-pointer" :id="'status_'+size.id">
+                      <input type="checkbox" :id="'checkbox_'+size.id" value="" :checked="parseInt(size.status) === 1" @change="updateStatus(size.id, $event)"
+                             class="sr-only peer">
                       <div
                           class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
                     </label>
@@ -94,7 +99,7 @@
                 </div>
               </template>
               <template v-else-if="dataLoading">
-                <Skeleton />
+                <Skeleton/>
               </template>
               <template v-else>
                 <div>
@@ -129,6 +134,22 @@ export default {
     }
   },
   methods: {
+    updateStatus(id, e) {
+      document.getElementById('wait_' + id).classList.remove('hidden')
+      document.getElementById('status_' + id).classList.add('hidden')
+      axios.put(`/admin/product/${this.product_id}/color/${this.color_id}/sizes/${id}`, {
+        status: e.target.checked
+      })
+          .then(({data}) => {
+            this.show_toast(data.status, data.msg);
+            document.getElementById('wait_' + id).classList.add('hidden')
+            document.getElementById('status_' + id).classList.remove('hidden')
+            document.getElementById('checkbox_' + id).checked = e.target.checked;
+          })
+          .catch(err => {
+            err.handleGlobally && err.handleGlobally();
+          })
+    },
     fetchProductAndColor() {
       axios
           .get(`/admin/product/${this.product_id}`)

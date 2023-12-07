@@ -8,8 +8,10 @@ use App\Http\Resources\ApiResource;
 use App\Models\Product;
 use App\Productcolor;
 use App\Productsku;
-use App\ProductSubcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -131,14 +133,105 @@ class ProductController extends Controller
 
     }
 
-    public function fetchSizesByColorId(Request $request, $product_id, $color_id){
+    public function deleteImage(Request $request, $id){
+        $request->validate([
+            'image' => 'required'
+        ]);
+        $image = $request->image;
+        $productColor = Productcolor::findOrFail($id)->append('json_more_images');
+        $json_images = $productColor->json_more_images;
+
+        if(in_array($image, $json_images)){
+            $filePath = Storage::path('public/' . $image);
+            if(File::exists($filePath)) {
+                File::delete($filePath);
+            }
+
+            $key = array_search($image, $json_images);
+            unset($json_images[$key]);
+            $productColor->update(['more_images' => json_encode($json_images)]);
+            return response()->json(['status' => 'success', 'msg' => 'Image deleted successfully']);
+        }
+
+        return response()->json(['status' => 'warning', 'msg' => 'Image not found']);
+    }
+
+    public function uploadImages(Request $request, $id){
+        $request->validate([
+            'images' => 'required'
+        ]);
+
+        $files = $request->file('images');
+        $productColor = Productcolor::findOrFail($id)->append('json_more_images');
+        $json_images = $productColor->json_more_images;
+
+        foreach ($files as $file){
+            $filName = Str::random() . '.' . $file->getClientOriginalExtension();
+            $subFolder = date('FY');
+            $destinationPath = Storage::path('public/productcolors/' . $subFolder);
+            if (!File::isDirectory($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+            if ($file->move($destinationPath, $filName)) {
+                //file moved and push to array
+                $dbPath = 'productcolors/' . $subFolder . '/' . $filName;
+                array_push($json_images, $dbPath);
+            }
+        }
+        $productColor->update(['more_images' => json_encode($json_images)]);
+        return response()->json(['status' => 'success', 'msg' => 'Images uploaded successfully']);
+
+    }
+
+    public function fetchSizesByColorId(Request $request, $product_id, $color_id)
+    {
         $productColor = Productcolor::findOrFail($color_id);
         $sizes = Productsku::where([
             'product_id' => $product_id,
             'color' => $productColor->color,
         ])
-        ->orderBy('size', 'ASC')->get();
+            ->orderBy('size', 'ASC')->get();
         return new ApiResource($sizes);
+    }
+
+    public function fetchSizeById(Request $request, $product_id, $color_id, $size_id)
+    {
+        $productColor = Productcolor::findOrFail($color_id);
+        $size = Productsku::where([
+            'id' => $size_id,
+            'product_id' => $product_id,
+            'color' => $productColor->color,
+        ])
+            ->firstOrFail();
+
+        return new ApiResource($size);
+    }
+
+    public function updateSizeById(Request $request, $product_id, $color_id, $size_id)
+    {
+        $productColor = Productcolor::findOrFail($color_id);
+        $size = Productsku::where([
+            'id' => $size_id,
+            'product_id' => $product_id,
+            'color' => $productColor->color,
+        ])
+            ->firstOrFail();
+
+        $size->update($request->all());
+        $status = 'success';
+
+        $msg = $size->size . ' updated successfully';
+        if ($request->filled('status')) {
+            if ($request->status) {
+                $status = 'success';
+                $msg = $size->size . ' Published Successfully';
+            } else {
+                $status = 'warning';
+                $msg = $size->size . ' Unpublished Successfully';
+            }
+        }
+
+        return response()->json(['status' => $status, 'msg' => $msg]);
     }
 
 }

@@ -22,7 +22,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
         Route::get('color/{id}', [ProductController::class, 'fetchProductColor']);
         Route::put('color/{id}', [ProductController::class, 'updateProductColorStatus']);
+        Route::post('color/{id}/delete-image', [ProductController::class, 'deleteImage']);
+        Route::post('color/{id}/upload-images', [ProductController::class, 'uploadImages']);
+
         Route::get('{product_id}/color/{color_id}/sizes', [ProductController::class, 'fetchSizesByColorId']);
+        Route::get('{product_id}/color/{color_id}/sizes/{size_id}', [ProductController::class, 'fetchSizeById']);
+        Route::put('{product_id}/color/{color_id}/sizes/{size_id}', [ProductController::class, 'updateSizeById']);
+
 
     });
 });

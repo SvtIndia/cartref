@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Productcolor extends Model
 {
-    protected $fillable = ['status'];
+    protected $fillable = ['color','status','more_images','main_image'];
 
 
     public function colors()

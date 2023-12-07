@@ -86,7 +86,7 @@ class SubCategoryController extends Controller
             $file = $request->file('image');
             $filName = Str::random() . '.' . $file->getClientOriginalExtension();
             $subFolder = date('FY');
-            $destinationPath = Storage::path('public/product-subcategories/' . $subFolder, 'public');
+            $destinationPath = Storage::path('public/product-subcategories/' . $subFolder);
             if (!File::isDirectory($destinationPath)) {
                 File::makeDirectory($destinationPath, 0777, true, true);
             }

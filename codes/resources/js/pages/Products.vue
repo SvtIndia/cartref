@@ -125,7 +125,7 @@
                                         Actions
                                     </div>
                                 </div>
-                                <div v-for="(product, index) in    products   " v-bind:key="index"
+                                <div v-for="(product, index) in products" v-bind:key="index"
                                     class="table-row table-body hover:bg-primary-100">
                                     <div class="table-cell border-t border-gray-500 text-sm text-center w-10 p-1 px-2">
                                         <div class="flex items-center">
