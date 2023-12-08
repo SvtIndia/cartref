@@ -511,14 +511,15 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    $product = \App\Models\Product::findOrFail(846);
-    $colors = Productcolor::where('product_id', $product->id)->get();
-//    $targetColor = Color::where('name','Red')->first();
-//
-//    $product->colors()->attach($targetColor);
-//
-//    $product = \App\Models\Product::findOrFail(2147);
-    return $colors;
+    $color = Productcolor::find(3186)->append('json_more_images');
+
+    $imgDel = "productcolors/July2023/RIrpOdtfmzHDFNTEqNCO.jpg";
+    $json_images = $color->json_more_images;
+    $key = array_search($imgDel, $json_images);
+    unset($json_images[$key]);
+//    array_splice($json_images, $key, 1);
+    return (json_encode($json_images));
+
 });
 
 //Calling this route by shiprocket

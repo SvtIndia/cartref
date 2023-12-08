@@ -42,28 +42,28 @@
                     <template v-if="color.json_more_images && Array.isArray(color.json_more_images) && color.json_more_images.length > 0">
                       <div class="relative bg-white border border-gray-200 rounded-lg shadow h-52" v-for="(image, index) in color.json_more_images" :key="image">
                         <div class="h-full w-full">
-                          <img class="h-full w-full border rounded-md" v-if="image" :src="$store.state.storageUrl + image" alt="image"/>
+                          <img class="h-full w-full cursor-zoom-in border rounded-md object-fill"
+                              v-if="image"
+                              :src="$store.state.storageUrl + image"
+                              @click="imageModal($store.state.storageUrl + image)"
+                              alt="image"
+                          />
                         </div>
                         <button type="button" @click="deleteImage(image)" class="absolute top-0 right-1 text-red-500 text-xl cursor-pointer">
                           <i class="fi fi-rr-circle-xmark"></i>
                         </button>
                       </div>
                     </template>
-                    <!--                    <template v-if="dataLoading">-->
-                    <!--                      <div class="w-8 h-8">-->
-                    <!--                        <Spinner />-->
-                    <!--                      </div>-->
-                    <!--                    </template>-->
                     <div class="flex items-center justify-center col-span-2 h-52">
                       <label for="dropzone-file"
-                             class="flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:rounded-xl hover:shadow-md">
+                             class="relative flex flex-col items-center justify-center w-full h-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:rounded-xl hover:shadow-md">
                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
                           <i class="fi fi-rr-cloud-upload-alt text-4xl h-8 mb-4 text-gray-500"></i>
                           <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                           <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF</p>
                           <p id="dropzone-file-select" class="text-base text-gray-500"></p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden"  accept="image/*" @change="handleFileChange($event)" multiple>
+                        <input id="dropzone-file" type="file" class="absolute h-full w-full z-0 m-0 p-0 opacity-0"  accept="image/*" @change="handleFileChange($event)" multiple>
                       </label>
                     </div>
                   </div>
@@ -96,6 +96,7 @@
         </div>
       </div>
     </div>
+    <ImageModal :show="showModal" :hide="closeImageModal" :img="imgModal"></ImageModal>
   </div>
 </template>
 
@@ -106,6 +107,8 @@ export default {
     return {
       loading: true,
       dataLoading: true,
+      showModal: false,
+      imgModal: '',
       product_id: this.$route.params.product_id,
       color_id: this.$route.params.color_id,
       product: {},
@@ -114,6 +117,14 @@ export default {
     }
   },
   methods: {
+    imageModal(img) {
+      this.showModal = true;
+      this.imgModal = img;
+    },
+    closeImageModal() {
+      this.showModal = false;
+    },
+
     /* Operational methods */
     deleteImage(img) {
       if (!confirm("Are you sure want to delete this image ? ")) {
@@ -166,7 +177,6 @@ export default {
             err.handleGlobally && err.handleGlobally();
           })
     },
-
 
     /* Data fetch methods */
     fetchProduct() {

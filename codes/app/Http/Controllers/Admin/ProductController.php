@@ -133,7 +133,8 @@ class ProductController extends Controller
 
     }
 
-    public function deleteImage(Request $request, $id){
+    public function deleteImage(Request $request, $id)
+    {
         $request->validate([
             'image' => 'required'
         ]);
@@ -141,14 +142,15 @@ class ProductController extends Controller
         $productColor = Productcolor::findOrFail($id)->append('json_more_images');
         $json_images = $productColor->json_more_images;
 
-        if(in_array($image, $json_images)){
+        if (in_array($image, $json_images)) {
             $filePath = Storage::path('public/' . $image);
-            if(File::exists($filePath)) {
+            if (File::exists($filePath)) {
                 File::delete($filePath);
             }
 
             $key = array_search($image, $json_images);
-            unset($json_images[$key]);
+//            unset($json_images[$key]);
+            array_splice($json_images, $key, 1);
             $productColor->update(['more_images' => json_encode($json_images)]);
             return response()->json(['status' => 'success', 'msg' => 'Image deleted successfully']);
         }
@@ -156,7 +158,8 @@ class ProductController extends Controller
         return response()->json(['status' => 'warning', 'msg' => 'Image not found']);
     }
 
-    public function uploadImages(Request $request, $id){
+    public function uploadImages(Request $request, $id)
+    {
         $request->validate([
             'images' => 'required'
         ]);
@@ -165,7 +168,7 @@ class ProductController extends Controller
         $productColor = Productcolor::findOrFail($id)->append('json_more_images');
         $json_images = $productColor->json_more_images;
 
-        foreach ($files as $file){
+        foreach ($files as $file) {
             $filName = Str::random() . '.' . $file->getClientOriginalExtension();
             $subFolder = date('FY');
             $destinationPath = Storage::path('public/productcolors/' . $subFolder);
@@ -181,6 +184,42 @@ class ProductController extends Controller
         $productColor->update(['more_images' => json_encode($json_images)]);
         return response()->json(['status' => 'success', 'msg' => 'Images uploaded successfully']);
 
+    }
+
+    public function uploadMainImage()
+    {
+        $request->validate([
+            'image' => 'required|image|max:2048'
+        ]);
+        $productColor = Productcolor::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+
+            $file = $request->file('image');
+            $filName = Str::random() . '.' . $file->getClientOriginalExtension();
+            $subFolder = date('FY');
+            $destinationPath = Storage::path('public/productcolors/' . $subFolder);
+
+            if (!File::isDirectory($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+            if ($file->move($destinationPath, $filName)) {
+                //file moved
+                $dbPath = 'productcolors/' . $subFolder . '/' . $filName;
+
+                //deleting existing file
+                $oldFilePath = Storage::path('public/' . $productColor->main_image);
+                if (File::exists($oldFilePath)) {
+                    File::delete($oldFilePath);
+                }
+
+                //replace string with new one
+                $productColor->update(['main_image' => $dbPath]);
+                return response()->json(['status' => 'success', 'msg' => 'Image uploaded successfully']);
+            }
+        }
+
+        return response()->json(['status' => 'error', 'msg' => 'Something went wrong']);
     }
 
     public function fetchSizesByColorId(Request $request, $product_id, $color_id)
