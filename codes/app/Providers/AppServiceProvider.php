@@ -92,6 +92,7 @@ class AppServiceProvider extends ServiceProvider
                         ->where('from', '<=', Carbon::today())
                         ->where('to', '>=',Carbon::today())
                         ->where('user_email', null)
+                        ->where('is_coupon_for_all', true)
                         ->inRandomOrder()
                         ->get();
 
