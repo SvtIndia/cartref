@@ -526,7 +526,8 @@
             width: 100%;
             margin: auto;
             text-align: center;
-            position: absolute;
+            margin: 1rem auto;
+            /*position: absolute;*/
         }
         .get-started-btn{
             margin: 0 auto;
@@ -540,21 +541,31 @@
             cursor: pointer;
         }
 
+        .product-popup.showroom-popup{
+            margin: 4rem;
+        }
+
         @media screen and (max-width: 500px) {
             .get-started-wrapper{
                 bottom: 5rem;
             }
             .get-started-btn{
-                font-size: 1rem;
+                font-size: 2rem;
                 padding: 0.5rem 1rem;
+            }
+            .product-popup.showroom-popup{
+                margin: 2rem;
             }
         }
         @media (min-width: 500px) and (max-width: 1000px) {
+            .product-popup.showroom-popup{
+                margin: 2.5rem;
+            }
             .get-started-wrapper{
                 bottom: 5rem;
             }
             .get-started-btn{
-                font-size: 1.5rem;
+                font-size: 2rem;
                 padding: 0.5rem 1rem;
             }
         }
@@ -673,8 +684,8 @@
         <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-product mfp-fade mfp-ready" tabindex="-1"
              style="overflow: hidden auto;">
             <div class="mfp-container mfp-ajax-holder">
-                <div class="mfp-content">
-                    <div class="product product-single row product-popup" style="padding: 0px;">
+                <div class="mfp-content" style="position: absolute;">
+                    <div class="product product-single row product-popup showroom-popup" style="padding: 0px;">
                         <figure class="product-image" style="padding: 0px;">
                             @if(is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile')))
                                 <img src="{{ config('app.url') . '/images/showroom_popup_mobile.png' }}"
@@ -683,22 +694,22 @@
                                 <img src="{{ config('app.url') . '/images/showroom_popup.png' }}"
                                      style="display: flex; margin: auto;" alt="showroom">
                             @endif
+                            <div class="get-started-wrapper">
+                                <button title="Get Started"
+                                        onclick="window.location.href='/showcase-at-home/get-started'"
+                                        type="button"
+                                        class="get-started-btn"
+                                >
+                                    Get Started
+                                </button>
+                            </div>
                         </figure>
                         <button title="Close (Esc)"
                                 onclick="document.getElementById('showroom_popup').style.display = 'none';" type="button"
                                 class="mfp-close"><span>×</span></button>
-
-                        <div class="get-started-wrapper">
-                            <button title="Get Started"
-                                    onclick="window.location.href='/showcase-at-home/get-started'"
-                                    type="button"
-                                    class="get-started-btn"
-                            >
-                                Get Started
-                            </button>
-                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
