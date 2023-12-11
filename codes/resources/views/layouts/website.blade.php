@@ -520,6 +520,45 @@
         }
     </style>
 
+    <style>
+        .get-started-wrapper{
+            bottom: 6rem;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            position: absolute;
+        }
+        .get-started-btn{
+            margin: 0 auto;
+            margin-block: auto;
+            padding: 1rem 1.2rem;
+            font-size: 2rem;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 500px) {
+            .get-started-wrapper{
+                bottom: 5rem;
+            }
+            .get-started-btn{
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+        @media (min-width: 500px) and (max-width: 1000px) {
+            .get-started-wrapper{
+                bottom: 5rem;
+            }
+            .get-started-btn{
+                font-size: 1.5rem;
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
 
     @livewireStyles
     <script src="{{ asset('php_ua/assets/js/scripts/phpUaJS.js') }}"></script>
@@ -609,6 +648,7 @@
         </div>
     </div>
 </div> --}}
+
     <div style="display: none" id="no_internet">
         <div class="mfp-bg mfp-product mfp-fade mfp-ready quickview" wire:click="displayfalse"></div>
         <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-product mfp-fade mfp-ready" tabindex="-1"
@@ -623,6 +663,40 @@
                         <button title="Close (Esc)"
                                 onclick="document.getElementById('no_internet').style.display = 'none';" type="button"
                                 class="mfp-close"><span>×</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: none" id="showroom_popup">
+        <div class="mfp-bg mfp-product mfp-fade mfp-ready quickview" wire:click="displayfalse"></div>
+        <div class="mfp-wrap mfp-close-btn-in mfp-auto-cursor mfp-product mfp-fade mfp-ready" tabindex="-1"
+             style="overflow: hidden auto;">
+            <div class="mfp-container mfp-ajax-holder">
+                <div class="mfp-content">
+                    <div class="product product-single row product-popup" style="padding: 0px;">
+                        <figure class="product-image" style="padding: 0px;">
+                            @if(is_numeric(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'mobile')))
+                                <img src="{{ config('app.url') . '/images/showroom_popup_mobile.png' }}"
+                                     style="display: flex; margin: auto;" alt="showroom">
+                            @else
+                                <img src="{{ config('app.url') . '/images/showroom_popup.png' }}"
+                                     style="display: flex; margin: auto;" alt="showroom">
+                            @endif
+                        </figure>
+                        <button title="Close (Esc)"
+                                onclick="document.getElementById('showroom_popup').style.display = 'none';" type="button"
+                                class="mfp-close"><span>×</span></button>
+
+                        <div class="get-started-wrapper">
+                            <button title="Get Started"
+                                    onclick="window.location.href='/showcase-at-home/get-started'"
+                                    type="button"
+                                    class="get-started-btn"
+                            >
+                                Get Started
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
