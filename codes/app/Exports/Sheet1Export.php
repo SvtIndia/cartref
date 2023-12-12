@@ -45,6 +45,7 @@ class Sheet1Export implements FromCollection, WithHeadings, WithStyles, WithEven
             'SKU ID',
             'Colors',
             'Available Sizes',
+            'Qty',
             'Style',
             'Gender',
             "Length \n (cms)",
@@ -91,7 +92,7 @@ class Sheet1Export implements FromCollection, WithHeadings, WithStyles, WithEven
             ->setPromptTitle('Select Size(s)')
             ->setPrompt(sprintf("For multiple sizes use comma(,) seperated.\nView all sizes: Refer Worksheet1"));
 
-        $sheet->getDataValidation('I2:I1000')->setType('list')
+        $sheet->getDataValidation('J2:J1000')->setType('list')
             ->setFormula1(sprintf("='Worksheet 1'!\$E$2:\$E$%s", count($this->styles) + 1))
             ->setFormula2(null)
             ->setAllowBlank(false)
@@ -102,7 +103,7 @@ class Sheet1Export implements FromCollection, WithHeadings, WithStyles, WithEven
             ->setPromptTitle('Select Style')
             ->setPrompt('Choose a Style from the list.');
 
-        $sheet->getDataValidation('J2:J1000')
+        $sheet->getDataValidation('K2:K1000')
             ->setType('list')
             ->setErrorStyle(DataValidation::STYLE_INFORMATION )
             ->setFormula1(sprintf("='Worksheet 1'!\$D$2:\$D$%s", count($this->genders) + 1))

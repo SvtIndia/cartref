@@ -507,10 +507,13 @@ Route::get('/backup-clean', function () {
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
 Route::get('/get', function () {
-    return (float)(" 10 4000.55a ");
-    $str = preg_replace('/\s+/', '', ' $str ');
-    dd($str);
-  return view('notify');
+    if ("sd" !='' && "sdsd" !='' && "ddf" !='') {
+        return 323434;
+    }
+   $product = \App\Models\Product::find(3016);
+   return $product->productskus()
+       ->where(['size' => 'UK 3', 'color' => 'Blue'])->update(['available_stock' => 15])
+;
 });
 
 //Calling this route by shiprocket
