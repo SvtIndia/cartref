@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryComponentSlider;
 use App\Productcolor;
 use App\Size;
 use App\Brand;
@@ -236,7 +237,12 @@ class WelcomeController extends Controller
         $recentlyviewed = [];
 
         $dynamiccollections = Collection::where(['status' => 1, 'category' => $category])
-            ->where('desktop_columns', '>', '0')->whereHas('collections')->orderBy('order_id', 'asc')->get();
+                        ->where('desktop_columns', '>', '0')
+                        ->whereHas('collections')
+                        ->orderBy('order_id', 'asc')
+                        ->get();
+
+        $categoryComponentSliders = CategoryComponentSlider::where(['category_slug' => $category, 'is_active' => true])->orderBy('order')->get();
 
         // return ($dynamiccollections);
 
@@ -256,6 +262,7 @@ class WelcomeController extends Controller
             'trendings' => $trendings,
             'blogs' => $blogs,
             'dynamiccollections' => $dynamiccollections,
+            'categoryComponentSliders' => $categoryComponentSliders,
         ]);
     }
 

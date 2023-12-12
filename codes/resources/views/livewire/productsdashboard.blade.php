@@ -51,9 +51,9 @@
             @endif
             @if (request('filter'))
                 @if(request('type')) in @else for @endif
-                    @if(request('filter') == 'activeproducts') Active Products
-                    @elseif(request('filter') == 'inactiveproducts') In-Active Products
-                    @elseif(request('filter') == 'pendingforverificationproducts') Pending for Verification Products
+                    @if(request('filter') === 'activeproducts') Active Products
+                    @elseif(request('filter') === 'inactiveproducts') In-Active Products
+                    @elseif(request('filter') === 'pendingforverificationproducts') Pending for Verification Products
                     @else {{ request('filter') }}
                     @endif
             @endif
