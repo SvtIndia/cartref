@@ -180,7 +180,7 @@
                                                         class="count">{{ $orders->where('order_status', 'Returned')->count() }}</span>
                                                 </div>
                                                 <div class="info">
-                                                    <span class="title">Returne Delivered</span>
+                                                    <span class="title">Return Delivered</span>
                                                 </div>
                                             </div>
                                         </a>
