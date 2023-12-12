@@ -568,4 +568,5 @@
             $('.selected_ids').val(ids);
         });
     </script>
+
 @stop
