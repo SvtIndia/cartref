@@ -14,11 +14,11 @@
                 <a href="{{ route('welcome') }}" class="logo">
                     <img src="{{ Voyager::image(setting('site.logo')) }}" alt="{{ env('APP_NAME') }} logo" width="194" height="43">
                 </a>
-                <div class="showroom-at-home">
-                    @if(Config::get('icrm.showcase_at_home.feature') == 1)
-                        @livewire('showcasecount')
-                    @endif
-                </div>
+{{--                <div class="showroom-at-home">--}}
+{{--                    @if(Config::get('icrm.showcase_at_home.feature') == 1)--}}
+{{--                        @livewire('showcasecount')--}}
+{{--                    @endif--}}
+{{--                </div>--}}
                 <!-- End of Logo -->
             </div>
             <div class="header-center">
@@ -80,6 +80,11 @@
                 <!-- End of Header Search -->
                 {{-- <a class="login-link" href="{{ asset('ajax/login.html') }}" data-toggle="login-modal" title="login"><i class="d-icon-user"></i></a> --}}
                 {{-- <a class="login-link" href="{{ route('login') }}" title="login"><i class="d-icon-user"></i></a> --}}
+                <div class="showroom-at-home">
+                    @if(Config::get('icrm.showcase_at_home.feature') == 1)
+                        @livewire('showcasecount')
+                    @endif
+                </div>
 
                 @auth
                     {{-- if logged in --}}

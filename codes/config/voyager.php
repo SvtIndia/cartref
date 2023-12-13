@@ -205,6 +205,7 @@ return [
 
     'additional_js' => [
         'js/adminjs.js',
+
     ],
 
     'googlemaps' => [

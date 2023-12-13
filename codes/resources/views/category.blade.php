@@ -8,53 +8,56 @@
 
 @section('content')
     @include('components.frontend.introsliders.01')
+    <br><br>
 
-    {{-- <section id="statistics">
-        <div class="container">
-            <div class="stats owl-carousel">
+{{--    <section id="statistics">--}}
+{{--        <div class="container">--}}
+{{--            <div class="stats owl-carousel">--}}
 
-                <div class="stat">
-                    <div class="icon">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                    <div class="info">
-                        3+ Cities
-                    </div>
-                </div>
+{{--                <div class="stat">--}}
+{{--                    <div class="icon">--}}
+{{--                        <i class="fa fa-globe"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="info">--}}
+{{--                        3+ Cities--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
 
-                <div class="stat">
-                    <div class="icon">
-                        <i class="fa fa-users"></i>
-                    </div>
-                    <div class="info">
-                        10k+ Happy Customers
-                    </div>
-                </div>
+{{--                <div class="stat">--}}
+{{--                    <div class="icon">--}}
+{{--                        <i class="fa fa-users"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="info">--}}
+{{--                        10k+ Happy Customers--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="stat">
-                    <div class="icon">
-                        <i class="fa fa-home"></i>
-                    </div>
-                    <div class="info">
-                        150+ Showroom at Home
-                    </div>
-                </div>
+{{--                <div class="stat">--}}
+{{--                    <div class="icon">--}}
+{{--                        <i class="fa fa-home"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="info">--}}
+{{--                        150+ Showroom at Home--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <div class="stat">
-                    <div class="icon">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="info">
-                        300+ Sellers
-                    </div>
-                </div>
+{{--                <div class="stat">--}}
+{{--                    <div class="icon">--}}
+{{--                        <i class="fa fa-user"></i>--}}
+{{--                    </div>--}}
+{{--                    <div class="info">--}}
+{{--                        300+ Sellers--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-            </div>
-        </div>
-    </section> --}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
+
 
     @include('components/frontend/collections/dynamiccollections')
+
 
     <br><br>
     @include('components/frontend/collections/3column')

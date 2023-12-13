@@ -50,7 +50,12 @@
                 for {{ request('type') }} type
             @endif
             @if (request('filter'))
-                @if(request('type')) in @else for @endif {{ request('filter') }}
+                @if(request('type')) in @else for @endif
+                    @if(request('filter') === 'activeproducts') Active Products
+                    @elseif(request('filter') === 'inactiveproducts') In-Active Products
+                    @elseif(request('filter') === 'pendingforverificationproducts') Pending for Verification Products
+                    @else {{ request('filter') }}
+                    @endif
             @endif
             @if (empty(request('type')) && empty(request('filter')))
                 for all

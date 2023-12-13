@@ -14,7 +14,7 @@
 
     @if (count($dynamiccollections) > 0)
 
-        @foreach ($dynamiccollections as $dynamiccollection)
+        @foreach ($dynamiccollections as $index => $dynamiccollection)
             <style>
                 .dynamic-hero{{ $dynamiccollection->id }} {
                     position: relative;
@@ -55,10 +55,31 @@
                 </style>
             @endif
 
+            @if($index === 1 && isset($categoryComponentSliders) && count($categoryComponentSliders) > 0)
+                <section id="statistics">
+                    <div class="container">
+                        <div class="stats owl-carousel">
+                            @foreach($categoryComponentSliders as $item)
+                                <div class="stat">
+                                    <div class="icon">
+                                        <i class="fa {{ $item->icon }}"></i>
+                                        <!--fa fa-users-->
+                                    </div>
+                                    <div class="info">
+                                        {{ $item->title }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </section>
+                <br>
+            @endif
+
             <section id="dynamiccollections{{ $dynamiccollection->id }}">
                 <div class="containers pt-2 pb-6 pr-4 pl-4  dynamic-hero{{ $dynamiccollection->id }}">
 
-                    <h2 class="title title-center mb-4">
+                    <h2 class="title title-center mb-4" style="font-family: 'Merriweather',serif;">
                         {{ $dynamiccollection->group_name }}
                     </h2>
 

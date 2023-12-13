@@ -3,10 +3,10 @@
 @endphp
 
 @isset($colors)
-    @if (count($colors) > 0)
+    @if (count($colors) > 1)
     <div class="container">
         <div class="row">
-            <h3>Product Colors</h3>
+            <h3>Product Variations Image</h3>
         </div>
     </div>
     <div class="table-responsive">

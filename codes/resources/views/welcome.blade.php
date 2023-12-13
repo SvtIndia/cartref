@@ -79,32 +79,41 @@
 
 @section('bottomscripts')
 
-<script>
-    $(document).ready(function() {
-        $('.stats.owl-carousel').owlCarousel({
-            items: 1,
-            margin: 10,
-            loop: true,
-            nav: false,
-            dots: true,
-            autoplay: true,
-            autoplayTimeout: 2000,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                768: {
-                    items: 2
-                },
-                992: {
-                    items: 3
-                },
-                1200: {
-                    items: 4
+    <script>
+        $(document).ready(function () {
+            $('.stats.owl-carousel').owlCarousel({
+                items: 1,
+                margin: 10,
+                loop: true,
+                nav: false,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 2
+                    },
+                    992: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 4
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 
+    @guest
+        @if(!Session::get('showcasecity'))
+            <script>
+                $(document).ready(function () {
+                    document.getElementById('showroom_popup').style.display = 'block'
+                });
+            </script>
+        @endif
+    @endguest
 @endsection

@@ -41,6 +41,8 @@
                             {{ method_field("PUT") }}
                         @endif
 
+                        <input type="hidden" name="previous_url" value="{{ url()->previous()  }}">
+
                         <!-- CSRF TOKEN -->
                         {{ csrf_field() }}
 
@@ -314,4 +316,5 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+
 @stop

@@ -624,7 +624,7 @@
                                     <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}"
                                          class="img-responsive" alt="wishlist empty">
                                     <h1 class="display-5 fw-bold text-dark">
-                                        We dont have any product avaialable for selected filters
+                                        We dont have any product available for selected filters
                                         @if (!empty(Session::get('showcasecity')))
                                             at {{ Session::get('showcasecity') }}
                                             {{ Session::get('showcasepincode') }} area.
@@ -822,7 +822,7 @@
                                     <img src="{{ asset('images/icrm/wishlist/empty_wishlist.svg') }}"
                                          class="img-responsive" alt="wishlist empty">
                                     <h1 class="display-5 fw-bold text-dark">
-                                        We dont have any product avaialable for selected filters
+                                        We dont have any product available for selected filters
                                         @if (!empty(Session::get('showcasecity')))
                                             at {{ Session::get('showcasecity') }}
                                             {{ Session::get('showcasepincode') }} area.
