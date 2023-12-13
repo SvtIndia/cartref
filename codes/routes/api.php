@@ -55,4 +55,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.v1.', 'namespace' => 'Api\\V1\\'], 
             
     });
  });
- Route::get('/fetch/showroom-orders/{order_id}',[\App\Http\Controllers\ShowcaseAtHomeController::class, 'getOrder']);
+Route::get('/fetch/showroom-orders/{order_id}',[\App\Http\Controllers\ShowcaseAtHomeController::class, 'getOrder']);
+Route::get('/fetch/announcement',[\App\Http\Controllers\AnnouncementController::class, 'fetchAnnouncements']);
