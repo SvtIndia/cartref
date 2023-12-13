@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import router from './Router/index'
 import store from './Store/index'
 import mixin from './plugins/mixin';
+import './plugins/directives.js';
 
 Vue.use(VueRouter);
 
