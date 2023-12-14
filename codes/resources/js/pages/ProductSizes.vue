@@ -155,11 +155,9 @@
 </template>
 
 <script>
-import InputError from "../../../vendor/laravel/breeze/stubs/inertia-vue/resources/js/Components/InputError.vue";
 
 export default {
   name: "ProductSizes",
-  components: {InputError},
   data() {
     return {
       loading: true,
