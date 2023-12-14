@@ -54,6 +54,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductBulkUploadController;
 use App\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\VoyagerForgottenPasswordController;
+use App\Http\Controllers\VoyagerResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,6 +117,12 @@ Route::group(['prefix' => Config::get('icrm.admin_panel.prefix')], function () {
     Route::post('/products/bulk-upload', [ProductBulkUploadController::class, 'upload'])->name('products.bulk-upload');
 
     Voyager::routes(['verify', true]);
+
+    // Password Reset Routes...
+    Route::get('password/reset', [VoyagerForgottenPasswordController::class,'showLinkRequestForm'])->name('voyager.password.request');
+    Route::post('password/email', [VoyagerForgottenPasswordController::class,'sendResetLinkEmail'])->name('voyager.password.email');
+    Route::get('password/reset/{token}', [VoyagerResetPasswordController::class,'showResetForm'])->name('voyager.password.reset');
+    Route::post('password/reset', [VoyagerResetPasswordController::class,'reset'])->name('voyager.password.reset.submit');;
 
     Route::get('/downloadlabel', [DownloadLabelController::class, 'downloadlabel'])->name('downloadlabel');
     Route::post('/orders/downloadtaxinvoice', [DownloadLabelController::class, 'downloadtaxinvoice'])->name('downloadtaxinvoice');
@@ -506,7 +514,9 @@ Route::get('/backup-clean', function () {
 
 Route::view('/invoice/test', 'vendor.invoices.templates.default');
 
+
 Route::get('/get', function () {
+    return route('passwords.sent');
     if ("sd" !='' && "sdsd" !='' && "ddf" !='') {
         return 323434;
     }
@@ -528,3 +538,4 @@ Route::get('/notify/{order_id}',function($order_id){
 });
 
 Route::get('/export-users-from-view',[ProductBulkUploadController::class, 'export_product_dummy']);
+

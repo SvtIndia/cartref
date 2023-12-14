@@ -79,7 +79,7 @@
             <section id="dynamiccollections{{ $dynamiccollection->id }}">
                 <div class="containers pt-2 pb-6 pr-4 pl-4  dynamic-hero{{ $dynamiccollection->id }}">
 
-                    <h2 class="title title-center mb-4" style="font-family: 'Merriweather',serif;">
+                    <h2 class="title title-center mb-4" style="font-family: 'Merriweather',serif; @if($dynamiccollection->font_size > 0)font-size: {{ $dynamiccollection->font_size  }}@endif">
                         {{ $dynamiccollection->group_name }}
                     </h2>
 
