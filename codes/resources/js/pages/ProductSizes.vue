@@ -52,9 +52,6 @@
                 <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
                   Last Update
                 </div>
-                <div class="table-cell border-l border-gray-500 text-center uppercase font-semibold p-1">
-                  Actions
-                </div>
               </div>
 
               <template v-if="sizes && sizes.length > 0">
@@ -121,15 +118,8 @@
                     <div class="text-sm py-2.5" v-html="formDateTime(size.created_at)"></div>
                   </div>
                   <div class="table-cell border-t border-l border-gray-500 p-1 text-center">
-                    <div class="text-sm py-2.5" v-html="formDateTime(size.updated_at)"></div>
+                    <div class="text-sm pt-2.5 pb-1" v-html="formDateTime(size.updated_at)"></div>
                     <div class="text-sm">({{ timeAgo(size.updated_at) }})</div>
-                  </div>
-                  <div class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
-                    <div class="flex flex-col gap-2 items-center justify-center">
-                      <a href="#" type="button" class="font-medium cursor-pointer text-yellow-500">
-                        <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
-                      </a>
-                    </div>
                   </div>
                 </div>
               </template>

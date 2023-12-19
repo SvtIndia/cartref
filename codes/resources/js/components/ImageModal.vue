@@ -32,8 +32,15 @@ export default {
   },
   watch: {
     img(newVal) {
-      document.get
       this.getMeta(newVal);
+    },
+    show(val){
+        if(val){
+          document.body.style.overflow = 'hidden'
+        }
+        else{
+          document.body.style.overflow = 'unset'
+        }
     }
   },
   methods: {

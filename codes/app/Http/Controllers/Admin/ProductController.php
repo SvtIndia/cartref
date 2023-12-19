@@ -186,7 +186,7 @@ class ProductController extends Controller
 
     }
 
-    public function uploadMainImage()
+    public function uploadMainImage(Request $request, $id)
     {
         $request->validate([
             'image' => 'required|image|max:2048'
@@ -215,7 +215,7 @@ class ProductController extends Controller
 
                 //replace string with new one
                 $productColor->update(['main_image' => $dbPath]);
-                return response()->json(['status' => 'success', 'msg' => 'Image uploaded successfully']);
+                return response()->json(['status' => 'success', 'msg' => 'Image updated successfully']);
             }
         }
 

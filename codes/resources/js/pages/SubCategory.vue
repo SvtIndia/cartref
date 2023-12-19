@@ -16,7 +16,7 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="text" v-model="name" id="sub_category"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                       class="form-input"
                        placeholder="Western Wear" required>
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
@@ -24,7 +24,7 @@
                        title="The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.">Slug
                   <span class="text-red-600">*</span></label>
                 <input type="text" v-model="slug" id="slug"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                       class="form-input"
                        placeholder="western-wear" required>
               </div>
             </div>
@@ -33,14 +33,14 @@
                 <label for="image" class="block mb-2 text-sm font-bold text-gray-900"
                        title="An image belonging to a specific type, often distinguished by shared characteristics or features.">Category Image</label>
                 <input type="file" @change="handleImageChange($event)" id="image"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                       class="form-input"
                        placeholder="western-wear" accept="image/*">
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
                 <label for="image" class="block mb-2 text-sm font-bold text-gray-900" title="Those immediately above the category in the hierarchy">Parent Category <span
                     class="text-red-600">*</span></label>
                 <select v-model="parent_category_id"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                        class="form-input"
                         placeholder="western-wear" required>
                   <option value="" selected>Select Parent Category</option>
                   <option v-for="(parent, index) in parent_category" :key="index" :value="parent.id">{{ parent.name }}</option>
@@ -54,7 +54,7 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="text" id="hsn" v-model="hsn"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                       class="form-input"
                        placeholder="8471">
               </div>
               <div class="mb-5 md:w-1/2 w-full mx-2 my-1">
@@ -63,13 +63,13 @@
                   <span class="text-red-600">*</span>
                 </label>
                 <input type="number" id="gst" v-model="gst"
-                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                       class="form-input"
                        placeholder="18">
               </div>
             </div>
             <div class="text-center">
               <button type="submit"
-                      class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold  rounded-lg text-base mx-1 px-5 py-2.5">
+                      class="submit-btn">
                 {{ this.editId ? 'Update' : 'Create' }}
               </button>
               <button type="button" @click="clear()"

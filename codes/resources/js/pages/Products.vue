@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                             <div class="relative">
-                                <select title="Status" v-model="parent_category_id" @change="fetchProduct()"
+                                <select title="Category" v-model="parent_category_id" @change="fetchProduct()"
                                     class="block appearance-none pl-2 pr-8 w-auto leading-tight h-full cursor-pointer text-black bg-white border border-gray-400 focus:outline-none hover:shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-none font-medium rounded-lg text-sm px-3 py-2">
                                     <option value="" selected>All Categories</option>
                                     <option v-for="(parent, index) in parent_category" :key="index" :value="parent.id">{{
@@ -65,14 +65,14 @@
                                 </div>
                                 <input type="text" v-model="keyword" @change="fetchProduct()"
                                     class="block focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500 p-2 pl-10 text-sm text-gray-900 border border-gray-400 rounded-lg w-40 bg-white"
-                                    placeholder="Search" @keydown.enter="fetchProduct()">
+                                    placeholder="Search" title="Search" @keydown.enter="fetchProduct()">
                             </div>
                             <div class="flex border border-gray-600 rounded-lg bg-white">
-                                <button class="px-2 py-1 m-[2px] hover:bg-primary-100 border-r border-solid cursor-pointer"
+                                <button title="Reload" class="px-2 py-1 m-[2px] hover:bg-primary-100 border-r border-solid cursor-pointer"
                                     @click="fetchProduct()">
                                     <i class="ffi fi-rr-refresh mr-1"></i>
                                 </button>
-                                <select
+                                <select title="Page Limit"
                                     class="w-14 block px-1 m-[2px] text-base text-center text-gray-900 bg-white cursor-pointer"
                                     @change="fetchProduct()" v-model="row_count">
                                     <option :value="count.toLowerCase()" v-for="(count, index) in $store.state.row_counts"
@@ -138,10 +138,9 @@
                                     </div>
                                     <div
                                         class="table-cell border-t border-l border-gray-500 text-sm p-1 text-center !align-middle">
-                                        <img @click="imageModal($store.state.storageUrl + product.image)"
-                                            v-if="product.image"
-                                            class="w-20 h-20 border border-gray-400 mx-auto p-1 rounded-[50%]"
-                                            :src="$store.state.storageUrl + product.image" :alt="product.name">
+                                        <img class="w-20 h-20 border border-gray-400 mx-auto p-1 rounded-[50%]" v-if="product.image"
+                                            @click="imageModal($store.state.storageUrl + product.image)"
+                                            :src="$store.state.storageUrl + product.image" alt="product-img">
                                         <p class="text-center text-gray-800" v-else>--No Image--</p>
                                     </div>
                                     <div

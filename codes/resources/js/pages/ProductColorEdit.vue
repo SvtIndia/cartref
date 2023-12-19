@@ -31,7 +31,8 @@
                       v-model="color_name"
                       placeholder="Color"
                       required="required"
-                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary-500 focus-visible:border-primary-500"
+                      readonly
+                      class="form-input"
                   />
                 </div>
               </div>
@@ -72,24 +73,18 @@
                 <div class="w-full md:w-1/2 block max-sm:my-4">
                   <div>
                     <label class="block mb-2 text-sm font-bold text-gray-900">Main Image</label>
-                    <img class="w-100 md:h-[36rem] w-full border rounded-md" :src="$store.state.storageUrl + color?.main_image" alt="main"/>
+                    <img class="w-100 md:h-[36rem] w-full border rounded-md" :src="$store.state.storageUrl + color?.main_image" alt="main-img"/>
                   </div>
                   <!-- upload -->
                   <div class="flex items-center justify-center bg-grey-lighter mt-4">
-                    <label
-                        class="flex flex-col items-center px-4 py-4 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-primary-500 hover:text-white">
+                    <label for="main-file"
+                        class="relative flex flex-col items-center px-4 py-4 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-primary-500 hover:text-white">
                       <i class="fi fi-rr-file-upload text-3xl"></i>
-                      <span class="mt-2 text-base leading-normal">Choose image</span>
-                      <input type='file' class="hidden"/>
+                      <span class="mt-2 text-base leading-normal">Change image</span>
+                      <input id="main-file" type='file' @change="updateMainImage($event)" class="absolute h-full w-full z-0 m-0 p-0 opacity-0"/>
                     </label>
                   </div>
                 </div>
-              </div>
-              <div class="text-left">
-                <button type="submit"
-                        class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold rounded-lg text-base mx-1 px-5 py-2.5">
-                  Update
-                </button>
               </div>
             </form>
           </div>
@@ -176,6 +171,32 @@ export default {
             this.loading = false;
             err.handleGlobally && err.handleGlobally();
           })
+    },
+    updateMainImage(e) {
+      let files = e.target.files;
+      if(files.length <= 0){
+        return false;
+      }
+
+      this.loading = true;
+      //creating new object of files
+      const formData = new FormData();
+      formData.append('image', files[0]);
+
+      //uploading to db
+      const config = {
+        headers: {'Content-Type': 'multipart/form-data'}
+      }
+      axios
+        .post(`/admin/product/color/${this.color_id}/main-image`, formData, config)
+        .then((res) => {
+          this.fetchColor();
+          this.show_toast(res.data.status, res.data.msg);
+        })
+        .catch(err => {
+          this.loading = false;
+          err.handleGlobally && err.handleGlobally();
+        })
     },
 
     /* Data fetch methods */

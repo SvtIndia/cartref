@@ -9,6 +9,7 @@ import Products from "../pages/Products.vue";
 import ProductColors from "../pages/ProductColors.vue";
 import ProductSizes from "../pages/ProductSizes.vue";
 import ProductColorEdit from "../pages/ProductColorEdit.vue";
+import ProductEdit from "../pages/ProductEdit.vue";
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         name: 'products',
         path: '/admin/products',
         component: Products,
+    },
+    {
+        name: 'products-edit',
+        path: '/admin/products/edit',
+        component: ProductEdit,
     },
     {
         name: 'product-colors',
