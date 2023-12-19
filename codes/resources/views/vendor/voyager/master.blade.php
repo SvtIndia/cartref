@@ -196,7 +196,7 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
         <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
         <script src="{{asset('js/showcase-order.js')}}"></script>
     @endif
-    @if(auth()->user()->hasRole(['Vendor','admin','Client']))
+    @if(auth()->user()->hasRole(['Vendor']))
         <script src="{{asset('js/announcement.js')}}"></script>
     @endif
     {{--  Pusher Notification   --}}
