@@ -2,7 +2,7 @@ Pusher.logToConsole = true;
 var pusher = new Pusher(pusher_key, {
     cluster: 'ap2'
 });
-var channel = pusher.subscribe('my-channel@'+user_id);
+var channel = pusher.subscribe('my-channel@' + user_id);
 
 let showcases = '';
 let renderItems = '';
@@ -13,10 +13,10 @@ channel.bind('my-event', function (data) {
 
     $.ajax({
         type: "GET",
-        url: "/api/fetch/showroom-orders/"+order_id,
-        success: function(res) {
+        url: "/api/fetch/showroom-orders/" + order_id,
+        success: function (res) {
             showcases = res.showcases;
-            showcases.forEach((item,index) => {
+            showcases.forEach((item, index) => {
                 renderItems += `
                 <tr>
                     <td>
@@ -33,15 +33,15 @@ channel.bind('my-event', function (data) {
                     </td>
                     <td>
                         <div class="product-information">
-                            <a href="${window.location.origin +'/product/'+ item.product.slug}" class="name" target="_blank">
+                            <a href="${window.location.origin + '/product/' + item.product.slug}" class="name" target="_blank">
                                 <img
-                                    src="${window.location.origin +'/storage/'+ item.product.image}"
+                                    src="${window.location.origin + '/storage/' + item.product.image}"
                                     onerror="this.onerror=null;this.src='/images/placeholer.png';"
                                     alt="img"
                                 />
                             </a>
                             <div class="info">
-                                <a href="${window.location.origin +'/product/'+ item.product.slug}" class="name" target="_blank" 
+                                <a href="${window.location.origin + '/product/' + item.product.slug}" class="name" target="_blank" 
                                     style="color:unset;text-overflow: ellipsis;overflow: hidden; white-space: nowrap;"
                                 >
                                     ${item.product.name}
@@ -75,16 +75,16 @@ channel.bind('my-event', function (data) {
                             ${item.customer_name}
                         </div>
                         <div>
-                            ${item.dropoff_streetaddress1 +', '+ item.dropoff_streetaddress2 +', '+ item.dropoff_city +', '+ item.dropoff_state +' - '+ item.dropoff_pincode}
+                            ${item.dropoff_streetaddress1 + ', ' + item.dropoff_streetaddress2 + ', ' + item.dropoff_city + ', ' + item.dropoff_state + ' - ' + item.dropoff_pincode}
                         </div>
                         <div>
                             <a href="tel:91${item.customer_contact_number}">+91 ${item.customer_contact_number}</a>
                         </div>
                     </td>
                 </tr>
-            `   ;
+            `;
 
-                if(showcases.length == index + 1){
+                if (showcases.length == index + 1) {
                     setData();
                     playBeep();
                     notifyMe(`#${item.order_id} Order`);
@@ -93,6 +93,7 @@ channel.bind('my-event', function (data) {
         }
     })
 });
+
 function notifyMe(title) {
     if (Notification.permission !== 'granted')
         Notification.requestPermission();
@@ -103,15 +104,16 @@ function notifyMe(title) {
         });
     }
 }
-function playBeep()
-{
-    var audio=document.createElement('audio');
-    audio.style.display="none";
-    audio.src = window.location.origin+'/mp3/new_order_beep.wav';
-    audio.autoplay=true;
+
+function playBeep() {
+    var audio = document.createElement('audio');
+    audio.style.display = "none";
+    audio.src = window.location.origin + '/mp3/new_order_beep.wav';
+    audio.autoplay = true;
     audio.loop = true;
     document.body.appendChild(audio);
 }
+
 const setData = () => {
 
     $('body').append(`
@@ -146,11 +148,15 @@ const setData = () => {
                     </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <form action="${window.location.origin}/showcase-at-home/my-orders/order/${showcases[0].order_id}/accept-order" method="get">
-                            <button type="submit" class="btn btn-success flex" style="margin:auto;">Accept</button>
-                        </form>
-                    </div>
+                    ${user_id === showcases[0].vendor_id ?
+                        `<div class="modal-footer">
+                            <form
+                                action="${window.location.origin}/showcase-at-home/my-orders/order/${showcases[0].order_id}/accept-order"
+                                method="get">
+                                <button type="submit" class="btn btn-success flex" style="margin:auto;">Accept</button>
+                            </form>
+                        </div>`
+                    : ''}
                 </div>
             </div>
         </div>
@@ -189,14 +195,14 @@ const timeAgo = (date) => {
         return interval + ' minutes ago';
     }
 
-    if(seconds < 10) return 'just now';
+    if (seconds < 10) return 'just now';
 
     return Math.floor(seconds) + ' seconds ago';
 };
 
 
 // request permission on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (!Notification) {
         alert('Desktop notifications not available in your browser. Try Chromium.');
         return;

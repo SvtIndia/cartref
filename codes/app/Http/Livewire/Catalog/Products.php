@@ -321,7 +321,7 @@ class Products extends Component
     public function render()
     {
 
-        $products = Product::where('admin_status', 'Accepted')
+        $products = Product::withCount('users')->where('admin_status', 'Accepted')
             // ->whereLike('name', $this->search ?? '')
             ->whereHas('vendor', function ($query) {
                 $query->where('status', 1);
@@ -511,6 +511,13 @@ class Products extends Component
                     $q->where('status', 1)->where('showcase_at_home', 1)->where('id', request('vendor_id'));
                 });
             })
+            ->when(true, function($query){
+                return $query->orderBy('created_at', 'desc')->take(200);
+            })
+            ->when(true, function($query){
+                return $query->orderBy('users_count', 'desc');
+            })
+
         ;
 
 
