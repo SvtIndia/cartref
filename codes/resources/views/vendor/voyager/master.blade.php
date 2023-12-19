@@ -69,6 +69,25 @@
             border-right: 1px solid;
             border-right-color: currentcolor;
         }
+        .announcement-li{
+            padding: 8px 0;
+            border: solid 1px transparent;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: white;
+            margin: 1rem 0;
+        }
+        .bg-danger {
+            background-color: #DC3545;
+        }
+        .bg-primary {
+            background-color: #007BFF;
+        }
+        .bg-success{
+            background-color: #28A745;
+        }
     </style>
     @yield('head')
 </head>
@@ -172,11 +191,12 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
             const pusher_key = "{{env('PUSHER_APP_KEY') }}";
             const user_id = "{{auth()->user()->id }}";
             const favicon = "{{ Voyager::image($admin_favicon) }}"
+            const route = "{{ \Route::currentRouteName() }}"
         </script>
         <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
         <script src="{{asset('js/showcase-order.js')}}"></script>
     @endif
-    @if(auth()->user()->hasRole(['Vendor']))
+    @if(auth()->user()->hasRole(['Vendor','admin','Client']))
         <script src="{{asset('js/announcement.js')}}"></script>
     @endif
     {{--  Pusher Notification   --}}
