@@ -13,7 +13,8 @@
             <div class="flex flex-col md:flex-row gap-8 mx-2">
               <div class="flex flex-col md:w-3/4 w-full">
                 <div class="w-full my-2">
-                  <label for="title" class="block mb-2 text-sm font-bold text-gray-900" title="A concise name describing a product for easy identification and marketing.">
+                  <label for="title" class="block mb-2 text-sm font-bold text-gray-900"
+                         title="A concise name describing a product for easy identification and marketing.">
                     Product Title <span class="text-red-600">*</span>
                   </label>
                   <input type="text" v-model="name" id="title" class="form-input" placeholder="Western Wear" required>
@@ -26,8 +27,9 @@
                   <input type="text" v-model="slug" id="slug" class="form-input" placeholder="western-wear" required>
                 </div>
                 <div class="w-full my-2">
-                  <label for="code" class="block mb-2 text-sm font-bold text-gray-900" title="'SKU' stands for Stock Keeping Unit, a unique code for product identification in inventory.">
-                      Product Code (ERP) / SKU <span class="text-red-600">*</span>
+                  <label for="code" class="block mb-2 text-sm font-bold text-gray-900"
+                         title="'SKU' stands for Stock Keeping Unit, a unique code for product identification in inventory.">
+                    Product Code (ERP) / SKU <span class="text-red-600">*</span>
                   </label>
                   <input type="text" v-model="sku" id="code" class="form-input" placeholder="12X-987XX" required>
                 </div>
@@ -35,40 +37,62 @@
                   <div class="md:w-1/2 w-full">
                     <label for="category_id" class="block mb-2 text-sm font-bold text-gray-900"
                            title="Those immediately above the category in the hierarchy">Category <span class="text-red-600">*</span></label>
-                    <select v-model="category_id" id="category_id" class="form-input" required>
-                      <option value="" selected>Select Category</option>
-                      <option v-for="(category, index) in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="category_id" id="category_id" class="form-input appearance-none" required>
+                        <option value="" selected>Select Category</option>
+                        <option v-for="(category, index) in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                   <div class="md:w-1/2 w-full">
                     <label for="sub_category_id" class="block mb-2 text-sm font-bold text-gray-900" title="Those immediately below the main category in the hierarchy">Sub
                       Category
                       <span class="text-red-600">*</span>
                     </label>
-                    <select v-model="sub_category_id" id="sub_category_id" class="form-input" required>
-                      <option value="" selected>Select Sub Category</option>
-                      <option v-for="(sub_cat, index) in sub_categories" :key="sub_cat.id" :value="sub_cat.id">{{ sub_cat.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="sub_category_id" id="sub_category_id" class="form-input appearance-none" required>
+                        <option value="" selected>Select Sub Category</option>
+                        <option v-for="(sub_cat, index) in sub_categories" :key="sub_cat.id" :value="sub_cat.id">{{ sub_cat.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="flex gap-4 w-full my-2">
                   <div class="mb-5 md:w-1/2 w-full">
-                    <label for="brand_id" class="block mb-2 text-sm font-bold text-gray-900" title="Brand is a distinct identity and perception of a product or company in the market.">
+                    <label for="brand_id" class="block mb-2 text-sm font-bold text-gray-900"
+                           title="Brand is a distinct identity and perception of a product or company in the market.">
                       Brand <span class="text-red-600">*</span>
                     </label>
-                    <select v-model="brand_id" id="brand_id" class="form-input" required>
-                      <option value="" selected>Choose Brand</option>
-                      <option v-for="(brand, index) in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="brand_id" id="brand_id" class="form-input appearance-none" required>
+                        <option value="" selected>Choose Brand</option>
+                        <option v-for="(brand, index) in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                   <div class="mb-5 md:w-1/2 w-full">
-                    <label for="seller_id" class="block mb-2 text-sm font-bold text-gray-900" title="The Seller name is the individual or business selling a product or service.">
+                    <label for="seller_id" class="block mb-2 text-sm font-bold text-gray-900"
+                           title="The Seller name is the individual or business selling a product or service.">
                       Seller Name <span class="text-red-600">*</span>
                     </label>
-                    <select v-model="seller_id" id="seller_id" class="form-input" required>
-                      <option value="" selected>Choose Seller</option>
-                      <option v-for="(seller, index) in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="seller_id" id="seller_id" class="form-input appearance-none" required>
+                        <option value="" selected>Choose Seller</option>
+                        <option v-for="(seller, index) in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -89,13 +113,15 @@
               </div>
             </div>
             <div class="w-full my-1 mb-3">
-              <label for="description" class="block mb-2 text-sm font-bold text-gray-900" title="A concise depiction or portrayal providing details and characteristics of a subject or object.">
+              <label for="description" class="block mb-2 text-sm font-bold text-gray-900"
+                     title="A concise depiction or portrayal providing details and characteristics of a subject or object.">
                 Description <span class="text-red-600">*</span>
               </label>
               <textarea v-model="description" id="description" class="form-input h-36" placeholder="Describe your product here..."></textarea>
             </div>
             <div class="w-full my-1 mb-3">
-              <label for="features" class="block mb-2 text-sm font-bold text-gray-900" title="Distinctive attributes or characteristics of something, often highlighting its unique qualities or functions.">
+              <label for="features" class="block mb-2 text-sm font-bold text-gray-900"
+                     title="Distinctive attributes or characteristics of something, often highlighting its unique qualities or functions.">
                 Features <span class="text-red-600">*</span>
               </label>
               <textarea v-model="features" id="features" class="form-input h-36" placeholder="Describe your product's features here..."></textarea>
@@ -105,19 +131,30 @@
                 <div class="flex gap-4 w-full my-2">
                   <div class="md:w-1/2 w-full">
                     <label for="gender_id" class="block mb-2 text-sm font-bold text-gray-900">Gender <span class="text-red-600">*</span></label>
-                    <select v-model="gender_id" id="gender_id" class="form-input" required>
-                      <option value="" selected>Select Gender</option>
-                      <option v-for="(gender, index) in genders" :key="gender.id" :value="gender.id">{{ gender.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="gender_id" id="gender_id" class="form-input appearance-none" required>
+                        <option value="" selected>Select Gender</option>
+                        <option v-for="(gender, index) in genders" :key="gender.id" :value="gender.id">{{ gender.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                   <div class="md:w-1/2 w-full">
-                    <label for="style_id" class="block mb-2 text-sm font-bold text-gray-900" title="Style is a distinctive manner or characteristic expression that defines an individual, work, or era">
+                    <label for="style_id" class="block mb-2 text-sm font-bold text-gray-900"
+                           title="Style is a distinctive manner or characteristic expression that defines an individual, work, or era">
                       Style <span class="text-red-600">*</span>
                     </label>
-                    <select v-model="style_id" id="style_id" class="form-input" required>
-                      <option value="" selected>Select Style</option>
-                      <option v-for="(style, index) in styles" :key="style.id" :value="style.id">{{ style.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="style_id" id="style_id" class="form-input appearance-none" required>
+                        <option value="" selected>Select Style</option>
+                        <option v-for="(style, index) in styles" :key="style.id" :value="style.id">{{ style.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="flex gap-4 w-full my-2">
@@ -125,19 +162,11 @@
                     <label for="sizes" class="block mb-2 text-sm font-bold text-gray-900">
                       Available Sizes <span class="text-red-600">*</span>
                     </label>
-                    <!--                <select v-model="brand_id" id="brand_id" class="form-input" required>-->
-                    <!--                  <option value="" selected>Choose Brand</option>-->
-                    <!--                  <option v-for="(brand, index) in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>-->
-                    <!--                </select>-->
                   </div>
                   <div class="md:w-1/2 w-full">
                     <label for="seller_id" class="block mb-2 text-sm font-bold text-gray-900">
                       Available Colors <span class="text-red-600">*</span>
                     </label>
-                    <!--                <select v-model="seller_id" id="seller_id" class="form-input" required>-->
-                    <!--                  <option value="" selected>Choose Seller</option>-->
-                    <!--                  <option v-for="(seller, index) in sellers" :key="seller.id" :value="seller.id">{{ seller.name }}</option>-->
-                    <!--                </select>-->
                   </div>
                 </div>
                 <div class="flex gap-4 w-full my-2">
@@ -169,7 +198,8 @@
                   </div>
                 </div>
                 <div class="w-full my-2">
-                  <label for="size_guide" class="block mb-2 text-sm font-bold text-gray-900" title="An image which references chart indicating measurements for selecting appropriate clothing or products.">
+                  <label for="size_guide" class="block mb-2 text-sm font-bold text-gray-900"
+                         title="An image which references chart indicating measurements for selecting appropriate clothing or products.">
                     Size Guide
                   </label>
                   <input type="file" id="size_guide" class="form-input" accept="image/*">
@@ -191,7 +221,8 @@
                   </div>
                 </div>
                 <div class="w-full my-2">
-                  <label for="product_tags" class="block mb-2 text-sm font-bold text-gray-900" title="Product keywords are specific terms used to optimize search and enhance discoverability online.">
+                  <label for="product_tags" class="block mb-2 text-sm font-bold text-gray-900"
+                         title="Product keywords are specific terms used to optimize search and enhance discoverability online.">
                     Product Keywords / Tags (Comma [,] Seperated)
                   </label>
                   <textarea v-model="product_tags" id="product_tags" class="form-input h-32"
@@ -205,9 +236,14 @@
                 <div class="flex gap-4 w-full my-2">
                   <div class="w-1/2">
                     <label for="admin_status" class="block mb-2 text-sm font-bold text-gray-900">QC Status</label>
-                    <select v-model="admin_status" id="admin_status" class="form-input" required>
-                      <option v-for="(status, index) in admin_statuses" :key="status.id" :value="status.name">{{ status.name }}</option>
-                    </select>
+                    <div class="relative">
+                      <select v-model="admin_status" id="admin_status" class="form-input appearance-none" required>
+                        <option v-for="(status, index) in admin_statuses" :key="status.id" :value="status.name">{{ status.name }}</option>
+                      </select>
+                      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <i class="fi fi-ss-angle-small-down text-xl w-5 h-6 ml-1"></i>
+                      </div>
+                    </div>
                   </div>
                   <div class="w-1/2">
                     <label for="flash_sale" class="block mb-2 text-sm font-bold text-gray-900">Flash Sale </label>
