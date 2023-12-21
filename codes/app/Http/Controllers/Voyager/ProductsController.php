@@ -59,7 +59,8 @@ class ProductsController extends VoyagerBaseController
         } else {
 
         }
-        if(request()->previous_url){
+        $route = app('router')->getRoutes()->match(app('request')->create(request()->previous_url));
+        if(request()->previous_url && $route->getName() === 'voyager.products.index'){
             $redirect = redirect(request()->previous_url);
         }
         else {

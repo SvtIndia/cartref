@@ -17,7 +17,9 @@
                 <br><br>
                 <div class="cart-action">
                     <a href="{{ route('products.showcase') }}" class="btn btn-dark"><span>Browse Products</span></a>
-                    <a class="btn btn-sm btn-link" href="{{ route('showcase.getstarted') }}" style="color: red;">Activate Showroom At Home</a>
+                    @if (Session::get('showcasecity') == null)
+                        <a class="btn btn-sm btn-link" href="{{ route('showcase.getstarted') }}" style="color: red;">Activate Showroom At Home</a>
+                    @endif
                 </div>
             @else
                 <div class="products scrollable">
@@ -73,10 +75,9 @@
                 </div>
                 <!-- End of Cart Total -->
 
-                <div class="cart-action">
-                    {{-- <a href="{{ route('bag') }}" class="btn btn-dark btn-link">View Bag</a> --}}
-                    <a href="{{ route('showcase.bag') }}" class="btn btn-dark"><span>GO TO SHOWROOM BAG</span></a>
-                </div>
+                    <div class="cart-action">
+                        <a href="{{ route('showcase.bag') }}" class="btn btn-dark"><span>GO TO SHOWROOM BAG</span></a>
+                    </div>
                 <!-- End of Cart Action -->
             @endif
 
