@@ -219,12 +219,12 @@
                                     <div
                                         class="table-cell border-t border-l border-gray-500 text-sm align-[middle!important] text-center">
                                         <div class="flex gap-4 mx-2 items-center justify-center">
-                                            <a href="javascript:void(0)" type="button"
+                                            <router-link :to="{ name: 'product-edit', params: { id: product.id } }"
                                                 class="font-medium cursor-pointer text-yellow-500">
                                                 <i class="fi fi-rr-pencil w-5 h-5 text-xl"></i>
-                                            </a>
+                                            </router-link>
                                             <router-link :to="{ name: 'product-colors', params: { id: product.id } }"
-                                                type="button" class="font-medium cursor-pointer text-blue-500">
+                                                class="font-medium cursor-pointer text-blue-500">
                                                 <i class="fi fi-rr-eye w-5 h-5 text-xl"></i>
                                             </router-link>
                                             <a href="javascript:void(0)" type="button"

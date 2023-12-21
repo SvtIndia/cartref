@@ -33,8 +33,8 @@ const routes = [
         component: Products,
     },
     {
-        name: 'products-edit',
-        path: '/admin/products/edit',
+        name: 'product-edit',
+        path: '/admin/products/:id/edit',
         component: ProductEdit,
     },
     {

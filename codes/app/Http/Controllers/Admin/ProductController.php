@@ -61,7 +61,7 @@ class ProductController extends Controller
 
     public function fetchProduct(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($id)->append('json_images');
         //Response
         return new ApiResource($product);
     }

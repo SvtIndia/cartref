@@ -24,6 +24,7 @@ class SubCategoryController extends Controller
         /* Query Parameters */
         $keyword = request()->keyword;
         $status = request()->status;
+        $category = request()->category_id;
         $rows = request()->rows ?? 25;
 
         if ($rows == 'all') {
@@ -33,6 +34,11 @@ class SubCategoryController extends Controller
         $categories = ProductSubcategory::with('category')
             ->when(isset($status), function ($query) use ($status) {
                 $query->where('status', (int)$status);
+            })
+            ->when(isset($category), function ($query) use ($category) {
+                $query->whereHas('category', function ($query) use ($category) {
+                    $query->where('id', $category);
+                });
             })
             ->when(isset($keyword), function ($query) use ($keyword) {
                 $query->where(function ($query1) use ($keyword) {

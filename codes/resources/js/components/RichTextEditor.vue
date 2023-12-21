@@ -21,23 +21,27 @@
 </template>
 <script>
 import Editor from "@tinymce/tinymce-vue";
+
 export default {
   components: {
     Editor: Editor,
   },
-  props:{
-    initail_value:String,
-    setVal:Function,
+  props: {
+    initial_value: String,
+    setVal: Function,
     height: String,
   },
   watch: {
     data_content(newValue, oldValue) {
       this.setVal(newValue);
+    },
+    initial_value(newValue) {
+      this.data_content = newValue;
     }
   },
-  data(){
+  data() {
     return {
-      data_content: this.initail_value,
+      data_content: this.initial_value,
     }
   }
 

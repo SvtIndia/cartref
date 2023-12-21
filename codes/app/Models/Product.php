@@ -437,7 +437,8 @@ class Product extends Model
     {
         return $this->belongsTo(ProductSubcategory::class, 'subcategory_id');
     }
-
-
+    public function getJsonImagesAttribute(){
+        return json_decode($this->images) ?? [];
+    }
 
 }

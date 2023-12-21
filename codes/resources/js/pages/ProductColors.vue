@@ -16,10 +16,10 @@
           <h3 class="text-start my-8">Colors</h3>
         </div>
         <div>
-          <a class="flex items-center gap-2 px-4 py-2 text-base font-bold text-center text-white align-middle transition-all rounded-lg cursor-pointer bg-primary-500 hover:bg-primary-600">
+          <router-link :to="{ name: 'product-edit', params: { id: product.id } }" class="flex items-center gap-2 px-4 py-2 text-base font-bold text-center text-white align-middle transition-all rounded-lg cursor-pointer bg-primary-500 hover:bg-primary-600">
             Edit Product
             <i class="fi fi-rr-arrow-up-right-from-square text-base w-6 h-6"></i>
-          </a>
+          </router-link>
         </div>
       </div>
 
