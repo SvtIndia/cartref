@@ -215,9 +215,9 @@
                   </div>
                 </div>
                 <div class="w-full mb-2">
-                  <div class="text-green-500 text-sm">
+                  <div class="text-green-500 text-sm" v-if="mrp > 0 && offer_price > 0">
                     <span class="text-gray-800">Discount :</span>
-                    ₹500.00 (25%)
+                    ₹{{ (mrp-offer_price).toFixed(2) }} ({{ (((mrp-offer_price)/offer_price)*100).toFixed(2) }}%)
                   </div>
                 </div>
                 <div class="w-full my-2">
@@ -339,8 +339,8 @@ export default {
       height: '',
       weight: '',
       //price fields
-      offer_price: '',
-      mrp: '',
+      offer_price: 0,
+      mrp: 0,
       //image
       main_image: "products/August2023/aWihGA0zmgQYhSj0zVN0.jpg",
       more_images: [
