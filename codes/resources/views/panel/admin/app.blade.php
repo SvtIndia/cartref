@@ -43,6 +43,7 @@
 
     <!--script -->
     <script src="{{ asset('vue/js/app.js') }}" defer></script>
+
 </body>
 
 </html>

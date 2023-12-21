@@ -124,7 +124,7 @@
                      title="Distinctive attributes or characteristics of something, often highlighting its unique qualities or functions.">
                 Features <span class="text-red-600">*</span>
               </label>
-              <textarea v-model="features" id="features" class="form-input h-36" placeholder="Describe your product's features here..."></textarea>
+              <RichTextEditor :setVal="(val) => features = val" :initail_value="features" height="350"/>
             </div>
             <div class="flex flex-col md:flex-row gap-8 mx-2 mb-3">
               <div class="flex flex-col md:w-3/5 w-full">
@@ -231,7 +231,7 @@
                 </div>
                 <div class="w-full my-2" v-if="editId">
                   <label for="admin_comments" class="block mb-2 text-sm font-bold text-gray-900">Admin Comments </label>
-                  <textarea v-model="admin_comments" id="admin_comments" class="form-input h-32" placeholder="NO QUANTITY FOUND"></textarea>
+                  <RichTextEditor :setVal="(val) => admin_comments = val" :initail_value="admin_comments"/>
                 </div>
                 <div class="flex gap-4 w-full my-2">
                   <div class="w-1/2">
@@ -308,7 +308,7 @@ export default {
       dataLoading: false,
       showModal: false,
       imgModal: '',
-      editId: '',
+      editId: '1',
       //dropdown-lists
       categories: [],
       sub_categories: [],
@@ -350,10 +350,10 @@ export default {
         'products/August2023/aWihGA0zmgQYhSj0zVN0.jpg',
       ],
       //textarea-fields
-      description: '',
-      features: '',
-      product_tags: '',
-      admin_comments: '',
+      description: "",
+      features: "<p>Describe your product's features here...</p>",
+      product_tags: "",
+      admin_comments: "",
       //status
       flash_sale: false,
       admin_status: 'Accepted',
@@ -366,9 +366,6 @@ export default {
     },
     closeImageModal() {
       this.showModal = false;
-    },
-    name() {
-
     },
     clear() {
 

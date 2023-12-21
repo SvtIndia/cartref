@@ -8,7 +8,6 @@ import mixin from './plugins/mixin';
 import './plugins/directives.js';
 
 Vue.use(VueRouter);
-
 var $ = global.jQuery;
 window.$ = $;
 
@@ -20,6 +19,7 @@ Vue.component('Spinner', require('./components/Spinner.vue').default);
 Vue.component('Wait', require('./components/Wait.vue').default);
 Vue.component('Pagination', require('./components/Pagination.vue').default);
 Vue.component('ImageModal', require('./components/ImageModal.vue').default);
+Vue.component('RichTextEditor', require('./components/RichTextEditor.vue').default);
 
 const app = new Vue({
     el: '#app',
