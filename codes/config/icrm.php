@@ -504,7 +504,7 @@ return [
         'order_limit' => '5',
 
         // what are the delivery charges for customers who request showcase at home within a city?
-        'delivery_charges' => '150',
+        'delivery_charges' => '0',
 
         // what is you delivery tat in minute, hour, day, week, month?
         'delivery_tat' => '3',

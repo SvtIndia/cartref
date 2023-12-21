@@ -229,7 +229,32 @@
         var total_amount = amount * 100;
         // var consent = $("#two-step:checkbox:checked").length;
 
-
+        if(total_amount <= 0){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#custom-overlay').show();
+            $.ajax({
+                type:'POST',
+                url:"{{ route('showcase.paynow') }}",
+                data:{
+                    amount:total_amount,
+                    full_name:full_name,
+                    email:email,
+                    contact_number:contact_number
+                },
+                success:function(data){
+                    $('.success-message').text(data.success);
+                    $('.success-alert').fadeIn('slow', function(){
+                        $('.success-alert').delay(5000).fadeOut();
+                    });
+                    $('#custom-overlay').hide();
+                    window.location.href = "/showcase-at-home/my-orders/all";
+                }
+            });
+        }
 
         // /<span class="required">*</span><span class="required">*</span> validate form fields <span class="required">*</span>/
 
@@ -302,8 +327,11 @@
                 "color": "#0A0757"
             }
         };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
+
+        if(total_amount > 0) {
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
     });
 </script>
 @endpush

@@ -250,41 +250,47 @@ class ShowcaseAtHomeController extends Controller
         /** Proceed Razorpay payment */
         $input = $request->all();
 
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        if($request->amount > 0){
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
-        $payment = $api->payment->fetch($request->razorpay_payment_id);
+            $payment = $api->payment->fetch($request->razorpay_payment_id);
 
-        if (count($input) && !empty($input['razorpay_payment_id'])) {
-            try {
+            if (count($input) && !empty($input['razorpay_payment_id'])) {
+                try {
 
-                $payment->capture(array('amount' => $request->amount));
+                    $payment->capture(array('amount' => $request->amount));
 
-            } catch (\Exception $e) {
-                return $e->getMessage();
-                \Session::put('error', $e->getMessage());
-                return redirect()->back();
+                } catch (\Exception $e) {
+                    return $e->getMessage();
+                    \Session::put('error', $e->getMessage());
+                    return redirect()->back();
+                }
             }
+
+
+            /** if payment successful then insert transaction data into the database */
+            $payInfo = [
+                'payment_id' => $request->razorpay_payment_id,
+                'order_id' => $payment->id,
+                'payer_email' => $request->email,
+                'amount' => $request->amount,
+                'currency' => $payment->currency,
+                'payment_status' => $payment->status,
+                'method' => $payment->method,
+            ];
+
+            Payment::insertGetId($payInfo);
+
+            /**
+             * after successfull payment add order information in the orders table
+             * Clear cart
+             */
+            $this->carttoorder($payInfo);
+        }
+        else{
+            $this->carttoorder([]);
         }
 
-
-        /** if payment successful then insert transaction data into the database */
-        $payInfo = [
-            'payment_id' => $request->razorpay_payment_id,
-            'order_id' => $payment->id,
-            'payer_email' => $request->email,
-            'amount' => $request->amount,
-            'currency' => $payment->currency,
-            'payment_status' => $payment->status,
-            'method' => $payment->method,
-        ];
-
-        Payment::insertGetId($payInfo);
-
-        /**
-         * after successfull payment add order information in the orders table
-         * Clear cart
-         */
-        $this->carttoorder($payInfo);
 
         Session::flash('success', 'Showcase At Home order successfully placed! You can expect delivery within ' . Config::get('icrm.showcase_at_home.delivery_tat') . ' ' . Config::get('icrm.showcase_at_home.delivery_tat_name') . '.');
         // return redirect()->route('myorders');
