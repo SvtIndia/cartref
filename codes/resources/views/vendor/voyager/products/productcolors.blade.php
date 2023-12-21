@@ -29,7 +29,7 @@
                         <tr>
                             <td style="text-align: center">
                                 @if ($color->status == 1)
-                                    <a href="{{ url('/'.Config('icrm.admin_panel.prefix').'/productcolors/'.$color->id.'/edit') }}">Edit</a>
+                                    <a target="_blank" href="{{ url('/'.Config('icrm.admin_panel.prefix').'/productcolors/'.$color->id.'/edit') }}">Edit</a>
                                 @else
                                     -
                                 @endif

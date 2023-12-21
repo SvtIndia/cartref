@@ -36,7 +36,7 @@
                             @if (Config::get('icrm.stock_management.inventory') == 0)
                                 <td style="text-align: center">
                                     @if ($sku->status == 1)
-                                        <a href="{{ url('/'.Config('icrm.admin_panel.prefix').'/productsku/'.$sku->id.'/edit') }}">Edit</a>
+                                        <a target="_blank" href="{{ url('/'.Config('icrm.admin_panel.prefix').'/productsku/'.$sku->id.'/edit') }}">Edit</a>
                                     @else
                                         -
                                     @endif
