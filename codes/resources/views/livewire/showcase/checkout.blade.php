@@ -183,7 +183,7 @@
 
                                     <div>
                                         <button type="submit" wire:loading.remove wire:loading.attr="disabled" wire:model="disablebtn" class="btn btn-dark btn-rounded btn-order" id="rzp-button1" @if($this->disablebtn == true) disabled="disabled" @endif>
-                                            Make Payment
+                                            {{ $ftotal > 0 ? 'Make Payment' : 'Place Order'  }}
                                         </button>
 
                                         <button wire:loading.delay.long wire:target="disablebtn" wire:loading.attr="disabled" class="btn btn-dark btn-rounded btn-order">
