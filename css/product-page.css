@@ -469,6 +469,9 @@
         padding: 8px;
         width: 88%;
     }
+        .price-p {
+            flex-direction: column!important;
+        }
 
     .new-wishlist-wrapper {
         width: 12%;
